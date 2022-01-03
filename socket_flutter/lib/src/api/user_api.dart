@@ -39,4 +39,30 @@ class UserAPI {
       return invalidError;
     }
   }
+
+  Future<ResponseAPI> getUsers({int? limit, String? nextCursor}) async {
+    final Map<String, dynamic> query = {
+      "limit": limit.toString(),
+      "cursor": nextCursor,
+    };
+
+    try {
+      final Uri uri = Uri.http(
+        _host,
+        "$_endpoint/",
+        query,
+      );
+      final Map<String, String> headers = {"Content-type": "application/json"};
+      print(uri);
+
+      final res = await http.get(uri, headers: headers);
+      final decode = json.decode(res.body);
+
+      final ResponseAPI responseAPI = ResponseAPI.fromMap(decode);
+      return responseAPI;
+    } catch (e) {
+      print(e);
+      return invalidError;
+    }
+  }
 }

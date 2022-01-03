@@ -35,4 +35,6 @@ class User {
   String toJson() => json.encode(toMap());
 
   factory User.fromJson(String source) => User.fromMap(json.decode(source));
+
+  static User fromJsonModel(Map<String, dynamic> json) => User.fromMap(json);
 }
