@@ -1,11 +1,19 @@
 import 'dart:convert';
 
+import 'package:socket_flutter/src/service/auth_service.dart';
+
 class User {
   final String id;
   final String name;
   final String email;
 
   String? sessionToken;
+
+  bool get isCurrent {
+    final currentUser = AuthService.to.currentUser.value;
+    if (currentUser == null) return false;
+    return currentUser.id == this.id;
+  }
 
   User({
     required this.id,

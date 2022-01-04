@@ -7,12 +7,12 @@ import 'package:socket_flutter/src/utils/enviremont.dart';
 class UserAPI {
   final String _host = Enviroment.host;
   final String _endpoint = "/api/v1/users";
+  final Map<String, String> headers = {"Content-type": "application/json"};
 
   Future<ResponseAPI> signUp(Map<String, dynamic> user) async {
     try {
       final Uri uri = Uri.http(_host, "$_endpoint/signup");
       final String bodyParams = json.encode(user);
-      final Map<String, String> headers = {"Content-type": "application/json"};
 
       final res = await http.post(uri, headers: headers, body: bodyParams);
       final data = json.decode(res.body);
@@ -28,7 +28,6 @@ class UserAPI {
     try {
       final Uri uri = Uri.http(_host, "$_endpoint/login");
       final String bodyParams = json.encode(credential);
-      final Map<String, String> headers = {"Content-type": "application/json"};
 
       final res = await http.post(uri, headers: headers, body: bodyParams);
       final data = json.decode(res.body);
@@ -52,8 +51,6 @@ class UserAPI {
         "$_endpoint/",
         query,
       );
-      final Map<String, String> headers = {"Content-type": "application/json"};
-      print(uri);
 
       final res = await http.get(uri, headers: headers);
       final decode = json.decode(res.body);

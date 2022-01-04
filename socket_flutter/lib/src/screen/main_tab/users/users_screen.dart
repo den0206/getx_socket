@@ -33,7 +33,7 @@ class UsersScreen extends StatelessWidget {
   }
 }
 
-class UserCell extends StatelessWidget {
+class UserCell extends GetView<UsersController> {
   const UserCell({Key? key, required this.user}) : super(key: key);
 
   final User user;
@@ -43,7 +43,7 @@ class UserCell extends StatelessWidget {
     return ListTile(
       title: Text(user.name),
       onTap: () {
-        print(user.id);
+        controller.onTap(user);
       },
     );
   }

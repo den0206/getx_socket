@@ -6,11 +6,13 @@ import 'package:socket_flutter/src/screen/auth/signup/signup_controller.dart';
 import 'package:socket_flutter/src/screen/auth/signup/signup_screen.dart';
 import 'package:socket_flutter/src/screen/chat/chat_controller.dart';
 import 'package:socket_flutter/src/screen/chat/chat_screen.dart';
+import 'package:socket_flutter/src/screen/main_tab/users/user_detail/user_detail_screen.dart';
 import 'package:socket_flutter/src/screen/root_screen.dart';
 
 class AppRoot {
   static List<GetPage> pages = [
     ..._authPages,
+    ..._mainPages,
   ];
 }
 
@@ -38,4 +40,11 @@ final List<GetPage> _authPages = [
     page: () => ChatScreen(),
     binding: BindingsBuilder(() => Get.lazyPut(() => ChatController())),
   )
+];
+
+final List<GetPage> _mainPages = [
+  GetPage(
+    name: UserDetailScreen.routeName,
+    page: () => UserDetailScreen(),
+  ),
 ];
