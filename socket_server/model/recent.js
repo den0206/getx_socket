@@ -14,6 +14,9 @@ const recentSchema = mongoose.Schema({
   date: {type: Date, default: Date.now},
 });
 
+// ,
+//   {timestamps: true}
+
 recentSchema.virtual('id').get(function () {
   if (this._id) return this._id.toHexString();
 });

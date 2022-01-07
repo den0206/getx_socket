@@ -73,8 +73,24 @@ async function findByRoomId(req, res) {
   }
 }
 
+async function deleteRecent(req, res) {
+  const recentId = req.params.id;
+  console.log(req.userData);
+
+  try {
+    console.log('Success');
+    // const recent = await Recent.findByIdAndDelete(recentId);
+
+    // res.status(200).json({status: true, data: recent});
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).json({status: false, message: e.message});
+  }
+}
+
 module.exports = {
   createPrivateChat,
   findByUserId,
   findByRoomId,
+  deleteRecent,
 };

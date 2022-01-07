@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:socket_flutter/src/screen/main_tab/main_tab_controller.dart';
+import 'package:socket_flutter/src/screen/main_tab/recents/recents_screen.dart';
 import 'package:socket_flutter/src/screen/main_tab/users/users_screen.dart';
 import 'package:socket_flutter/src/screen/widget/custom_button.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
@@ -30,7 +31,7 @@ class MainTabScreen extends StatelessWidget {
     ];
 
     final List<Widget> pages = [
-      Text("Chat"),
+      RecentsScreen(),
       UsersScreen(),
 
       /// current only log outbutton
