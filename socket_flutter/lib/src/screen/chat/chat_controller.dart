@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
-import 'package:socket_flutter/src/model/message.dart';
+import 'package:socket_flutter/src/model/chat.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:socket_io_client/socket_io_client.dart';
 
@@ -10,7 +10,7 @@ class ChatController extends GetxController {
 
   final String chatRoomId = "sample";
 
-  final messages = RxList<Message>();
+  final messages = RxList<Chat>();
 
   @override
   void onInit() {
@@ -34,7 +34,7 @@ class ChatController extends GetxController {
 
   void setupSocketListner() {
     socket.on("message-receive", (data) {
-      final newMewssage = Message.fromMap(data);
+      final newMewssage = Chat.fromMap(data);
       print(newMewssage);
       messages.add(newMewssage);
     });
@@ -42,7 +42,7 @@ class ChatController extends GetxController {
 
   void sendMessage() {
     if (socket.id == null) return;
-    final message = Message(chatRoomId, textController.text);
+    final message = Chat(chatRoomId, textController.text);
 
     socket.emit(
       "message",

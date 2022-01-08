@@ -26,10 +26,12 @@ connectIO(server);
 /// routes
 const userRoute = require('./routes/user_route');
 const recentRoute = require('./routes/recent_route');
+const messageRoute = require('./routes/message_route');
 
 const v1 = process.env.API_URL;
 app.use(`${v1}/users`, userRoute);
 app.use(`${v1}/recents`, recentRoute);
+app.use(`${v1}/messages`, messageRoute);
 
 server.listen(port, () => {
   console.log('server Start', port);

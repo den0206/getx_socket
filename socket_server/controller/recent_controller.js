@@ -79,9 +79,9 @@ async function deleteRecent(req, res) {
 
   try {
     console.log('Success');
-    // const recent = await Recent.findByIdAndDelete(recentId);
+    const recent = await Recent.findByIdAndDelete(recentId);
 
-    // res.status(200).json({status: true, data: recent});
+    res.status(200).json({status: true, data: recent});
   } catch (e) {
     console.log(e.message);
     res.status(500).json({status: false, message: e.message});

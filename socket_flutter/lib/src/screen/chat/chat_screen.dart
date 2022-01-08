@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:socket_flutter/src/model/message.dart';
+import 'package:socket_flutter/src/model/chat.dart';
 import 'package:socket_flutter/src/screen/chat/chat_controller.dart';
 
 class ChatScreen extends GetView<ChatController> {
@@ -68,7 +68,7 @@ class ChatScreen extends GetView<ChatController> {
 class MessageCell extends StatelessWidget {
   const MessageCell({Key? key, required this.message}) : super(key: key);
 
-  final Message message;
+  final Chat message;
 
   bool get isCurrentUser {
     return false;

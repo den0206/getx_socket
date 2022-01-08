@@ -1,5 +1,7 @@
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/route_manager.dart';
 import 'package:socket_flutter/src/model/user.dart';
+import 'package:socket_flutter/src/screen/main_tab/message/message_screen.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
 import 'package:socket_flutter/src/service/create_recent.dart';
 
@@ -22,6 +24,12 @@ class UserDetailController extends GetxController {
     final chatRoomId =
         await cr.createChatRoom(currentUser.id, user.id, [currentUser, user]);
 
-    print(chatRoomId);
+    Get.until((route) => route.isFirst);
+
+    final arguments = [
+      chatRoomId,
+      [user],
+    ];
+    Get.toNamed(MessageScreen.routeName, arguments: arguments);
   }
 }

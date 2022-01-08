@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:socket_flutter/src/model/user.dart';
 
+enum RecentType { private, group }
+
 class Recent {
   final String id;
   final String chatRoomId;
@@ -11,6 +13,13 @@ class Recent {
   final String lastMessage;
   final int counter;
   final DateTime date;
+
+  RecentType get type {
+    if (withUser != null) {
+      return RecentType.private;
+    }
+    return RecentType.group;
+  }
 
   Recent({
     required this.id,

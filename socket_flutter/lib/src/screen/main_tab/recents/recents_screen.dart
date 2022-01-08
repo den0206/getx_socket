@@ -79,11 +79,14 @@ class RecentCell extends GetView<RecentsController> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        print(recent.id);
+        controller.pushMessageScreen(recent);
       },
       child: Container(
-        color: Colors.white,
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+        decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border(
+                bottom: BorderSide(color: Colors.grey.shade300, width: 0.5))),
         child: Slidable(
           key: Key(recent.id),
           endActionPane: ActionPane(
