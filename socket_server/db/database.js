@@ -15,6 +15,11 @@ async function connection() {
     console.log(e);
   }
 }
+
+function checkId(id) {
+  return mongoose.isValidObjectId(id);
+}
 module.exports = {
   connection,
+  checkId,
 };

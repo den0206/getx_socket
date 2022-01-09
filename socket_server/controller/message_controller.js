@@ -1,4 +1,49 @@
 const Message = require('../model/message');
+const {encodeBase64, decodeToBase64} = require('../utils/base64');
+const {checkId} = require('../db/database');
+
+async function loadMessage(req, res) {
+  const chatRoomId = req.params.chatRoomId;
+
+  const cursor = req.query.cursor;
+  const limit = +req.query.limit || 10;
+
+  let query = {chatRoomId: chatRoomId};
+
+  if (cursor) {
+    query['_id'] = {
+      $lt: decodeToBase64(cursor),
+    };
+  }
+
+  let messages = await Message.find(query)
+    .sort({_id: -1})
+    .limit(limit + 1)
+    .populate('userId', '-password')
+    .populate('readBy', 'select');
+
+  const hasNextPage = messages.length > limit;
+  messages = hasNextPage ? messages.slice(0, -1) : messages;
+
+  const nextPageCursor = hasNextPage
+    ? encodeBase64(messages[messages.length - 1].id)
+    : null;
+
+  const data = {
+    pageFeeds: messages,
+    pageInfo: {
+      nextPageCursor: nextPageCursor,
+      hasNextPage: hasNextPage,
+    },
+  };
+
+  try {
+    res.status(200).json({status: true, data: data});
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).json({status: false, message: 'Can not get Recents'});
+  }
+}
 
 async function sendMessage(req, res) {
   const body = req.body;
@@ -18,4 +63,9 @@ async function sendMessage(req, res) {
   }
 }
 
-module.exports = {sendMessage};
+module.exports = {loadMessage, sendMessage};
+
+// if (!checkId(chatRoomId))
+//   return res
+//     .status(400)
+//     .json({status: false, message: 'Invalid Chat Room Id'});

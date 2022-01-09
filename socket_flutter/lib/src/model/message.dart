@@ -49,6 +49,14 @@ class Message {
 
   String toJson() => json.encode(toMap());
 
+  static Message fromJsonModel(Map<String, dynamic> json) =>
+      Message.fromMap(json);
+
   factory Message.fromJson(String source) =>
       Message.fromMap(json.decode(source));
+
+  @override
+  String toString() {
+    return 'Message(id: $id, chatRoomId: $chatRoomId, text: $text, user: $user, date: $date)';
+  }
 }

@@ -23,7 +23,7 @@ async function findByUserId(req, res) {
 
   const cursor = req.query.cursor;
   const limit = +req.query.limit || 10;
-  console.log(limit);
+
   let query = {userId: userId};
 
   if (cursor) {

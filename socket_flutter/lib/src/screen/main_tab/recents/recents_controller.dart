@@ -62,8 +62,6 @@ class RecentsController extends GetxController {
         return;
     }
 
-    final argumants = [recent.chatRoomId, argumentUser];
-
     final MessageExtention extention = MessageExtention(
       chatRoomId: recent.chatRoomId,
       withUsers: argumentUser,

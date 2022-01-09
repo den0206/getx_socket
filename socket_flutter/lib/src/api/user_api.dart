@@ -1,20 +1,15 @@
-import 'dart:convert';
-
-import 'package:http/http.dart' as http;
+import 'package:socket_flutter/src/api/api_base.dart';
 import 'package:socket_flutter/src/model/response_api.dart';
-import 'package:socket_flutter/src/utils/enviremont.dart';
 
-class UserAPI {
-  final String _host = Enviroment.host;
-  final String _endpoint = "/api/v1/users";
-  final Map<String, String> headers = {"Content-type": "application/json"};
+class UserAPI extends APIBase {
+  UserAPI() : super(EndPoint.user);
 
   Future<ResponseAPI> signUp(Map<String, dynamic> user) async {
     try {
-      final Uri uri = Uri.http(_host, "$_endpoint/signup");
+      final Uri uri = Uri.http(host, "$endpoint/signup");
       final String bodyParams = json.encode(user);
 
-      final res = await http.post(uri, headers: headers, body: bodyParams);
+      final res = await client.post(uri, headers: headers, body: bodyParams);
       final data = json.decode(res.body);
 
       return ResponseAPI.fromMap(data);
@@ -26,10 +21,10 @@ class UserAPI {
 
   Future<ResponseAPI> login(Map<String, dynamic> credential) async {
     try {
-      final Uri uri = Uri.http(_host, "$_endpoint/login");
+      final Uri uri = Uri.http(host, "$endpoint/login");
       final String bodyParams = json.encode(credential);
 
-      final res = await http.post(uri, headers: headers, body: bodyParams);
+      final res = await client.post(uri, headers: headers, body: bodyParams);
       final data = json.decode(res.body);
 
       final ResponseAPI responseAPI = ResponseAPI.fromMap(data);
@@ -47,12 +42,12 @@ class UserAPI {
 
     try {
       final Uri uri = Uri.http(
-        _host,
-        "$_endpoint/",
+        host,
+        "$endpoint/",
         query,
       );
 
-      final res = await http.get(uri, headers: headers);
+      final res = await client.get(uri, headers: headers);
       final decode = json.decode(res.body);
 
       final ResponseAPI responseAPI = ResponseAPI.fromMap(decode);
