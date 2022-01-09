@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:socket_flutter/src/model/user.dart';
+import 'package:socket_flutter/src/service/auth_service.dart';
+import 'package:socket_flutter/src/utils/date_format.dart';
 
 class Message {
   final String id;
@@ -8,6 +10,16 @@ class Message {
   final String text;
   final User user;
   final DateTime date;
+
+  bool get isCurrent {
+    final currentUser = AuthService.to.currentUser.value;
+    if (currentUser == null) return false;
+    return this.user.id == currentUser.id;
+  }
+
+  String get formattedTime {
+    return DateFormatter.getVerBoseDateString(date);
+  }
 
   Message({
     required this.id,
@@ -22,8 +34,8 @@ class Message {
       'id': id,
       'chatRoomId': chatRoomId,
       'text': text,
-      'user': user.toMap(),
-      'dateTime': date.millisecondsSinceEpoch,
+      'userId': user.toMap(),
+      'date': date.toIso8601String(),
     };
   }
 

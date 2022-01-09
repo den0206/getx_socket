@@ -3,12 +3,15 @@ import 'package:socket_flutter/src/model/message.dart';
 import 'package:socket_flutter/src/model/page_feed.dart';
 import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:socket_io_client/socket_io_client.dart';
 
 class MessageExtention {
   final String chatRoomId;
   final List<User> withUsers;
 
   final MessageAPI _messageAPI = MessageAPI();
+  late IO.Socket socket;
 
   final int limit = 10;
 
@@ -18,7 +21,29 @@ class MessageExtention {
   MessageExtention({
     required this.chatRoomId,
     required this.withUsers,
-  });
+  }) {
+    _initSocket();
+  }
+
+  _initSocket() {
+    print(chatRoomId);
+    socket = IO.io(
+      'http://localhost:3000',
+      OptionBuilder()
+          .setTransports(['websocket'])
+          .setQuery({"chatID": chatRoomId})
+          .disableAutoConnect()
+          .build(),
+    );
+
+    socket.connect();
+  }
+
+  void stopService() {
+    print("Destroy");
+    socket.destroy();
+    socket.dispose();
+  }
 
   Future<List<Message>> loadMessage() async {
     final res = await _messageAPI.loadMessage(
@@ -34,9 +59,18 @@ class MessageExtention {
     reachLast = !pages.pageInfo.hasNextPage;
     nextCursor = pages.pageInfo.nextPageCursor;
 
-    final temp = pages.pageFeeds;
+    final temp = pages.pageFeeds.reversed.toList();
 
     return temp;
+  }
+
+  void addNerChatListner(Function(Message message) listner) {
+    socket.on("message-receive", (data) {
+      print(data);
+      final newMessage = Message.fromMap(data);
+
+      listner(newMessage);
+    });
   }
 
   Future<void> sendMessage({required String text}) async {
@@ -55,7 +89,10 @@ class MessageExtention {
     }
 
     final message = Message.fromMapWithUser(res.data, currentUser);
-
-    print(message);
+    if (socket.id == null) return;
+    socket.emit(
+      "message",
+      message.toMap(),
+    );
   }
 }

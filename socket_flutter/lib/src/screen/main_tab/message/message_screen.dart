@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:socket_flutter/src/model/message.dart';
+import 'package:socket_flutter/src/screen/main_tab/message/message_bubbles/text_bubble.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_controller.dart';
 
 class MessageScreen extends GetView<MessageController> {
@@ -16,11 +18,15 @@ class MessageScreen extends GetView<MessageController> {
       body: Column(
         children: [
           Expanded(
-            child: ListView.builder(
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return Text("Sample");
-              },
+            child: Obx(
+              () => ListView.builder(
+                itemCount: controller.messages.length,
+                controller: controller.sC,
+                itemBuilder: (context, index) {
+                  final message = controller.messages[index];
+                  return MessageCell(message: message);
+                },
+              ),
             ),
           ),
           _messageInput(context)
@@ -103,6 +109,54 @@ class MessageScreen extends GetView<MessageController> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class MessageCell extends StatelessWidget {
+  const MessageCell({Key? key, required this.message}) : super(key: key);
+
+  final Message message;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(top: 10),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: message.isCurrent
+                ? MainAxisAlignment.end
+                : MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              TextBubble(message: message),
+            ],
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 5),
+            child: Row(
+              mainAxisAlignment: message.isCurrent
+                  ? MainAxisAlignment.end
+                  : MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  child: Text(
+                    message.formattedTime,
+                    style: TextStyle(
+                      color: Color(0xffAEABC9),
+                      fontSize: 11,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1,
+                    ),
+                  ),
+                )
+              ],
+            ),
+          )
+        ],
       ),
     );
   }
