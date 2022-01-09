@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/get.dart';
 import 'package:socket_flutter/src/model/message.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_bubbles/text_bubble.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_controller.dart';
+import 'package:socket_flutter/src/screen/widget/loading_widget.dart';
 
 class MessageScreen extends GetView<MessageController> {
   const MessageScreen({Key? key}) : super(key: key);
@@ -17,6 +19,10 @@ class MessageScreen extends GetView<MessageController> {
       ),
       body: Column(
         children: [
+          Obx(
+            () =>
+                controller.isLoading.value ? LoadingCellWidget() : Container(),
+          ),
           Expanded(
             child: Obx(
               () => ListView.builder(
@@ -24,6 +30,7 @@ class MessageScreen extends GetView<MessageController> {
                 controller: controller.sC,
                 itemBuilder: (context, index) {
                   final message = controller.messages[index];
+
                   return MessageCell(message: message);
                 },
               ),
@@ -131,7 +138,33 @@ class MessageCell extends StatelessWidget {
                 : MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              TextBubble(message: message),
+              CupertinoContextMenu(
+                actions: [
+                  if (message.isCurrent)
+                    CupertinoContextMenuAction(
+                      isDefaultAction: true,
+                      child: const Text(
+                        'Delete',
+                        style: TextStyle(
+                          color: Colors.red,
+                        ),
+                      ),
+                      onPressed: () {
+                        print(message.id);
+                        Get.back();
+                      },
+                    ),
+                  CupertinoContextMenuAction(
+                    child: const Text('Cancel'),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+                child: TextBubble(
+                  message: message,
+                ),
+              ),
             ],
           ),
           Padding(

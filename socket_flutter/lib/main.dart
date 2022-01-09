@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 import 'package:get/route_manager.dart';
+import 'package:sizer/sizer.dart';
 import 'package:socket_flutter/src/app_root.dart';
 
 import 'src/screen/root_screen.dart';
@@ -17,13 +18,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: 'Socket_Flutter',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      getPages: AppRoot.pages,
-      initialRoute: RootScreen.routeName,
+    return Sizer(
+      builder: (context, orientation, deviceType) {
+        return GetMaterialApp(
+          title: 'Socket_Flutter',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          getPages: AppRoot.pages,
+          initialRoute: RootScreen.routeName,
+        );
+      },
     );
   }
 }

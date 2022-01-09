@@ -12,6 +12,7 @@ class RecentsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<RecentsController>(
       init: RecentsController(),
+      autoRemove: false,
       builder: (controller) {
         return CupertinoPageScaffold(
           backgroundColor: Colors.green,

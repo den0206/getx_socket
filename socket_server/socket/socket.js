@@ -10,7 +10,7 @@ function connectIO(server) {
     chatID = socket.handshake.query.chatID;
 
     socket.join(chatID);
-    console.log(socket.adapter.rooms);
+    // console.log(socket.adapter.rooms);
 
     socket.on('message', (msg) => {
       io.in(chatID).emit('message-receive', msg);
@@ -20,7 +20,6 @@ function connectIO(server) {
 
     socket.on('disconnect', () => {
       socket.leave(chatID, function (err) {
-        console.log(err); // display null
         console.log(socket.adapter.rooms); // display the same list of rooms the specified room is still there
       });
       console.log('Disconnrect');

@@ -32,6 +32,7 @@ class MessageExtention {
       OptionBuilder()
           .setTransports(['websocket'])
           .setQuery({"chatID": chatRoomId})
+          .enableForceNew()
           .disableAutoConnect()
           .build(),
     );
@@ -41,8 +42,8 @@ class MessageExtention {
 
   void stopService() {
     print("Destroy");
-    socket.destroy();
     socket.dispose();
+    socket.destroy();
   }
 
   Future<List<Message>> loadMessage() async {
@@ -58,6 +59,8 @@ class MessageExtention {
 
     reachLast = !pages.pageInfo.hasNextPage;
     nextCursor = pages.pageInfo.nextPageCursor;
+
+    print(reachLast);
 
     final temp = pages.pageFeeds.reversed.toList();
 

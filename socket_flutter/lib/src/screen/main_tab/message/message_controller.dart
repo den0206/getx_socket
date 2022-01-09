@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:socket_flutter/src/model/message.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_extention.dart';
+import 'package:socket_flutter/src/screen/widget/common_dialog.dart';
 
 class MessageController extends GetxController {
   final TextEditingController tc = TextEditingController();
   final ScrollController sC = ScrollController();
 
   final RxList<Message> messages = RxList<Message>();
+  RxBool isLoading = false.obs;
+  bool isFirst = true;
 
   /// extention
   final MessageExtention extention = Get.arguments;
@@ -15,7 +18,7 @@ class MessageController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-
+    addScrollController();
     await loadMessages();
     sC.jumpTo(sC.position.maxScrollExtent);
 
@@ -24,18 +27,46 @@ class MessageController extends GetxController {
 
   @override
   void onClose() {
+    sC.removeListener(() {});
     sC.dispose();
     extention.stopService();
+
     super.onClose();
   }
 
   Future<void> loadMessages() async {
     if (extention.reachLast) return;
-    final temp = await extention.loadMessage();
 
-    messages.addAll(temp);
+    isLoading.call(true);
 
-    await _scrollToBottom();
+    await Future.delayed(Duration(seconds: 1));
+
+    try {
+      final temp = await extention.loadMessage();
+
+      if (!isFirst) {
+        messages.insertAll(0, temp);
+      } else {
+        messages.addAll(temp);
+      }
+    } catch (e) {
+      showError(e);
+    } finally {
+      isLoading.call(false);
+
+      if (isFirst) {
+        await _scrollToBottom();
+        isFirst = false;
+      }
+    }
+  }
+
+  void addScrollController() {
+    sC.addListener(() async {
+      if (sC.position.pixels == sC.position.minScrollExtent && !isFirst) {
+        await loadMessages();
+      }
+    });
   }
 
   void listneNewChat() {
