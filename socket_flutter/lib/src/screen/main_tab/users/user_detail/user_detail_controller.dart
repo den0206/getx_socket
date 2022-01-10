@@ -22,8 +22,8 @@ class UserDetailController extends GetxController {
     final cr = RecentExtention();
     final currentUser = AuthService.to.currentUser.value!;
 
-    final chatRoomId =
-        await cr.createChatRoom(currentUser.id, user.id, [currentUser, user]);
+    final chatRoomId = await cr
+        .createPrivateChatRoom(currentUser.id, user.id, [currentUser, user]);
 
     if (chatRoomId == null) {
       print("Not Generate ChatID");

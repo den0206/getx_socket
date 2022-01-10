@@ -1,6 +1,7 @@
 import 'package:socket_flutter/src/api/message_api.dart';
 import 'package:socket_flutter/src/model/message.dart';
 import 'package:socket_flutter/src/model/page_feed.dart';
+import 'package:socket_flutter/src/model/recent.dart';
 import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
 import 'package:socket_flutter/src/service/recent_extention.dart';
@@ -101,25 +102,40 @@ class MessageExtention {
       "message",
       message.toMap(),
     );
+    final userIds = [currentUser.id, ...withUsers.map((u) => u.id).toList()];
 
-    await updateRecent(chatRoomId: chatRoomId, lastMessage: text);
+    final existUsers =
+        await updateRecent(chatRoomId: chatRoomId, lastMessage: text);
 
-    final userIds = withUsers.map((u) => u.id).toList();
+    /// Recent が消されているユーザーを求める
+    final deleteUsers = userIds.toSet().difference(existUsers.toSet()).toList();
+    if (deleteUsers.isNotEmpty) {
+      print("RECREATE Recents $deleteUsers!");
+
+      /// ReCreate New Recent
+      final allUsers = [currentUser, ...withUsers];
+      await Future.forEach(deleteUsers, (String id) async {
+        await re.createRecentAPI(id, currentUser.id, allUsers, chatRoomId);
+      });
+    }
 
     final Map<String, dynamic> data = {
-      "userIds": [currentUser.id, ...userIds],
+      "userIds": userIds,
+      "chatRoomId": chatRoomId,
     };
     socket.emit("update", data);
   }
 
-  Future<void> updateRecent(
+  Future<List<String>> updateRecent(
       {required String chatRoomId, required String lastMessage}) async {
     final recents = await re.findByChatRoomId(chatRoomId);
 
     if (recents.isNotEmpty) {
-      recents.forEach((recent) {
-        re.updateRecentItem(recent, lastMessage);
+      await Future.forEach(recents, (Recent recent) async {
+        await re.updateRecentItem(recent, lastMessage);
       });
     }
+
+    return recents.map((r) => r.user.id).toList();
   }
 }

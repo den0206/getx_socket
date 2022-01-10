@@ -20,7 +20,7 @@ class MessageController extends GetxController {
     super.onInit();
     addScrollController();
     await loadMessages();
-    sC.jumpTo(sC.position.minScrollExtent);
+    if (messages.isNotEmpty) sC.jumpTo(sC.position.minScrollExtent);
 
     listneNewChat();
   }
@@ -51,7 +51,6 @@ class MessageController extends GetxController {
       isLoading.call(false);
 
       if (isFirst) {
-        await _scrollToBottom();
         isFirst = false;
       }
     }

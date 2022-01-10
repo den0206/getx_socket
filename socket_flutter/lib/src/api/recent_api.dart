@@ -1,4 +1,5 @@
 import 'package:socket_flutter/src/api/api_base.dart';
+import 'package:socket_flutter/src/model/recent.dart';
 import 'package:socket_flutter/src/model/response_api.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
 
@@ -20,10 +21,57 @@ class RecentAPI extends APIBase {
     }
   }
 
-  Future<ResponseAPI> getByRoomID(String chatRoomId) async {
+  Future<ResponseAPI> updateRecent(
+      Recent recent, Map<String, dynamic> value) async {
+    if (token == null) {
+      return ResponseAPI(status: false, message: "No Token", data: null);
+    }
+
+    headers["Authorization"] = token!;
+
+    final recentId = recent.id;
     try {
-      final Uri uri = Uri.http(host, "$endpoint/roomid/$chatRoomId");
+      final Uri uri = Uri.http(host, "$endpoint/$recentId");
+
+      final String bodyParams = json.encode(value);
+
+      final res = await client.put(uri, body: bodyParams, headers: headers);
+      final data = json.decode(res.body);
+
+      return ResponseAPI.fromMap(data);
+    } catch (e) {
+      print(e.toString());
+      return invalidError;
+    }
+  }
+
+  Future<ResponseAPI> findOneByRoomIdAndUserId(
+      String userId, String chatRoomId) async {
+    try {
+      final Uri uri = Uri.http(host, "$endpoint/$userId/$chatRoomId");
       final res = await client.get(uri, headers: headers);
+      final data = json.decode(res.body);
+
+      return ResponseAPI.fromMap(data);
+    } catch (e) {
+      print(e.toString());
+      return invalidError;
+    }
+  }
+
+  Future<ResponseAPI> getByRoomID(String chatRoomId,
+      {bool includeUserParams = true}) async {
+    /// 使う 0 (規定値)
+    /// 使わない 1
+    final Map<String, dynamic> query = {
+      "userParams": includeUserParams ? "0" : "1",
+    };
+    try {
+      final Uri uri = Uri.http(host, "$endpoint/roomid/$chatRoomId", query);
+      final res = await client.get(
+        uri,
+        headers: headers,
+      );
       final data = json.decode(res.body);
 
       return ResponseAPI.fromMap(data);
@@ -48,7 +96,7 @@ class RecentAPI extends APIBase {
       );
 
       final res = await client.get(uri, headers: headers);
-      final decode = json.decode((res.body));
+      final decode = json.decode(res.body);
 
       return ResponseAPI.fromMap(decode);
     } catch (e) {

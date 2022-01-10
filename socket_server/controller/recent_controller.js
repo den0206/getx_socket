@@ -1,5 +1,6 @@
 const Recent = require('../model/recent');
 const {encodeBase64, decodeToBase64} = require('../utils/base64');
+const {checkId} = require('../db/database');
 
 async function createPrivateChat(req, res) {
   const body = req.body;
@@ -60,22 +61,86 @@ async function findByUserId(req, res) {
   }
 }
 async function updateRecent(req, res) {
-  /// TODO UPDATE RECENT
+  /// TODO UPDATE
+  const recentId = req.params.id;
+
+  if (!checkId(recentId))
+    return res
+      .status(400)
+      .json({status: false, message: 'Invalid Chat Room Id'});
+
+  const value = {
+    lastMessage: req.body.lastMessage,
+    counter: req.body.counter,
+    date: Date.now(),
+  };
+
+  console.log(value);
+
+  try {
+    const updateRecent = await Recent.findByIdAndUpdate(recentId, value, {
+      new: true,
+    });
+    res.status(200).json({status: true, data: updateRecent});
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).json({status: false, message: 'Can not update Recents'});
+  }
 }
 
 async function findByRoomId(req, res) {
   const chatRoomid = req.params.chatRoomId;
+  const useUserParam = req.query.userParams;
 
-  const recents = await Recent.find({chatRoomId: chatRoomid}).populate([
-    'userId',
-    'withUserId',
-  ]);
+  var recents;
+
+  /// 使う 0
+  /// 使わない 1
+
+  switch (useUserParam) {
+    case '0':
+      recents = await Recent.find({chatRoomId: chatRoomid}).populate([
+        'userId',
+        'withUserId',
+      ]);
+      break;
+    case '1':
+      recents = await Recent.find({chatRoomId: chatRoomid});
+      break;
+
+    default:
+      res.status(500).json({status: false, message: 'InValid Params'});
+  }
 
   try {
     res.status(200).json({status: true, data: recents});
   } catch (e) {
     console.log(e.message);
     res.status(500).json({status: false, message: 'Can not get Recents'});
+  }
+}
+
+async function findOneByRoomIdAndUserId(req, res) {
+  const userId = req.params.userId;
+  const chatRoomId = req.params.chatRoomId;
+
+  console.log(userId, chatRoomId);
+
+  try {
+    const findRecent = await Recent.findOne({
+      userId: userId,
+      chatRoomId: chatRoomId,
+    }).populate(['userId', 'withUserId']);
+
+    if (!findRecent)
+      return res
+        .status(400)
+        .json({status: false, message: 'Can not find The Recent'});
+
+    res.status(200).json({status: true, data: findRecent});
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).json({status: false, message: 'Invlid Error'});
   }
 }
 
@@ -99,5 +164,6 @@ module.exports = {
   updateRecent,
   findByUserId,
   findByRoomId,
+  findOneByRoomIdAndUserId,
   deleteRecent,
 };

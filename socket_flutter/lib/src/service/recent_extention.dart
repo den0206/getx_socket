@@ -6,7 +6,7 @@ import 'package:socket_flutter/src/service/auth_service.dart';
 class RecentExtention {
   final RecentAPI _recentAPI = RecentAPI();
 
-  Future<String?> createChatRoom(
+  Future<String?> createPrivateChatRoom(
       String currentUID, String withUserID, List<User> users) async {
     var chatRoomId;
 
@@ -20,7 +20,10 @@ class RecentExtention {
     final userIds = [currentUID, withUserID];
     var tempMembers = userIds;
 
-    final res = await _recentAPI.getByRoomID(chatRoomId);
+    final res = await _recentAPI.getByRoomID(
+      chatRoomId,
+      includeUserParams: false,
+    );
 
     if (!res.status) {
       return null;
@@ -40,14 +43,14 @@ class RecentExtention {
     }
 
     await Future.forEach(tempMembers, (String id) async {
-      await _createRecentAPI(id, currentUID, users, chatRoomId);
+      await createRecentAPI(id, currentUID, users, chatRoomId);
     });
     print(tempMembers.length);
 
     return chatRoomId;
   }
 
-  Future<void> _createRecentAPI(
+  Future<void> createRecentAPI(
       String id, String currentUID, List<User> users, String chatRoomId) async {
     final withUser = id == currentUID ? users.last : users.first;
 
@@ -72,22 +75,20 @@ class RecentExtention {
     return recents;
   }
 
-  void updateRecentItem(Recent recent, String lastMessage) {
-    final date = DateTime.now();
+  Future<void> updateRecentItem(Recent recent, String lastMessage) async {
     final uid = recent.user.id;
     final currentUid = AuthService.to.currentUser.value!.id;
     var counter = recent.counter;
 
     if (currentUid != uid) {
-      ++counter;
+      counter++;
     }
 
     final value = {
       "lastMessage": lastMessage,
-      "conter": counter,
-      "date": date,
+      "counter": counter,
     };
 
-    print(value);
+    await _recentAPI.updateRecent(recent, value);
   }
 }

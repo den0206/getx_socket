@@ -29,7 +29,17 @@ class RecentsController extends GetxController {
 
     await loadRecents();
 
-    listenRecent();
+    _initSocket();
+    listenRrecent();
+  }
+
+  Future<void> reLoad() async {
+    print("Refres");
+    reachLast = false;
+    nextCursor = null;
+    recents.clear();
+
+    await loadRecents();
   }
 
   Future<void> loadRecents() async {
@@ -53,6 +63,7 @@ class RecentsController extends GetxController {
 
     final temp = pages.pageFeeds;
     recents.addAll(temp);
+    recents.sort((a, b) => b.date.compareTo(a.date));
 
     update();
   }
@@ -80,7 +91,7 @@ class RecentsController extends GetxController {
     final _ = await Get.toNamed(MessageScreen.routeName, arguments: extention);
   }
 
-  void listenRecent() {
+  void _initSocket() {
     final currentUser = AuthService.to.currentUser.value!;
     socket = IO.io(
       "${Enviroment.main}/recents",
@@ -93,9 +104,30 @@ class RecentsController extends GetxController {
     );
 
     socket.connect();
+  }
 
+  void listenRrecent() {
+    final currentUser = AuthService.to.currentUser.value!;
     socket.on("update", (data) async {
-      print("UPDATE Recent");
+      final chatRoomId = data["chatRoomId"];
+      print("UPDATE $chatRoomId");
+
+      final res =
+          await _recentApi.findOneByRoomIdAndUserId(currentUser.id, chatRoomId);
+      if (res.status) {
+        final newRecent = Recent.fromMap(res.data);
+        if (!recents.map((r) => r.id).contains(newRecent.id)) {
+          /// not Load Recents yet.
+          recents.insert(0, newRecent);
+        } else {
+          print("Replace");
+          int index = recents.indexWhere((recent) => recent.id == newRecent.id);
+          recents[index] = newRecent;
+          recents.sort((a, b) => b.date.compareTo(a.date));
+        }
+
+        update();
+      }
     });
   }
 }

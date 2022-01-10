@@ -25,8 +25,7 @@ class RecentsScreen extends StatelessWidget {
               ),
               CupertinoSliverRefreshControl(
                 onRefresh: () async {
-                  await Future.delayed(const Duration(seconds: 1));
-                  print("refresh");
+                  await controller.reLoad();
                 },
               ),
               SliverToBoxAdapter(
