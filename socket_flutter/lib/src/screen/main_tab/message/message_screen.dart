@@ -25,14 +25,19 @@ class MessageScreen extends GetView<MessageController> {
           ),
           Expanded(
             child: Obx(
-              () => ListView.builder(
-                itemCount: controller.messages.length,
+              () => Scrollbar(
+                isAlwaysShown: true,
                 controller: controller.sC,
-                itemBuilder: (context, index) {
-                  final message = controller.messages[index];
+                child: ListView.builder(
+                  itemCount: controller.messages.length,
+                  controller: controller.sC,
+                  reverse: true,
+                  itemBuilder: (context, index) {
+                    final message = controller.messages[index];
 
-                  return MessageCell(message: message);
-                },
+                    return MessageCell(message: message);
+                  },
+                ),
               ),
             ),
           ),

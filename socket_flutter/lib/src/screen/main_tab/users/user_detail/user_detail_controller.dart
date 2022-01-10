@@ -4,7 +4,7 @@ import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_extention.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_screen.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
-import 'package:socket_flutter/src/service/create_recent.dart';
+import 'package:socket_flutter/src/service/recent_extention.dart';
 
 class UserDetailController extends GetxController {
   UserDetailController(this.user);
@@ -19,7 +19,7 @@ class UserDetailController extends GetxController {
   Future<void> startPrivateChat() async {
     if (user.isCurrent) return;
 
-    final cr = CreateRecent();
+    final cr = RecentExtention();
     final currentUser = AuthService.to.currentUser.value!;
 
     final chatRoomId =

@@ -1,7 +1,9 @@
 import 'package:socket_flutter/src/api/recent_api.dart';
+import 'package:socket_flutter/src/model/recent.dart';
 import 'package:socket_flutter/src/model/user.dart';
+import 'package:socket_flutter/src/service/auth_service.dart';
 
-class CreateRecent {
+class RecentExtention {
   final RecentAPI _recentAPI = RecentAPI();
 
   Future<String?> createChatRoom(
@@ -56,5 +58,36 @@ class CreateRecent {
     };
 
     await _recentAPI.createPrivateChat(recent);
+  }
+
+  Future<List<Recent>> findByChatRoomId(String chatRoomId) async {
+    final res = await _recentAPI.getByRoomID(chatRoomId);
+
+    if (!res.status) {
+      return [];
+    }
+
+    final recents = (res.data as List).map((r) => Recent.fromMap(r)).toList();
+
+    return recents;
+  }
+
+  void updateRecentItem(Recent recent, String lastMessage) {
+    final date = DateTime.now();
+    final uid = recent.user.id;
+    final currentUid = AuthService.to.currentUser.value!.id;
+    var counter = recent.counter;
+
+    if (currentUid != uid) {
+      ++counter;
+    }
+
+    final value = {
+      "lastMessage": lastMessage,
+      "conter": counter,
+      "date": date,
+    };
+
+    print(value);
   }
 }

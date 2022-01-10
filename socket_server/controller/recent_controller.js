@@ -59,11 +59,17 @@ async function findByUserId(req, res) {
     res.status(500).json({status: false, message: 'Can not get Recents'});
   }
 }
+async function updateRecent(req, res) {
+  /// TODO UPDATE RECENT
+}
 
 async function findByRoomId(req, res) {
   const chatRoomid = req.params.chatRoomId;
 
-  const recents = await Recent.find({chatRoomId: chatRoomid});
+  const recents = await Recent.find({chatRoomId: chatRoomid}).populate([
+    'userId',
+    'withUserId',
+  ]);
 
   try {
     res.status(200).json({status: true, data: recents});
@@ -90,6 +96,7 @@ async function deleteRecent(req, res) {
 
 module.exports = {
   createPrivateChat,
+  updateRecent,
   findByUserId,
   findByRoomId,
   deleteRecent,

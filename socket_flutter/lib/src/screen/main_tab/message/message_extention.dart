@@ -3,6 +3,8 @@ import 'package:socket_flutter/src/model/message.dart';
 import 'package:socket_flutter/src/model/page_feed.dart';
 import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
+import 'package:socket_flutter/src/service/recent_extention.dart';
+import 'package:socket_flutter/src/utils/enviremont.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:socket_io_client/socket_io_client.dart';
 
@@ -11,6 +13,7 @@ class MessageExtention {
   final List<User> withUsers;
 
   final MessageAPI _messageAPI = MessageAPI();
+  final RecentExtention re = RecentExtention();
   late IO.Socket socket;
 
   final int limit = 10;
@@ -28,7 +31,7 @@ class MessageExtention {
   _initSocket() {
     print(chatRoomId);
     socket = IO.io(
-      'http://localhost:3000',
+      "${Enviroment.main}/messages",
       OptionBuilder()
           .setTransports(['websocket'])
           .setQuery({"chatID": chatRoomId})
@@ -62,14 +65,14 @@ class MessageExtention {
 
     print(reachLast);
 
-    final temp = pages.pageFeeds.reversed.toList();
+    final temp = pages.pageFeeds;
 
     return temp;
   }
 
   void addNerChatListner(Function(Message message) listner) {
     socket.on("message-receive", (data) {
-      print(data);
+      // print(data);
       final newMessage = Message.fromMap(data);
 
       listner(newMessage);
@@ -93,9 +96,30 @@ class MessageExtention {
 
     final message = Message.fromMapWithUser(res.data, currentUser);
     if (socket.id == null) return;
+
     socket.emit(
       "message",
       message.toMap(),
     );
+
+    await updateRecent(chatRoomId: chatRoomId, lastMessage: text);
+
+    final userIds = withUsers.map((u) => u.id).toList();
+
+    final Map<String, dynamic> data = {
+      "userIds": [currentUser.id, ...userIds],
+    };
+    socket.emit("update", data);
+  }
+
+  Future<void> updateRecent(
+      {required String chatRoomId, required String lastMessage}) async {
+    final recents = await re.findByChatRoomId(chatRoomId);
+
+    if (recents.isNotEmpty) {
+      recents.forEach((recent) {
+        re.updateRecentItem(recent, lastMessage);
+      });
+    }
   }
 }

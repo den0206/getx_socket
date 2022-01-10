@@ -1,3 +1,4 @@
+import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/route_manager.dart';
 import 'package:socket_flutter/src/api/recent_api.dart';
@@ -6,20 +7,29 @@ import 'package:socket_flutter/src/model/recent.dart';
 import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_extention.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_screen.dart';
+import 'package:socket_flutter/src/service/auth_service.dart';
+import 'package:socket_flutter/src/utils/enviremont.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:socket_io_client/socket_io_client.dart';
 
 class RecentsController extends GetxController {
+  static RecentsController get to => Get.find();
+
   final List<Recent> recents = [];
   final RecentAPI _recentApi = RecentAPI();
   final int limit = 5;
 
   String? nextCursor;
   bool reachLast = false;
+  late IO.Socket socket;
 
   @override
   void onInit() async {
     super.onInit();
 
     await loadRecents();
+
+    listenRecent();
   }
 
   Future<void> loadRecents() async {
@@ -39,7 +49,7 @@ class RecentsController extends GetxController {
     // set;
     reachLast = !pages.pageInfo.hasNextPage;
     nextCursor = pages.pageInfo.nextPageCursor;
-    print("next cursor is ${nextCursor}");
+    // print("next cursor is ${nextCursor}");
 
     final temp = pages.pageFeeds;
     recents.addAll(temp);
@@ -68,5 +78,24 @@ class RecentsController extends GetxController {
     );
 
     final _ = await Get.toNamed(MessageScreen.routeName, arguments: extention);
+  }
+
+  void listenRecent() {
+    final currentUser = AuthService.to.currentUser.value!;
+    socket = IO.io(
+      "${Enviroment.main}/recents",
+      OptionBuilder()
+          .setTransports(['websocket'])
+          .setQuery({"userId": currentUser.id})
+          .enableForceNew()
+          .disableAutoConnect()
+          .build(),
+    );
+
+    socket.connect();
+
+    socket.on("update", (data) async {
+      print("UPDATE Recent");
+    });
   }
 }

@@ -20,7 +20,7 @@ class MessageController extends GetxController {
     super.onInit();
     addScrollController();
     await loadMessages();
-    sC.jumpTo(sC.position.maxScrollExtent);
+    sC.jumpTo(sC.position.minScrollExtent);
 
     listneNewChat();
   }
@@ -44,11 +44,7 @@ class MessageController extends GetxController {
     try {
       final temp = await extention.loadMessage();
 
-      if (!isFirst) {
-        messages.insertAll(0, temp);
-      } else {
-        messages.addAll(temp);
-      }
+      messages.addAll(temp);
     } catch (e) {
       showError(e);
     } finally {
@@ -63,7 +59,7 @@ class MessageController extends GetxController {
 
   void addScrollController() {
     sC.addListener(() async {
-      if (sC.position.pixels == sC.position.minScrollExtent && !isFirst) {
+      if (sC.position.pixels == sC.position.maxScrollExtent && !isFirst) {
         await loadMessages();
       }
     });
@@ -71,7 +67,7 @@ class MessageController extends GetxController {
 
   void listneNewChat() {
     extention.addNerChatListner((message) {
-      messages.add(message);
+      messages.insert(0, message);
     });
   }
 
@@ -83,7 +79,7 @@ class MessageController extends GetxController {
 
   Future<void> _scrollToBottom() async {
     await sC.animateTo(
-      sC.position.maxScrollExtent + 100,
+      sC.position.minScrollExtent,
       duration: 100.milliseconds,
       curve: Curves.easeIn,
     );
