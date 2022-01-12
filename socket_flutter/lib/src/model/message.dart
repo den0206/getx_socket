@@ -11,6 +11,8 @@ class Message {
   final User user;
   final DateTime date;
 
+  List<String> readBy;
+
   bool get isCurrent {
     final currentUser = AuthService.to.currentUser.value;
     if (currentUser == null) return false;
@@ -21,12 +23,20 @@ class Message {
     return DateFormatter.getVerBoseDateString(date);
   }
 
+  bool get isRead {
+    if (isCurrent) return true;
+    final currentUser = AuthService.to.currentUser.value;
+    if (currentUser == null) return false;
+    return readBy.contains(currentUser.id);
+  }
+
   Message({
     required this.id,
     required this.chatRoomId,
     required this.text,
     required this.user,
     required this.date,
+    required this.readBy,
   });
 
   Map<String, dynamic> toMap() {
@@ -45,6 +55,7 @@ class Message {
       chatRoomId: map['chatRoomId'] ?? '',
       text: map['text'] ?? '',
       user: User.fromMap(map['userId']),
+      readBy: List<String>.from(map["readBy"]),
       date: DateTime.parse(map["date"]).toUtc(),
     );
   }
@@ -55,6 +66,7 @@ class Message {
       chatRoomId: map['chatRoomId'] ?? '',
       text: map['text'] ?? '',
       user: user,
+      readBy: List<String>.from(map["readBy"]),
       date: DateTime.parse(map["date"]).toUtc(),
     );
   }
@@ -69,6 +81,6 @@ class Message {
 
   @override
   String toString() {
-    return 'Message(id: $id, chatRoomId: $chatRoomId, text: $text, user: $user, date: $date)';
+    return 'Message(id: $id, chatRoomId: $chatRoomId, text: $text, user: $user, date: $date, readBy: $readBy)';
   }
 }

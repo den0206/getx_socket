@@ -126,7 +126,7 @@ class MessageScreen extends GetView<MessageController> {
   }
 }
 
-class MessageCell extends StatelessWidget {
+class MessageCell extends GetView<MessageController> {
   const MessageCell({Key? key, required this.message}) : super(key: key);
 
   final Message message;
@@ -179,6 +179,7 @@ class MessageCell extends StatelessWidget {
                   ? MainAxisAlignment.end
                   : MainAxisAlignment.start,
               children: [
+                if (controller.checkRead(message)) Text("Read"),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8),
                   child: Text(

@@ -19,8 +19,8 @@ async function loadMessage(req, res) {
   let messages = await Message.find(query)
     .sort({_id: -1})
     .limit(limit + 1)
-    .populate('userId', '-password')
-    .populate('readBy', 'select');
+    .populate('userId', '-password');
+  // .populate('readBy', 'select');
 
   const hasNextPage = messages.length > limit;
   messages = hasNextPage ? messages.slice(0, -1) : messages;
@@ -63,7 +63,27 @@ async function sendMessage(req, res) {
   }
 }
 
-module.exports = {loadMessage, sendMessage};
+async function updateReadStatus(req, res) {
+  const id = req.params.id;
+  const readBy = req.body.readBy;
+
+  console.log(id, readBy);
+
+  if (!checkId(id))
+    return res.status(400).json({status: false, message: 'Invalid id'});
+
+  const value = {readBy: readBy};
+
+  try {
+    const _ = await Message.findByIdAndUpdate(id, value);
+    res.status(200).json({status: true, message: 'Success,Update Read'});
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).json({status: false, message: 'Can not update Read'});
+  }
+}
+
+module.exports = {loadMessage, sendMessage, updateReadStatus};
 
 // if (!checkId(chatRoomId))
 //   return res

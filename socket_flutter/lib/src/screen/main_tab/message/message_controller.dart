@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:socket_flutter/src/model/message.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_extention.dart';
-import 'package:socket_flutter/src/screen/widget/common_dialog.dart';
 
 class MessageController extends GetxController {
   final TextEditingController tc = TextEditingController();
@@ -35,7 +34,7 @@ class MessageController extends GetxController {
   }
 
   Future<void> loadMessages() async {
-    if (extention.reachLast) return;
+    if (extention.reachLast || isLoading.value) return;
 
     isLoading.call(true);
 
@@ -46,7 +45,8 @@ class MessageController extends GetxController {
 
       messages.addAll(temp);
     } catch (e) {
-      showError(e);
+      print(e);
+      // showError(e);
     } finally {
       isLoading.call(false);
 
@@ -54,6 +54,12 @@ class MessageController extends GetxController {
         isFirst = false;
       }
     }
+  }
+
+  bool checkRead(Message message) {
+    /// private
+    final withUser = extention.withUsers.first;
+    return message.readBy.contains(withUser.id);
   }
 
   void addScrollController() {

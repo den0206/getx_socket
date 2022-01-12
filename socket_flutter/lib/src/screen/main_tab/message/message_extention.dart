@@ -61,6 +61,12 @@ class MessageExtention {
 
     final Pages<Message> pages = Pages.fromMap(res.data, Message.fromJsonModel);
 
+    /// unread を絞り出す
+    final unreads =
+        pages.pageFeeds.where((message) => message.isRead == false).toList();
+
+    if (unreads.isNotEmpty) await updateReadLists(unreads);
+
     reachLast = !pages.pageInfo.hasNextPage;
     nextCursor = pages.pageInfo.nextPageCursor;
 
@@ -126,6 +132,8 @@ class MessageExtention {
     socket.emit("update", data);
   }
 
+  /// MARK Recent Status
+
   Future<List<String>> updateRecent(
       {required String chatRoomId, required String lastMessage}) async {
     final recents = await re.findByChatRoomId(chatRoomId);
@@ -137,5 +145,36 @@ class MessageExtention {
     }
 
     return recents.map((r) => r.user.id).toList();
+  }
+
+  /// MARK Read Status
+
+  Future<void> updateReadLists(List<Message> unreads) async {
+    print("-----Update READ!!");
+
+    /// userId && unreads socket
+
+    Future.forEach(unreads, (Message message) async {
+      if (!message.isRead) {
+        await updateRead(message);
+      }
+    });
+  }
+
+  Future<void> updateRead(Message message) async {
+    final User currentUser = AuthService.to.currentUser.value!;
+
+    /// unique array
+    final uniqueRead = [currentUser.id, ...message.readBy].toSet().toList();
+
+    final readBody = {"readBy": uniqueRead};
+
+    final res = await _messageAPI.updateReadStatus(message.id, readBody);
+
+    if (res.status) {
+      print("update Read ${message.id}");
+
+      /// use socket
+    }
   }
 }

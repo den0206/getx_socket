@@ -6,4 +6,6 @@ const {checkAuth} = require('../middleware/check_auth');
 router.get('/:chatRoomId', messageController.loadMessage);
 router.post('/', messageController.sendMessage);
 
+router.put('/updateRead/:id', messageController.updateReadStatus);
+
 module.exports = router;

@@ -42,4 +42,19 @@ class MessageAPI extends APIBase {
       return invalidError;
     }
   }
+
+  Future<ResponseAPI> updateReadStatus(
+      String messageId, Map<String, dynamic> readBody) async {
+    try {
+      final Uri uri = Uri.http(host, "$endpoint/updateRead/$messageId");
+      final String bodyParams = json.encode(readBody);
+
+      final res = await client.put(uri, headers: headers, body: bodyParams);
+      final data = json.decode(res.body);
+      return ResponseAPI.fromMap(data);
+    } catch (e) {
+      print(e.toString());
+      return invalidError;
+    }
+  }
 }
