@@ -83,9 +83,21 @@ async function updateReadStatus(req, res) {
   }
 }
 
-module.exports = {loadMessage, sendMessage, updateReadStatus};
+async function deleteMessage(req, res) {
+  const id = req.params.id;
 
-// if (!checkId(chatRoomId))
-//   return res
-//     .status(400)
-//     .json({status: false, message: 'Invalid Chat Room Id'});
+  if (!checkId(id))
+    return res
+      .status(400)
+      .json({status: false, message: 'Invalid Chat Room Id'});
+
+  try {
+    /// もし既にメッセージが消されている場合,dataはnullで返却される。
+    const mes = await Message.findByIdAndUpdate(id);
+    res.status(200).json({status: true, data: mes});
+  } catch (e) {
+    res.status(500).json({status: false, message: e.message});
+  }
+}
+
+module.exports = {loadMessage, sendMessage, updateReadStatus, deleteMessage};

@@ -23,11 +23,8 @@ class RecentAPI extends APIBase {
 
   Future<ResponseAPI> updateRecent(
       Recent recent, Map<String, dynamic> value) async {
-    if (token == null) {
-      return ResponseAPI(status: false, message: "No Token", data: null);
-    }
-
-    headers["Authorization"] = token!;
+    if (!checkToken())
+      return ResponseAPI(status: false, data: null, message: "No Token");
 
     final recentId = recent.id;
     try {
@@ -106,11 +103,8 @@ class RecentAPI extends APIBase {
   }
 
   Future<ResponseAPI> deleteRecent({required String recentId}) async {
-    if (token == null) {
-      return ResponseAPI(status: false, message: "No Token", data: null);
-    }
-
-    headers["Authorization"] = token!;
+    if (!checkToken())
+      return ResponseAPI(status: false, data: null, message: "No Token");
 
     /// 401 token invalid
     /// 403 no token

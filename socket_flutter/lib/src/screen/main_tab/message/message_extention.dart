@@ -9,10 +9,13 @@ import 'package:socket_flutter/src/utils/enviremont.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:socket_io_client/socket_io_client.dart';
 
+/// MARK  Message関連のAPI処理等を纏める
+
 class MessageExtention {
   final String chatRoomId;
   final List<User> withUsers;
 
+  final User currentUser = AuthService.to.currentUser.value!;
   final MessageAPI _messageAPI = MessageAPI();
   final RecentExtention re = RecentExtention();
   late IO.Socket socket;
@@ -62,15 +65,14 @@ class MessageExtention {
     final Pages<Message> pages = Pages.fromMap(res.data, Message.fromJsonModel);
 
     /// unread を絞り出す
-    final unreads =
-        pages.pageFeeds.where((message) => message.isRead == false).toList();
+    final unreads = pages.pageFeeds
+        .where((message) => !message.isRead && !message.isCurrent)
+        .toList();
 
     if (unreads.isNotEmpty) await updateReadLists(unreads);
 
     reachLast = !pages.pageInfo.hasNextPage;
     nextCursor = pages.pageInfo.nextPageCursor;
-
-    print(reachLast);
 
     final temp = pages.pageFeeds;
 
@@ -79,15 +81,23 @@ class MessageExtention {
 
   void addNerChatListner(Function(Message message) listner) {
     socket.on("message-receive", (data) {
-      // print(data);
       final newMessage = Message.fromMap(data);
+
+      if (!newMessage.isCurrent) {
+        updateRead(message: newMessage, useSocket: true);
+      }
 
       listner(newMessage);
     });
   }
 
+  void addReadListner(Function(Map<String, dynamic> readListner) readListner) {
+    socket.on("read-receive", (data) {
+      readListner(data);
+    });
+  }
+
   Future<void> sendMessage({required String text}) async {
-    final User currentUser = AuthService.to.currentUser.value!;
     final Map<String, dynamic> messageData = {
       "chatRoomId": chatRoomId,
       "text": text,
@@ -132,19 +142,25 @@ class MessageExtention {
     socket.emit("update", data);
   }
 
+  /// MARK Delete Message
+  Future<bool> delete(String id) async {
+    final res = await _messageAPI.deleteMessage(id);
+
+    if (res.message != null) {
+      print("Delete Fail!!!, ${res.message}");
+    }
+
+    return res.status;
+  }
+
   /// MARK Recent Status
 
   Future<List<String>> updateRecent(
       {required String chatRoomId, required String lastMessage}) async {
-    final recents = await re.findByChatRoomId(chatRoomId);
+    final updated = await re.updateRecentWithLastMessage(
+        chatRoomId: chatRoomId, lastMessage: lastMessage);
 
-    if (recents.isNotEmpty) {
-      await Future.forEach(recents, (Recent recent) async {
-        await re.updateRecentItem(recent, lastMessage);
-      });
-    }
-
-    return recents.map((r) => r.user.id).toList();
+    return updated.map((r) => r.user.id).toList();
   }
 
   /// MARK Read Status
@@ -152,18 +168,24 @@ class MessageExtention {
   Future<void> updateReadLists(List<Message> unreads) async {
     print("-----Update READ!!");
 
-    /// userId && unreads socket
-
     Future.forEach(unreads, (Message message) async {
       if (!message.isRead) {
-        await updateRead(message);
+        await updateRead(message: message);
       }
     });
+
+    final uid = currentUser.id;
+    final uds = unreads.map((u) => u.id).toList();
+    print("Multiple Update");
+    final value = {
+      "uid": uid,
+      "ids": uds,
+    };
+    socket.emit("read", value);
   }
 
-  Future<void> updateRead(Message message) async {
-    final User currentUser = AuthService.to.currentUser.value!;
-
+  Future<void> updateRead(
+      {required Message message, bool useSocket = false}) async {
     /// unique array
     final uniqueRead = [currentUser.id, ...message.readBy].toSet().toList();
 
@@ -174,7 +196,15 @@ class MessageExtention {
     if (res.status) {
       print("update Read ${message.id}");
 
-      /// use socket
+      /// use socket  only single update
+      if (useSocket) {
+        print("Single Update");
+        final value = {
+          "uid": currentUser.id,
+          "ids": message.id,
+        };
+        socket.emit("read", value);
+      }
     }
   }
 }

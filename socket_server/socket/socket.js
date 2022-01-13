@@ -6,7 +6,7 @@ function connectIO(server) {
   var messageIO = io.of('/messages');
   var recentIO = io.of('/recents');
 
-  /// Message
+  /// Message_namespace
 
   messageIO.on('connection', (socket) => {
     console.log('CHAT connected', socket.id);
@@ -16,6 +16,10 @@ function connectIO(server) {
 
     socket.on('message', (msg) => {
       messageIO.in(chatID).emit('message-receive', msg);
+    });
+
+    socket.on('read', (ids) => {
+      messageIO.in(chatID).emit('read-receive', ids);
     });
 
     /// connect another namespace
@@ -37,7 +41,7 @@ function connectIO(server) {
     });
   });
 
-  /// Recent
+  /// Recent_namespace
 
   recentIO.on('connection', (socket) => {
     console.log('RECENT Connected', socket.id);

@@ -5,7 +5,7 @@ const messageSchema = mongoose.Schema({
   chatRoomId: {type: String, required: true},
   text: {type: String, required: true},
   userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-  readBy: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+  readBy: [{type: mongoose.Schema.Types.ObjectId, ref: 'User', default: []}],
   date: {type: Date, default: Date.now},
 });
 

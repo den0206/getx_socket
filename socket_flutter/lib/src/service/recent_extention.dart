@@ -91,4 +91,26 @@ class RecentExtention {
 
     await _recentAPI.updateRecent(recent, value);
   }
+
+  Future<List<Recent>> updateRecentWithLastMessage(
+      {required String chatRoomId,
+      String? lastMessage,
+      bool isDelete = false}) async {
+    final recents = await findByChatRoomId(chatRoomId);
+
+    String last;
+
+    if (lastMessage != null) {
+      last = lastMessage;
+    } else {
+      last = "Deleted";
+    }
+
+    if (recents.isNotEmpty) {
+      await Future.forEach(recents, (Recent recent) async {
+        await updateRecentItem(recent, last);
+      });
+    }
+    return recents;
+  }
 }

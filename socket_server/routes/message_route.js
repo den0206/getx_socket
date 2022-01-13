@@ -5,6 +5,7 @@ const {checkAuth} = require('../middleware/check_auth');
 
 router.get('/:chatRoomId', messageController.loadMessage);
 router.post('/', messageController.sendMessage);
+router.delete('/:id', checkAuth, messageController.deleteMessage);
 
 router.put('/updateRead/:id', messageController.updateReadStatus);
 

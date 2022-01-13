@@ -57,4 +57,20 @@ class MessageAPI extends APIBase {
       return invalidError;
     }
   }
+
+  Future<ResponseAPI> deleteMessage(String messageId) async {
+    if (!checkToken()) {
+      return ResponseAPI(status: false, data: null, message: "No Token");
+    }
+    try {
+      final Uri uri = Uri.http(host, "$endpoint/$messageId");
+
+      final res = await client.delete(uri, headers: headers);
+      final data = json.decode(res.body);
+      return ResponseAPI.fromMap(data);
+    } catch (e) {
+      print(e.toString());
+      return invalidError;
+    }
+  }
 }

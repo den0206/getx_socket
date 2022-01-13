@@ -26,6 +26,20 @@ abstract class APIBase {
   }
 
   APIBase(this.endPointType);
+
+  bool checkToken() {
+    if (token == null) {
+      return false;
+    } else {
+      /// check 401?
+
+      headers["Authorization"] = token!;
+      return true;
+    }
+
+    /// 401 token invalid
+    /// 403 no token
+  }
 }
 
 enum EndPoint { user, recent, message }

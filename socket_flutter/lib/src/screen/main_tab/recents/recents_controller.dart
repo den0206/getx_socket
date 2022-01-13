@@ -8,6 +8,7 @@ import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_extention.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_screen.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
+import 'package:socket_flutter/src/service/recent_extention.dart';
 import 'package:socket_flutter/src/utils/enviremont.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:socket_io_client/socket_io_client.dart';
@@ -50,9 +51,7 @@ class RecentsController extends GetxController {
     final res =
         await _recentApi.getRecents(limit: limit, nextCursor: nextCursor);
 
-    if (!res.status) {
-      return;
-    }
+    if (!res.status) return;
 
     final Pages<Recent> pages = Pages.fromMap(res.data, Recent.fromJsonModel);
 
@@ -70,7 +69,19 @@ class RecentsController extends GetxController {
 
   Future<void> deleteRecent(Recent recent) async {
     final recentId = recent.id;
-    await _recentApi.deleteRecent(recentId: recentId);
+    final res = await _recentApi.deleteRecent(recentId: recentId);
+
+    if (res.status) {
+      final re = RecentExtention();
+
+      /// last message is "Deleted"
+      await re.updateRecentWithLastMessage(chatRoomId: recent.chatRoomId);
+
+      recents.remove(recent);
+      update();
+    } else {
+      print("Delete Fail!!!, ${res.message}");
+    }
   }
 
   Future<void> pushMessageScreen(Recent recent) async {

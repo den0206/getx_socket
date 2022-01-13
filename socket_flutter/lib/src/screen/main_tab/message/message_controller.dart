@@ -22,6 +22,7 @@ class MessageController extends GetxController {
     if (messages.isNotEmpty) sC.jumpTo(sC.position.minScrollExtent);
 
     listneNewChat();
+    listenReadStatus();
   }
 
   @override
@@ -56,11 +57,31 @@ class MessageController extends GetxController {
     }
   }
 
+  Future<void> sendMessage() async {
+    await extention.sendMessage(text: tc.text);
+    tc.clear();
+    _scrollToBottom();
+  }
+
+  Future<void> deleteMessage(Message message) async {
+    final action = await extention.delete(message.id);
+
+    if (action) {
+      messages.remove(message);
+      Get.back();
+    } else {
+      /// show alt
+      print("削除失敗");
+    }
+  }
+
   bool checkRead(Message message) {
     /// private
     final withUser = extention.withUsers.first;
     return message.readBy.contains(withUser.id);
   }
+
+  /// MARK Scroll Controler
 
   void addScrollController() {
     sC.addListener(() async {
@@ -70,23 +91,52 @@ class MessageController extends GetxController {
     });
   }
 
-  void listneNewChat() {
-    extention.addNerChatListner((message) {
-      messages.insert(0, message);
-    });
-  }
-
-  Future<void> sendMessage() async {
-    await extention.sendMessage(text: tc.text);
-    tc.clear();
-    _scrollToBottom();
-  }
-
   Future<void> _scrollToBottom() async {
     await sC.animateTo(
       sC.position.minScrollExtent,
       duration: 100.milliseconds,
       curve: Curves.easeIn,
     );
+  }
+
+  /// MARK Listners
+
+  void listneNewChat() {
+    extention.addNerChatListner((message) {
+      messages.insert(0, message);
+    });
+  }
+
+  void listenReadStatus() {
+    extention.addReadListner((value) {
+      final uid = value["uid"];
+      final ids = value["ids"];
+
+      if (ids is List) {
+        /// update multiple read
+        final List<String> temp = List.castFrom(ids);
+
+        temp.forEach((String id) {
+          _readUI(id, uid);
+        });
+      }
+
+      if (ids is String) {
+        /// single read
+        _readUI(ids, uid);
+      }
+    });
+  }
+
+  void _readUI(String id, String uid) {
+    final messageIds = messages.map((m) => m.id).toList();
+    if (messageIds.contains(id)) {
+      final index = messageIds.indexOf(id);
+      final temp = messages[index];
+      temp.readBy.add(uid);
+
+      /// update Reactive
+      messages[index] = temp;
+    }
   }
 }

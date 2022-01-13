@@ -55,7 +55,7 @@ class Message {
       chatRoomId: map['chatRoomId'] ?? '',
       text: map['text'] ?? '',
       user: User.fromMap(map['userId']),
-      readBy: List<String>.from(map["readBy"]),
+      readBy: List<String>.from(map["readBy"] ?? []),
       date: DateTime.parse(map["date"]).toUtc(),
     );
   }

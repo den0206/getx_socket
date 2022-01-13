@@ -155,8 +155,7 @@ class MessageCell extends GetView<MessageController> {
                         ),
                       ),
                       onPressed: () {
-                        print(message.id);
-                        Get.back();
+                        controller.deleteMessage(message);
                       },
                     ),
                   CupertinoContextMenuAction(
