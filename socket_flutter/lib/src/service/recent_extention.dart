@@ -1,11 +1,17 @@
+import 'package:socket_flutter/src/api/group_api.dart';
 import 'package:socket_flutter/src/api/recent_api.dart';
+import 'package:socket_flutter/src/model/group.dart';
 import 'package:socket_flutter/src/model/recent.dart';
 import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
 
 class RecentExtention {
   final RecentAPI _recentAPI = RecentAPI();
+  final GropuAPI _groupAPI = GropuAPI();
 
+  User get currentUser => AuthService.to.currentUser.value!;
+
+  // MARK Private
   Future<String?> createPrivateChatRoom(
       String currentUID, String withUserID, List<User> users) async {
     var chatRoomId;
@@ -50,6 +56,46 @@ class RecentExtention {
     return chatRoomId;
   }
 
+  /// MARK Group
+  Future<Group?> createGroup(List<User> members) async {
+    final owner = currentUser;
+    members.insert(0, owner);
+
+    /// unique
+    final ids = Set();
+    members.retainWhere((x) => ids.add(x.id));
+    final memberIds = members.map((m) => m.id).toList();
+
+    final Map<String, dynamic> body = {
+      "ownerId": owner.id,
+      "members": memberIds
+    };
+
+    final res = await _groupAPI.createGroup(body);
+    if (!res.status) {
+      return null;
+    }
+
+    final group = Group.fromMapWithMembers(res.data, members);
+    return group;
+  }
+
+  Future<void> createGroupRecent(Group group) async {
+    await Future.forEach(group.members, (User user) async {
+      final Map<String, dynamic> recent = {
+        "userId": user.id,
+        "chatRoomId": group.id,
+        "group": group.id,
+      };
+
+      print(recent);
+
+      await _recentAPI.createChatRecent(recent);
+    });
+
+    print("Update All Recents!!");
+  }
+
   Future<void> createRecentAPI(
       String id, String currentUID, List<User> users, String chatRoomId) async {
     final withUser = id == currentUID ? users.last : users.first;
@@ -60,7 +106,7 @@ class RecentExtention {
       "withUserId": withUser.id,
     };
 
-    await _recentAPI.createPrivateChat(recent);
+    await _recentAPI.createChatRecent(recent);
   }
 
   Future<List<Recent>> findByChatRoomId(String chatRoomId) async {
@@ -77,10 +123,9 @@ class RecentExtention {
 
   Future<void> updateRecentItem(Recent recent, String lastMessage) async {
     final uid = recent.user.id;
-    final currentUid = AuthService.to.currentUser.value!.id;
     var counter = recent.counter;
 
-    if (currentUid != uid) {
+    if (currentUser.id != uid) {
       counter++;
     }
 

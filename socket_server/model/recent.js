@@ -9,6 +9,7 @@ const recentSchema = mongoose.Schema({
   },
   chatRoomId: {type: String, required: true},
   withUserId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+  group: {type: mongoose.Schema.Types.ObjectId, ref: 'Group'},
   lastMessage: {type: String, default: ''},
   counter: {type: Number, default: 0},
   date: {type: Date, default: Date.now},

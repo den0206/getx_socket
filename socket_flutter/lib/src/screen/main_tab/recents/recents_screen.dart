@@ -4,6 +4,8 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:socket_flutter/src/model/recent.dart';
 import 'package:socket_flutter/src/screen/main_tab/recents/recents_controller.dart';
+import 'package:socket_flutter/src/screen/main_tab/users/user_detail/user_detail_screen.dart';
+import 'package:socket_flutter/src/screen/main_tab/users/users_screen.dart';
 
 class RecentsScreen extends StatelessWidget {
   const RecentsScreen({Key? key}) : super(key: key);
@@ -22,6 +24,14 @@ class RecentsScreen extends StatelessWidget {
                 backgroundColor: Colors.transparent,
                 toolbarHeight: 70,
                 title: Text("Recents"),
+                actions: [
+                  IconButton(
+                    icon: Icon(Icons.person_add),
+                    onPressed: () {
+                      Get.toNamed(UsersScreen.routeName, arguments: false);
+                    },
+                  )
+                ],
               ),
               CupertinoSliverRefreshControl(
                 onRefresh: () async {
@@ -123,7 +133,9 @@ class RecentCell extends GetView<RecentsController> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    recent.withUser!.name,
+                    !recent.isGroup
+                        ? recent.withUser!.name
+                        : recent.group?.title ?? "Group",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Color(0xff686795),

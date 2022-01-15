@@ -2,13 +2,14 @@ const Recent = require('../model/recent');
 const {encodeBase64, decodeToBase64} = require('../utils/base64');
 const {checkId} = require('../db/database');
 
-async function createPrivateChat(req, res) {
+async function createChatRecent(req, res) {
   const body = req.body;
 
   const recent = new Recent({
     userId: body.userId,
     chatRoomId: body.chatRoomId,
     withUserId: body.withUserId,
+    group: body.group,
   });
 
   try {
@@ -160,7 +161,7 @@ async function deleteRecent(req, res) {
 }
 
 module.exports = {
-  createPrivateChat,
+  createPrivateChat: createChatRecent,
   updateRecent,
   findByUserId,
   findByRoomId,

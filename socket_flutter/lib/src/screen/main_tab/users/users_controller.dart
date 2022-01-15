@@ -6,10 +6,14 @@ import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/screen/main_tab/users/user_detail/user_detail_controller.dart';
 import 'package:socket_flutter/src/screen/main_tab/users/user_detail/user_detail_screen.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
+import 'package:socket_flutter/src/service/recent_extention.dart';
 
 class UsersController extends GetxController {
   final UserAPI _userApi = UserAPI();
   final RxList<User> users = <User>[].obs;
+  final RxList<User> selectedUsers = <User>[].obs;
+
+  final bool isPrivate = Get.arguments ?? true;
 
   final int limit = 5;
   String? nextCursor;
@@ -19,15 +23,6 @@ class UsersController extends GetxController {
   void onInit() async {
     super.onInit();
     await loadUsers();
-  }
-
-  void onTap(User user) {
-    Get.to(
-      UserDetailScreen(),
-      binding: BindingsBuilder(
-        () => Get.lazyPut(() => UserDetailController(user)),
-      ),
-    );
   }
 
   Future<void> loadUsers() async {
@@ -55,5 +50,49 @@ class UsersController extends GetxController {
         .toList();
 
     users.addAll(temp);
+  }
+
+  void onTap(User user) {
+    if (isPrivate) {
+      Get.to(
+        UserDetailScreen(),
+        binding: BindingsBuilder(
+          () => Get.lazyPut(() => UserDetailController(user)),
+        ),
+      );
+    } else {
+      if (!checkSelected(user)) {
+        selectedUsers.add(user);
+      } else {
+        selectedUsers.remove(user);
+      }
+    }
+  }
+
+  Future<void> createGroup() async {
+    if (selectedUsers.length <= 1) {
+      print("Too small...");
+      return;
+    } else if (selectedUsers.length >= 5) {
+      print("Too many ....");
+      return;
+    }
+
+    final re = RecentExtention();
+
+    final group = await re.createGroup(selectedUsers);
+
+    if (group == null) {
+      print("グループが作れません");
+      return;
+    }
+
+    await re.createGroupRecent(group);
+    selectedUsers.clear();
+    Get.back();
+  }
+
+  bool checkSelected(User user) {
+    return selectedUsers.contains(user);
   }
 }

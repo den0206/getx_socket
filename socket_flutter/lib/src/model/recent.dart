@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:socket_flutter/src/model/group.dart';
 import 'package:socket_flutter/src/model/user.dart';
 
 enum RecentType { private, group }
@@ -9,10 +10,15 @@ class Recent {
   final String chatRoomId;
   final User user;
   User? withUser;
+  Group? group;
 
   final String lastMessage;
   final int counter;
   final DateTime date;
+
+  bool get isGroup {
+    return withUser == null;
+  }
 
   RecentType get type {
     if (withUser != null) {
@@ -26,6 +32,7 @@ class Recent {
     required this.chatRoomId,
     required this.user,
     this.withUser,
+    this.group,
     required this.lastMessage,
     required this.counter,
     required this.date,

@@ -42,7 +42,7 @@ abstract class APIBase {
   }
 }
 
-enum EndPoint { user, recent, message }
+enum EndPoint { user, recent, message, group }
 
 extension EndPointEXT on EndPoint {
   String get name {
@@ -55,6 +55,8 @@ extension EndPointEXT on EndPoint {
         return "$APIVer/recents";
       case EndPoint.message:
         return "$APIVer/messages";
+      case EndPoint.group:
+        return "$APIVer/groups";
     }
   }
 }

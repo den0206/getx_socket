@@ -4,11 +4,10 @@ import 'package:socket_flutter/src/screen/auth/login/login_contoller.dart';
 import 'package:socket_flutter/src/screen/auth/login/login_sceen.dart';
 import 'package:socket_flutter/src/screen/auth/signup/signup_controller.dart';
 import 'package:socket_flutter/src/screen/auth/signup/signup_screen.dart';
-import 'package:socket_flutter/src/screen/chat/chat_controller.dart';
-import 'package:socket_flutter/src/screen/chat/chat_screen.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_controller.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_screen.dart';
 import 'package:socket_flutter/src/screen/main_tab/users/user_detail/user_detail_screen.dart';
+import 'package:socket_flutter/src/screen/main_tab/users/users_screen.dart';
 import 'package:socket_flutter/src/screen/root_screen.dart';
 
 class AppRoot {
@@ -37,14 +36,13 @@ final List<GetPage> _authPages = [
       () => Get.lazyPut(() => SignUpController()),
     ),
   ),
-  GetPage(
-    name: ChatScreen.routeName,
-    page: () => ChatScreen(),
-    binding: BindingsBuilder(() => Get.lazyPut(() => ChatController())),
-  )
 ];
 
 final List<GetPage> _mainPages = [
+  GetPage(
+    name: UsersScreen.routeName,
+    page: () => UsersScreen(),
+  ),
   GetPage(
     name: UserDetailScreen.routeName,
     page: () => UserDetailScreen(),
@@ -55,5 +53,5 @@ final List<GetPage> _mainPages = [
     binding: BindingsBuilder(
       () => Get.lazyPut(() => MessageController()),
     ),
-  )
+  ),
 ];

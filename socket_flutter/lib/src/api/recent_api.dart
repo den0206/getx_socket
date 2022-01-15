@@ -6,7 +6,7 @@ import 'package:socket_flutter/src/service/auth_service.dart';
 class RecentAPI extends APIBase {
   RecentAPI() : super(EndPoint.recent);
 
-  Future<ResponseAPI> createPrivateChat(Map<String, dynamic> recent) async {
+  Future<ResponseAPI> createChatRecent(Map<String, dynamic> recent) async {
     try {
       final Uri uri = Uri.http(host, "$endpoint/");
       final String bodyParams = json.encode(recent);
