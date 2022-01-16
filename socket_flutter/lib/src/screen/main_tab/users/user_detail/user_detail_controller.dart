@@ -1,6 +1,7 @@
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/route_manager.dart';
 import 'package:socket_flutter/src/model/user.dart';
+import 'package:socket_flutter/src/screen/main_tab/groups/groups_screen.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_extention.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_screen.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
@@ -36,5 +37,9 @@ class UserDetailController extends GetxController {
         MessageExtention(chatRoomId: chatRoomId, withUsers: [user]);
 
     Get.toNamed(MessageScreen.routeName, arguments: extention);
+  }
+
+  Future<void> openGroups() async {
+    final _ = await Get.toNamed(GroupsScreen.routeName);
   }
 }

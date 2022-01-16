@@ -5,6 +5,7 @@ const {checkId} = require('../db/database');
 async function createChatRecent(req, res) {
   const body = req.body;
 
+  console.log(body.group);
   const recent = new Recent({
     userId: body.userId,
     chatRoomId: body.chatRoomId,
@@ -37,7 +38,12 @@ async function findByUserId(req, res) {
   let recents = await Recent.find(query)
     .sort({_id: -1})
     .limit(limit + 1)
-    .populate(['userId', 'withUserId']);
+    .populate(['userId', 'withUserId'])
+    .populate({
+      path: 'group',
+      model: 'Group',
+      populate: {path: 'members', model: 'User'},
+    });
 
   const hasNextPage = recents.length > limit;
   recents = hasNextPage ? recents.slice(0, -1) : recents;

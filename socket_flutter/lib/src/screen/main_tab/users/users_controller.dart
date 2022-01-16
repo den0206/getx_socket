@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:socket_flutter/src/api/user_api.dart';
 import 'package:socket_flutter/src/model/page_feed.dart';
 import 'package:socket_flutter/src/model/user.dart';
-import 'package:socket_flutter/src/screen/main_tab/users/user_detail/user_detail_controller.dart';
 import 'package:socket_flutter/src/screen/main_tab/users/user_detail/user_detail_screen.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
 import 'package:socket_flutter/src/service/recent_extention.dart';
@@ -55,10 +54,7 @@ class UsersController extends GetxController {
   void onTap(User user) {
     if (isPrivate) {
       Get.to(
-        UserDetailScreen(),
-        binding: BindingsBuilder(
-          () => Get.lazyPut(() => UserDetailController(user)),
-        ),
+        UserDetailScreen(user),
       );
     } else {
       if (!checkSelected(user)) {

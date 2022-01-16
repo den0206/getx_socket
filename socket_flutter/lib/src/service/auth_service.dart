@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 
 import 'package:socket_flutter/src/model/user.dart';
+import 'package:socket_flutter/src/screen/main_tab/recents/recents_controller.dart';
 import 'package:socket_flutter/src/service/storage_service.dart';
 
 class AuthService extends GetxService {
@@ -30,6 +31,8 @@ class AuthService extends GetxService {
   }
 
   Future<void> logout() async {
+    await Get.delete<RecentsController>();
+
     await storage.deleteLocal(StorageKey.user);
     this.currentUser.value = null;
   }

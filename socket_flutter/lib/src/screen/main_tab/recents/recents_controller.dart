@@ -34,6 +34,15 @@ class RecentsController extends GetxController {
     listenRrecent();
   }
 
+  @override
+  void onClose() {
+    super.onClose();
+
+    print("Destroy RECENT");
+    socket.dispose();
+    socket.destroy();
+  }
+
   Future<void> reLoad() async {
     print("Refres");
     reachLast = false;
@@ -91,7 +100,8 @@ class RecentsController extends GetxController {
         argumentUser.add(recent.withUser!);
         break;
       case RecentType.group:
-        return;
+        argumentUser.addAll(recent.group!.members);
+      // return;
     }
 
     final MessageExtention extention = MessageExtention(

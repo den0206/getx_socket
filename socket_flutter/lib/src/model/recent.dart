@@ -16,10 +16,6 @@ class Recent {
   final int counter;
   final DateTime date;
 
-  bool get isGroup {
-    return withUser == null;
-  }
-
   RecentType get type {
     if (withUser != null) {
       return RecentType.private;
@@ -57,6 +53,7 @@ class Recent {
       user: User.fromMap(map['userId']),
       withUser:
           map['withUserId'] != null ? User.fromMap(map['withUserId']) : null,
+      group: map["group"] != null ? Group.fromMap(map["group"]) : null,
       lastMessage: map['lastMessage'] ?? '',
       counter: map['counter']?.toInt() ?? 0,
       date: DateTime.parse(map["date"]).toUtc(),
@@ -72,6 +69,6 @@ class Recent {
 
   @override
   String toString() {
-    return 'Recent(id: $id, chatRoomId: $chatRoomId, user: $user, withUser: $withUser, lastMessage: $lastMessage, counter: $counter, date: $date)';
+    return 'Recent(id: $id, chatRoomId: $chatRoomId, user: $user, withUser: $withUser, group: $group, lastMessage: $lastMessage, counter: $counter, date: $date)';
   }
 }

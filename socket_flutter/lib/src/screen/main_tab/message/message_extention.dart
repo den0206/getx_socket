@@ -1,7 +1,6 @@
 import 'package:socket_flutter/src/api/message_api.dart';
 import 'package:socket_flutter/src/model/message.dart';
 import 'package:socket_flutter/src/model/page_feed.dart';
-import 'package:socket_flutter/src/model/recent.dart';
 import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
 import 'package:socket_flutter/src/service/recent_extention.dart';

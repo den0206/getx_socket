@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+
 import 'package:socket_flutter/src/screen/main_tab/main_tab_controller.dart';
 import 'package:socket_flutter/src/screen/main_tab/recents/recents_screen.dart';
+import 'package:socket_flutter/src/screen/main_tab/users/user_detail/user_detail_screen.dart';
 import 'package:socket_flutter/src/screen/main_tab/users/users_screen.dart';
-import 'package:socket_flutter/src/screen/widget/custom_button.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
 
 class MainTabScreen extends StatelessWidget {
@@ -33,16 +34,9 @@ class MainTabScreen extends StatelessWidget {
     final List<Widget> pages = [
       RecentsScreen(),
       UsersScreen(),
+      UserDetailScreen(AuthService.to.currentUser.value!)
 
       /// current only log outbutton
-      Center(
-        child: CustomButton(
-          title: "Logout",
-          onPressed: () {
-            AuthService.to.logout();
-          },
-        ),
-      )
     ];
     return GetBuilder<MainTabController>(
       init: MainTabController(),

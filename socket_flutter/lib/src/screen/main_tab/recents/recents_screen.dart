@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:socket_flutter/src/model/recent.dart';
+import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/screen/main_tab/recents/recents_controller.dart';
-import 'package:socket_flutter/src/screen/main_tab/users/user_detail/user_detail_screen.dart';
 import 'package:socket_flutter/src/screen/main_tab/users/users_screen.dart';
 
 class RecentsScreen extends StatelessWidget {
@@ -115,16 +115,17 @@ class RecentCell extends GetView<RecentsController> {
           ),
           child: Row(
             children: [
-              Container(
-                  width: 50,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: Colors.black,
-                      width: 3,
-                    ),
-                  )),
+              recent.type == RecentType.private
+                  ? Container(
+                      width: 50,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: Colors.black,
+                        ),
+                      ))
+                  : OverlapAvatars(users: recent.group!.members),
               SizedBox(
                 width: 20,
               ),
@@ -133,7 +134,7 @@ class RecentCell extends GetView<RecentsController> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    !recent.isGroup
+                    recent.type == RecentType.private
                         ? recent.withUser!.name
                         : recent.group?.title ?? "Group",
                     textAlign: TextAlign.center,
@@ -164,6 +165,46 @@ class RecentCell extends GetView<RecentsController> {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class OverlapAvatars extends StatelessWidget {
+  const OverlapAvatars({
+    Key? key,
+    required this.users,
+    this.size = 40,
+  }) : super(key: key);
+
+  final List<User> users;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 15),
+      child: Container(
+        height: size,
+        child: ListView.builder(
+          shrinkWrap: true,
+          scrollDirection: Axis.horizontal,
+          itemCount: users.length,
+          itemBuilder: (context, index) {
+            return Align(
+              widthFactor: 0.4,
+              child: Container(
+                height: size,
+                width: size,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                  border: Border.all(color: Colors.black),
+                ),
+              ),
+            );
+          },
         ),
       ),
     );

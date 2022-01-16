@@ -1,12 +1,19 @@
 import 'dart:convert';
 
 import 'package:socket_flutter/src/model/user.dart';
+import 'package:socket_flutter/src/service/auth_service.dart';
 
 class Group {
   final String id;
   final String ownerId;
   final String? title;
   final List<User> members;
+
+  bool get isOwner {
+    final currentUser = AuthService.to.currentUser.value;
+    if (currentUser == null) return false;
+    return ownerId == currentUser.id;
+  }
 
   Group({
     required this.id,
