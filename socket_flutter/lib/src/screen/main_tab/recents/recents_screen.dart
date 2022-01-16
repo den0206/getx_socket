@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:socket_flutter/src/model/recent.dart';
-import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/screen/main_tab/recents/recents_controller.dart';
-import 'package:socket_flutter/src/screen/main_tab/users/users_screen.dart';
+import 'package:socket_flutter/src/screen/widget/overlap_avatars.dart';
 
 class RecentsScreen extends StatelessWidget {
   const RecentsScreen({Key? key}) : super(key: key);
@@ -24,14 +23,6 @@ class RecentsScreen extends StatelessWidget {
                 backgroundColor: Colors.transparent,
                 toolbarHeight: 70,
                 title: Text("Recents"),
-                actions: [
-                  IconButton(
-                    icon: Icon(Icons.person_add),
-                    onPressed: () {
-                      Get.toNamed(UsersScreen.routeName, arguments: false);
-                    },
-                  )
-                ],
               ),
               CupertinoSliverRefreshControl(
                 onRefresh: () async {
@@ -165,46 +156,6 @@ class RecentCell extends GetView<RecentsController> {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class OverlapAvatars extends StatelessWidget {
-  const OverlapAvatars({
-    Key? key,
-    required this.users,
-    this.size = 40,
-  }) : super(key: key);
-
-  final List<User> users;
-  final double size;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 15),
-      child: Container(
-        height: size,
-        child: ListView.builder(
-          shrinkWrap: true,
-          scrollDirection: Axis.horizontal,
-          itemCount: users.length,
-          itemBuilder: (context, index) {
-            return Align(
-              widthFactor: 0.4,
-              child: Container(
-                height: size,
-                width: size,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.white,
-                  border: Border.all(color: Colors.black),
-                ),
-              ),
-            );
-          },
         ),
       ),
     );

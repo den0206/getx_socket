@@ -1,0 +1,26 @@
+import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:get/route_manager.dart';
+import 'package:socket_flutter/src/api/group_api.dart';
+import 'package:socket_flutter/src/model/group.dart';
+
+class GroupDetailController extends GetxController {
+  GroupDetailController(this.group);
+
+  final Group group;
+  final GropuAPI _gropuAPI = GropuAPI();
+
+  Future<void> deleteGroup() async {
+    if (!group.isOwner) return;
+
+    final res = await _gropuAPI.deleteById(group.id);
+
+    if (!res.status) {
+      print("Can't Delete Group");
+      return;
+    }
+
+    final deletedId = group.id;
+
+    Get.back(result: deletedId);
+  }
+}

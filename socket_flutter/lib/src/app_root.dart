@@ -55,8 +55,5 @@ final List<GetPage> _mainPages = [
     name: GroupsScreen.routeName,
     page: () => GroupsScreen(),
     fullscreenDialog: true,
-    binding: BindingsBuilder(
-      () => Get.lazyPut(() => GroupsController()),
-    ),
   )
 ];

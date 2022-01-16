@@ -13,10 +13,10 @@ function checkAuth(req, res, next) {
       next();
     } catch (e) {
       console.log(e);
-      return res.status(401).json({message: 'Token Invalid'});
+      return res.status(401).json({status: false, message: 'Token Invalid'});
     }
   } else {
-    return res.status(403).json({message: 'No Token'});
+    return res.status(403).json({status: false, message: 'No Token'});
   }
 }
 

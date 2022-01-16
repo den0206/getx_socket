@@ -92,8 +92,6 @@ class RecentExtention {
 
       await _recentAPI.createChatRecent(recent);
     });
-
-    print("Update All Recents!!");
   }
 
   Future<void> createRecentAPI(

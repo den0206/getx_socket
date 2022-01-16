@@ -85,7 +85,7 @@ class UsersController extends GetxController {
 
     await re.createGroupRecent(group);
     selectedUsers.clear();
-    Get.back();
+    Get.until((route) => route.isFirst);
   }
 
   bool checkSelected(User user) {

@@ -68,7 +68,6 @@ async function findByUserId(req, res) {
   }
 }
 async function updateRecent(req, res) {
-  /// TODO UPDATE
   const recentId = req.params.id;
 
   if (!checkId(recentId))
