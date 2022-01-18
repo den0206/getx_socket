@@ -67,7 +67,6 @@ class RecentsController extends GetxController {
     // set;
     reachLast = !pages.pageInfo.hasNextPage;
     nextCursor = pages.pageInfo.nextPageCursor;
-    // print("next cursor is ${nextCursor}");
 
     final temp = pages.pageFeeds;
     recents.addAll(temp);
@@ -81,11 +80,6 @@ class RecentsController extends GetxController {
     final res = await _recentApi.deleteRecent(recentId: recentId);
 
     if (res.status) {
-      final re = RecentExtention();
-
-      /// last message is "Deleted"
-      await re.updateRecentWithLastMessage(chatRoomId: recent.chatRoomId);
-
       recents.remove(recent);
       update();
     } else {
@@ -129,9 +123,10 @@ class RecentsController extends GetxController {
 
   void listenRrecent() {
     final currentUser = AuthService.to.currentUser.value!;
+
     socket.on("update", (data) async {
       final chatRoomId = data["chatRoomId"];
-      print("UPDATE $chatRoomId");
+      print("----UPDATE $chatRoomId");
 
       final res =
           await _recentApi.findOneByRoomIdAndUserId(currentUser.id, chatRoomId);

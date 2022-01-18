@@ -1,8 +1,7 @@
-const mongoose = require('mongoose');
-const Recent = require('./recent');
-
 var uniqueValidator = require('mongoose-unique-validator');
 const Message = require('./message');
+const mongoose = require('mongoose');
+const Recent = require('./recent');
 
 const groupSchema = mongoose.Schema({
   ownerId: {type: String, required: true},

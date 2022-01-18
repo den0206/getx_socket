@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:socket_flutter/src/model/message.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_extention.dart';
+import 'package:socket_flutter/src/service/recent_extention.dart';
 
 class MessageController extends GetxController {
   final TextEditingController tc = TextEditingController();
@@ -65,9 +66,14 @@ class MessageController extends GetxController {
 
   Future<void> deleteMessage(Message message) async {
     final action = await extention.delete(message.id);
-
     if (action) {
+      // BUG index0 のメッセージを削除するとクラッシュする
       messages.remove(message);
+
+      final re = RecentExtention();
+
+      /// last message is "Deleted"
+      await re.updateRecentWithLastMessage(chatRoomId: message.chatRoomId);
       Get.back();
     } else {
       /// show alt

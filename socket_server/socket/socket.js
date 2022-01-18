@@ -49,6 +49,19 @@ function connectIO(server) {
 
     socket.join(userId);
 
+    socket.on('singleRecent', (data) => {
+      userId = data['userId'];
+      recentIO.to(userId).emit('update', data);
+    });
+
+    socket.on('updateFromBegin', (data) => {
+      roomIds = data['userIds'];
+
+      roomIds.forEach(function (room) {
+        recentIO.to(room).emit('update', data);
+      });
+    });
+
     socket.on('disconnect', () => {
       console.log('Recent Disconnrect');
     });

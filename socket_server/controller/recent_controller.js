@@ -130,13 +130,17 @@ async function findOneByRoomIdAndUserId(req, res) {
   const userId = req.params.userId;
   const chatRoomId = req.params.chatRoomId;
 
-  console.log(userId, chatRoomId);
-
   try {
     const findRecent = await Recent.findOne({
       userId: userId,
       chatRoomId: chatRoomId,
-    }).populate(['userId', 'withUserId']);
+    })
+      .populate(['userId', 'withUserId'])
+      .populate({
+        path: 'group',
+        model: 'Group',
+        populate: {path: 'members', model: 'User'},
+      });
 
     if (!findRecent)
       return res
@@ -166,7 +170,7 @@ async function deleteRecent(req, res) {
 }
 
 module.exports = {
-  createPrivateChat: createChatRecent,
+  createChatRecent,
   updateRecent,
   findByUserId,
   findByRoomId,

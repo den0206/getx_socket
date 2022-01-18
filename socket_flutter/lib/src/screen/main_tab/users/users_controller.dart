@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:socket_flutter/src/api/user_api.dart';
 import 'package:socket_flutter/src/model/page_feed.dart';
 import 'package:socket_flutter/src/model/user.dart';
+import 'package:socket_flutter/src/screen/main_tab/recents/recents_controller.dart';
 import 'package:socket_flutter/src/screen/main_tab/users/user_detail/user_detail_screen.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
 import 'package:socket_flutter/src/service/recent_extention.dart';
@@ -84,6 +85,15 @@ class UsersController extends GetxController {
     }
 
     await re.createGroupRecent(group);
+
+    /// MARK Recentソケット
+    if (Get.isRegistered<RecentsController>()) {
+      final Map<String, dynamic> data = {
+        "userIds": group.members.map((e) => e.id).toList(),
+        "chatRoomId": group.id,
+      };
+      RecentsController.to.socket.emit("updateFromBegin", data);
+    }
     selectedUsers.clear();
     Get.until((route) => route.isFirst);
   }

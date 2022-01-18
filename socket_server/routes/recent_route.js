@@ -3,7 +3,7 @@ const router = express.Router();
 const recentController = require('../controller/recent_controller');
 const {checkAuth} = require('../middleware/check_auth');
 
-router.post('/', recentController.createPrivateChat);
+router.post('/', recentController.createChatRecent);
 
 router.get('/userid/:userId', recentController.findByUserId);
 router.get('/roomid/:chatRoomId', recentController.findByRoomId);
