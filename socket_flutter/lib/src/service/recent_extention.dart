@@ -1,4 +1,3 @@
-import 'package:get/instance_manager.dart';
 import 'package:socket_flutter/src/api/group_api.dart';
 import 'package:socket_flutter/src/api/recent_api.dart';
 import 'package:socket_flutter/src/model/group.dart';
@@ -61,14 +60,8 @@ class RecentExtention {
 
   void _useSingleSocket({required String userId, required String chatRoomId}) {
     /// MARK Recentソケット
-    if (Get.isRegistered<RecentsController>()) {
-      final Map<String, dynamic> data = {
-        "userId": userId,
-        "chatRoomId": chatRoomId
-      };
-
-      RecentsController.to.socket.emit("singleRecent", data);
-    }
+    RecentsController.to.recentIO
+        .sendUpdateRecent(userIds: userId, chatRoomId: chatRoomId);
   }
 
   /// MARK Group

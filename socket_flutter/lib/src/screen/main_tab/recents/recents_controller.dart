@@ -8,10 +8,6 @@ import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_extention.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_screen.dart';
 import 'package:socket_flutter/src/screen/main_tab/recents/recent_io.dart';
-import 'package:socket_flutter/src/service/auth_service.dart';
-import 'package:socket_flutter/src/utils/enviremont.dart';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
-import 'package:socket_io_client/socket_io_client.dart';
 
 class RecentsController extends GetxController {
   static RecentsController get to => Get.find();
@@ -22,18 +18,16 @@ class RecentsController extends GetxController {
 
   String? nextCursor;
   bool reachLast = false;
-  late IO.Socket socket;
 
-  // final RecentIO recentIO = RecentIO();
+  final RecentIO recentIO = RecentIO();
 
   @override
   void onInit() async {
     super.onInit();
 
     await loadRecents();
-
-    _initSocket();
-    listenRrecent();
+    listenRecent();
+    listenRecentDelete();
   }
 
   @override
@@ -41,8 +35,7 @@ class RecentsController extends GetxController {
     super.onClose();
 
     print("Destroy RECENT");
-    socket.dispose();
-    socket.destroy();
+    recentIO.destroySocket();
   }
 
   Future<void> reLoad() async {
@@ -108,42 +101,27 @@ class RecentsController extends GetxController {
     final _ = await Get.toNamed(MessageScreen.routeName, arguments: extention);
   }
 
-  void _initSocket() {
-    final currentUser = AuthService.to.currentUser.value!;
-    socket = IO.io(
-      "${Enviroment.main}/recents",
-      OptionBuilder()
-          .setTransports(['websocket'])
-          .setQuery({"userId": currentUser.id})
-          .enableForceNew()
-          .disableAutoConnect()
-          .build(),
-    );
+  void listenRecent() {
+    recentIO.listenRecentUpdate((newRecent) {
+      if (!recents.map((r) => r.id).contains(newRecent.id)) {
+        /// not Load Recents yet.
+        recents.insert(0, newRecent);
+      } else {
+        print("Replace");
+        int index = recents.indexWhere((recent) => recent.id == newRecent.id);
+        recents[index] = newRecent;
+        recents.sort((a, b) => b.date.compareTo(a.date));
+      }
 
-    socket.connect();
+      update();
+    });
   }
 
-  void listenRrecent() {
-    final currentUser = AuthService.to.currentUser.value!;
-
-    socket.on("update", (data) async {
-      final chatRoomId = data["chatRoomId"];
-      print("----UPDATE $chatRoomId");
-
-      final res =
-          await _recentApi.findOneByRoomIdAndUserId(currentUser.id, chatRoomId);
-      if (res.status) {
-        final newRecent = Recent.fromMap(res.data);
-        if (!recents.map((r) => r.id).contains(newRecent.id)) {
-          /// not Load Recents yet.
-          recents.insert(0, newRecent);
-        } else {
-          print("Replace");
-          int index = recents.indexWhere((recent) => recent.id == newRecent.id);
-          recents[index] = newRecent;
-          recents.sort((a, b) => b.date.compareTo(a.date));
-        }
-
+  void listenRecentDelete() {
+    recentIO.listenRecentDelete((chatRoomid) {
+      print("deleted ${chatRoomid}");
+      if (recents.map((r) => r.chatRoomId).contains(chatRoomid)) {
+        recents.removeWhere((r) => r.chatRoomId == chatRoomid);
         update();
       }
     });

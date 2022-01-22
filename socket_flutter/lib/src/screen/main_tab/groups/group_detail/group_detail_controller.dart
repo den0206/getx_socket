@@ -1,7 +1,9 @@
+import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get/route_manager.dart';
 import 'package:socket_flutter/src/api/group_api.dart';
 import 'package:socket_flutter/src/model/group.dart';
+import 'package:socket_flutter/src/screen/main_tab/recents/recents_controller.dart';
 
 class GroupDetailController extends GetxController {
   GroupDetailController(this.group);
@@ -20,6 +22,10 @@ class GroupDetailController extends GetxController {
     }
 
     final deletedId = group.id;
+
+    if (Get.isRegistered<RecentsController>()) {
+      RecentsController.to.recentIO.sendDeleteGroup(group: group);
+    }
 
     Get.back(result: deletedId);
   }
