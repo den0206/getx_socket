@@ -67,7 +67,8 @@ class MessageController extends GetxController {
   Future<void> deleteMessage(Message message) async {
     final action = await extention.delete(message.id);
     if (action) {
-      // BUG index0 のメッセージを削除するとクラッシュする
+      // BUG index0 のメッセージを削除するとクラッシュ
+
       messages.remove(message);
 
       final re = RecentExtention();
@@ -75,9 +76,6 @@ class MessageController extends GetxController {
       /// last message is "Deleted"
       await re.updateRecentWithLastMessage(chatRoomId: message.chatRoomId);
       Get.back();
-    } else {
-      /// show alt
-      print("削除失敗");
     }
   }
 

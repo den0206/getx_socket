@@ -7,8 +7,8 @@ import 'package:socket_flutter/src/model/recent.dart';
 import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_extention.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_screen.dart';
+import 'package:socket_flutter/src/screen/main_tab/recents/recent_io.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
-import 'package:socket_flutter/src/service/recent_extention.dart';
 import 'package:socket_flutter/src/utils/enviremont.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:socket_io_client/socket_io_client.dart';
@@ -23,6 +23,8 @@ class RecentsController extends GetxController {
   String? nextCursor;
   bool reachLast = false;
   late IO.Socket socket;
+
+  // final RecentIO recentIO = RecentIO();
 
   @override
   void onInit() async {
