@@ -93,7 +93,7 @@ async function deleteMessage(req, res) {
 
   try {
     /// もし既にメッセージが消されている場合,dataはnullで返却される。
-    const mes = await Message.findByIdAndUpdate(id);
+    const mes = await Message.findByIdAndDelete(id);
     res.status(200).json({status: true, data: mes});
   } catch (e) {
     res.status(500).json({status: false, message: e.message});

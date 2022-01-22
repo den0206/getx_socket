@@ -1,3 +1,4 @@
+const e = require('cors');
 var socket = require('socket.io');
 
 function connectIO(server) {
@@ -49,16 +50,27 @@ function connectIO(server) {
 
     socket.join(userId);
 
-    socket.on('singleRecent', (data) => {
-      userId = data['userId'];
-      recentIO.to(userId).emit('update', data);
+    socket.on('updateRecent', (data) => {
+      const roomIds = data['userIds'];
+
+      const isArray = Array.isArray(roomIds);
+      if (isArray) {
+        console.log('Group Update');
+        roomIds.forEach(function (room) {
+          recentIO.to(room).emit('update', data);
+        });
+      } else {
+        console.log('Single Update');
+        recentIO.to(roomIds).emit('update', data);
+      }
     });
 
-    socket.on('updateFromBegin', (data) => {
+    socket.on('deleteGroup', (data) => {
       roomIds = data['userIds'];
 
       roomIds.forEach(function (room) {
-        recentIO.to(room).emit('update', data);
+        console.log(room);
+        recentIO.to(room).emit('delete', data);
       });
     });
 

@@ -5,7 +5,6 @@ const {checkId} = require('../db/database');
 async function createChatRecent(req, res) {
   const body = req.body;
 
-  console.log(body.group);
   const recent = new Recent({
     userId: body.userId,
     chatRoomId: body.chatRoomId,
