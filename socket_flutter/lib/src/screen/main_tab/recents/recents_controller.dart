@@ -26,6 +26,8 @@ class RecentsController extends GetxController {
     super.onInit();
 
     await loadRecents();
+
+    recentIO.initSocket();
     listenRecent();
     listenRecentDelete();
   }

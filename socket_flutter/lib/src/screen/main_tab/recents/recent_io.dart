@@ -14,11 +14,9 @@ class RecentIO {
   final RecentAPI _recentApi = RecentAPI();
   final currentUser = AuthService.to.currentUser.value!;
 
-  RecentIO() {
-    _initSocket();
-  }
+  RecentIO() {}
 
-  _initSocket() {
+  initSocket() {
     socket = IO.io(
       "${Enviroment.main}/recents",
       OptionBuilder()
@@ -40,7 +38,7 @@ class RecentIO {
   }
 
   /// MARK  送信
-  ///
+
   void sendUpdateRecent(
       {required dynamic userIds, required String chatRoomId}) {
     if (Get.isRegistered<RecentsController>()) {

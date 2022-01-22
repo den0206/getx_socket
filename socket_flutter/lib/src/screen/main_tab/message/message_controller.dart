@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:socket_flutter/src/model/message.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_extention.dart';
+import 'package:socket_flutter/src/screen/main_tab/recents/recents_controller.dart';
 import 'package:socket_flutter/src/service/recent_extention.dart';
 
 class MessageController extends GetxController {
@@ -74,7 +75,14 @@ class MessageController extends GetxController {
       final re = RecentExtention();
 
       /// last message is "Deleted"
-      await re.updateRecentWithLastMessage(chatRoomId: message.chatRoomId);
+      final recents =
+          await re.updateRecentWithLastMessage(chatRoomId: message.chatRoomId);
+      if (recents.isNotEmpty) {
+        recents.forEach((recent) {
+          RecentsController.to.recentIO.sendUpdateRecent(
+              userIds: recent.user.id, chatRoomId: recent.chatRoomId);
+        });
+      }
       Get.back();
     }
   }
