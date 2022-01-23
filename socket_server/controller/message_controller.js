@@ -70,10 +70,23 @@ async function sendImageMessage(req, res) {
     text: body.text,
     userId: body.userId,
   });
-  const fileUrl = await AwsClient.uploadImage(req.file, message);
-  console.log(fileUrl);
 
-  res.status(500).json({status: false, message: 'Can not create Message'});
+  try {
+    const file = req.file;
+    if (!file) {
+      res.status(500).json({status: false, message: 'Not find File'});
+    }
+    const extention = file.originalname.split('.').pop();
+    const fileName = `${message.userId}/messages/${message.id}/image.${extention}`;
+
+    const fileUrl = await AwsClient.uploadImage(file, fileName);
+    message.imageUrl = fileUrl;
+    await message.save();
+    res.status(200).json({status: true, data: message});
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).json({status: false, message: 'Can not create Message'});
+  }
 }
 
 async function updateReadStatus(req, res) {
@@ -105,8 +118,9 @@ async function deleteMessage(req, res) {
       .json({status: false, message: 'Invalid Chat Room Id'});
 
   try {
-    /// もし既にメッセージが消されている場合,dataはnullで返却される。
-    const mes = await Message.findByIdAndDelete(id);
+    const mes = await Message.findById(id);
+    /// delete with pre reletaion
+    await mes.delete();
     res.status(200).json({status: true, data: mes});
   } catch (e) {
     res.status(500).json({status: false, message: e.message});

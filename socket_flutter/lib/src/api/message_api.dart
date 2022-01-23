@@ -47,7 +47,6 @@ class MessageAPI extends APIBase {
 
       final response = await request.send();
       final resStr = await response.stream.bytesToString();
-      print(resStr);
       final data = json.decode(resStr);
       return ResponseAPI.fromMap(data);
     } catch (e) {

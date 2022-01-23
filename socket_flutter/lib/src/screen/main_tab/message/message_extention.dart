@@ -119,7 +119,7 @@ class MessageExtention {
           message: messageData,
           file: file,
         );
-        return;
+        break;
       case MessageType.video:
         return;
     }
@@ -129,6 +129,7 @@ class MessageExtention {
       return;
     }
 
+    print(res.data);
     final message = Message.fromMapWithUser(res.data, currentUser);
     if (socket.id == null) return;
 

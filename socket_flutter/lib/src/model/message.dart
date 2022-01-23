@@ -13,7 +13,19 @@ class Message {
   final User user;
   final DateTime date;
 
+  String? imageUrl;
+  String? videoUrl;
+
   List<String> readBy;
+
+  MessageType get type {
+    if (videoUrl != null && imageUrl != null) {
+      return MessageType.video;
+    } else if (imageUrl != null) {
+      return MessageType.image;
+    }
+    return MessageType.text;
+  }
 
   bool get isCurrent {
     final currentUser = AuthService.to.currentUser.value;
@@ -39,6 +51,8 @@ class Message {
     required this.user,
     required this.date,
     required this.readBy,
+    this.imageUrl,
+    this.videoUrl,
   });
 
   Map<String, dynamic> toMap() {
@@ -47,6 +61,8 @@ class Message {
       'chatRoomId': chatRoomId,
       'text': text,
       'userId': user.toMap(),
+      "imageUrl": imageUrl ?? null,
+      "videoUrl": videoUrl ?? null,
       'date': date.toIso8601String(),
     };
   }
@@ -58,6 +74,8 @@ class Message {
       text: map['text'] ?? '',
       user: User.fromMap(map['userId']),
       readBy: List<String>.from(map["readBy"] ?? []),
+      imageUrl: map["imageUrl"] ?? null,
+      videoUrl: map["videoUrl"] ?? null,
       date: DateTime.parse(map["date"]).toUtc(),
     );
   }
@@ -69,6 +87,8 @@ class Message {
       text: map['text'] ?? '',
       user: user,
       readBy: List<String>.from(map["readBy"]),
+      imageUrl: map["imageUrl"] ?? null,
+      videoUrl: map["videoUrl"] ?? null,
       date: DateTime.parse(map["date"]).toUtc(),
     );
   }
@@ -83,6 +103,6 @@ class Message {
 
   @override
   String toString() {
-    return 'Message(id: $id, chatRoomId: $chatRoomId, text: $text, user: $user, date: $date, readBy: $readBy)';
+    return 'Message(id: $id, chatRoomId: $chatRoomId, text: $text, user: $user, date: $date, imageUrl: $imageUrl, videoUrl: $videoUrl, readBy: $readBy)';
   }
 }

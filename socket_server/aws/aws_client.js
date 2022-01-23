@@ -23,33 +23,36 @@ const s3Client = new S3Client({
   },
 });
 
-async function uploadImage(file, message) {
-  const extention = file.originalname.split('.').pop();
-  const fileName = `${message.userId}/${message.id}/image${extention}`;
-
+async function uploadImage(file, fileName) {
   const params = {Bucket: BUCKET_NAME, Key: `${fileName}`, Body: file.buffer};
-  console.log(params);
 
   try {
     const command = new PutObjectCommand(params);
     const response = await s3Client.send(command);
     const fileUrl = getUrlFromBucket(params);
-    return fileUrl;
+
+    if (response.$metadata.httpStatusCode == 200) {
+      return fileUrl;
+    } else {
+      throw new Error("Can't Update S3");
+    }
   } catch (e) {
     console.log(error);
     throw new Error();
   }
 }
 
-async function deleteImage(filePath) {
+async function deleteImage(urlString) {
+  const url = new URL(urlString);
+  const filePath = `${url.pathname.slice(1)}`;
   const params = {
     Bucket: BUCKET_NAME,
-    Key: `${filePath}`,
+    Key: filePath,
   };
 
   try {
-    const response = await s3.send(new DeleteObjectCommand(params));
-    return response;
+    const command = new DeleteObjectCommand(params);
+    await s3Client.send(command);
   } catch (e) {
     console.log(error);
     throw new Error();
@@ -58,7 +61,7 @@ async function deleteImage(filePath) {
 
 function getUrlFromBucket(params) {
   const {Bucket, Key} = params;
-  return `https://${Bucket}.s3${REGION}.amazonaws.com/${Key}`;
+  return `https://${Bucket}.s3.${REGION}.amazonaws.com/${Key}`;
 }
 
-module.exports = {uploadImage};
+module.exports = {uploadImage, deleteImage};

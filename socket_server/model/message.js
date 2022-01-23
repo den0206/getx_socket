@@ -1,12 +1,26 @@
 const mongoose = require('mongoose');
 var uniqueValidator = require('mongoose-unique-validator');
 
+const AwsClient = require('../aws/aws_client');
+
 const messageSchema = mongoose.Schema({
   chatRoomId: {type: String, required: true},
   text: {type: String, required: true},
   userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
   readBy: [{type: mongoose.Schema.Types.ObjectId, ref: 'User', default: []}],
+  imageUrl: {type: String},
   date: {type: Date, default: Date.now},
+});
+
+// Message-削除 with pre reletaion
+
+messageSchema.pre('remove', async function (next) {
+  if (this.imageUrl) {
+    console.log('=== Start DELETE');
+    console.log('DELETE RELATION', this._id);
+    await AwsClient.deleteImage(this.imageUrl);
+  }
+  next();
 });
 
 messageSchema.virtual('id').get(function () {
