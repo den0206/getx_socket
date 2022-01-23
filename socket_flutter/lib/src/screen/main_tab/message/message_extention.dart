@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:socket_flutter/src/api/message_api.dart';
 import 'package:socket_flutter/src/model/message.dart';
 import 'package:socket_flutter/src/model/page_feed.dart';
@@ -96,14 +98,31 @@ class MessageExtention {
     });
   }
 
-  Future<void> sendMessage({required String text}) async {
-    final Map<String, dynamic> messageData = {
+  Future<void> sendMessage(
+      {required MessageType type, required String text, File? file}) async {
+    final Map<String, String> messageData = {
       "chatRoomId": chatRoomId,
       "text": text,
       "userId": currentUser.id,
     };
 
-    final res = await _messageAPI.sendMessage(message: messageData);
+    var res;
+
+    switch (type) {
+      case MessageType.text:
+        res = await _messageAPI.sendMessage(message: messageData);
+        break;
+      case MessageType.image:
+        if (file == null) return;
+
+        res = await _messageAPI.sendImageMessage(
+          message: messageData,
+          file: file,
+        );
+        return;
+      case MessageType.video:
+        return;
+    }
 
     if (!res.status) {
       print("Can not send Message");

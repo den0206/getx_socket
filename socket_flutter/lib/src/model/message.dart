@@ -4,6 +4,8 @@ import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
 import 'package:socket_flutter/src/utils/date_format.dart';
 
+enum MessageType { text, image, video }
+
 class Message {
   final String id;
   final String chatRoomId;

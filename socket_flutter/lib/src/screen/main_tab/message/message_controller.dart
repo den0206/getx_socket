@@ -1,8 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:socket_flutter/src/model/message.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_extention.dart';
+import 'package:socket_flutter/src/screen/main_tab/message/message_file_sheet.dart';
 import 'package:socket_flutter/src/screen/main_tab/recents/recents_controller.dart';
+import 'package:socket_flutter/src/service/image_extention.dart';
 import 'package:socket_flutter/src/service/recent_extention.dart';
 
 class MessageController extends GetxController {
@@ -59,8 +64,9 @@ class MessageController extends GetxController {
     }
   }
 
-  Future<void> sendMessage() async {
-    await extention.sendMessage(text: tc.text);
+  Future<void> sendMessage(
+      {required MessageType type, required String text, File? file}) async {
+    await extention.sendMessage(type: type, text: text, file: file);
     tc.clear();
     _scrollToBottom();
   }
@@ -108,6 +114,48 @@ class MessageController extends GetxController {
       sC.position.minScrollExtent,
       duration: 100.milliseconds,
       curve: Curves.easeIn,
+    );
+  }
+
+  void showBottomSheet() {
+    final imageExtention = ImageExtention();
+    final List<MessageFileButton> actions = [
+      MessageFileButton(
+        icon: Icons.camera,
+        onPress: () {
+          print("Camera");
+        },
+      ),
+      MessageFileButton(
+        icon: Icons.image,
+        onPress: () async {
+          final selectedImage = await imageExtention.selectImage(
+              imageSource: ImageSource.gallery);
+
+          if (selectedImage != null) {
+            sendMessage(
+              type: MessageType.image,
+              text: "image",
+              file: selectedImage,
+            );
+            Get.back();
+          }
+        },
+      ),
+      MessageFileButton(
+        icon: Icons.videocam,
+        onPress: () async {},
+      ),
+      MessageFileButton(
+        icon: Icons.close,
+        onPress: () {
+          Get.back();
+        },
+      ),
+    ];
+    Get.bottomSheet(
+      MessageFileSheet(actions: actions),
+      backgroundColor: Colors.white,
     );
   }
 

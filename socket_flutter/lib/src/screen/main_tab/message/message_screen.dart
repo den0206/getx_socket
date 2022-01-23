@@ -91,7 +91,7 @@ class MessageScreen extends GetView<MessageController> {
                     )),
                     IconButton(
                       onPressed: () {
-                        print("Show");
+                        controller.showBottomSheet();
                       },
                       icon: Icon(Icons.attach_file, color: Colors.grey[500]),
                     )
@@ -115,7 +115,10 @@ class MessageScreen extends GetView<MessageController> {
                   return null;
                 } else {
                   FocusScope.of(context).unfocus();
-                  controller.sendMessage();
+                  controller.sendMessage(
+                    type: MessageType.text,
+                    text: controller.tc.text,
+                  );
                 }
               },
             ),

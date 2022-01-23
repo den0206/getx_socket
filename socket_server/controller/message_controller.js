@@ -1,6 +1,7 @@
 const Message = require('../model/message');
 const {encodeBase64, decodeToBase64} = require('../utils/base64');
 const {checkId} = require('../db/database');
+const AwsClient = require('../aws/aws_client');
 
 async function loadMessage(req, res) {
   const chatRoomId = req.params.chatRoomId;
@@ -47,7 +48,6 @@ async function loadMessage(req, res) {
 
 async function sendMessage(req, res) {
   const body = req.body;
-
   const message = new Message({
     chatRoomId: body.chatRoomId,
     text: body.text,
@@ -61,6 +61,19 @@ async function sendMessage(req, res) {
     console.log(e.message);
     res.status(500).json({status: false, message: 'Can not create Message'});
   }
+}
+
+async function sendImageMessage(req, res) {
+  const body = req.body;
+  const message = new Message({
+    chatRoomId: body.chatRoomId,
+    text: body.text,
+    userId: body.userId,
+  });
+  const fileUrl = await AwsClient.uploadImage(req.file, message);
+  console.log(fileUrl);
+
+  res.status(500).json({status: false, message: 'Can not create Message'});
 }
 
 async function updateReadStatus(req, res) {
@@ -100,4 +113,10 @@ async function deleteMessage(req, res) {
   }
 }
 
-module.exports = {loadMessage, sendMessage, updateReadStatus, deleteMessage};
+module.exports = {
+  loadMessage,
+  sendMessage,
+  sendImageMessage,
+  updateReadStatus,
+  deleteMessage,
+};
