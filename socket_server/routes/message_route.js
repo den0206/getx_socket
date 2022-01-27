@@ -8,7 +8,7 @@ const upload = multer({
     filesize: 4 * 1024 * 1024,
   },
   fileFilter: (req, file, cb) => {
-    const allowedMimes = ['image/jpeg', 'image/jpg', 'image/png'];
+    const allowedMimes = ['image/jpeg', 'image/jpg', 'image/png', 'video/mp4'];
     if (allowedMimes.includes(file.mimetype)) {
       cb(null, true);
     } else {
@@ -18,12 +18,20 @@ const upload = multer({
 });
 
 router.get('/:chatRoomId', messageController.loadMessage);
-router.post('/', messageController.sendMessage);
 
+// Text
+router.post('/', messageController.sendMessage);
+// Image
 router.post(
   '/image',
   upload.single('image'),
   messageController.sendImageMessage
+);
+// Video
+router.post(
+  '/video',
+  upload.array('video', 2),
+  messageController.sendVideoMessage
 );
 
 router.delete('/:id', checkAuth, messageController.deleteMessage);

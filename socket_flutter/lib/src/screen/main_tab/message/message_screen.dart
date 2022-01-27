@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:socket_flutter/src/model/message.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_bubbles/image_bubble.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_bubbles/text_bubble.dart';
+import 'package:socket_flutter/src/screen/main_tab/message/message_bubbles/video_bubble.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_controller.dart';
 import 'package:socket_flutter/src/screen/widget/loading_widget.dart';
 
@@ -148,38 +149,37 @@ class MessageCell extends GetView<MessageController> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               CupertinoContextMenu(
-                actions: [
-                  if (message.isCurrent)
-                    CupertinoContextMenuAction(
-                      isDefaultAction: true,
-                      child: const Text(
-                        'Delete',
-                        style: TextStyle(
-                          color: Colors.red,
+                  actions: [
+                    if (message.isCurrent)
+                      CupertinoContextMenuAction(
+                        isDefaultAction: true,
+                        child: const Text(
+                          'Delete',
+                          style: TextStyle(
+                            color: Colors.red,
+                          ),
                         ),
+                        onPressed: () {
+                          controller.deleteMessage(message);
+                        },
                       ),
+                    CupertinoContextMenuAction(
+                      child: const Text('Cancel'),
                       onPressed: () {
-                        controller.deleteMessage(message);
+                        Navigator.pop(context);
                       },
                     ),
-                  CupertinoContextMenuAction(
-                    child: const Text('Cancel'),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                ],
-                child:Stack(children: [
-                    if (message.type == MessageType.text)
-                      TextBubble(message: message),
-                    if (message.type == MessageType.image)
-                      ImageBubble(message: message),
-                    if (message.type == MessageType.video)
-                      Container()
-                ],)
-                
-             
-              ),
+                  ],
+                  child: Stack(
+                    children: [
+                      if (message.type == MessageType.text)
+                        TextBubble(message: message),
+                      if (message.type == MessageType.image)
+                        ImageBubble(message: message),
+                      if (message.type == MessageType.video)
+                        VideoBubble(message: message)
+                    ],
+                  )),
             ],
           ),
           Padding(

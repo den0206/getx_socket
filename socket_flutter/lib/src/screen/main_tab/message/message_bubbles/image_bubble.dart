@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:socket_flutter/src/model/message.dart';
+import 'package:sizer/sizer.dart';
 
 class ImageBubble extends StatelessWidget {
   const ImageBubble({Key? key, required this.message}) : super(key: key);
@@ -17,8 +18,8 @@ class ImageBubble extends StatelessWidget {
       ),
       child: Image.network(
         message.imageUrl!,
-        width: 200,
-        height: 200,
+        width: 50.w,
+        height: 50.w,
         fit: BoxFit.cover,
         loadingBuilder: (context, child, loadingProgress) {
           if (loadingProgress == null) return child;
@@ -30,8 +31,8 @@ class ImageBubble extends StatelessWidget {
                 Radius.circular(8.0),
               ),
             ),
-            width: 200.0,
-            height: 200.0,
+            width: 50.w,
+            height: 50.w,
             child: Center(
               child: CircularProgressIndicator(
                 color: Colors.black,

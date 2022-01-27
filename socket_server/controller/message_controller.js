@@ -89,6 +89,54 @@ async function sendImageMessage(req, res) {
   }
 }
 
+async function sendVideoMessage(req, res) {
+  const body = req.body;
+  const imageMimes = ['image/jpeg', 'image/jpg', 'image/png'];
+  const videoMimes = ['video/mp4'];
+
+  const message = new Message({
+    chatRoomId: body.chatRoomId,
+    text: body.text,
+    userId: body.userId,
+  });
+
+  try {
+    const files = req.files;
+    if (!files || !(files.length == 2)) {
+      res.status(500).json({status: false, message: 'Not find File OR 2'});
+    }
+    var fileUrls = [];
+
+    // 直列 非同期
+    for (const file of files) {
+      const extention = file.originalname.split('.').pop();
+      var fileName;
+
+      if (imageMimes.includes(file.mimetype)) {
+        fileName = `${message.userId}/messages/${message.id}/image.${extention}`;
+      } else if (videoMimes.includes(file.mimetype)) {
+        fileName = `${message.userId}/messages/${message.id}/video.${extention}`;
+      } else {
+        console.log('Not Fit Type');
+        return;
+      }
+
+      const fileUrl = await AwsClient.uploadImage(file, fileName);
+
+      fileUrls.push(fileUrl);
+    }
+
+    message.videoUrl = fileUrls[0];
+    message.imageUrl = fileUrls[1];
+
+    await message.save();
+    res.status(200).json({status: true, data: message});
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).json({status: false, message: 'Can not create Message'});
+  }
+}
+
 async function updateReadStatus(req, res) {
   const id = req.params.id;
   const readBy = req.body.readBy;
@@ -131,6 +179,28 @@ module.exports = {
   loadMessage,
   sendMessage,
   sendImageMessage,
+  sendVideoMessage,
   updateReadStatus,
   deleteMessage,
 };
+
+// 並列 非同期
+// await Promise.all(
+//   files.map(async (file) => {
+//     const extention = file.originalname.split('.').pop();
+
+//     var fileName;
+//     if (imageMimes.includes(file.mimetype)) {
+//       fileName = `${message.userId}/messages/${message.id}/image.${extention}`;
+//     } else if (videoMimes.includes(file.mimetype)) {
+//       fileName = `${message.userId}/messages/${message.id}/video.${extention}`;
+//     } else {
+//       console.log('Not Fit Type');
+//       return;
+//     }
+
+//     const fileUrl = await AwsClient.uploadImage(file, fileName);
+
+//     fileUrls.push(fileUrl);
+//   })
+// );

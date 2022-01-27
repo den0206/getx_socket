@@ -9,6 +9,7 @@ const messageSchema = mongoose.Schema({
   userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
   readBy: [{type: mongoose.Schema.Types.ObjectId, ref: 'User', default: []}],
   imageUrl: {type: String},
+  videoUrl: {type: String},
   date: {type: Date, default: Date.now},
 });
 

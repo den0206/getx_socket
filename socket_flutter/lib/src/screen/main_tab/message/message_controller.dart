@@ -134,17 +134,21 @@ class MessageController extends GetxController {
 
           if (selectedImage != null) {
             sendMessage(
-              type: MessageType.image,
-              text: "image",
-              file: selectedImage,
-            );
+                type: MessageType.image, text: "image", file: selectedImage);
             Get.back();
           }
         },
       ),
       MessageFileButton(
         icon: Icons.videocam,
-        onPress: () async {},
+        onPress: () async {
+          final selectedVideo = await imageExtention.selectVideo();
+          if (selectedVideo != null) {
+            sendMessage(
+                type: MessageType.video, text: "video", file: selectedVideo);
+            Get.back();
+          }
+        },
       ),
       MessageFileButton(
         icon: Icons.close,

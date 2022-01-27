@@ -121,7 +121,11 @@ class MessageExtention {
         );
         break;
       case MessageType.video:
-        return;
+        if (file == null) return;
+        res = await _messageAPI.sendVideoMessage(
+          message: messageData,
+          videoFile: file,
+        );
     }
 
     if (!res.status) {
@@ -187,7 +191,7 @@ class MessageExtention {
   Future<void> updateReadLists(List<Message> unreads) async {
     print("-----Update READ!!");
 
-    Future.forEach(unreads, (Message message) async {
+    await Future.forEach(unreads, (Message message) async {
       if (!message.isRead) {
         await updateRead(message: message);
       }
