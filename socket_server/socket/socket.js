@@ -69,7 +69,6 @@ function connectIO(server) {
       roomIds = data['userIds'];
 
       roomIds.forEach(function (room) {
-        console.log(room);
         recentIO.to(room).emit('delete', data);
       });
     });

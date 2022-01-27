@@ -18,8 +18,13 @@ const messageSchema = mongoose.Schema({
 messageSchema.pre('remove', async function (next) {
   if (this.imageUrl) {
     console.log('=== Start DELETE');
-    console.log('DELETE RELATION', this._id);
+    console.log('DELETE IAMGE RELATION', this._id);
     await AwsClient.deleteImage(this.imageUrl);
+  }
+  if (this.videoUrl) {
+    console.log('=== Start DELETE');
+    console.log('DELETE VIDEO RELATION', this._id);
+    await AwsClient.deleteImage(this.videoUrl);
   }
   next();
 });

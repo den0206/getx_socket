@@ -99,16 +99,20 @@ async function findByRoomId(req, res) {
 
   var recents;
 
-  /// 使う 0
+  /// 使う(private) 0
   /// 使わない 1
 
   switch (useUserParam) {
     case '0':
-      recents = await Recent.find({chatRoomId: chatRoomid}).populate([
-        'userId',
-        'withUserId',
-      ]);
+      recents = await Recent.find({chatRoomId: chatRoomid})
+        .populate(['userId', 'withUserId'])
+        .populate({
+          path: 'group',
+          model: 'Group',
+          populate: {path: 'members', model: 'User'},
+        });
       break;
+
     case '1':
       recents = await Recent.find({chatRoomId: chatRoomid});
       break;
@@ -117,6 +121,7 @@ async function findByRoomId(req, res) {
       res.status(500).json({status: false, message: 'InValid Params'});
   }
 
+  console.log(recents);
   try {
     res.status(200).json({status: true, data: recents});
   } catch (e) {

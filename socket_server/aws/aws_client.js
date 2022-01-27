@@ -45,6 +45,7 @@ async function uploadImage(file, fileName) {
 async function deleteImage(urlString) {
   const url = new URL(urlString);
   const filePath = `${url.pathname.slice(1)}`;
+
   const params = {
     Bucket: BUCKET_NAME,
     Key: filePath,

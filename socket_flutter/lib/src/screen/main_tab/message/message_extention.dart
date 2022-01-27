@@ -151,6 +151,7 @@ class MessageExtention {
     if (deleteUsers.isNotEmpty) {
       print("RECREATE Recents $deleteUsers!");
 
+      // TODO ---- privateとGroupの分岐
       /// ReCreate New Recent
       final allUsers = [currentUser, ...withUsers];
       await Future.forEach(deleteUsers, (String id) async {

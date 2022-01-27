@@ -19,7 +19,6 @@ class VideoBubbleController extends GetxController {
 
   @override
   void onInit() async {
-    print("Cal");
     super.onInit();
     videoPlayerController = VideoPlayerController.network(videoUrl);
 
@@ -38,7 +37,6 @@ class VideoBubbleController extends GetxController {
         }
       },
     );
-    print(videoPlayerController.value.size.aspectRatio);
 
     chewieController = ChewieController(
       videoPlayerController: videoPlayerController,
@@ -90,23 +88,23 @@ class VideoBubble extends StatelessWidget {
     return GetBuilder<VideoBubbleController>(
       init: VideoBubbleController(message.videoUrl!),
       builder: (controller) {
-        return GestureDetector(
-          onTap: () {
-            controller.playVideo();
-          },
-          child: Container(
-            margin: EdgeInsets.only(bottom: 10, right: 10.0),
-            constraints: BoxConstraints(
-              maxHeight: 250,
-              maxWidth: 300,
-            ),
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey),
-              borderRadius: BorderRadius.circular(8),
-              color: Colors.black,
-            ),
-            child: !controller.isPlayng.value
-                ? Stack(
+        return Container(
+          margin: EdgeInsets.only(bottom: 10, right: 10.0),
+          constraints: BoxConstraints(
+            maxHeight: 250,
+            maxWidth: 300,
+          ),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey),
+            borderRadius: BorderRadius.circular(8),
+            color: Colors.black,
+          ),
+          child: !controller.isPlayng.value
+              ? GestureDetector(
+                  onTap: () {
+                    controller.playVideo();
+                  },
+                  child: Stack(
                     alignment: Alignment.center,
                     children: [
                       Image.network(
@@ -124,11 +122,11 @@ class VideoBubble extends StatelessWidget {
                         size: 80,
                       )
                     ],
-                  )
-                : Chewie(
-                    controller: controller.chewieController,
                   ),
-          ),
+                )
+              : Chewie(
+                  controller: controller.chewieController,
+                ),
         );
       },
     );
