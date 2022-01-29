@@ -15,8 +15,11 @@ class MessageController extends GetxController {
   final ScrollController sC = ScrollController();
 
   final RxList<Message> messages = RxList<Message>();
-  RxBool isLoading = false.obs;
+  final RxBool isLoading = false.obs;
   bool isFirst = true;
+
+  final focusNode = FocusNode();
+  final RxBool showEmoji = false.obs;
 
   /// extention
   final MessageExtention extention = Get.arguments;
@@ -28,6 +31,7 @@ class MessageController extends GetxController {
     await loadMessages();
     if (messages.isNotEmpty) sC.jumpTo(sC.position.minScrollExtent);
 
+    listnFocus();
     listneNewChat();
     listenReadStatus();
   }
@@ -36,6 +40,7 @@ class MessageController extends GetxController {
   void onClose() {
     sC.removeListener(() {});
     sC.dispose();
+    focusNode.dispose();
     extention.stopService();
 
     super.onClose();
@@ -202,5 +207,15 @@ class MessageController extends GetxController {
       /// update Reactive
       messages[index] = temp;
     }
+  }
+
+  void listnFocus() {
+    focusNode.addListener(
+      () {
+        if (focusNode.hasFocus) {
+          showEmoji.call(false);
+        }
+      },
+    );
   }
 }

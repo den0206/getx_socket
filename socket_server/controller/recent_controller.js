@@ -121,7 +121,6 @@ async function findByRoomId(req, res) {
       res.status(500).json({status: false, message: 'InValid Params'});
   }
 
-  console.log(recents);
   try {
     res.status(200).json({status: true, data: recents});
   } catch (e) {

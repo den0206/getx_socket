@@ -103,14 +103,24 @@ class RecentExtention {
 
   Future<void> createRecentAPI(
       String id, String currentUID, List<User> users, String chatRoomId) async {
-    final withUser = id == currentUID ? users.last : users.first;
+    Map<String, dynamic> recent;
 
-    final Map<String, dynamic> recent = {
-      "userId": id,
-      "chatRoomId": chatRoomId,
-      "withUserId": withUser.id,
-    };
+    if (users.length > 2) {
+      recent = {
+        "userId": id,
+        "chatRoomId": chatRoomId,
+        "group": chatRoomId,
+      };
+    } else {
+      /// private
+      final withUser = id == currentUID ? users.last : users.first;
 
+      recent = {
+        "userId": id,
+        "chatRoomId": chatRoomId,
+        "withUserId": withUser.id,
+      };
+    }
     await _recentAPI.createChatRecent(recent);
   }
 
@@ -126,12 +136,20 @@ class RecentExtention {
     return recents;
   }
 
-  Future<void> updateRecentItem(Recent recent, String lastMessage) async {
+  Future<void> updateRecentItem(
+      Recent recent, String lastMessage, bool isDelete) async {
     final uid = recent.user.id;
     var counter = recent.counter;
 
     if (currentUser.id != uid) {
-      counter++;
+      if (!isDelete) {
+        counter++;
+      } else {
+        --counter;
+      }
+      if (counter < 0) {
+        counter = 0;
+      }
     }
 
     final value = {
@@ -156,7 +174,7 @@ class RecentExtention {
 
     if (recents.isNotEmpty) {
       await Future.forEach(recents, (Recent recent) async {
-        await updateRecentItem(recent, last);
+        await updateRecentItem(recent, last, lastMessage == null);
       });
     }
     return recents;

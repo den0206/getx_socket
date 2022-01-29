@@ -11,8 +11,10 @@ environment:
 dependencies:
   chewie: ^1.2.2
   cupertino_icons: ^1.0.2
+  emoji_picker_flutter: ^1.1.1
   flutter:
     sdk: flutter
+  flutter_keyboard_visibility: ^5.1.1
   flutter_slidable: ^1.2.0
   get: ^4.6.1
   http: ^0.13.4

@@ -1,5 +1,7 @@
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
 import 'package:socket_flutter/src/model/message.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_bubbles/image_bubble.dart';
@@ -7,6 +9,7 @@ import 'package:socket_flutter/src/screen/main_tab/message/message_bubbles/text_
 import 'package:socket_flutter/src/screen/main_tab/message/message_bubbles/video_bubble.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_controller.dart';
 import 'package:socket_flutter/src/screen/widget/loading_widget.dart';
+import 'package:sizer/sizer.dart';
 
 class MessageScreen extends GetView<MessageController> {
   const MessageScreen({Key? key}) : super(key: key);
@@ -27,31 +30,37 @@ class MessageScreen extends GetView<MessageController> {
           ),
           Expanded(
             child: Obx(
-              () => Scrollbar(
-                isAlwaysShown: true,
-                controller: controller.sC,
-                child: ListView.builder(
-                  itemCount: controller.messages.length,
-                  controller: controller.sC,
-                  reverse: true,
-                  itemBuilder: (context, index) {
-                    final message = controller.messages[index];
+              () => Stack(
+                children: [
+                  Scrollbar(
+                    isAlwaysShown: true,
+                    controller: controller.sC,
+                    child: ListView.builder(
+                      itemCount: controller.messages.length,
+                      controller: controller.sC,
+                      reverse: true,
+                      itemBuilder: (context, index) {
+                        final message = controller.messages[index];
 
-                    return MessageCell(message: message);
-                  },
-                ),
+                        return MessageCell(message: message);
+                      },
+                    ),
+                  ),
+                  _keybordBackround(context)
+                ],
               ),
             ),
           ),
-          _messageInput(context)
+          _messageInput(context),
+          _emojiSpace()
         ],
       ),
     );
   }
 
   Widget _messageInput(BuildContext context) {
-    return SafeArea(
-      top: false,
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 20),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 10),
         child: Row(
@@ -77,20 +86,23 @@ class MessageScreen extends GetView<MessageController> {
                       icon: Icon(Icons.emoji_emotions_outlined),
                       color: Colors.grey[500],
                       onPressed: () {
-                        print("Emoji");
+                        FocusScope.of(context).unfocus();
+                        controller.showEmoji.toggle();
                       },
                     ),
                     SizedBox(
                       width: 10,
                     ),
                     Expanded(
-                        child: TextField(
-                      controller: controller.tc,
-                      decoration: InputDecoration(
-                        hintText: "Message...",
-                        border: InputBorder.none,
+                      child: TextField(
+                        controller: controller.tc,
+                        focusNode: controller.focusNode,
+                        decoration: InputDecoration(
+                          hintText: "Message...",
+                          border: InputBorder.none,
+                        ),
                       ),
-                    )),
+                    ),
                     IconButton(
                       onPressed: () {
                         controller.showBottomSheet();
@@ -126,6 +138,66 @@ class MessageScreen extends GetView<MessageController> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _emojiSpace() {
+    return Obx(
+      () => Offstage(
+        offstage: !controller.showEmoji.value,
+        child: SizedBox(
+          height: 35.h,
+          child: EmojiPicker(
+            onEmojiSelected: (category, emoji) {
+              controller.tc
+                ..text += emoji.emoji
+                ..selection = TextSelection.fromPosition(
+                    TextPosition(offset: controller.tc.text.length));
+            },
+            onBackspacePressed: () {
+              controller.tc
+                ..text = controller.tc.text.characters.skipLast(1).toString()
+                ..selection = TextSelection.fromPosition(
+                  TextPosition(offset: controller.tc.text.length),
+                );
+            },
+            config: Config(
+              columns: 7,
+              emojiSizeMax: 32.0,
+              verticalSpacing: 0,
+              horizontalSpacing: 0,
+              initCategory: Category.RECENT,
+              bgColor: Color(0xFFF2F2F2),
+              indicatorColor: Colors.blue,
+              iconColor: Colors.grey,
+              iconColorSelected: Colors.blue,
+              progressIndicatorColor: Colors.blue,
+              backspaceColor: Colors.blue,
+              showRecentsTab: true,
+              recentsLimit: 28,
+              noRecentsText: 'No Recents',
+              noRecentsStyle: TextStyle(fontSize: 20, color: Colors.black26),
+              categoryIcons: CategoryIcons(),
+              buttonMode: ButtonMode.MATERIAL,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _keybordBackround(BuildContext context) {
+    return KeyboardDismissOnTap(
+      child: KeyboardVisibilityBuilder(
+        builder: (p0, isKeyboardVisible) {
+          return isKeyboardVisible || controller.showEmoji.value
+              ? Container(
+                  decoration:
+                      BoxDecoration(color: Colors.black.withOpacity(0.4)),
+                )
+              : Container();
+        },
       ),
     );
   }
