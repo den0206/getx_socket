@@ -1,5 +1,8 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:socket_flutter/src/model/custom_exception.dart';
+import 'package:socket_flutter/src/model/response_api.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
 import 'package:socket_flutter/src/utils/enviremont.dart';
 import 'package:http/http.dart' as http;
@@ -11,6 +14,7 @@ abstract class APIBase {
   final Map<String, String> headers = {"Content-type": "application/json"};
 
   final EndPoint endPointType;
+  APIBase(this.endPointType);
 
   String get endpoint {
     return endPointType.name;
@@ -25,20 +29,102 @@ abstract class APIBase {
     return "JWT ${user.sessionToken}";
   }
 
-  APIBase(this.endPointType);
-
-  bool checkToken() {
-    if (token == null) {
-      return false;
-    } else {
-      /// check 401?
-
-      headers["Authorization"] = token!;
-      return true;
+  // GET
+  Future<ResponseAPI> getRequest({required Uri uri, useToken = false}) async {
+    try {
+      if (useToken) {
+        if (token == null) {
+          throw UnauthorisedException("No Token");
+        } else {
+          headers["Authorization"] = token!;
+        }
+      }
+      final res = await http.get(uri, headers: headers);
+      return _filterResponse(res);
+    } on SocketException {
+      throw Exception("No Internet");
     }
+  }
 
-    /// 401 token invalid
-    /// 403 no token
+  // POST
+  Future<ResponseAPI> postRequest(
+      {required Uri uri,
+      required Map<String, dynamic> body,
+      useToken = false}) async {
+    try {
+      if (useToken) {
+        if (token == null) {
+          throw UnauthorisedException("No Token");
+        } else {
+          headers["Authorization"] = token!;
+        }
+      }
+
+      final String bodyParams = json.encode(body);
+      final res = await http.post(uri, headers: headers, body: bodyParams);
+      return _filterResponse(res);
+    } on SocketException {
+      throw Exception("No Internet");
+    }
+  }
+
+  // PUT
+  Future<ResponseAPI> putRequest(
+      {required Uri uri,
+      required Map<String, dynamic> body,
+      useToken = false}) async {
+    try {
+      if (useToken) {
+        if (token == null) {
+          throw UnauthorisedException("No Token");
+        } else {
+          headers["Authorization"] = token!;
+        }
+      }
+
+      final String bodyParams = json.encode(body);
+      final res = await http.put(uri, headers: headers, body: bodyParams);
+      return _filterResponse(res);
+    } on SocketException {
+      throw Exception("No Internet");
+    }
+  }
+
+  // DELETE
+  Future<ResponseAPI> deleteRequest(
+      {required Uri uri, useToken = false}) async {
+    try {
+      if (useToken) {
+        if (token == null) {
+          throw UnauthorisedException("No Token");
+        } else {
+          headers["Authorization"] = token!;
+        }
+      }
+
+      final res = await http.delete(uri, headers: headers);
+      return _filterResponse(res);
+    } on SocketException {
+      throw Exception("No Internet");
+    }
+  }
+
+  ResponseAPI _filterResponse(http.Response response) {
+    final resJson = json.decode(response.body);
+    final responseAPI = ResponseAPI.fromMap(resJson);
+
+    switch (response.statusCode) {
+      case 200:
+        return responseAPI;
+      case 400:
+        throw FetchDataException(responseAPI.message);
+      case 401:
+      case 403:
+        throw UnauthorisedException(responseAPI.message);
+      case 500:
+      default:
+        throw BadRequestException(responseAPI.message);
+    }
   }
 }
 

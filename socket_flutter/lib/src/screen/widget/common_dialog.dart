@@ -103,15 +103,13 @@ class CustomDialog extends StatelessWidget {
   }
 }
 
-Future showError(error) {
+Future showError(String? message) {
   return showDialog(
     context: Get.context!,
     builder: (context) {
       return AlertDialog(
         title: Text("Error"),
-        content: error.message != null
-            ? Text("${error.message} Error")
-            : Text("UnknownError"),
+        content: message != null ? Text(message) : Text("UnknownError"),
         actions: [
           TextButton(
             onPressed: () {

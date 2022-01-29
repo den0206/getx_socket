@@ -1,3 +1,5 @@
+import 'package:socket_flutter/src/screen/widget/common_dialog.dart';
+
 class ResponseAPI {
   final bool status;
   String? message;
@@ -24,3 +26,14 @@ class ResponseAPI {
 
 final invalidError =
     ResponseAPI(status: false, data: null, message: "Invalid Error");
+
+ResponseAPI catchAPIError([String message = "Invalid Error"]) {
+  /// show Allert
+  showError(message);
+
+  return ResponseAPI(
+    status: false,
+    data: null,
+    message: message,
+  );
+}

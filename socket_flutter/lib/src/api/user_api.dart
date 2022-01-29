@@ -7,30 +7,18 @@ class UserAPI extends APIBase {
   Future<ResponseAPI> signUp(Map<String, dynamic> user) async {
     try {
       final Uri uri = Uri.http(host, "$endpoint/signup");
-      final String bodyParams = json.encode(user);
-
-      final res = await client.post(uri, headers: headers, body: bodyParams);
-      final data = json.decode(res.body);
-
-      return ResponseAPI.fromMap(data);
+      return await postRequest(uri: uri, body: user);
     } catch (e) {
-      print(e.toString());
-      return invalidError;
+      return catchAPIError(e.toString());
     }
   }
 
   Future<ResponseAPI> login(Map<String, dynamic> credential) async {
     try {
       final Uri uri = Uri.http(host, "$endpoint/login");
-      final String bodyParams = json.encode(credential);
-
-      final res = await client.post(uri, headers: headers, body: bodyParams);
-      final data = json.decode(res.body);
-
-      final ResponseAPI responseAPI = ResponseAPI.fromMap(data);
-      return responseAPI;
+      return await postRequest(uri: uri, body: credential);
     } catch (e) {
-      return invalidError;
+      return catchAPIError(e.toString());
     }
   }
 
@@ -46,15 +34,9 @@ class UserAPI extends APIBase {
         "$endpoint/",
         query,
       );
-
-      final res = await client.get(uri, headers: headers);
-      final decode = json.decode(res.body);
-
-      final ResponseAPI responseAPI = ResponseAPI.fromMap(decode);
-      return responseAPI;
+      return await getRequest(uri: uri);
     } catch (e) {
-      print(e);
-      return invalidError;
+      return catchAPIError(e.toString());
     }
   }
 }

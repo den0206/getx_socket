@@ -73,6 +73,7 @@ class MessageController extends GetxController {
       {required MessageType type, required String text, File? file}) async {
     await extention.sendMessage(type: type, text: text, file: file);
     tc.clear();
+    showEmoji.call(false);
     _scrollToBottom();
   }
 

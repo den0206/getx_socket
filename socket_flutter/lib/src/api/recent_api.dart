@@ -9,36 +9,19 @@ class RecentAPI extends APIBase {
   Future<ResponseAPI> createChatRecent(Map<String, dynamic> recent) async {
     try {
       final Uri uri = Uri.http(host, "$endpoint/");
-      final String bodyParams = json.encode(recent);
-
-      final res = await client.post(uri, headers: headers, body: bodyParams);
-      final data = json.decode(res.body);
-
-      return ResponseAPI.fromMap(data);
+      return await postRequest(uri: uri, body: recent);
     } catch (e) {
-      print(e.toString());
-      return invalidError;
+      return catchAPIError(e.toString());
     }
   }
 
   Future<ResponseAPI> updateRecent(
       Recent recent, Map<String, dynamic> value) async {
-    if (!checkToken())
-      return ResponseAPI(status: false, data: null, message: "No Token");
-
-    final recentId = recent.id;
     try {
-      final Uri uri = Uri.http(host, "$endpoint/$recentId");
-
-      final String bodyParams = json.encode(value);
-
-      final res = await client.put(uri, body: bodyParams, headers: headers);
-      final data = json.decode(res.body);
-
-      return ResponseAPI.fromMap(data);
+      final Uri uri = Uri.http(host, "$endpoint/${recent.id}");
+      return await putRequest(uri: uri, body: value, useToken: true);
     } catch (e) {
-      print(e.toString());
-      return invalidError;
+      return catchAPIError(e.toString());
     }
   }
 
@@ -46,13 +29,9 @@ class RecentAPI extends APIBase {
       String userId, String chatRoomId) async {
     try {
       final Uri uri = Uri.http(host, "$endpoint/$userId/$chatRoomId");
-      final res = await client.get(uri, headers: headers);
-      final data = json.decode(res.body);
-
-      return ResponseAPI.fromMap(data);
+      return await getRequest(uri: uri);
     } catch (e) {
-      print(e.toString());
-      return invalidError;
+      return catchAPIError(e.toString());
     }
   }
 
@@ -65,16 +44,9 @@ class RecentAPI extends APIBase {
     };
     try {
       final Uri uri = Uri.http(host, "$endpoint/roomid/$chatRoomId", query);
-      final res = await client.get(
-        uri,
-        headers: headers,
-      );
-      final data = json.decode(res.body);
-
-      return ResponseAPI.fromMap(data);
+      return await getRequest(uri: uri);
     } catch (e) {
-      print(e.toString());
-      return invalidError;
+      return catchAPIError(e.toString());
     }
   }
 
@@ -91,34 +63,18 @@ class RecentAPI extends APIBase {
         "$endpoint/userid/${currentUser.id}",
         query,
       );
-
-      final res = await client.get(uri, headers: headers);
-      final decode = json.decode(res.body);
-
-      return ResponseAPI.fromMap(decode);
+      return await getRequest(uri: uri);
     } catch (e) {
-      print(e.toString());
-      return invalidError;
+      return catchAPIError(e.toString());
     }
   }
 
   Future<ResponseAPI> deleteRecent({required String recentId}) async {
-    if (!checkToken())
-      return ResponseAPI(status: false, data: null, message: "No Token");
-
-    /// 401 token invalid
-    /// 403 no token
-
     try {
       final Uri uri = Uri.http(host, "$endpoint/$recentId");
-      final res = await client.delete(uri, headers: headers);
-      print(res.statusCode);
-      final data = json.decode(res.body);
-
-      return ResponseAPI.fromMap(data);
+      return await deleteRequest(uri: uri, useToken: true);
     } catch (e) {
-      print(e.toString());
-      return invalidError;
+      return catchAPIError(e.toString());
     }
   }
 }

@@ -14,14 +14,10 @@ class MessageAPI extends APIBase {
       {required Map<String, dynamic> message}) async {
     try {
       final Uri uri = Uri.http(host, "$endpoint/");
-      final String bodyParams = json.encode(message);
 
-      final res = await client.post(uri, headers: headers, body: bodyParams);
-      final data = json.decode(res.body);
-      return ResponseAPI.fromMap(data);
+      return await postRequest(uri: uri, body: message);
     } catch (e) {
-      print(e.toString());
-      return invalidError;
+      return catchAPIError(e.toString());
     }
   }
 
@@ -101,7 +97,6 @@ class MessageAPI extends APIBase {
       "limit": limit.toString(),
       "cursor": nextCursor,
     };
-
     try {
       final Uri uri = Uri.http(
         host,
@@ -109,13 +104,9 @@ class MessageAPI extends APIBase {
         query,
       );
 
-      final res = await client.get(uri, headers: headers);
-      final decode = json.decode((res.body));
-
-      return ResponseAPI.fromMap(decode);
+      return await getRequest(uri: uri);
     } catch (e) {
-      print(e.toString());
-      return invalidError;
+      return catchAPIError(e.toString());
     }
   }
 
@@ -123,30 +114,18 @@ class MessageAPI extends APIBase {
       String messageId, Map<String, dynamic> readBody) async {
     try {
       final Uri uri = Uri.http(host, "$endpoint/updateRead/$messageId");
-      final String bodyParams = json.encode(readBody);
-
-      final res = await client.put(uri, headers: headers, body: bodyParams);
-      final data = json.decode(res.body);
-      return ResponseAPI.fromMap(data);
+      return await putRequest(uri: uri, body: readBody);
     } catch (e) {
-      print(e.toString());
-      return invalidError;
+      return catchAPIError(e.toString());
     }
   }
 
   Future<ResponseAPI> deleteMessage(String messageId) async {
-    if (!checkToken()) {
-      return ResponseAPI(status: false, data: null, message: "No Token");
-    }
     try {
       final Uri uri = Uri.http(host, "$endpoint/$messageId");
-
-      final res = await client.delete(uri, headers: headers);
-      final data = json.decode(res.body);
-      return ResponseAPI.fromMap(data);
+      return await deleteRequest(uri: uri, useToken: true);
     } catch (e) {
-      print(e.toString());
-      return invalidError;
+      return catchAPIError(e.toString());
     }
   }
 }
