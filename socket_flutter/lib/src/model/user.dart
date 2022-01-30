@@ -78,6 +78,6 @@ ImageProvider getUserImage(User user) {
   if (user.avatarUrl == null) {
     return Image.asset("assets/images/default_user.png").image;
   } else {
-    return NetworkImage(user.avatarUrl!);
+    return Image.network(user.avatarUrl!).image;
   }
 }

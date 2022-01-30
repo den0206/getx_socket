@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/screen/main_tab/users/users_controller.dart';
 import 'package:socket_flutter/src/screen/widget/common_dialog.dart';
+import 'package:socket_flutter/src/screen/widget/custom_button.dart';
 
 class UsersScreen extends StatelessWidget {
   const UsersScreen({Key? key}) : super(key: key);
@@ -65,6 +66,11 @@ class UserCell extends GetView<UsersController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() => ListTile(
+          leading: CircleImageButton(
+            imageProvider: getUserImage(user),
+            size: 30,
+            addShadow: false,
+          ),
           selected: controller.checkSelected(user),
           selectedColor: Colors.black,
           selectedTileColor: Colors.grey.withOpacity(0.3),

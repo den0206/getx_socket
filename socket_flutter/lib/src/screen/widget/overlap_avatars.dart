@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:socket_flutter/src/model/user.dart';
+import 'package:socket_flutter/src/screen/widget/custom_button.dart';
 
 class OverlapAvatars extends StatelessWidget {
   const OverlapAvatars({
@@ -22,16 +23,12 @@ class OverlapAvatars extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           itemCount: users.length,
           itemBuilder: (context, index) {
+            final user = users[index];
             return Align(
               widthFactor: 0.4,
-              child: Container(
-                height: size,
-                width: size,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.white,
-                  border: Border.all(color: Colors.black),
-                ),
+              child: CircleImageButton(
+                imageProvider: getUserImage(user),
+                size: size,
               ),
             );
           },

@@ -3,6 +3,7 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/screen/main_tab/users/user_detail/user_detail_controller.dart';
 import 'package:socket_flutter/src/screen/widget/custom_button.dart';
+import 'package:sizer/sizer.dart';
 
 class UserDetailScreen extends StatelessWidget {
   const UserDetailScreen(this.user, {Key? key}) : super(key: key);
@@ -24,6 +25,13 @@ class UserDetailScreen extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                CircleImageButton(
+                  imageProvider: getUserImage(controller.user),
+                  size: 40.w,
+                ),
+                SizedBox(
+                  height: 40,
+                ),
                 Text(
                   controller.user.name,
                   style: TextStyle(

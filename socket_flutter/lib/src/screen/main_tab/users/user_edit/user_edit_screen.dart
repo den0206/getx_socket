@@ -37,24 +37,14 @@ class UserEditScreen extends GetView<UserEditController> {
               SizedBox(
                 height: 40,
               ),
-              Obx(() => GestureDetector(
+              Obx(() => CircleImageButton(
+                    imageProvider: controller.userImage.value == null
+                        ? getUserImage(controller.editUser)
+                        : FileImage(controller.userImage.value!),
+                    size: 30.w,
                     onTap: () {
                       controller.selectImage();
                     },
-                    child: Container(
-                      width: 30.w,
-                      height: 30.w,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.grey,
-                        image: DecorationImage(
-                          image: controller.userImage.value == null
-                              ? getUserImage(controller.editUser)
-                              : FileImage(controller.userImage.value!),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
                   )),
               SizedBox(
                 height: 40,

@@ -8,7 +8,6 @@ import 'package:socket_flutter/src/api/user_api.dart';
 import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
 import 'package:socket_flutter/src/service/image_extention.dart';
-import 'package:socket_flutter/src/service/storage_service.dart';
 
 class UserEditController extends GetxController {
   final User currentUser = AuthService.to.currentUser.value!;
@@ -55,15 +54,11 @@ class UserEditController extends GetxController {
         userData: editUser.toMap(), avatarFile: userImage.value);
 
     if (!res.status) return;
-    final StorageService storage = StorageService.to;
 
     final newUser = User.fromMap(res.data);
-    newUser.sessionToken = currentUser.sessionToken;
+    await AuthService.to.updateUser(newUser);
 
-    await storage.saveLocal(StorageKey.user, newUser.toMap());
     print(newUser.toString());
-
-    AuthService.to.currentUser.call(newUser);
 
     Get.back();
   }

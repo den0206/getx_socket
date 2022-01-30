@@ -23,8 +23,10 @@ class MyApp extends StatelessWidget {
         return GetMaterialApp(
           title: 'Socket_Flutter',
           theme: ThemeData(
-            primarySwatch: Colors.blue,
-          ),
+              primarySwatch: Colors.blue,
+              appBarTheme: AppBarTheme(
+                backgroundColor: Colors.green,
+              )),
           getPages: AppRoot.pages,
           initialRoute: RootScreen.routeName,
         );

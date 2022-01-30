@@ -29,6 +29,12 @@ class AuthService extends GetxService {
     this.currentUser.call(User.fromMap(value));
   }
 
+  Future<void> updateUser(User newUser) async {
+    newUser.sessionToken = currentUser.value!.sessionToken;
+    await storage.saveLocal(StorageKey.user, newUser.toMap());
+    this.currentUser.call(newUser);
+  }
+
   Future<void> logout() async {
     await Get.delete<RecentsController>();
 

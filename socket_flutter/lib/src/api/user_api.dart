@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:socket_flutter/src/api/api_base.dart';
 import 'package:socket_flutter/src/model/response_api.dart';
-import 'package:socket_flutter/src/model/user.dart';
 
 class UserAPI extends APIBase {
   UserAPI() : super(EndPoint.user);
