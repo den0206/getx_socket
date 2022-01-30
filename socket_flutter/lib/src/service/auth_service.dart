@@ -24,7 +24,6 @@ class AuthService extends GetxService {
   Future<void> loadUser() async {
     if (currentUser.value != null) return;
     final value = await storage.readLocal(StorageKey.user);
-    print(value);
     if (value == null) return;
 
     this.currentUser.call(User.fromMap(value));

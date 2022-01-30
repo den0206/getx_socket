@@ -80,10 +80,15 @@ class MessageController extends GetxController {
   Future<void> deleteMessage(Message message) async {
     final action = await extention.delete(message.id);
     if (action) {
-      // BUG index0 のメッセージを削除するとクラッシュ
+      // BUG indexlast のメッセージを削除するとクラッシュ
 
-      messages.remove(message);
-
+      final index = messages.indexOf(message);
+      if (index == messages.length) {
+        print("Call");
+        return;
+      } else {
+        messages.remove(message);
+      }
       final re = RecentExtention();
 
       /// last message is "Deleted"

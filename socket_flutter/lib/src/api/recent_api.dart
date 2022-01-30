@@ -58,12 +58,9 @@ class RecentAPI extends APIBase {
 
     try {
       final currentUser = AuthService.to.currentUser.value!;
-      final Uri uri = Uri.http(
-        host,
-        "$endpoint/userid/${currentUser.id}",
-        query,
-      );
-      return await getRequest(uri: uri);
+      final Uri uri =
+          Uri.http(host, "$endpoint/userid/${currentUser.id}", query);
+      return await getRequest(uri: uri, useToken: true);
     } catch (e) {
       return catchAPIError(e.toString());
     }
