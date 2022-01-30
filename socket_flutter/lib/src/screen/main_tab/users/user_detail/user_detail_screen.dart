@@ -3,7 +3,6 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/screen/main_tab/users/user_detail/user_detail_controller.dart';
 import 'package:socket_flutter/src/screen/widget/custom_button.dart';
-import 'package:socket_flutter/src/service/auth_service.dart';
 
 class UserDetailScreen extends StatelessWidget {
   const UserDetailScreen(this.user, {Key? key}) : super(key: key);
@@ -33,15 +32,28 @@ class UserDetailScreen extends StatelessWidget {
                       color: Colors.black),
                 ),
                 Text(controller.user.email),
+                SizedBox(
+                  height: 40,
+                ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: controller.user.isCurrent
                       ? [
                           CustomButton(
                             title: "Groups",
-                            background: Colors.green,
+                            background: Colors.orange,
                             onPressed: () {
                               controller.openGroups();
+                            },
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          CustomButton(
+                            title: "Edit",
+                            background: Colors.green,
+                            onPressed: () {
+                              controller.showEdit();
                             },
                           ),
                           SizedBox(
@@ -51,7 +63,7 @@ class UserDetailScreen extends StatelessWidget {
                             title: "Logout",
                             background: Colors.red,
                             onPressed: () {
-                              AuthService.to.logout();
+                              controller.tryLogout(context);
                             },
                           ),
                         ]

@@ -18,7 +18,7 @@ class MessageAPI extends APIBase {
   }
 
   Future<ResponseAPI> sendImageMessage(
-      {required Map<String, String> message, required File file}) async {
+      {required Map<String, dynamic> message, required File file}) async {
     try {
       final Uri uri = Uri.http(host, "$endpoint/image");
       return await updateSingleFile(uri: uri, body: message, file: file);
@@ -28,7 +28,7 @@ class MessageAPI extends APIBase {
   }
 
   Future<ResponseAPI> sendVideoMessage(
-      {required Map<String, String> message, required File videoFile}) async {
+      {required Map<String, dynamic> message, required File videoFile}) async {
     try {
       final Uri uri = Uri.http(host, "$endpoint/video");
       return await updateSingleFile(uri: uri, body: message, file: videoFile);

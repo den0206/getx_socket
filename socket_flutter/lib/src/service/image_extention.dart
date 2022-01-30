@@ -13,6 +13,8 @@ class ImageExtention {
 
     if (_image != null) {
       return File(_image.path);
+    } else {
+      return null;
     }
   }
 

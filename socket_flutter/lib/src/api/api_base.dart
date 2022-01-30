@@ -149,10 +149,13 @@ extension APIBaseExtention on APIBase {
   // MultipartRequest
   Future<ResponseAPI> updateSingleFile({
     required Uri uri,
-    required Map<String, String> body,
+    required Map<String, dynamic> body,
     required File file,
+    String type = "POST",
+    useToken = false,
   }) async {
     try {
+      _setToken(useToken);
       final contentType = lookupMimeType(file.path);
       if (contentType == null) throw Exception("NO Content Type");
       final List<File> inputs = [];
@@ -187,9 +190,13 @@ extension APIBaseExtention on APIBase {
         },
       );
 
-      final request = http.MultipartRequest("POST", uri);
+      // Map<String,dynamic> to <Str,Str>
+      final Map<String, String> stringParameters =
+          body.map((key, value) => MapEntry(key, value.toString()));
+
+      final request = http.MultipartRequest(type, uri);
       request.headers.addAll(headers);
-      request.fields.addAll(body);
+      request.fields.addAll(stringParameters);
       request.files.addAll(multipartFiles);
 
       final res = await request.send();

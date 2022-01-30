@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:socket_flutter/src/api/api_base.dart';
 import 'package:socket_flutter/src/model/response_api.dart';
+import 'package:socket_flutter/src/model/user.dart';
 
 class UserAPI extends APIBase {
   UserAPI() : super(EndPoint.user);
@@ -35,6 +38,29 @@ class UserAPI extends APIBase {
         query,
       );
       return await getRequest(uri: uri);
+    } catch (e) {
+      return catchAPIError(e.toString());
+    }
+  }
+
+  Future<ResponseAPI> editUser(
+      {required Map<String, dynamic> userData, File? avatarFile}) async {
+    try {
+      final Uri uri = Uri.http(
+        host,
+        "$endpoint/edit",
+      );
+
+      if (avatarFile == null) {
+        return await putRequest(uri: uri, body: userData, useToken: true);
+      } else {
+        return await updateSingleFile(
+            uri: uri,
+            body: userData,
+            file: avatarFile,
+            type: "PUT",
+            useToken: true);
+      }
     } catch (e) {
       return catchAPIError(e.toString());
     }

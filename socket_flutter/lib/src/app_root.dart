@@ -7,6 +7,8 @@ import 'package:socket_flutter/src/screen/auth/signup/signup_screen.dart';
 import 'package:socket_flutter/src/screen/main_tab/groups/groups_screen.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_controller.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_screen.dart';
+import 'package:socket_flutter/src/screen/main_tab/users/user_edit/user_edit_controller.dart';
+import 'package:socket_flutter/src/screen/main_tab/users/user_edit/user_edit_screen.dart';
 import 'package:socket_flutter/src/screen/main_tab/users/users_screen.dart';
 import 'package:socket_flutter/src/screen/root_screen.dart';
 
@@ -42,6 +44,15 @@ final List<GetPage> _mainPages = [
   GetPage(
     name: UsersScreen.routeName,
     page: () => UsersScreen(),
+  ),
+  GetPage(
+    name: UserEditScreen.routeName,
+    page: () => UserEditScreen(),
+    binding: BindingsBuilder(
+      () => Get.lazyPut(
+        () => UserEditController(),
+      ),
+    ),
   ),
   GetPage(
     name: MessageScreen.routeName,

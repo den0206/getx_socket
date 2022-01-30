@@ -100,7 +100,7 @@ class MessageExtention {
 
   Future<void> sendMessage(
       {required MessageType type, required String text, File? file}) async {
-    final Map<String, String> messageData = {
+    final Map<String, dynamic> messageData = {
       "chatRoomId": chatRoomId,
       "text": text,
       "userId": currentUser.id,

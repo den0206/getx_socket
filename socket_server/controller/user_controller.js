@@ -1,6 +1,7 @@
 const User = require('../model/user');
 const jwt = require('jsonwebtoken');
 const {encodeBase64, decodeToBase64} = require('../utils/base64');
+const AwsClient = require('../aws/aws_client');
 
 const bcrypt = require('bcrypt');
 
@@ -89,4 +90,33 @@ async function getUsers(req, res) {
   res.status(200).json({status: true, data: data});
 }
 
-module.exports = {signUp, login, getUsers};
+async function updateUser(req, res) {
+  // via Token;
+  const userId = req.userData.userid;
+  const body = req.body;
+  const file = req.file;
+  console.log(userId);
+
+  try {
+    let imagePath = body.avatarUrl;
+    if (file) {
+      const extention = file.originalname.split('.').pop();
+      const fileName = `${userId}/avatar/avatar.${extention}`;
+      imagePath = await AwsClient.uploadImage(file, fileName);
+    }
+
+    const value = {name: body.name, avatarUrl: imagePath};
+    const newUser = await User.findByIdAndUpdate(userId, value, {new: true});
+
+    if (!newUser) {
+      res
+        .status(400)
+        .json({status: false, message: 'Can not fetch edited user'});
+    }
+    res.status(200).json({status: true, data: newUser});
+  } catch (e) {
+    res.status(500).json({status: false, message: 'Can not edit user'});
+  }
+}
+
+module.exports = {signUp, login, getUsers, updateUser};
