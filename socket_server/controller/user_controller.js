@@ -95,7 +95,6 @@ async function updateUser(req, res) {
   const userId = req.userData.userid;
   const body = req.body;
   const file = req.file;
-  console.log(userId);
 
   try {
     let imagePath = body.avatarUrl;
@@ -119,4 +118,21 @@ async function updateUser(req, res) {
   }
 }
 
-module.exports = {signUp, login, getUsers, updateUser};
+async function deleteUser(req, res) {
+  const userId = req.userData.userid;
+
+  try {
+    const findUser = await User.findById(userId);
+    if (!findUser)
+      res.status(400).json({status: false, message: 'Can not find the user'});
+
+    /// delete with pre reletaion
+    await findUser.delete();
+    console.log('=== Complete DELETE');
+    res.status(200).json({status: true, data: findUser});
+  } catch (e) {
+    res.status(500).json({status: false, message: 'Can not delete user'});
+  }
+}
+
+module.exports = {signUp, login, getUsers, updateUser, deleteUser};

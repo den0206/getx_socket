@@ -15,4 +15,6 @@ router.put(
   userController.updateUser
 );
 
+router.delete('/delete', checkAuth, userController.deleteUser);
+
 module.exports = router;

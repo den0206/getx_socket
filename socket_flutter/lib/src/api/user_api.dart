@@ -64,4 +64,16 @@ class UserAPI extends APIBase {
       return catchAPIError(e.toString());
     }
   }
+
+  Future<ResponseAPI> deleteUser() async {
+    try {
+      final Uri uri = Uri.http(
+        host,
+        "$endpoint/delete",
+      );
+      return await deleteRequest(uri: uri, useToken: true);
+    } catch (e) {
+      return catchAPIError(e.toString());
+    }
+  }
 }
