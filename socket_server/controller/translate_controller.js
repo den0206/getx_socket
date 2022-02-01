@@ -1,5 +1,3 @@
-const {param} = require('../routes/translate_route');
-
 const baseURL = process.env.DEEPURL;
 const DEEPKEY = process.env.DEEPKEY;
 
@@ -17,10 +15,14 @@ async function textTR(req, res) {
   const pTarget_lang = query.tar;
 
   // 改行で分ける？
+  var textArray = pText.match(/[^\r\n]+/g);
+  console.log(textArray);
 
   var params = new URLSearchParams();
   params.append('auth_key', DEEPKEY);
-  params.append('text', pText);
+  textArray.forEach((text) => {
+    params.append('text', text);
+  });
   params.append('source_lang', pSource_lang);
   params.append('target_lang', pTarget_lang);
 

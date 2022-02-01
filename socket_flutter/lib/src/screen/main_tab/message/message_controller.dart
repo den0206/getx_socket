@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import 'package:socket_flutter/src/screen/main_tab/message/message_file_sheet.da
 import 'package:socket_flutter/src/screen/main_tab/recents/recents_controller.dart';
 import 'package:socket_flutter/src/service/image_extention.dart';
 import 'package:socket_flutter/src/service/recent_extention.dart';
+import 'package:socket_flutter/src/service/storage_service.dart';
 
 class MessageController extends GetxController {
   final TextEditingController tc = TextEditingController();
@@ -17,7 +19,6 @@ class MessageController extends GetxController {
 
   final RxList<Message> messages = RxList<Message>();
 
-  final RxString translatedtext = "".obs;
   final RxBool isLoading = false.obs;
   bool isFirst = true;
 
@@ -27,10 +28,19 @@ class MessageController extends GetxController {
   /// extention
   final MessageExtention extention = Get.arguments;
 
+  /// translate
+  final StorageService storage = StorageService.to;
+  final RxString before = "".obs;
+  final RxString after = "".obs;
+  final RxBool isTranslationg = false.obs;
+  final RxBool useRealtime = true.obs;
+  Timer? _trsTimer;
+
   @override
   void onInit() async {
     super.onInit();
     addScrollController();
+    await loadLocal();
     await loadMessages();
     if (messages.isNotEmpty) sC.jumpTo(sC.position.minScrollExtent);
 
@@ -45,8 +55,18 @@ class MessageController extends GetxController {
     sC.dispose();
     focusNode.dispose();
     extention.stopService();
+    _trsTimer?.cancel();
 
     super.onClose();
+  }
+
+  Future<void> loadLocal() async {
+    final currentReal = await storage.readBool(StorageKey.realtime);
+    if (currentReal == null) {
+      useRealtime.call(true);
+    } else {
+      useRealtime.call(currentReal);
+    }
   }
 
   Future<void> loadMessages() async {
@@ -228,17 +248,37 @@ class MessageController extends GetxController {
     );
   }
 
-  void onChangeText(String text) {
-    translatedtext.call(text);
+  Future<void> toggleReal() async {
+    tc.text = "";
+    after.call("");
+    useRealtime.toggle();
+    await storage.saveBool(StorageKey.realtime, useRealtime.value);
+  }
 
-    //
+  void onChangeText(String text) {
+    after.call("");
+
+    _trsTimer?.cancel();
+
+    if (text.length >= 3 && useRealtime.value) {
+      isTranslationg.call(true);
+      _trsTimer = Timer(Duration(seconds: 1), () async {
+        translateText();
+      });
+    }
   }
 
   Future<void> translateText() async {
-    final trs = await extention.translateText(
-        text: tc.text, src: Country.japanese, tar: Country.english);
+    if (!isTranslationg.value) isTranslationg.call(true);
+    try {
+      final trs = await extention.translateText(
+          text: tc.text, src: Country.japanese, tar: Country.english);
 
-    if (trs == null) return;
-    translatedtext.call(trs);
+      if (trs == null) return;
+      after.call(trs);
+    } catch (e) {
+    } finally {
+      isTranslationg.call(false);
+    }
   }
 }

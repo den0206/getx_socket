@@ -249,7 +249,7 @@ extension MessageExtTranslation on MessageExtention {
     final List<Map> translations = List.castFrom(res.data);
     var temp = "";
     translations.forEach((element) {
-      temp += element["text"];
+      temp += element["text"] + "\n";
     });
 
     return temp;

@@ -11,6 +11,7 @@ class StorageService extends GetxService {
     storage = await SharedPreferences.getInstance();
   }
 
+  // String
   Future<void> saveLocal(StorageKey key, dynamic value) async {
     final encoded = json.encode(value);
 
@@ -27,6 +28,19 @@ class StorageService extends GetxService {
     return decoded;
   }
 
+  // Bool
+  Future<void> saveBool(StorageKey key, bool value) async {
+    await storage.setBool(key.keyString, value);
+  }
+
+  Future<bool?> readBool(StorageKey key) async {
+    final value = storage.getBool(key.keyString);
+    if (value == null) {
+      return null;
+    }
+    return value;
+  }
+
   Future<bool> deleteLocal(StorageKey key) async {
     return await storage.remove(key.keyString);
   }
@@ -34,7 +48,7 @@ class StorageService extends GetxService {
 
 enum StorageKey {
   user,
-  barcodeNo,
+  realtime,
 }
 
 extension StorageKeyEXT on StorageKey {
@@ -42,8 +56,8 @@ extension StorageKeyEXT on StorageKey {
     switch (this) {
       case StorageKey.user:
         return "user";
-      case StorageKey.barcodeNo:
-        return "barcodeNo";
+      case StorageKey.realtime:
+        return "realtime";
     }
   }
 }

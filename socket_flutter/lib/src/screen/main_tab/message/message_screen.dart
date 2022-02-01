@@ -2,6 +2,7 @@ import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:socket_flutter/src/model/message.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_bubbles/image_bubble.dart';
@@ -10,6 +11,7 @@ import 'package:socket_flutter/src/screen/main_tab/message/message_bubbles/video
 import 'package:socket_flutter/src/screen/main_tab/message/message_controller.dart';
 import 'package:socket_flutter/src/screen/widget/loading_widget.dart';
 import 'package:sizer/sizer.dart';
+import 'package:socket_flutter/src/utils/global_functions.dart';
 
 class MessageScreen extends GetView<MessageController> {
   const MessageScreen({Key? key}) : super(key: key);
@@ -21,6 +23,36 @@ class MessageScreen extends GetView<MessageController> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Chats"),
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios,
+          ),
+          onPressed: () {
+            dismisskeyBord(context);
+            Get.back();
+          },
+        ),
+        actions: [
+          Obx(
+            () => Row(
+              children: [
+                Text(
+                  controller.useRealtime.value ? "Realtime" : "No Realtime",
+                  style: TextStyle(fontSize: 10),
+                ),
+                Switch(
+                  value: controller.useRealtime.value,
+                  activeColor: Colors.orange,
+                  inactiveTrackColor: Colors.white,
+                  onChanged: (value) {
+                    controller.toggleReal();
+                  },
+                ),
+              ],
+            ),
+          )
+        ],
       ),
       body: Column(
         children: [
@@ -195,42 +227,57 @@ class MessageScreen extends GetView<MessageController> {
       child: KeyboardVisibilityBuilder(
         builder: (p0, isKeyboardVisible) {
           return isKeyboardVisible || controller.showEmoji.value
-              ? Stack(
-                  children: [
-                    Container(
-                      decoration:
-                          BoxDecoration(color: Colors.black.withOpacity(0.4)),
-                    ),
-                    Obx(
-                      () => Center(
-                        child: controller.translatedtext.value != ""
+              ? Obx(() {
+                  return Stack(
+                    children: [
+                      Container(
+                        decoration:
+                            BoxDecoration(color: Colors.black.withOpacity(0.4)),
+                      ),
+                      Center(
+                        child: controller.after.value != ""
                             ? BubbleSelf(
-                                text: controller.translatedtext.value,
+                                text: controller.after.value,
                                 bubbleColor: Colors.green,
                                 textColor: Colors.white,
                                 bottomLeft: 12,
                                 bottomRight: 0)
-                            : null,
+                            : controller.isTranslationg.value
+                                ? WaveLoading()
+                                : null,
                       ),
-                    ),
-                    Align(
-                      alignment: Alignment.bottomLeft,
-                      child: Padding(
-                        padding: EdgeInsets.all(24.0),
-                        child: FloatingActionButton(
-                          backgroundColor: Colors.orange[300],
-                          child: Icon(Icons.translate),
-                          onPressed: () {
-                            controller.translateText();
-                          },
-                        ),
-                      ),
-                    )
-                  ],
-                )
+                      if (!controller.useRealtime.value)
+                        Align(
+                          alignment: Alignment.bottomLeft,
+                          child: Padding(
+                            padding: EdgeInsets.all(24.0),
+                            child: FloatingActionButton(
+                              backgroundColor: Colors.orange[300],
+                              child: Icon(Icons.translate),
+                              onPressed: () {
+                                controller.translateText();
+                              },
+                            ),
+                          ),
+                        )
+                    ],
+                  );
+                })
               : Container();
         },
       ),
+    );
+  }
+}
+
+class WaveLoading extends StatelessWidget {
+  const WaveLoading({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SpinKitWave(
+      color: Color(0xffffffff),
+      size: 30,
     );
   }
 }
