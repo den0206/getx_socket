@@ -19,6 +19,31 @@ class FetchDataException extends CustomException {
   FetchDataException(message) : super(message, "Error During Communication: ");
 }
 
+class NotFoundException extends CustomException {
+  NotFoundException(message) : super(message, "Not Found: ");
+}
+
+class ExceedLimitException extends CustomException {
+  ExceedLimitException(message) : super(message, "ExceedLimit: ");
+}
+
+class URLTooLongException extends CustomException {
+  URLTooLongException(message) : super(message, "Url is Too Long: ");
+}
+
+class TooManyRequestException extends CustomException {
+  TooManyRequestException(message) : super(message, "Too Many Request: ");
+}
+
+class QuotaExceedException extends CustomException {
+  QuotaExceedException(message) : super(message, "QuotaExceed: ");
+}
+
+class ResourceUnavailableException extends CustomException {
+  ResourceUnavailableException(message)
+      : super(message, "The Resource Unavailable: ");
+}
+
 class BadRequestException extends CustomException {
   BadRequestException(message) : super(message, "Invalid Request: ");
 }

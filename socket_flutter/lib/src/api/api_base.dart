@@ -68,6 +68,19 @@ abstract class APIBase {
       case 401:
       case 403:
         throw UnauthorisedException(responseAPI.message);
+      case 404:
+        throw NotFoundException(responseAPI.message);
+      case 413:
+        throw ExceedLimitException(responseAPI.message);
+      case 414:
+        throw URLTooLongException(responseAPI.message);
+      case 429:
+      case 529:
+        throw TooManyRequestException(responseAPI.message);
+      case 456:
+        throw QuotaExceedException(responseAPI.message);
+      case 503:
+        throw ResourceUnavailableException(responseAPI.message);
       case 500:
       default:
         throw BadRequestException(responseAPI.message);
@@ -210,7 +223,7 @@ extension APIBaseExtention on APIBase {
   }
 }
 
-enum EndPoint { user, recent, message, group }
+enum EndPoint { user, recent, message, group, translate }
 
 extension EndPointEXT on EndPoint {
   String get name {
@@ -225,6 +238,8 @@ extension EndPointEXT on EndPoint {
         return "$APIVer/messages";
       case EndPoint.group:
         return "$APIVer/groups";
+      case EndPoint.translate:
+        return "$APIVer/translate";
     }
   }
 }

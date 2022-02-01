@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:socket_flutter/src/model/country.dart';
 import 'package:socket_flutter/src/model/message.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_extention.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_file_sheet.dart';
@@ -15,6 +16,8 @@ class MessageController extends GetxController {
   final ScrollController sC = ScrollController();
 
   final RxList<Message> messages = RxList<Message>();
+
+  final RxString translatedtext = "".obs;
   final RxBool isLoading = false.obs;
   bool isFirst = true;
 
@@ -223,5 +226,19 @@ class MessageController extends GetxController {
         }
       },
     );
+  }
+
+  void onChangeText(String text) {
+    translatedtext.call(text);
+
+    //
+  }
+
+  Future<void> translateText() async {
+    final trs = await extention.translateText(
+        text: tc.text, src: Country.japanese, tar: Country.english);
+
+    if (trs == null) return;
+    translatedtext.call(trs);
   }
 }

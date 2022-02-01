@@ -10,29 +10,57 @@ class TextBubble extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: Colors.transparent,
-      child: Container(
-        padding: EdgeInsets.all(10),
-        margin: EdgeInsets.all(10),
-        constraints: BoxConstraints(
-          maxWidth: MediaQuery.of(context).size.width * 0.6,
+      child: BubbleSelf(
+        text: message.text,
+        bubbleColor: message.isCurrent ? Colors.green : Colors.grey[200],
+        textColor: message.isCurrent ? Colors.white : Colors.grey[800],
+        bottomLeft: message.isCurrent ? 12 : 0,
+        bottomRight: message.isCurrent ? 0 : 12,
+      ),
+    );
+  }
+}
+
+class BubbleSelf extends StatelessWidget {
+  const BubbleSelf({
+    Key? key,
+    required this.text,
+    this.bubbleColor,
+    this.textColor,
+    required this.bottomLeft,
+    required this.bottomRight,
+  }) : super(key: key);
+
+  final String text;
+  final Color? bubbleColor;
+  final Color? textColor;
+  final double bottomLeft;
+  final double bottomRight;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(10),
+      margin: EdgeInsets.all(10),
+      constraints: BoxConstraints(
+        maxWidth: MediaQuery.of(context).size.width * 0.6,
+      ),
+      decoration: BoxDecoration(
+        color: bubbleColor,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(16),
+          topRight: Radius.circular(16),
+          bottomLeft: Radius.circular(bottomLeft),
+          bottomRight: Radius.circular(bottomRight),
         ),
-        decoration: BoxDecoration(
-          color: message.isCurrent ? Colors.green : Colors.grey[200],
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(16),
-            topRight: Radius.circular(16),
-            bottomLeft: Radius.circular(message.isCurrent ? 12 : 0),
-            bottomRight: Radius.circular(message.isCurrent ? 0 : 12),
-          ),
-        ),
-        child: Text(
-          message.text,
-          style: TextStyle(
-            fontSize: 24,
-            letterSpacing: 1.5,
-            fontWeight: FontWeight.w600,
-            color: message.isCurrent ? Colors.white : Colors.grey[800],
-          ),
+      ),
+      child: Text(
+        text,
+        style: TextStyle(
+          fontSize: 24,
+          letterSpacing: 1.5,
+          fontWeight: FontWeight.w600,
+          color: textColor,
         ),
       ),
     );

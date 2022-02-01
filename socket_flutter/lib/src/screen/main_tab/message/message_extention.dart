@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:socket_flutter/src/api/message_api.dart';
+import 'package:socket_flutter/src/api/translate_api.dart';
+import 'package:socket_flutter/src/model/country.dart';
 import 'package:socket_flutter/src/model/message.dart';
 import 'package:socket_flutter/src/model/page_feed.dart';
 import 'package:socket_flutter/src/model/user.dart';
@@ -18,6 +20,7 @@ class MessageExtention {
 
   final User currentUser = AuthService.to.currentUser.value!;
   final MessageAPI _messageAPI = MessageAPI();
+  final TranslateAPI _translateAPI = TranslateAPI();
   final RecentExtention re = RecentExtention();
   late IO.Socket socket;
 
@@ -229,5 +232,26 @@ class MessageExtention {
         socket.emit("read", value);
       }
     }
+  }
+}
+
+// translate
+extension MessageExtTranslation on MessageExtention {
+  Future<String?> translateText(
+      {required String text,
+      required Country src,
+      required Country tar}) async {
+    final res =
+        await _translateAPI.getTranslate(text: text, src: src, tar: tar);
+
+    if (!res.status) return null;
+
+    final List<Map> translations = List.castFrom(res.data);
+    var temp = "";
+    translations.forEach((element) {
+      temp += element["text"];
+    });
+
+    return temp;
   }
 }

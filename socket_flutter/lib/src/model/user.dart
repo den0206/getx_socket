@@ -78,6 +78,15 @@ ImageProvider getUserImage(User user) {
   if (user.avatarUrl == null) {
     return Image.asset("assets/images/default_user.png").image;
   } else {
-    return Image.network(user.avatarUrl!).image;
+    return Image.network(
+      user.avatarUrl!,
+      loadingBuilder: (context, child, loadingProgress) {
+        if (loadingProgress == null) return child;
+        return CircularProgressIndicator();
+      },
+      errorBuilder: (context, error, stackTrace) {
+        return Text("Error");
+      },
+    ).image;
   }
 }

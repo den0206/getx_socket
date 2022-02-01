@@ -97,10 +97,13 @@ class MessageScreen extends GetView<MessageController> {
                       child: TextField(
                         controller: controller.tc,
                         focusNode: controller.focusNode,
+                        keyboardType: TextInputType.multiline,
+                        maxLines: 5,
                         decoration: InputDecoration(
                           hintText: "Message...",
                           border: InputBorder.none,
                         ),
+                        onChanged: controller.onChangeText,
                       ),
                     ),
                     IconButton(
@@ -192,9 +195,38 @@ class MessageScreen extends GetView<MessageController> {
       child: KeyboardVisibilityBuilder(
         builder: (p0, isKeyboardVisible) {
           return isKeyboardVisible || controller.showEmoji.value
-              ? Container(
-                  decoration:
-                      BoxDecoration(color: Colors.black.withOpacity(0.4)),
+              ? Stack(
+                  children: [
+                    Container(
+                      decoration:
+                          BoxDecoration(color: Colors.black.withOpacity(0.4)),
+                    ),
+                    Obx(
+                      () => Center(
+                        child: controller.translatedtext.value != ""
+                            ? BubbleSelf(
+                                text: controller.translatedtext.value,
+                                bubbleColor: Colors.green,
+                                textColor: Colors.white,
+                                bottomLeft: 12,
+                                bottomRight: 0)
+                            : null,
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Padding(
+                        padding: EdgeInsets.all(24.0),
+                        child: FloatingActionButton(
+                          backgroundColor: Colors.orange[300],
+                          child: Icon(Icons.translate),
+                          onPressed: () {
+                            controller.translateText();
+                          },
+                        ),
+                      ),
+                    )
+                  ],
                 )
               : Container();
         },
