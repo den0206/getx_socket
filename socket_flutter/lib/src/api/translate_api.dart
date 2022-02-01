@@ -18,7 +18,7 @@ class TranslateAPI extends APIBase {
     try {
       final Uri uri = Uri.http(host, "$endpoint/", query);
 
-      return await getRequest(uri: uri);
+      return await getRequest(uri: uri, useToken: true);
     } catch (e) {
       return catchAPIError(e.toString());
     }

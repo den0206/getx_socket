@@ -269,6 +269,7 @@ class MessageController extends GetxController {
   }
 
   Future<void> translateText() async {
+    if (tc.text.length <= 3) return;
     if (!isTranslationg.value) isTranslationg.call(true);
     try {
       final trs = await extention.translateText(

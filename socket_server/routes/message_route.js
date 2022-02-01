@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const messageController = require('../controller/message_controller');
 const {checkAuth} = require('../middleware/check_auth');
-var multer = require('multer');
 const upload = require('../aws/upload_option');
 
 router.get('/:chatRoomId', messageController.loadMessage);

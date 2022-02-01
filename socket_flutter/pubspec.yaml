@@ -12,6 +12,7 @@ dependencies:
   chewie: ^1.2.2
   cupertino_icons: ^1.0.2
   emoji_picker_flutter: ^1.1.1
+  flag: ^6.0.0
   flutter:
     sdk: flutter
   flutter_keyboard_visibility: ^5.1.1

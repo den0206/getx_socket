@@ -1,9 +1,11 @@
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
+import 'package:flag/flag.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:socket_flutter/src/model/country.dart';
 import 'package:socket_flutter/src/model/message.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_bubbles/image_bubble.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_bubbles/text_bubble.dart';
@@ -22,7 +24,21 @@ class MessageScreen extends GetView<MessageController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Chats"),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Flag.fromCode(
+              Country.english.flagsCode,
+              width: 30,
+              height: 50,
+            ),
+            Flag.fromCode(
+              Country.japanese.flagsCode,
+              height: 25,
+              width: 40,
+            ),
+          ],
+        ),
         automaticallyImplyLeading: false,
         leading: IconButton(
           icon: Icon(
@@ -118,7 +134,7 @@ class MessageScreen extends GetView<MessageController> {
                       icon: Icon(Icons.emoji_emotions_outlined),
                       color: Colors.grey[500],
                       onPressed: () {
-                        FocusScope.of(context).unfocus();
+                        dismisskeyBord(context);
                         controller.showEmoji.toggle();
                       },
                     ),
@@ -129,11 +145,16 @@ class MessageScreen extends GetView<MessageController> {
                       child: TextField(
                         controller: controller.tc,
                         focusNode: controller.focusNode,
+                        maxLength: 50,
                         keyboardType: TextInputType.multiline,
                         maxLines: 5,
                         decoration: InputDecoration(
                           hintText: "Message...",
+                          hintStyle: TextStyle(
+                            height: 1.8,
+                          ),
                           border: InputBorder.none,
+                          counterText: '',
                         ),
                         onChanged: controller.onChangeText,
                       ),
@@ -252,8 +273,9 @@ class MessageScreen extends GetView<MessageController> {
                           child: Padding(
                             padding: EdgeInsets.all(24.0),
                             child: FloatingActionButton(
-                              backgroundColor: Colors.orange[300],
+                              backgroundColor: Colors.green[300],
                               child: Icon(Icons.translate),
+                              heroTag: "translate",
                               onPressed: () {
                                 controller.translateText();
                               },

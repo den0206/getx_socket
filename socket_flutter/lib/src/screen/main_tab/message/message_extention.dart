@@ -248,10 +248,11 @@ extension MessageExtTranslation on MessageExtention {
 
     final List<Map> translations = List.castFrom(res.data);
     var temp = "";
-    translations.forEach((element) {
-      temp += element["text"] + "\n";
+    translations.asMap().forEach((index, element) {
+      temp += element["text"];
+      if (index != translations.length - 1) temp += "\n";
     });
-
+    print(temp);
     return temp;
   }
 }

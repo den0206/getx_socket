@@ -57,7 +57,7 @@ class BubbleSelf extends StatelessWidget {
       child: Text(
         text,
         style: TextStyle(
-          fontSize: 24,
+          fontSize: 20,
           letterSpacing: 1.5,
           fontWeight: FontWeight.w600,
           color: textColor,

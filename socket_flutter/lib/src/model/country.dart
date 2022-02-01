@@ -1,3 +1,5 @@
+import 'package:flag/flag.dart';
+
 enum Country {
   bulgarian,
   czech,
@@ -76,6 +78,59 @@ extension CountryEXT on Country {
         return "SV";
       case Country.chinese:
         return "ZH";
+    }
+  }
+
+  FlagsCode get flagsCode {
+    switch (this) {
+      case Country.bulgarian:
+        return FlagsCode.BG;
+      case Country.czech:
+        return FlagsCode.CZ;
+      case Country.danish:
+        return FlagsCode.DK;
+      case Country.german:
+        return FlagsCode.DE;
+      case Country.greek:
+        return FlagsCode.GR;
+      case Country.spanish:
+        return FlagsCode.ES;
+      case Country.estonian:
+        return FlagsCode.EE;
+      case Country.english:
+        return FlagsCode.US;
+      case Country.french:
+        return FlagsCode.FR;
+      case Country.finnish:
+        return FlagsCode.FI;
+      case Country.hungarian:
+        return FlagsCode.HU;
+      case Country.japanese:
+        return FlagsCode.JP;
+      case Country.lithuanian:
+        return FlagsCode.LT;
+      case Country.italian:
+        return FlagsCode.IT;
+      case Country.latvian:
+        return FlagsCode.LT;
+      case Country.dutch:
+        return FlagsCode.NL;
+      case Country.polish:
+        return FlagsCode.PL;
+      case Country.portuguese:
+        return FlagsCode.PT;
+      case Country.romanian:
+        return FlagsCode.RO;
+      case Country.russian:
+        return FlagsCode.RU;
+      case Country.slovak:
+        return FlagsCode.SK;
+      case Country.slovenian:
+        return FlagsCode.SI;
+      case Country.swedish:
+        return FlagsCode.SE;
+      case Country.chinese:
+        return FlagsCode.CN;
     }
   }
 }

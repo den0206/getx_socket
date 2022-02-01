@@ -7,10 +7,16 @@ const port = process.env.PORT || 3000;
 const connectIO = require('./socket/socket');
 const {connection} = require('./db/database');
 const morgan = require('morgan');
+const mongoSanitize = require('express-mongo-sanitize');
+const helmet = require('helmet');
 
 dotenv.config();
 
 const server = http.createServer(app);
+
+// protect
+app.use(mongoSanitize());
+app.use(helmet());
 
 app.use(cors());
 app.use(express.json());
