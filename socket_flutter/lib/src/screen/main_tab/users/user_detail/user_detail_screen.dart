@@ -1,9 +1,11 @@
+import 'package:country_list_pick/country_list_pick.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/screen/main_tab/users/user_detail/user_detail_controller.dart';
 import 'package:socket_flutter/src/screen/widget/custom_button.dart';
 import 'package:sizer/sizer.dart';
+import 'package:socket_flutter/src/screen/widget/user_country_widget.dart';
 
 class UserDetailScreen extends StatelessWidget {
   const UserDetailScreen(this.user, {Key? key}) : super(key: key);
@@ -25,9 +27,10 @@ class UserDetailScreen extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                CircleImageButton(
-                  imageProvider: getUserImage(controller.user),
+                UserCountryWidget(
+                  user: user,
                   size: 40.w,
+                  addShadow: true,
                 ),
                 SizedBox(
                   height: 40,
@@ -91,6 +94,31 @@ class UserDetailScreen extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class CountryFlagWidget extends StatelessWidget {
+  const CountryFlagWidget({
+    Key? key,
+    required this.country,
+    this.size = 30,
+  }) : super(key: key);
+
+  final CountryCode country;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: size - 5,
+      width: size,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: getCountryFlag(country),
+          fit: BoxFit.contain,
+        ),
+      ),
     );
   }
 }

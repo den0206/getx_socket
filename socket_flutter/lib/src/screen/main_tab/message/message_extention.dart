@@ -24,6 +24,8 @@ class MessageExtention {
   final RecentExtention re = RecentExtention();
   late IO.Socket socket;
 
+  Language targetLanguage = Language.english;
+
   final int limit = 10;
 
   bool reachLast = false;
@@ -254,5 +256,16 @@ extension MessageExtTranslation on MessageExtention {
     });
     print(temp);
     return temp;
+  }
+
+  void setTargetLanguage({Language? language}) {
+    Language current;
+    if (language == null) {
+      current =
+          withUsers.length == 1 ? withUsers[0].mainLanguage : Language.english;
+    } else {
+      current = language;
+    }
+    this.targetLanguage = current;
   }
 }

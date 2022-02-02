@@ -28,6 +28,7 @@ class OverlapAvatars extends StatelessWidget {
               widthFactor: 0.4,
               child: CircleImageButton(
                 imageProvider: getUserImage(user),
+                addShadow: false,
                 size: size,
               ),
             );

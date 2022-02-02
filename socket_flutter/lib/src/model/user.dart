@@ -103,3 +103,10 @@ ImageProvider getUserImage(User user) {
     ).image;
   }
 }
+
+ImageProvider getCountryFlag(CountryCode country) {
+  return Image.asset(
+    country.flagUri!,
+    package: 'country_list_pick',
+  ).image;
+}

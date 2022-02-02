@@ -9,8 +9,12 @@ import 'package:socket_flutter/src/screen/main_tab/message/message_bubbles/image
 import 'package:socket_flutter/src/screen/main_tab/message/message_bubbles/text_bubble.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_bubbles/video_bubble.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_controller.dart';
+import 'package:socket_flutter/src/screen/main_tab/users/user_detail/user_detail_screen.dart';
+import 'package:socket_flutter/src/screen/widget/animated_widget.dart';
 import 'package:socket_flutter/src/screen/widget/loading_widget.dart';
 import 'package:sizer/sizer.dart';
+import 'package:socket_flutter/src/screen/widget/user_country_widget.dart';
+import 'package:socket_flutter/src/service/auth_service.dart';
 import 'package:socket_flutter/src/utils/global_functions.dart';
 
 class MessageScreen extends GetView<MessageController> {
@@ -23,29 +27,16 @@ class MessageScreen extends GetView<MessageController> {
     return Scaffold(
       appBar: AppBar(
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            // Flag.fromCode(
-            //   Language.english.flagsCode,
-            //   width: 30,
-            //   height: 50,
-            // ),
-            // Flag.fromCode(
-            //   Language.japanese.flagsCode,
-            //   height: 25,
-            //   width: 40,
-            // ),
+            if (controller.isPrivate) ...[
+              CountryFlagWidget(
+                  country: controller.extention.withUsers[0].country),
+              Icon(Icons.loop),
+              CountryFlagWidget(
+                  country: AuthService.to.currentUser.value!.country)
+            ],
           ],
-        ),
-        automaticallyImplyLeading: false,
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios,
-          ),
-          onPressed: () {
-            dismisskeyBord(context);
-            Get.back();
-          },
         ),
         actions: [
           Obx(
@@ -247,40 +238,48 @@ class MessageScreen extends GetView<MessageController> {
         builder: (p0, isKeyboardVisible) {
           return isKeyboardVisible || controller.showEmoji.value
               ? Obx(() {
-                  return Stack(
-                    children: [
-                      Container(
-                        decoration:
-                            BoxDecoration(color: Colors.black.withOpacity(0.4)),
-                      ),
-                      Center(
-                        child: controller.after.value != ""
-                            ? BubbleSelf(
-                                text: controller.after.value,
-                                bubbleColor: Colors.green,
-                                textColor: Colors.white,
-                                bottomLeft: 12,
-                                bottomRight: 0)
-                            : controller.isTranslationg.value
-                                ? WaveLoading()
-                                : null,
-                      ),
-                      if (!controller.useRealtime.value)
-                        Align(
-                          alignment: Alignment.bottomLeft,
-                          child: Padding(
-                            padding: EdgeInsets.all(24.0),
-                            child: FloatingActionButton(
-                              backgroundColor: Colors.green[300],
-                              child: Icon(Icons.translate),
-                              heroTag: "translate",
-                              onPressed: () {
-                                controller.translateText();
-                              },
+                  return FadeinWidget(
+                    duration: Duration(milliseconds: 200),
+                    child: Stack(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                              color: Colors.black.withOpacity(0.4)),
+                        ),
+                        Center(
+                          child: controller.after.value != ""
+                              ? FadeinWidget(
+                                  child: BubbleSelf(
+                                      text: controller.after.value,
+                                      bubbleColor: Colors.green,
+                                      textColor: Colors.white,
+                                      bottomLeft: 12,
+                                      bottomRight: 0),
+                                )
+                              : controller.isTranslationg.value
+                                  ? WaveLoading()
+                                  : null,
+                        ),
+                        if (!controller.useRealtime.value)
+                          Align(
+                            alignment: Alignment.bottomLeft,
+                            child: Padding(
+                              padding: EdgeInsets.all(24.0),
+                              child: FloatingActionButton(
+                                backgroundColor: Colors.green[300],
+                                child: Icon(
+                                  Icons.g_translate,
+                                  color: Colors.white,
+                                ),
+                                heroTag: "translate",
+                                onPressed: () {
+                                  controller.translateText();
+                                },
+                              ),
                             ),
-                          ),
-                        )
-                    ],
+                          )
+                      ],
+                    ),
                   );
                 })
               : Container();
@@ -310,15 +309,20 @@ class MessageCell extends GetView<MessageController> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 10),
+      margin: EdgeInsets.only(
+          top: 10,
+          left: message.isCurrent ? 0 : 10,
+          right: message.isCurrent ? 10 : 0),
       child: Column(
         children: [
           Row(
             mainAxisAlignment: message.isCurrent
                 ? MainAxisAlignment.end
                 : MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.end,
+            // crossAxisAlignment: CrossAxisAlignment.end,
             children: [
+              if (!message.isCurrent)
+                Center(child: UserCountryWidget(user: message.user, size: 30)),
               CupertinoContextMenu(
                   actions: [
                     if (message.isCurrent)
@@ -341,15 +345,17 @@ class MessageCell extends GetView<MessageController> {
                       },
                     ),
                   ],
-                  child: Stack(
-                    children: [
-                      if (message.type == MessageType.text)
-                        TextBubble(message: message),
-                      if (message.type == MessageType.image)
-                        ImageBubble(message: message),
-                      if (message.type == MessageType.video)
-                        VideoBubble(message: message)
-                    ],
+                  child: FadeinWidget(
+                    child: Stack(
+                      children: [
+                        if (message.type == MessageType.text)
+                          TextBubble(message: message),
+                        if (message.type == MessageType.image)
+                          ImageBubble(message: message),
+                        if (message.type == MessageType.video)
+                          VideoBubble(message: message)
+                      ],
+                    ),
                   )),
             ],
           ),
@@ -360,7 +366,8 @@ class MessageCell extends GetView<MessageController> {
                   ? MainAxisAlignment.end
                   : MainAxisAlignment.start,
               children: [
-                if (controller.checkRead(message)) Text("Read"),
+                if (controller.checkRead(message) && message.isCurrent)
+                  Text("Read"),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8),
                   child: Text(

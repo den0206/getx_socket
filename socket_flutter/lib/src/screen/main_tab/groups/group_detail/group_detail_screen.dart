@@ -43,7 +43,9 @@ class GroupDetailScreen extends GetView<GroupDetailController> {
                 title: "Message",
                 background: Colors.green,
                 titleColor: Colors.white,
-                onPressed: () {},
+                onPressed: () {
+                  controller.pushMessagePage();
+                },
               ),
             ],
           ),

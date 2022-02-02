@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:socket_flutter/src/model/recent.dart';
-import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/screen/main_tab/main_tab_controller.dart';
 import 'package:socket_flutter/src/screen/main_tab/recents/recents_controller.dart';
-import 'package:socket_flutter/src/screen/widget/custom_button.dart';
 import 'package:socket_flutter/src/screen/widget/overlap_avatars.dart';
+import 'package:socket_flutter/src/screen/widget/user_country_widget.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
 
 class RecentsScreen extends StatelessWidget {
@@ -28,9 +27,8 @@ class RecentsScreen extends StatelessWidget {
                 toolbarHeight: 70,
                 title: Text("Recents"),
                 leading: Center(
-                  child: CircleImageButton(
-                    imageProvider:
-                        getUserImage(AuthService.to.currentUser.value!),
+                  child: UserCountryWidget(
+                    user: AuthService.to.currentUser.value!,
                     size: 35,
                     onTap: () {
                       MainTabController.to.setIndex(2);
@@ -121,10 +119,9 @@ class RecentCell extends GetView<RecentsController> {
           child: Row(
             children: [
               recent.type == RecentType.private
-                  ? CircleImageButton(
-                      imageProvider: getUserImage(recent.withUser!),
+                  ? UserCountryWidget(
+                      user: recent.withUser!,
                       size: 35,
-                      addShadow: false,
                     )
                   : OverlapAvatars(users: recent.group!.members),
               SizedBox(

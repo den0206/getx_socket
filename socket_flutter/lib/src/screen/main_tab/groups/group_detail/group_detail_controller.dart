@@ -3,6 +3,8 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get/route_manager.dart';
 import 'package:socket_flutter/src/api/group_api.dart';
 import 'package:socket_flutter/src/model/group.dart';
+import 'package:socket_flutter/src/screen/main_tab/message/message_extention.dart';
+import 'package:socket_flutter/src/screen/main_tab/message/message_screen.dart';
 import 'package:socket_flutter/src/screen/main_tab/recents/recents_controller.dart';
 
 class GroupDetailController extends GetxController {
@@ -28,5 +30,13 @@ class GroupDetailController extends GetxController {
     }
 
     Get.back(result: deletedId);
+  }
+
+  Future<void> pushMessagePage() async {
+    Get.until((route) => route.isFirst);
+
+    final MessageExtention extention =
+        MessageExtention(chatRoomId: group.id, withUsers: group.members);
+    Get.toNamed(MessageScreen.routeName, arguments: extention);
   }
 }

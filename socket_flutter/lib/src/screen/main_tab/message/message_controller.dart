@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:socket_flutter/src/model/language.dart';
 import 'package:socket_flutter/src/model/message.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_extention.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_file_sheet.dart';
@@ -28,6 +27,10 @@ class MessageController extends GetxController {
   /// extention
   final MessageExtention extention = Get.arguments;
 
+  bool get isPrivate {
+    return extention.withUsers.length == 1 ? true : false;
+  }
+
   /// translate
   final StorageService storage = StorageService.to;
   final RxString before = "".obs;
@@ -39,6 +42,7 @@ class MessageController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
+    extention.setTargetLanguage();
     addScrollController();
     await loadLocal();
     await loadMessages();
@@ -269,11 +273,14 @@ class MessageController extends GetxController {
   }
 
   Future<void> translateText() async {
-    if (tc.text.length <= 3) return;
+    if (tc.text.length <= 2) return;
     if (!isTranslationg.value) isTranslationg.call(true);
     try {
       final trs = await extention.translateText(
-          text: tc.text, src: Language.japanese, tar: Language.english);
+        text: tc.text,
+        src: extention.currentUser.mainLanguage,
+        tar: extention.targetLanguage,
+      );
 
       if (trs == null) return;
       after.call(trs);
