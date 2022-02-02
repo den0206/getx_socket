@@ -6,10 +6,20 @@ import 'package:socket_flutter/src/model/response_api.dart';
 class UserAPI extends APIBase {
   UserAPI() : super(EndPoint.user);
 
-  Future<ResponseAPI> signUp(Map<String, dynamic> user) async {
+  Future<ResponseAPI> signUp(
+      {required Map<String, dynamic> userData, File? avatarFile}) async {
     try {
       final Uri uri = Uri.http(host, "$endpoint/signup");
-      return await postRequest(uri: uri, body: user);
+
+      if (avatarFile == null) {
+        return await postRequest(uri: uri, body: userData);
+      } else {
+        return await updateSingleFile(
+          uri: uri,
+          body: userData,
+          file: avatarFile,
+        );
+      }
     } catch (e) {
       return catchAPIError(e.toString());
     }

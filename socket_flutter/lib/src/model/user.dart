@@ -1,13 +1,18 @@
 import 'dart:convert';
 
+import 'package:country_list_pick/country_list_pick.dart';
 import 'package:flutter/material.dart';
 
+import 'package:socket_flutter/src/model/language.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
+import 'package:socket_flutter/src/utils/global_functions.dart';
 
 class User {
   final String id;
   String name;
   final String email;
+  final CountryCode country;
+  final Language mainLanguage;
 
   String? avatarUrl;
   String? sessionToken;
@@ -22,6 +27,8 @@ class User {
     required this.id,
     required this.name,
     required this.email,
+    required this.country,
+    required this.mainLanguage,
     this.avatarUrl,
     this.sessionToken,
   });
@@ -31,6 +38,8 @@ class User {
       'id': id,
       'name': name,
       'email': email,
+      "countryCode": country.code,
+      "mainLanguage": mainLanguage.name,
       "avatarUrl": avatarUrl,
       'sessionToken': sessionToken,
     };
@@ -41,6 +50,8 @@ class User {
       id: map['id'] ?? '',
       name: map['name'] ?? '',
       email: map['email'] ?? '',
+      country: getCountryFromCode(map["countryCode"] ?? "US"),
+      mainLanguage: getLanguage(map["mainLanguage"] ?? "EN"),
       avatarUrl: map["avatarUrl"],
       sessionToken: map['sessionToken'],
     );
@@ -63,6 +74,8 @@ class User {
       id: id ?? this.id,
       name: name ?? this.name,
       email: email ?? this.email,
+      country: this.country,
+      mainLanguage: this.mainLanguage,
       avatarUrl: avatarUrl ?? this.avatarUrl,
       sessionToken: sessionToken ?? this.sessionToken,
     );
@@ -70,7 +83,7 @@ class User {
 
   @override
   String toString() {
-    return 'User(id: $id, name: $name, email: $email, avatarUrl: $avatarUrl, sessionToken: $sessionToken)';
+    return 'User(id: $id, name: $name, email: $email, country: $country, mainLanguage: $mainLanguage, avatarUrl: $avatarUrl, sessionToken: $sessionToken)';
   }
 }
 

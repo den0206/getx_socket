@@ -7,6 +7,8 @@ const bcrypt = require('bcrypt');
 
 async function signUp(req, res, next) {
   const body = req.body;
+  const file = req.file;
+
   console.log(body);
   const isFind = await User.findOne({email: body.email});
 
@@ -17,13 +19,22 @@ async function signUp(req, res, next) {
 
   const hashed = await bcrypt.hash(body.password, 10);
 
-  const user = new User({
+  let user = new User({
     name: body.name,
     email: body.email,
+    countryCode: body.countryCode,
+    mainLanguage: body.mainLanguage,
     password: hashed,
   });
 
   try {
+    if (file) {
+      const extention = file.originalname.split('.').pop();
+      const fileName = `${user._id}/avatar/avatar.${extention}`;
+      let imagePath = await AwsClient.uploadImage(file, fileName);
+      user.avatarUrl = imagePath;
+    }
+
     await user.save();
     res.status(200).json({status: true, data: user});
   } catch (e) {

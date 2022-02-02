@@ -34,7 +34,7 @@ class CustomTextField extends StatelessWidget {
         ),
         enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(
-            color: Colors.white,
+            color: Colors.black,
           ),
         ),
       ),

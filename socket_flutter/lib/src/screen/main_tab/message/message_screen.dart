@@ -1,11 +1,9 @@
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
-import 'package:flag/flag.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
-import 'package:socket_flutter/src/model/country.dart';
 import 'package:socket_flutter/src/model/message.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_bubbles/image_bubble.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_bubbles/text_bubble.dart';
@@ -27,16 +25,16 @@ class MessageScreen extends GetView<MessageController> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Flag.fromCode(
-              Country.english.flagsCode,
-              width: 30,
-              height: 50,
-            ),
-            Flag.fromCode(
-              Country.japanese.flagsCode,
-              height: 25,
-              width: 40,
-            ),
+            // Flag.fromCode(
+            //   Language.english.flagsCode,
+            //   width: 30,
+            //   height: 50,
+            // ),
+            // Flag.fromCode(
+            //   Language.japanese.flagsCode,
+            //   height: 25,
+            //   width: 40,
+            // ),
           ],
         ),
         automaticallyImplyLeading: false,

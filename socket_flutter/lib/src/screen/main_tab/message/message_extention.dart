@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:socket_flutter/src/api/message_api.dart';
 import 'package:socket_flutter/src/api/translate_api.dart';
-import 'package:socket_flutter/src/model/country.dart';
+import 'package:socket_flutter/src/model/language.dart';
 import 'package:socket_flutter/src/model/message.dart';
 import 'package:socket_flutter/src/model/page_feed.dart';
 import 'package:socket_flutter/src/model/user.dart';
@@ -239,8 +239,8 @@ class MessageExtention {
 extension MessageExtTranslation on MessageExtention {
   Future<String?> translateText(
       {required String text,
-      required Country src,
-      required Country tar}) async {
+      required Language src,
+      required Language tar}) async {
     final res =
         await _translateAPI.getTranslate(text: text, src: src, tar: tar);
 

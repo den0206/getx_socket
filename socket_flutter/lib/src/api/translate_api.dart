@@ -1,5 +1,5 @@
 import 'package:socket_flutter/src/api/api_base.dart';
-import 'package:socket_flutter/src/model/country.dart';
+import 'package:socket_flutter/src/model/language.dart';
 import 'package:socket_flutter/src/model/response_api.dart';
 
 class TranslateAPI extends APIBase {
@@ -7,8 +7,8 @@ class TranslateAPI extends APIBase {
 
   Future<ResponseAPI> getTranslate({
     required String text,
-    required Country src,
-    required Country tar,
+    required Language src,
+    required Language tar,
   }) async {
     final Map<String, dynamic> query = {
       "text": text,

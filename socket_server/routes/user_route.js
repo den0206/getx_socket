@@ -4,7 +4,7 @@ const userController = require('../controller/user_controller');
 const {checkAuth} = require('../middleware/check_auth');
 const upload = require('../aws/upload_option');
 
-router.post('/signup', userController.signUp);
+router.post('/signup', upload.single('image'), userController.signUp);
 router.post('/login', userController.login);
 router.get('/', userController.getUsers);
 

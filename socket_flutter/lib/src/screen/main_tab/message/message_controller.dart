@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:socket_flutter/src/model/country.dart';
+import 'package:socket_flutter/src/model/language.dart';
 import 'package:socket_flutter/src/model/message.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_extention.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_file_sheet.dart';
@@ -273,7 +273,7 @@ class MessageController extends GetxController {
     if (!isTranslationg.value) isTranslationg.call(true);
     try {
       final trs = await extention.translateText(
-          text: tc.text, src: Country.japanese, tar: Country.english);
+          text: tc.text, src: Language.japanese, tar: Language.english);
 
       if (trs == null) return;
       after.call(trs);
