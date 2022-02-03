@@ -240,7 +240,8 @@ class MessageExtention {
 // translate
 extension MessageExtTranslation on MessageExtention {
   Future<String?> translateText(
-      {required String text,
+      {required Map<int, String> text,
+      required String currentTrs,
       required Language src,
       required Language tar}) async {
     final res =
@@ -248,13 +249,26 @@ extension MessageExtTranslation on MessageExtention {
 
     if (!res.status) return null;
 
-    final List<Map> translations = List.castFrom(res.data);
-    var temp = "";
-    translations.asMap().forEach((index, element) {
-      temp += element["text"];
-      if (index != translations.length - 1) temp += "\n";
+    final data = Map.from(res.data);
+    // <int,String> へcast
+    final Map<int, String> current = {};
+    data.entries.forEach((map) => {current[int.parse(map.key)] = map.value});
+    print("今回の翻訳 ${current}");
+
+    // 翻訳済みのテキストを段落つきのmapへ
+    final alreadyTrs = currentTrs.trim().split("\n").asMap();
+
+    var newMap = Map.of(alreadyTrs);
+    current.entries.forEach((element) {
+      newMap[element.key] = element.value;
     });
-    print(temp);
+
+    var temp = "";
+    newMap.entries.forEach((element) {
+      temp += element.value;
+      if (element.key != newMap.keys.last) temp += "\n";
+    });
+
     return temp;
   }
 
@@ -269,3 +283,13 @@ extension MessageExtTranslation on MessageExtention {
     this.targetLanguage = current;
   }
 }
+
+
+//OLD
+   // final List<Map> translations = List.castFrom(res.data);
+    // var temp = "";
+    // translations.asMap().forEach((index, element) {
+    //   temp += element["text"];
+    //   if (index != translations.length - 1) temp += "\n";
+    // });
+// print(temp);

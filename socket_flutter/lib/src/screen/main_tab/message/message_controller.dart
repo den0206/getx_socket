@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:socket_flutter/src/model/custom_exception.dart';
 import 'package:socket_flutter/src/model/message.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_extention.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_file_sheet.dart';
@@ -11,18 +12,22 @@ import 'package:socket_flutter/src/screen/main_tab/recents/recents_controller.da
 import 'package:socket_flutter/src/service/image_extention.dart';
 import 'package:socket_flutter/src/service/recent_extention.dart';
 import 'package:socket_flutter/src/service/storage_service.dart';
+import 'package:socket_flutter/src/utils/global_functions.dart';
+import 'package:stream_transform/stream_transform.dart';
+import 'package:collection/collection.dart';
 
 class MessageController extends GetxController {
   final TextEditingController tc = TextEditingController();
   final ScrollController sC = ScrollController();
 
   final RxList<Message> messages = RxList<Message>();
-
   final RxBool isLoading = false.obs;
   bool isFirst = true;
 
   final focusNode = FocusNode();
   final RxBool showEmoji = false.obs;
+  final RxBool useRealtime = true.obs;
+  final StorageService storage = StorageService.to;
 
   /// extention
   final MessageExtention extention = Get.arguments;
@@ -32,17 +37,19 @@ class MessageController extends GetxController {
   }
 
   /// translate
-  final StorageService storage = StorageService.to;
-  final RxString before = "".obs;
+  final StreamController<String> streamController = StreamController();
   final RxString after = "".obs;
   final RxBool isTranslationg = false.obs;
-  final RxBool useRealtime = true.obs;
-  Timer? _trsTimer;
+
+  String searchText = "";
+  Map<int, String> oldMap = {0: ""};
+  Map<int, String> newMap = {0: ""};
 
   @override
   void onInit() async {
     super.onInit();
     extention.setTargetLanguage();
+    streamText();
     addScrollController();
     await loadLocal();
     await loadMessages();
@@ -59,7 +66,7 @@ class MessageController extends GetxController {
     sC.dispose();
     focusNode.dispose();
     extention.stopService();
-    _trsTimer?.cancel();
+    streamController.close();
 
     super.onClose();
   }
@@ -262,31 +269,68 @@ class MessageController extends GetxController {
   void onChangeText(String text) {
     after.call("");
 
-    _trsTimer?.cancel();
-
     if (text.length >= 3 && useRealtime.value) {
       isTranslationg.call(true);
-      _trsTimer = Timer(Duration(seconds: 1), () async {
-        translateText();
-      });
+      checkText();
     }
   }
 
+  void streamText() {
+    streamController.stream.debounce(Duration(seconds: 1)).listen((s) {
+      // backspaceの時は呼ばない
+      if (!searchText.contains(s) && useRealtime.value) checkText();
+
+      searchText = s;
+    });
+  }
+
+  Future<void> checkText() async {
+    if (tc.text.length <= 3) return;
+
+    final sep = tc.text.trim().split("\n");
+    newMap = sep.asMap();
+
+    // 改行の際は呼ばない
+    if (!DeepCollectionEquality().equals(oldMap, newMap)) {
+      translateText();
+    }
+    oldMap = newMap;
+  }
+
   Future<void> translateText() async {
-    if (tc.text.length <= 2) return;
-    if (!isTranslationg.value) isTranslationg.call(true);
+    isTranslationg.call(true);
     try {
+      final extract = extractrMap(oldMap, newMap);
       final trs = await extention.translateText(
-        text: tc.text,
+        text: extract,
+        currentTrs: after.value,
         src: extention.currentUser.mainLanguage,
         tar: extention.targetLanguage,
       );
-
-      if (trs == null) return;
+      if (trs == null) {
+        throw NotFoundException("Not Found");
+      }
       after.call(trs);
     } catch (e) {
+      print(e.toString());
     } finally {
       isTranslationg.call(false);
     }
   }
 }
+
+
+
+    // if (!isTranslationg.value) isTranslationg.call(true);
+    // try {
+    //   final trs = await extention.translateText(
+    //     text: tc.text,
+    //     src: extention.currentUser.mainLanguage,
+    //     tar: extention.targetLanguage,
+    //   );
+
+  
+    // } catch (e) {
+    // } finally {
+    //   isTranslationg.call(false);
+    // }

@@ -6,12 +6,15 @@ class TranslateAPI extends APIBase {
   TranslateAPI() : super(EndPoint.translate);
 
   Future<ResponseAPI> getTranslate({
-    required String text,
+    required Map<int, String> text,
     required Language src,
     required Language tar,
   }) async {
+    final texts = text.values.toList();
+    final paragraphs = text.keys.map((i) => i.toString()).toList();
     final Map<String, dynamic> query = {
-      "text": text,
+      "texts": texts,
+      "paragraphs": paragraphs,
       "src": src.code,
       "tar": tar.code,
     };

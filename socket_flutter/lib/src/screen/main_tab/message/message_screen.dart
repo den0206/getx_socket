@@ -136,6 +136,7 @@ class MessageScreen extends GetView<MessageController> {
                         focusNode: controller.focusNode,
                         maxLength: 50,
                         keyboardType: TextInputType.multiline,
+                        textInputAction: TextInputAction.newline,
                         maxLines: 5,
                         decoration: InputDecoration(
                           hintText: "Message...",
@@ -145,7 +146,12 @@ class MessageScreen extends GetView<MessageController> {
                           border: InputBorder.none,
                           counterText: '',
                         ),
-                        onChanged: controller.onChangeText,
+                        onChanged: (value) {
+                          controller.streamController.add(value);
+                        },
+                        onSubmitted: (value) {
+                          print("BREAK");
+                        },
                       ),
                     ),
                     IconButton(
@@ -247,18 +253,23 @@ class MessageScreen extends GetView<MessageController> {
                               color: Colors.black.withOpacity(0.4)),
                         ),
                         Center(
-                          child: controller.after.value != ""
-                              ? FadeinWidget(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              if (controller.isTranslationg.value)
+                                WaveLoading(),
+                              if (controller.after.value != "")
+                                FadeinWidget(
                                   child: BubbleSelf(
-                                      text: controller.after.value,
-                                      bubbleColor: Colors.green,
-                                      textColor: Colors.white,
-                                      bottomLeft: 12,
-                                      bottomRight: 0),
+                                    text: controller.after.value,
+                                    bubbleColor: Colors.green,
+                                    textColor: Colors.white,
+                                    bottomLeft: 12,
+                                    bottomRight: 0,
+                                  ),
                                 )
-                              : controller.isTranslationg.value
-                                  ? WaveLoading()
-                                  : null,
+                            ],
+                          ),
                         ),
                         if (!controller.useRealtime.value)
                           Align(
@@ -273,7 +284,7 @@ class MessageScreen extends GetView<MessageController> {
                                 ),
                                 heroTag: "translate",
                                 onPressed: () {
-                                  controller.translateText();
+                                  controller.checkText();
                                 },
                               ),
                             ),
