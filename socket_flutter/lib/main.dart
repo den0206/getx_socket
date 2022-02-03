@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_config/flutter_config.dart';
 import 'package:get/instance_manager.dart';
 import 'package:get/route_manager.dart';
 import 'package:sizer/sizer.dart';
@@ -10,6 +11,7 @@ import 'src/service/storage_service.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Get.put(StorageService()).initStorage();
+  await FlutterConfig.loadEnvVariables();
   runApp(const MyApp());
 }
 

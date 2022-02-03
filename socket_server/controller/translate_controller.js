@@ -1,6 +1,3 @@
-const {param} = require('express/lib/request');
-var qs = require('qs');
-
 const baseURL = process.env.DEEPURL;
 const DEEPKEY = process.env.DEEPKEY;
 
@@ -44,7 +41,7 @@ async function textTR(req, res) {
     }
     res.status(trs.status).json({status: true, data: data});
   } catch (e) {
-    res.json({status: false, message: e.response.data.message});
+    res.json({status: false, message: e.response.body});
   }
 }
 

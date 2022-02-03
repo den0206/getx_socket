@@ -15,6 +15,7 @@ dependencies:
   emoji_picker_flutter: ^1.1.1
   flutter:
     sdk: flutter
+  flutter_config: ^2.0.0
   flutter_keyboard_visibility: ^5.1.1
   flutter_slidable: ^1.2.0
   flutter_spinkit: ^5.1.0
@@ -29,6 +30,7 @@ dependencies:
   stream_transform: ^2.0.0
   video_compress: ^3.1.0
   video_player: ^2.2.14
+  device_info_plus: '^0.0.1'
 
 dev_dependencies:
   flutter_test:

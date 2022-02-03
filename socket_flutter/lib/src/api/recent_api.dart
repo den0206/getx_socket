@@ -8,7 +8,7 @@ class RecentAPI extends APIBase {
 
   Future<ResponseAPI> createChatRecent(Map<String, dynamic> recent) async {
     try {
-      final Uri uri = Uri.http(host, "$endpoint/");
+      final Uri uri = setUri("$endpoint/");
       return await postRequest(uri: uri, body: recent);
     } catch (e) {
       return catchAPIError(e.toString());
@@ -18,7 +18,7 @@ class RecentAPI extends APIBase {
   Future<ResponseAPI> updateRecent(
       Recent recent, Map<String, dynamic> value) async {
     try {
-      final Uri uri = Uri.http(host, "$endpoint/${recent.id}");
+      final Uri uri = setUri("$endpoint/${recent.id}");
       return await putRequest(uri: uri, body: value, useToken: true);
     } catch (e) {
       return catchAPIError(e.toString());
@@ -28,7 +28,7 @@ class RecentAPI extends APIBase {
   Future<ResponseAPI> findOneByRoomIdAndUserId(
       String userId, String chatRoomId) async {
     try {
-      final Uri uri = Uri.http(host, "$endpoint/$userId/$chatRoomId");
+      final Uri uri = setUri("$endpoint/$userId/$chatRoomId");
       return await getRequest(uri: uri);
     } catch (e) {
       return catchAPIError(e.toString());
@@ -43,7 +43,7 @@ class RecentAPI extends APIBase {
       "userParams": includeUserParams ? "0" : "1",
     };
     try {
-      final Uri uri = Uri.http(host, "$endpoint/roomid/$chatRoomId", query);
+      final Uri uri = setUri("$endpoint/roomid/$chatRoomId", query);
       return await getRequest(uri: uri);
     } catch (e) {
       return catchAPIError(e.toString());
@@ -58,8 +58,7 @@ class RecentAPI extends APIBase {
 
     try {
       final currentUser = AuthService.to.currentUser.value!;
-      final Uri uri =
-          Uri.http(host, "$endpoint/userid/${currentUser.id}", query);
+      final Uri uri = setUri("$endpoint/userid/${currentUser.id}", query);
       return await getRequest(uri: uri, useToken: true);
     } catch (e) {
       return catchAPIError(e.toString());
@@ -68,7 +67,7 @@ class RecentAPI extends APIBase {
 
   Future<ResponseAPI> deleteRecent({required String recentId}) async {
     try {
-      final Uri uri = Uri.http(host, "$endpoint/$recentId");
+      final Uri uri = setUri("$endpoint/$recentId");
       return await deleteRequest(uri: uri, useToken: true);
     } catch (e) {
       return catchAPIError(e.toString());

@@ -1,8 +1,14 @@
-const e = require('cors');
 var socket = require('socket.io');
 
 function connectIO(server) {
-  var io = socket(server);
+  const local = process.env.LOCAL;
+  const prodct = process.env.PRODUCT;
+
+  const io = socket(server, {
+    cors: {
+      origin: [local, prodct],
+    },
+  });
 
   var messageIO = io.of('/messages');
   var recentIO = io.of('/recents');

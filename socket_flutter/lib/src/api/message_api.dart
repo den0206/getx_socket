@@ -9,7 +9,7 @@ class MessageAPI extends APIBase {
   Future<ResponseAPI> sendMessage(
       {required Map<String, dynamic> message}) async {
     try {
-      final Uri uri = Uri.http(host, "$endpoint/");
+      final Uri uri = setUri("$endpoint/");
 
       return await postRequest(uri: uri, body: message);
     } catch (e) {
@@ -20,7 +20,7 @@ class MessageAPI extends APIBase {
   Future<ResponseAPI> sendImageMessage(
       {required Map<String, dynamic> message, required File file}) async {
     try {
-      final Uri uri = Uri.http(host, "$endpoint/image");
+      final Uri uri = setUri("$endpoint/image");
       return await updateSingleFile(uri: uri, body: message, file: file);
     } catch (e) {
       return catchAPIError(e.toString());
@@ -30,7 +30,7 @@ class MessageAPI extends APIBase {
   Future<ResponseAPI> sendVideoMessage(
       {required Map<String, dynamic> message, required File videoFile}) async {
     try {
-      final Uri uri = Uri.http(host, "$endpoint/video");
+      final Uri uri = setUri("$endpoint/video");
       return await updateSingleFile(uri: uri, body: message, file: videoFile);
     } catch (e) {
       return catchAPIError(e.toString());
@@ -44,11 +44,7 @@ class MessageAPI extends APIBase {
       "cursor": nextCursor,
     };
     try {
-      final Uri uri = Uri.http(
-        host,
-        "$endpoint/$chatRoomId",
-        query,
-      );
+      final Uri uri = setUri("$endpoint/$chatRoomId", query);
 
       return await getRequest(uri: uri);
     } catch (e) {
@@ -59,7 +55,7 @@ class MessageAPI extends APIBase {
   Future<ResponseAPI> updateReadStatus(
       String messageId, Map<String, dynamic> readBody) async {
     try {
-      final Uri uri = Uri.http(host, "$endpoint/updateRead/$messageId");
+      final Uri uri = setUri("$endpoint/updateRead/$messageId");
       return await putRequest(uri: uri, body: readBody);
     } catch (e) {
       return catchAPIError(e.toString());
@@ -68,7 +64,7 @@ class MessageAPI extends APIBase {
 
   Future<ResponseAPI> deleteMessage(String messageId) async {
     try {
-      final Uri uri = Uri.http(host, "$endpoint/$messageId");
+      final Uri uri = setUri("$endpoint/$messageId");
       return await deleteRequest(uri: uri, useToken: true);
     } catch (e) {
       return catchAPIError(e.toString());

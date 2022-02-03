@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 
+import 'package:flutter_config/flutter_config.dart';
 import 'package:mime/mime.dart';
 import 'package:socket_flutter/src/model/custom_exception.dart';
 import 'package:socket_flutter/src/model/response_api.dart';
@@ -30,6 +32,11 @@ abstract class APIBase {
     }
 
     return "JWT ${user.sessionToken}";
+  }
+
+  void _setAPIKey() {
+    final apiKey = FlutterConfig.get("API_KEY");
+    headers["x-api-key"] = "${apiKey}";
   }
 
   void _setToken(bool useToken) {
@@ -86,6 +93,12 @@ abstract class APIBase {
         throw BadRequestException(responseAPI.message);
     }
   }
+
+  Uri setUri(String path, [Map<String, dynamic>? query]) {
+    return kDebugMode
+        ? Uri.http(host, path, query)
+        : Uri.https(host, path, query);
+  }
 }
 
 /// MARK CRUD 処理の纏め
@@ -93,6 +106,7 @@ extension APIBaseExtention on APIBase {
   // GET
   Future<ResponseAPI> getRequest({required Uri uri, useToken = false}) async {
     try {
+      _setAPIKey();
       _setToken(useToken);
 
       final res = await http.get(uri, headers: headers);
@@ -111,6 +125,7 @@ extension APIBaseExtention on APIBase {
       required Map<String, dynamic> body,
       useToken = false}) async {
     try {
+      _setAPIKey();
       _setToken(useToken);
 
       final String bodyParams = json.encode(body);
@@ -130,6 +145,7 @@ extension APIBaseExtention on APIBase {
       required Map<String, dynamic> body,
       useToken = false}) async {
     try {
+      _setAPIKey();
       _setToken(useToken);
 
       final String bodyParams = json.encode(body);
@@ -147,6 +163,7 @@ extension APIBaseExtention on APIBase {
   Future<ResponseAPI> deleteRequest(
       {required Uri uri, useToken = false}) async {
     try {
+      _setAPIKey();
       _setToken(useToken);
 
       final res = await http.delete(uri, headers: headers);
@@ -168,6 +185,7 @@ extension APIBaseExtention on APIBase {
     useToken = false,
   }) async {
     try {
+      _setAPIKey();
       _setToken(useToken);
       final contentType = lookupMimeType(file.path);
       if (contentType == null) throw Exception("NO Content Type");

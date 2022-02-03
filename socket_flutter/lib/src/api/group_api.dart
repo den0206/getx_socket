@@ -7,7 +7,7 @@ class GropuAPI extends APIBase {
 
   Future<ResponseAPI> createGroup(Map<String, dynamic> group) async {
     try {
-      final Uri uri = Uri.http(host, "$endpoint/");
+      final Uri uri = setUri("$endpoint/");
       return await postRequest(uri: uri, body: group);
     } catch (e) {
       return catchAPIError(e.toString());
@@ -16,7 +16,7 @@ class GropuAPI extends APIBase {
 
   Future<ResponseAPI> findByUserId(String userId) async {
     try {
-      final Uri uri = Uri.http(host, "$endpoint/$userId");
+      final Uri uri = setUri("$endpoint/$userId");
       return await getRequest(uri: uri, useToken: true);
     } catch (e) {
       return catchAPIError(e.toString());
@@ -26,7 +26,7 @@ class GropuAPI extends APIBase {
   Future<ResponseAPI> deleteById(String groupId) async {
     try {
       final currentUser = AuthService.to.currentUser.value!;
-      final Uri uri = Uri.http(host, "$endpoint/$groupId/${currentUser.id}");
+      final Uri uri = setUri("$endpoint/$groupId/${currentUser.id}");
       return await deleteRequest(uri: uri, useToken: true);
     } catch (e) {
       return catchAPIError(e.toString());

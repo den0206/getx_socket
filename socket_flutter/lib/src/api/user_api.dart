@@ -9,7 +9,7 @@ class UserAPI extends APIBase {
   Future<ResponseAPI> signUp(
       {required Map<String, dynamic> userData, File? avatarFile}) async {
     try {
-      final Uri uri = Uri.http(host, "$endpoint/signup");
+      final Uri uri = setUri("$endpoint/signup");
 
       if (avatarFile == null) {
         return await postRequest(uri: uri, body: userData);
@@ -27,7 +27,7 @@ class UserAPI extends APIBase {
 
   Future<ResponseAPI> login(Map<String, dynamic> credential) async {
     try {
-      final Uri uri = Uri.http(host, "$endpoint/login");
+      final Uri uri = setUri("$endpoint/login");
       return await postRequest(uri: uri, body: credential);
     } catch (e) {
       return catchAPIError(e.toString());
@@ -41,11 +41,7 @@ class UserAPI extends APIBase {
     };
 
     try {
-      final Uri uri = Uri.http(
-        host,
-        "$endpoint/",
-        query,
-      );
+      final Uri uri = setUri("$endpoint/", query);
       return await getRequest(uri: uri);
     } catch (e) {
       return catchAPIError(e.toString());
@@ -55,10 +51,7 @@ class UserAPI extends APIBase {
   Future<ResponseAPI> editUser(
       {required Map<String, dynamic> userData, File? avatarFile}) async {
     try {
-      final Uri uri = Uri.http(
-        host,
-        "$endpoint/edit",
-      );
+      final Uri uri = setUri("$endpoint/edit");
 
       if (avatarFile == null) {
         return await putRequest(uri: uri, body: userData, useToken: true);
@@ -77,10 +70,7 @@ class UserAPI extends APIBase {
 
   Future<ResponseAPI> deleteUser() async {
     try {
-      final Uri uri = Uri.http(
-        host,
-        "$endpoint/delete",
-      );
+      final Uri uri = setUri("$endpoint/delete");
       return await deleteRequest(uri: uri, useToken: true);
     } catch (e) {
       return catchAPIError(e.toString());
