@@ -3,7 +3,7 @@ var http = require('http');
 const cors = require('cors');
 const app = express();
 const dotenv = require('dotenv');
-const ngrok = require('ngrok');
+// const ngrok = require('ngrok');
 const port = process.env.PORT || 3000;
 const connectIO = require('./socket/socket');
 const {connection} = require('./db/database');
@@ -40,6 +40,10 @@ const translateRoute = require('./routes/translate_route');
 
 const v1 = process.env.API_URL;
 const ngrokToken = process.env.NGROKTOKEN;
+
+app.get('/', (req, res) => {
+  res.status(200).send('Connect Success');
+});
 
 app.all(`${v1}/*`, checkAPIKey);
 app.use(`${v1}/users`, userRoute);

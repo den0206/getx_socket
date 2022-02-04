@@ -13,7 +13,7 @@ import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 
 abstract class APIBase {
-  final String host = Enviroment.host;
+  final String host = Enviroment.getHost();
   final http.Client client = http.Client();
   final JsonCodec json = JsonCodec();
   final Map<String, String> headers = {"Content-type": "application/json"};

@@ -18,7 +18,7 @@ class RecentIO {
 
   initSocket() {
     socket = IO.io(
-      "${Enviroment.main}/recents",
+      "${Enviroment.getMainUrl()}/recents",
       OptionBuilder()
           .setTransports(['websocket'])
           .setQuery({"userId": currentUser.id})

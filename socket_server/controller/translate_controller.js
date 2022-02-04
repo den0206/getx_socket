@@ -28,6 +28,7 @@ async function textTR(req, res) {
 
   params.append('source_lang', pSource_lang);
   params.append('target_lang', pTarget_lang);
+
   try {
     const trs = await axios.get('/translate', {params});
 
@@ -39,6 +40,7 @@ async function textTR(req, res) {
     } else {
       data[pParagraphs[0]] = trs.data.translations[0].text;
     }
+    console.log(data);
     res.status(trs.status).json({status: true, data: data});
   } catch (e) {
     res.json({status: false, message: e.response.body});

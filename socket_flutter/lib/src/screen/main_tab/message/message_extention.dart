@@ -41,7 +41,7 @@ class MessageExtention {
   _initSocket() {
     print(chatRoomId);
     socket = IO.io(
-      "${Enviroment.main}/messages",
+      "${Enviroment.getMainUrl()}/messages",
       OptionBuilder()
           .setTransports(['websocket'])
           .setQuery({"chatID": chatRoomId})
@@ -280,6 +280,7 @@ extension MessageExtTranslation on MessageExtention {
     } else {
       current = language;
     }
+
     this.targetLanguage = current;
   }
 }
