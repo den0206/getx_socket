@@ -1,6 +1,7 @@
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
@@ -24,73 +25,77 @@ class MessageScreen extends GetView<MessageController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            if (controller.isPrivate) ...[
-              CountryFlagWidget(
-                  country: controller.extention.withUsers[0].country),
-              Icon(Icons.loop),
-              CountryFlagWidget(
-                  country: AuthService.to.currentUser.value!.country)
-            ],
-          ],
-        ),
-        actions: [
-          Obx(
-            () => Row(
-              children: [
-                Text(
-                  controller.useRealtime.value ? "Realtime" : "No Realtime",
-                  style: TextStyle(fontSize: 10),
-                ),
-                Switch(
-                  value: controller.useRealtime.value,
-                  activeColor: Colors.orange,
-                  inactiveTrackColor: Colors.white,
-                  onChanged: (value) {
-                    controller.toggleReal();
-                  },
-                ),
+    return OverlayLoadingWidget(
+      isLoading: controller.isOverLay,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              if (controller.isPrivate) ...[
+                CountryFlagWidget(
+                    country: controller.extention.withUsers[0].country),
+                Icon(Icons.loop),
+                CountryFlagWidget(
+                    country: AuthService.to.currentUser.value!.country)
               ],
-            ),
-          )
-        ],
-      ),
-      body: Column(
-        children: [
-          Obx(
-            () =>
-                controller.isLoading.value ? LoadingCellWidget() : Container(),
+            ],
           ),
-          Expanded(
-            child: Obx(
-              () => Stack(
+          actions: [
+            Obx(
+              () => Row(
                 children: [
-                  Scrollbar(
-                    isAlwaysShown: true,
-                    controller: controller.sC,
-                    child: ListView.builder(
-                      itemCount: controller.messages.length,
-                      controller: controller.sC,
-                      reverse: true,
-                      itemBuilder: (context, index) {
-                        final message = controller.messages[index];
-
-                        return MessageCell(message: message);
-                      },
-                    ),
+                  Text(
+                    controller.useRealtime.value ? "Realtime" : "No Realtime",
+                    style: TextStyle(fontSize: 10),
                   ),
-                  _keybordBackround(context)
+                  Switch(
+                    value: controller.useRealtime.value,
+                    activeColor: Colors.orange,
+                    inactiveTrackColor: Colors.white,
+                    onChanged: (value) {
+                      controller.toggleReal();
+                    },
+                  ),
                 ],
               ),
+            )
+          ],
+        ),
+        body: Column(
+          children: [
+            Obx(
+              () => controller.isLoading.value
+                  ? LoadingCellWidget()
+                  : Container(),
             ),
-          ),
-          _messageInput(context),
-          _emojiSpace()
-        ],
+            Expanded(
+              child: Obx(
+                () => Stack(
+                  children: [
+                    Scrollbar(
+                      isAlwaysShown: true,
+                      controller: controller.sC,
+                      child: ListView.builder(
+                        itemCount: controller.messages.length,
+                        controller: controller.sC,
+                        reverse: true,
+                        itemBuilder: (context, index) {
+                          final message = controller.messages[index];
+
+                          return MessageCell(message: message);
+                        },
+                      ),
+                    ),
+                    _keybordBackround(context)
+                  ],
+                ),
+              ),
+            ),
+            _messageInput(context),
+            _emojiSpace()
+          ],
+        ),
       ),
     );
   }
@@ -257,16 +262,14 @@ class MessageScreen extends GetView<MessageController> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               if (controller.isTranslationg.value)
-                                WaveLoading(),
+                                FadeinWidget(child: WaveLoading()),
                               if (controller.after.value != "")
-                                FadeinWidget(
-                                  child: BubbleSelf(
-                                    text: controller.after.value,
-                                    bubbleColor: Colors.green,
-                                    textColor: Colors.white,
-                                    bottomLeft: 12,
-                                    bottomRight: 0,
-                                  ),
+                                BubbleSelf(
+                                  text: controller.after.value,
+                                  bubbleColor: Colors.green,
+                                  textColor: Colors.white,
+                                  bottomLeft: 12,
+                                  bottomRight: 0,
                                 )
                             ],
                           ),
@@ -336,6 +339,16 @@ class MessageCell extends GetView<MessageController> {
                 Center(child: UserCountryWidget(user: message.user, size: 30)),
               CupertinoContextMenu(
                   actions: [
+                    if (message.type == MessageType.text)
+                      CupertinoContextMenuAction(
+                        isDefaultAction: true,
+                        child: Text("Copy"),
+                        onPressed: () async {
+                          final data = ClipboardData(text: message.text);
+                          await Clipboard.setData(data);
+                          Get.back();
+                        },
+                      ),
                     if (message.isCurrent)
                       CupertinoContextMenuAction(
                         isDefaultAction: true,

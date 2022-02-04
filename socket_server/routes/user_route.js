@@ -15,6 +15,7 @@ router.put(
   userController.updateUser
 );
 
+router.get('/blocks', checkAuth, userController.getBlockUsers);
 router.delete('/delete', checkAuth, userController.deleteUser);
 
 module.exports = router;

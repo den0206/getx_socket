@@ -22,6 +22,7 @@ class MessageController extends GetxController {
 
   final RxList<Message> messages = RxList<Message>();
   final RxBool isLoading = false.obs;
+  final RxBool isOverLay = false.obs;
   bool isFirst = true;
 
   final focusNode = FocusNode();
@@ -112,29 +113,36 @@ class MessageController extends GetxController {
   }
 
   Future<void> deleteMessage(Message message) async {
-    final action = await extention.delete(message.id);
-    if (action) {
-      // BUG indexlast のメッセージを削除するとクラッシュ
+    Get.back();
+    isOverLay.call(true);
+    try {
+      final action = await extention.delete(message.id);
+      if (action) {
+        // BUG indexlast のメッセージを削除するとクラッシュ
 
-      final index = messages.indexOf(message);
-      if (index == messages.length) {
-        print("Call");
-        return;
-      } else {
-        messages.remove(message);
-      }
-      final re = RecentExtention();
+        final index = messages.indexOf(message);
+        if (index == messages.length) {
+          print("Call");
+          return;
+        } else {
+          messages.remove(message);
+        }
+        final re = RecentExtention();
 
-      /// last message is "Deleted"
-      final recents =
-          await re.updateRecentWithLastMessage(chatRoomId: message.chatRoomId);
-      if (recents.isNotEmpty) {
-        recents.forEach((recent) {
-          RecentsController.to.recentIO.sendUpdateRecent(
-              userIds: recent.user.id, chatRoomId: recent.chatRoomId);
-        });
+        /// last message is "Deleted"
+        final recents = await re.updateRecentWithLastMessage(
+            chatRoomId: message.chatRoomId);
+        if (recents.isNotEmpty) {
+          recents.forEach((recent) {
+            RecentsController.to.recentIO.sendUpdateRecent(
+                userIds: recent.user.id, chatRoomId: recent.chatRoomId);
+          });
+        }
       }
-      Get.back();
+    } catch (e) {
+      print(e.toString());
+    } finally {
+      isOverLay.call(false);
     }
   }
 

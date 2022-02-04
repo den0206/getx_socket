@@ -115,7 +115,13 @@ async function updateUser(req, res) {
       imagePath = await AwsClient.uploadImage(file, fileName);
     }
 
-    const value = {name: body.name, avatarUrl: imagePath};
+    const value = {
+      name: body.name,
+      blocked: body.blocked,
+      avatarUrl: imagePath,
+    };
+
+    console.log(value);
     const newUser = await User.findByIdAndUpdate(userId, value, {new: true});
 
     if (!newUser) {
@@ -146,4 +152,28 @@ async function deleteUser(req, res) {
   }
 }
 
-module.exports = {signUp, login, getUsers, updateUser, deleteUser};
+async function getBlockUsers(req, res) {
+  const userId = req.userData.userid;
+
+  try {
+    const findUser = await User.findById(userId).populate(
+      'blocked',
+      '-password'
+    );
+    if (!findUser)
+      res.status(400).json({status: false, message: 'No Find User'});
+
+    res.status(200).json({status: true, message: findUser.blocked});
+  } catch (e) {
+    res.status(500).json({status: false, message: 'Can not create user'});
+  }
+}
+
+module.exports = {
+  signUp,
+  login,
+  getUsers,
+  updateUser,
+  deleteUser,
+  getBlockUsers,
+};

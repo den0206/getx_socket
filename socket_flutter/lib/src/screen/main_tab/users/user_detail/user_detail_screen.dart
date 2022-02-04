@@ -87,6 +87,21 @@ class UserDetailScreen extends StatelessWidget {
                               controller.startPrivateChat();
                             },
                           ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          CustomButton(
+                            title: controller.isBlocked ? "UnBlock" : "Block",
+                            titleColor: controller.isBlocked
+                                ? Colors.black
+                                : Colors.white,
+                            background: controller.isBlocked
+                                ? Colors.yellow
+                                : Colors.purple,
+                            onPressed: () {
+                              controller.blockUser();
+                            },
+                          )
                         ],
                 )
               ],

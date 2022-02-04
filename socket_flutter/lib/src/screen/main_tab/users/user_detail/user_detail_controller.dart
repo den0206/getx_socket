@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/route_manager.dart';
+import 'package:socket_flutter/src/api/user_api.dart';
 import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/screen/main_tab/groups/groups_screen.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_extention.dart';
@@ -14,17 +15,28 @@ class UserDetailController extends GetxController {
   UserDetailController(this.user);
 
   final User user;
+  final currentUser = AuthService.to.currentUser.value!;
+  final UserAPI _userAPI = UserAPI();
+  bool isBlocked = false;
 
   @override
   void onInit() {
     super.onInit();
+
+    isBlocked = currentUser.checkBlocked(user);
+    print(isBlocked);
+    update();
   }
+
+  // bool get isBlocked {
+  //   if (user.isCurrent) return false;
+  //   return currentUser.checkBlocked(user);
+  // }
 
   Future<void> startPrivateChat() async {
     if (user.isCurrent) return;
 
     final cr = RecentExtention();
-    final currentUser = AuthService.to.currentUser.value!;
 
     final chatRoomId = await cr
         .createPrivateChatRoom(currentUser.id, user.id, [currentUser, user]);
@@ -65,5 +77,28 @@ class UserDetailController extends GetxController {
         );
       },
     );
+  }
+
+  Future<void> blockUser() async {
+    if (user.isCurrent) return;
+
+    if (currentUser.checkBlocked(user)) {
+      currentUser.blockedUsers.remove(user.id);
+    } else {
+      currentUser.blockedUsers.add(user.id);
+    }
+
+    final Map<String, dynamic> data = {
+      "blocked": currentUser.blockedUsers.toSet().toList()
+    };
+
+    final res = await _userAPI.editUser(userData: data);
+    if (!res.status) return;
+
+    final newUser = User.fromMap(res.data);
+    await AuthService.to.updateUser(newUser);
+
+    isBlocked = !isBlocked;
+    update();
   }
 }

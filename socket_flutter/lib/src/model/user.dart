@@ -14,6 +14,7 @@ class User {
   final CountryCode country;
   final Language mainLanguage;
 
+  List<String> blockedUsers;
   String? avatarUrl;
   String? sessionToken;
 
@@ -23,12 +24,17 @@ class User {
     return currentUser.id == this.id;
   }
 
+  bool checkBlocked(User user) {
+    return this.blockedUsers.contains(user.id);
+  }
+
   User({
     required this.id,
     required this.name,
     required this.email,
     required this.country,
     required this.mainLanguage,
+    required this.blockedUsers,
     this.avatarUrl,
     this.sessionToken,
   });
@@ -40,6 +46,7 @@ class User {
       'email': email,
       "countryCode": country.code,
       "mainLanguage": mainLanguage.name,
+      "blocked": blockedUsers,
       "avatarUrl": avatarUrl,
       'sessionToken': sessionToken,
     };
@@ -52,6 +59,7 @@ class User {
       email: map['email'] ?? '',
       country: getCountryFromCode(map["countryCode"] ?? "US"),
       mainLanguage: getLanguage(map["mainLanguage"] ?? "EN"),
+      blockedUsers: List<String>.from(map["blocked"]),
       avatarUrl: map["avatarUrl"],
       sessionToken: map['sessionToken'],
     );
@@ -67,6 +75,7 @@ class User {
     String? id,
     String? name,
     String? email,
+    List<String>? blockedUsers,
     String? avatarUrl,
     String? sessionToken,
   }) {
@@ -76,6 +85,7 @@ class User {
       email: email ?? this.email,
       country: this.country,
       mainLanguage: this.mainLanguage,
+      blockedUsers: blockedUsers ?? this.blockedUsers,
       avatarUrl: avatarUrl ?? this.avatarUrl,
       sessionToken: sessionToken ?? this.sessionToken,
     );
@@ -83,7 +93,7 @@ class User {
 
   @override
   String toString() {
-    return 'User(id: $id, name: $name, email: $email, country: $country, mainLanguage: $mainLanguage, avatarUrl: $avatarUrl, sessionToken: $sessionToken)';
+    return 'User(id: $id, name: $name, email: $email, country: $country, mainLanguage: $mainLanguage, blockedUsers: $blockedUsers, avatarUrl: $avatarUrl, sessionToken: $sessionToken)';
   }
 }
 

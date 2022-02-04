@@ -13,6 +13,7 @@ const userSchema = mongoose.Schema({
   countryCode: {type: String, required: true},
   mainLanguage: {type: String, required: true},
   password: {type: String, required: true},
+  blocked: [{type: mongoose.Schema.Types.ObjectId, ref: 'User', default: []}],
 });
 
 userSchema.pre('remove', async function (next) {
