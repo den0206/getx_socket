@@ -14,6 +14,7 @@ class User {
   final CountryCode country;
   final Language mainLanguage;
 
+  String fcmToken;
   List<String> blockedUsers;
   String? avatarUrl;
   String? sessionToken;
@@ -35,6 +36,7 @@ class User {
     required this.country,
     required this.mainLanguage,
     required this.blockedUsers,
+    required this.fcmToken,
     this.avatarUrl,
     this.sessionToken,
   });
@@ -45,6 +47,7 @@ class User {
       'name': name,
       'email': email,
       "countryCode": country.code,
+      "fcmToken": fcmToken,
       "mainLanguage": mainLanguage.name,
       "blocked": blockedUsers,
       "avatarUrl": avatarUrl,
@@ -59,7 +62,8 @@ class User {
       email: map['email'] ?? '',
       country: getCountryFromCode(map["countryCode"] ?? "US"),
       mainLanguage: getLanguage(map["mainLanguage"] ?? "EN"),
-      blockedUsers: List<String>.from(map["blocked"]),
+      fcmToken: map["fcmToken"] ?? "",
+      blockedUsers: List<String>.from(map["blocked"] ?? []),
       avatarUrl: map["avatarUrl"],
       sessionToken: map['sessionToken'],
     );
@@ -75,6 +79,7 @@ class User {
     String? id,
     String? name,
     String? email,
+    String? fcmToken,
     List<String>? blockedUsers,
     String? avatarUrl,
     String? sessionToken,
@@ -85,6 +90,7 @@ class User {
       email: email ?? this.email,
       country: this.country,
       mainLanguage: this.mainLanguage,
+      fcmToken: fcmToken ?? this.fcmToken,
       blockedUsers: blockedUsers ?? this.blockedUsers,
       avatarUrl: avatarUrl ?? this.avatarUrl,
       sessionToken: sessionToken ?? this.sessionToken,
@@ -93,7 +99,7 @@ class User {
 
   @override
   String toString() {
-    return 'User(id: $id, name: $name, email: $email, country: $country, mainLanguage: $mainLanguage, blockedUsers: $blockedUsers, avatarUrl: $avatarUrl, sessionToken: $sessionToken)';
+    return 'User(id: $id, name: $name, email: $email, country: $country, mainLanguage: $mainLanguage, fcmToken: $fcmToken, blockedUsers: $blockedUsers, avatarUrl: $avatarUrl, sessionToken: $sessionToken)';
   }
 }
 

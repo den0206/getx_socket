@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "533410216148",
+    "project_id": "getx-socket",
+    "storage_bucket": "getx-socket.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:533410216148:android:0f68594e413592f642e341",
+        "android_client_info": {
+          "package_name": "com.example.socket_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "533410216148-momlq8thl5sgbafsa1ecdpt9doj32a9a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMDlfyxnDdblOw7aYdAF2HplwlmI6woyY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "533410216148-momlq8thl5sgbafsa1ecdpt9doj32a9a.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "533410216148-vppl3ruhaaaqt82p4797thr9g2poecr3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.socketFlutter"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

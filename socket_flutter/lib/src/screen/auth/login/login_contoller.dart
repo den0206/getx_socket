@@ -5,6 +5,7 @@ import 'package:socket_flutter/src/model/response_api.dart';
 import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/screen/auth/signup/signup_screen.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
+import 'package:socket_flutter/src/service/notification_service.dart';
 import 'package:socket_flutter/src/service/storage_service.dart';
 
 class LoginController extends GetxController {
@@ -20,9 +21,14 @@ class LoginController extends GetxController {
   }
 
   Future<void> login() async {
+    final fcm = await NotificationService.to.getFCMToken();
+
+    if (fcm == null) return;
+
     final Map<String, dynamic> credential = {
       "email": emailController.text,
-      "password": passwordController.text
+      "password": passwordController.text,
+      "fcm": fcm,
     };
 
     final ResponseAPI res = await userAPI.login(credential);

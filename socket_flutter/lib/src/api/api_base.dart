@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-import 'package:flutter_config/flutter_config.dart';
 import 'package:mime/mime.dart';
 import 'package:socket_flutter/src/model/custom_exception.dart';
 import 'package:socket_flutter/src/model/response_api.dart';
@@ -35,7 +35,8 @@ abstract class APIBase {
   }
 
   void _setAPIKey() {
-    final apiKey = FlutterConfig.get("API_KEY");
+    final apiKey = dotenv.env["API_KEY"];
+
     headers["x-api-key"] = "${apiKey}";
   }
 

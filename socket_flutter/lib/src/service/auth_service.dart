@@ -27,6 +27,7 @@ class AuthService extends GetxService {
     if (value == null) return;
 
     this.currentUser.call(User.fromMap(value));
+    print(currentUser.value.toString());
   }
 
   Future<void> updateUser(User newUser) async {

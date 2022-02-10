@@ -54,7 +54,8 @@ class MessageController extends GetxController {
     addScrollController();
     await loadLocal();
     await loadMessages();
-    if (messages.isNotEmpty) sC.jumpTo(sC.position.minScrollExtent);
+    if (messages.isNotEmpty && sC.position.hasPixels)
+      sC.jumpTo(sC.position.minScrollExtent);
 
     listnFocus();
     listneNewChat();

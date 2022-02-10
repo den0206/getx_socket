@@ -49,6 +49,7 @@ class StorageService extends GetxService {
 enum StorageKey {
   user,
   realtime,
+  fcmToken,
 }
 
 extension StorageKeyEXT on StorageKey {
@@ -58,6 +59,8 @@ extension StorageKeyEXT on StorageKey {
         return "user";
       case StorageKey.realtime:
         return "realtime";
+      case StorageKey.fcmToken:
+        return "fcmToken";
     }
   }
 }

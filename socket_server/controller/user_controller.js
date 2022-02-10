@@ -45,8 +45,13 @@ async function signUp(req, res, next) {
 async function login(req, res) {
   const email = req.body.email;
   const password = req.body.password;
+  const fcm = req.body.fcm;
 
-  const user = await User.findOne({email: email});
+  const value = {fcmToken: fcm};
+
+  const user = await User.findOneAndUpdate({email: email}, value, {new: true});
+
+  // const user = await User.findOne({email: email});
 
   if (!user)
     return res.status(400).json({status: false, message: 'No  Exist Email'});
