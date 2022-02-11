@@ -13,7 +13,7 @@ class Recent {
   Group? group;
 
   final String lastMessage;
-  final int counter;
+  int counter;
   final DateTime date;
 
   RecentType get type {

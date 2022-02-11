@@ -53,7 +53,7 @@ class MainTabScreen extends StatelessWidget {
                 NotificationService.to.updateBadges();
                 break;
               case AppLifecycleState.resumed:
-                NotificationService.to.resetBadge();
+                print("ForeGround");
                 break;
               case AppLifecycleState.detached:
                 print('破棄されたときの処理');

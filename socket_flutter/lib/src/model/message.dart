@@ -16,6 +16,8 @@ class Message {
   String? imageUrl;
   String? videoUrl;
 
+  String? translated;
+
   List<String> readBy;
 
   MessageType get type {
@@ -51,6 +53,7 @@ class Message {
     required this.user,
     required this.date,
     required this.readBy,
+    this.translated,
     this.imageUrl,
     this.videoUrl,
   });
@@ -61,6 +64,7 @@ class Message {
       'chatRoomId': chatRoomId,
       'text': text,
       'userId': user.toMap(),
+      "translated": translated ?? null,
       "imageUrl": imageUrl ?? null,
       "videoUrl": videoUrl ?? null,
       'date': date.toIso8601String(),
@@ -74,6 +78,7 @@ class Message {
       text: map['text'] ?? '',
       user: User.fromMap(map['userId']),
       readBy: List<String>.from(map["readBy"] ?? []),
+      translated: map["translated"] ?? null,
       imageUrl: map["imageUrl"] ?? null,
       videoUrl: map["videoUrl"] ?? null,
       date: DateTime.parse(map["date"]).toUtc(),
@@ -87,6 +92,7 @@ class Message {
       text: map['text'] ?? '',
       user: user,
       readBy: List<String>.from(map["readBy"]),
+      translated: map["translated"] ?? null,
       imageUrl: map["imageUrl"] ?? null,
       videoUrl: map["videoUrl"] ?? null,
       date: DateTime.parse(map["date"]).toUtc(),
@@ -103,6 +109,6 @@ class Message {
 
   @override
   String toString() {
-    return 'Message(id: $id, chatRoomId: $chatRoomId, text: $text, user: $user, date: $date, imageUrl: $imageUrl, videoUrl: $videoUrl, readBy: $readBy)';
+    return 'Message(id: $id, chatRoomId: $chatRoomId, text: $text, user: $user, date: $date, imageUrl: $imageUrl, videoUrl: $videoUrl, translated: $translated, readBy: $readBy)';
   }
 }

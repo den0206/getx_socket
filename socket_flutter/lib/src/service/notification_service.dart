@@ -88,18 +88,27 @@ class NotificationService extends GetxService {
 
   /// MARK Send
 
-  Future<void> pushNotification() async {
+  Future<void> pushNotification({
+    required List<String> tokens,
+    required String lastMessage,
+    String title = "New Message",
+  }) async {
+    print(tokens);
     final Map<String, dynamic> data = {
-      "registration_ids": [
-        "e5NsnugORtW73Y7AkAXQQC:APA91bE81q7uDTqT3P9lxVnQE3i1RCqgbmz5jyfryM0-64TdU7ltyAogyJ0UJxYagXHjkkxTcmi7ZWq8p93NAzXMrFelc0Qm3e7UQGdWLCimxBofGhtvoJIv5jf8oRoPuk0fgTiMxR1m"
-      ],
+      "registration_ids": tokens,
       "notification": {
-        "body": "New announcement assigned",
+        "Title": title,
+        "body": lastMessage,
         "content_available": true,
         "priority": "high",
-        "Title": "hello",
-        "badge": 10,
+        "click_action": "FLUTTER_NOTIFICATION_CLICK",
       },
+      "data": {
+        "priority": "high",
+        "sound": "app_sound.wav",
+        "content_available": true,
+        "bodyText": lastMessage,
+      }
     };
 
     final response = await _notificationApi.messageNotification(data);
@@ -117,13 +126,18 @@ class NotificationService extends GetxService {
       return;
     }
 
-    final int badgeCount = res.data;
-
-    FlutterAppBadger.updateBadgeCount(badgeCount);
+    int badgeCount = res.data;
+    if (badgeCount > 0) {
+      if (badgeCount > 99) {
+        badgeCount = 99;
+      }
+      FlutterAppBadger.updateBadgeCount(badgeCount);
+    } else {
+      FlutterAppBadger.removeBadge();
+    }
   }
 
   void resetBadge() {
-    print('Foreground');
     if (!canBadge) return;
     FlutterAppBadger.removeBadge();
   }

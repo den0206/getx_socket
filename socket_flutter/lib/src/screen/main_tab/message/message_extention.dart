@@ -7,6 +7,7 @@ import 'package:socket_flutter/src/model/message.dart';
 import 'package:socket_flutter/src/model/page_feed.dart';
 import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
+import 'package:socket_flutter/src/service/notification_service.dart';
 import 'package:socket_flutter/src/service/recent_extention.dart';
 import 'package:socket_flutter/src/utils/enviremont.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
@@ -103,11 +104,16 @@ class MessageExtention {
     });
   }
 
-  Future<void> sendMessage(
-      {required MessageType type, required String text, File? file}) async {
+  Future<void> sendMessage({
+    required MessageType type,
+    required String text,
+    String? translated,
+    File? file,
+  }) async {
     final Map<String, dynamic> messageData = {
       "chatRoomId": chatRoomId,
       "text": text,
+      "translated": translated,
       "userId": currentUser.id,
     };
 
@@ -138,7 +144,6 @@ class MessageExtention {
       return;
     }
 
-    print(res.data);
     final message = Message.fromMapWithUser(res.data, currentUser);
     if (socket.id == null) return;
 
@@ -162,6 +167,10 @@ class MessageExtention {
         await re.createRecentAPI(id, currentUser.id, allUsers, chatRoomId);
       });
     }
+
+    final tokens = withUsers.map((u) => u.fcmToken).toList();
+    await NotificationService.to
+        .pushNotification(tokens: tokens, lastMessage: message.text);
 
     final Map<String, dynamic> data = {
       "userIds": userIds,

@@ -106,8 +106,12 @@ class MessageController extends GetxController {
   }
 
   Future<void> sendMessage(
-      {required MessageType type, required String text, File? file}) async {
-    await extention.sendMessage(type: type, text: text, file: file);
+      {required MessageType type,
+      required String text,
+      String? translated,
+      File? file}) async {
+    await extention.sendMessage(
+        type: type, text: text, translated: translated, file: file);
     tc.clear();
     showEmoji.call(false);
     _scrollToBottom();

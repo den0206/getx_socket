@@ -188,6 +188,7 @@ class MessageScreen extends GetView<MessageController> {
                   controller.sendMessage(
                     type: MessageType.text,
                     text: controller.tc.text,
+                    translated: controller.after.value,
                   );
                 }
               },
@@ -391,7 +392,11 @@ class MessageCell extends GetView<MessageController> {
                   : MainAxisAlignment.start,
               children: [
                 if (controller.checkRead(message) && message.isCurrent)
-                  Text("Read"),
+                  Icon(
+                    Icons.done_all,
+                    color: Colors.grey,
+                    size: 10.sp,
+                  ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8),
                   child: Text(

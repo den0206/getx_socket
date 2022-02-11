@@ -51,9 +51,11 @@ async function sendMessage(req, res) {
   const message = new Message({
     chatRoomId: body.chatRoomId,
     text: body.text,
+    translated: body.translated,
     userId: body.userId,
   });
 
+  console.log(message);
   try {
     await message.save();
     res.status(200).json({status: true, data: message});

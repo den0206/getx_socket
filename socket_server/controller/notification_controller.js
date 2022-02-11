@@ -16,8 +16,6 @@ async function pushNotification(req, res) {
     Authorization: `key=${serverKey}`,
   };
 
-  console.log(req.body);
-
   try {
     const response = await axios.post('/send', req.body, {headers: headers});
     res.status(200).json({status: true, data: response.data});

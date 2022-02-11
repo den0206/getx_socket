@@ -14,6 +14,7 @@ class LoginController extends GetxController {
 
   final userAPI = UserAPI();
   final StorageService storage = StorageService.to;
+  final RxBool isLoading = false.obs;
 
   @override
   void onInit() {
@@ -31,13 +32,11 @@ class LoginController extends GetxController {
       "fcm": fcm,
     };
 
-    final ResponseAPI res = await userAPI.login(credential);
+    isLoading.call(true);
 
-    if (res.message != null) {
-      print(res.message);
-      return;
-    }
-    if (res.status) {
+    try {
+      final ResponseAPI res = await userAPI.login(credential);
+
       final userData = res.data["user"];
       final token = res.data["token"];
 
@@ -49,6 +48,10 @@ class LoginController extends GetxController {
       await Future.delayed(Duration(seconds: 1));
       await Get.delete<LoginController>();
       AuthService.to.currentUser.call(user);
+    } catch (e) {
+      print(e.toString());
+    } finally {
+      isLoading.call(false);
     }
   }
 

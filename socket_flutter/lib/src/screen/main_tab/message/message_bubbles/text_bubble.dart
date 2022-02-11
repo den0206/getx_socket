@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:socket_flutter/src/model/message.dart';
+import 'package:flip_card/flip_card.dart';
 
 class TextBubble extends StatelessWidget {
   const TextBubble({Key? key, required this.message}) : super(key: key);
@@ -10,12 +11,25 @@ class TextBubble extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: Colors.transparent,
-      child: BubbleSelf(
-        text: message.text,
-        bubbleColor: message.isCurrent ? Colors.green : Colors.grey[200],
-        textColor: message.isCurrent ? Colors.white : Colors.grey[800],
-        bottomLeft: message.isCurrent ? 12 : 0,
-        bottomRight: message.isCurrent ? 0 : 12,
+      child: FlipCard(
+        flipOnTouch: message.translated != null,
+        front: BubbleSelf(
+          text: message.text,
+          bubbleColor: message.isCurrent ? Colors.green : Colors.grey[200],
+          textColor: message.isCurrent ? Colors.white : Colors.grey[800],
+          bottomLeft: message.isCurrent ? 12 : 0,
+          bottomRight: message.isCurrent ? 0 : 12,
+        ),
+        back: BubbleSelf(
+          text: message.translated ?? "",
+          bubbleColor: message.isCurrent ? Colors.green : Colors.grey[200],
+          textColor: message.isCurrent ? Colors.black : Colors.grey[800],
+          bottomLeft: message.isCurrent ? 12 : 0,
+          bottomRight: message.isCurrent ? 0 : 12,
+        ),
+        direction: FlipDirection.HORIZONTAL,
+        onFlip: () {},
+        onFlipDone: (isFront) {},
       ),
     );
   }
