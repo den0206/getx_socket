@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/instance_manager.dart';
@@ -10,12 +11,19 @@ import 'package:socket_flutter/src/service/notification_service.dart';
 import 'src/screen/root_screen.dart';
 import 'src/service/storage_service.dart';
 
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  print("BackGround");
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await Get.put(StorageService()).initStorage();
-  await Get.put(NotificationService());
   await dotenv.load(fileName: ".env");
+  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+
+  await Get.put(StorageService()).initStorage();
+  await Get.put(NotificationService()).initService();
+
   runApp(const MyApp());
 }
 
