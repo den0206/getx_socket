@@ -32,6 +32,10 @@ class MessageExtention {
   bool reachLast = false;
   String? nextCursor;
 
+  bool get isSameLanguage {
+    return currentUser.mainLanguage == targetLanguage;
+  }
+
   MessageExtention({
     required this.chatRoomId,
     required this.withUsers,
@@ -113,7 +117,7 @@ class MessageExtention {
     final Map<String, dynamic> messageData = {
       "chatRoomId": chatRoomId,
       "text": text,
-      "translated": translated,
+      "translated": translated != "" ? translated : null,
       "userId": currentUser.id,
     };
 

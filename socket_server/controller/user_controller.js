@@ -168,7 +168,7 @@ async function getBlockUsers(req, res) {
     if (!findUser)
       res.status(400).json({status: false, message: 'No Find User'});
 
-    res.status(200).json({status: true, message: findUser.blocked});
+    res.status(200).json({status: true, data: findUser.blocked});
   } catch (e) {
     res.status(500).json({status: false, message: 'Can not create user'});
   }

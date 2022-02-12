@@ -9,6 +9,7 @@ import 'package:socket_flutter/src/model/message.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_extention.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_file_sheet.dart';
 import 'package:socket_flutter/src/screen/main_tab/recents/recents_controller.dart';
+import 'package:socket_flutter/src/screen/widget/common_dialog.dart';
 import 'package:socket_flutter/src/service/image_extention.dart';
 import 'package:socket_flutter/src/service/recent_extention.dart';
 import 'package:socket_flutter/src/service/storage_service.dart';
@@ -54,7 +55,7 @@ class MessageController extends GetxController {
     addScrollController();
     await loadLocal();
     await loadMessages();
-    if (messages.isNotEmpty && sC.position.hasPixels)
+    if (messages.isNotEmpty && sC.hasClients)
       sC.jumpTo(sC.position.minScrollExtent);
 
     listnFocus();
@@ -110,10 +111,13 @@ class MessageController extends GetxController {
       required String text,
       String? translated,
       File? file}) async {
+    isOverLay.call(true);
     await extention.sendMessage(
         type: type, text: text, translated: translated, file: file);
     tc.clear();
     showEmoji.call(false);
+    after.call("");
+    isOverLay.call(false);
     _scrollToBottom();
   }
 
@@ -311,6 +315,11 @@ class MessageController extends GetxController {
   }
 
   Future<void> translateText() async {
+    if (extention.isSameLanguage) {
+      showError("Same Language");
+      useRealtime.call(false);
+      return;
+    }
     isTranslationg.call(true);
     try {
       final extract = extractrMap(oldMap, newMap);

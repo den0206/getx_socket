@@ -68,6 +68,15 @@ class UserAPI extends APIBase {
     }
   }
 
+  Future<ResponseAPI> fetchBlocks() async {
+    try {
+      final Uri uri = setUri("$endpoint/blocks");
+      return await getRequest(uri: uri, useToken: true);
+    } catch (e) {
+      return catchAPIError(e.toString());
+    }
+  }
+
   Future<ResponseAPI> deleteUser() async {
     try {
       final Uri uri = setUri("$endpoint/delete");

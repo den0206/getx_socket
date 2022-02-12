@@ -3,6 +3,7 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/route_manager.dart';
 import 'package:socket_flutter/src/api/user_api.dart';
 import 'package:socket_flutter/src/model/user.dart';
+import 'package:socket_flutter/src/screen/main_tab/blocks/block_list_screen.dart';
 import 'package:socket_flutter/src/screen/main_tab/groups/groups_screen.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_extention.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_screen.dart';
@@ -24,14 +25,8 @@ class UserDetailController extends GetxController {
     super.onInit();
 
     isBlocked = currentUser.checkBlocked(user);
-    print(isBlocked);
     update();
   }
-
-  // bool get isBlocked {
-  //   if (user.isCurrent) return false;
-  //   return currentUser.checkBlocked(user);
-  // }
 
   Future<void> startPrivateChat() async {
     if (user.isCurrent) return;
@@ -60,6 +55,10 @@ class UserDetailController extends GetxController {
 
   Future<void> showEdit() async {
     final _ = await Get.toNamed(UserEditScreen.routeName);
+  }
+
+  Future<void> showBlockList() async {
+    final _ = await Get.toNamed(BlockListScreen.routeName);
   }
 
   Future<void> tryLogout(BuildContext context) async {

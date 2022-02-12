@@ -16,64 +16,76 @@ class UsersScreen extends StatelessWidget {
       init: UsersController(),
       builder: (controller) {
         return Scaffold(
-            appBar: AppBar(
-              title: controller.isPrivate ? Text('Users') : Text("Group"),
+          appBar: AppBar(
+            title: controller.isPrivate ? Text('Users') : Text("Group"),
+          ),
+          body: ListView.separated(
+            separatorBuilder: (context, index) => Divider(
+              color: Colors.black,
+              height: 1,
             ),
-            body: ListView.separated(
-              separatorBuilder: (context, index) => Divider(
-                color: Colors.black,
-                height: 1,
-              ),
-              itemCount: controller.users.length,
-              itemBuilder: (context, index) {
-                final User user = controller.users[index];
+            itemCount: controller.users.length,
+            itemBuilder: (context, index) {
+              final User user = controller.users[index];
 
-                return UserCell(user: user);
-              },
-            ),
-            floatingActionButton: !controller.isPrivate
-                ? FloatingActionButton(
-                    child: Icon(Icons.add),
-                    backgroundColor: Colors.green,
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return CustomDialog(
-                            title: "Group",
-                            descripon: "create group?",
-                            icon: Icons.group_add,
-                            mainColor: Colors.green,
-                            onPress: () {
-                              controller.createGroup();
-                            },
-                          );
-                        },
-                      );
-                    },
-                  )
-                : null);
+              return Obx(
+                () => UserCell(
+                  user: user,
+                  selected: controller.checkSelected(user),
+                  onTap: () => controller.onTap(user),
+                ),
+              );
+            },
+          ),
+          floatingActionButton: !controller.isPrivate
+              ? FloatingActionButton(
+                  child: Icon(Icons.add),
+                  backgroundColor: Colors.green,
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return CustomDialog(
+                          title: "Group",
+                          descripon: "create group?",
+                          icon: Icons.group_add,
+                          mainColor: Colors.green,
+                          onPress: () {
+                            controller.createGroup();
+                          },
+                        );
+                      },
+                    );
+                  },
+                )
+              : null,
+        );
       },
     );
   }
 }
 
-class UserCell extends GetView<UsersController> {
-  const UserCell({Key? key, required this.user}) : super(key: key);
+class UserCell extends StatelessWidget {
+  const UserCell({
+    Key? key,
+    required this.user,
+    this.selected = false,
+    this.onTap,
+  }) : super(key: key);
 
   final User user;
+  final bool selected;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => ListTile(
-          leading: UserCountryWidget(user: user, size: 35),
-          selected: controller.checkSelected(user),
-          selectedColor: Colors.black,
-          selectedTileColor: Colors.grey.withOpacity(0.3),
-          title: Text(user.name),
-          onTap: () {
-            controller.onTap(user);
-          },
-        ));
+    return ListTile(
+      leading: UserCountryWidget(user: user, size: 35),
+      selected: selected,
+      selectedColor: Colors.black,
+      selectedTileColor: Colors.grey.withOpacity(0.3),
+      title: Text(user.name),
+      onTap: onTap,
+    );
   }
 }

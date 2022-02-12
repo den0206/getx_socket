@@ -7,21 +7,40 @@ class TextBubble extends StatelessWidget {
 
   final Message message;
 
+  String get frontText {
+    if (!message.isCurrent) {
+      if (message.translated != null) {
+        return message.translated!;
+      }
+    }
+    return message.text;
+  }
+
+  String get backText {
+    if (message.isCurrent) {
+      if (message.translated != null) {
+        return message.translated!;
+      }
+    }
+    return message.text;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Material(
       color: Colors.transparent,
       child: FlipCard(
         flipOnTouch: message.translated != null,
+        fill: Fill.none,
         front: BubbleSelf(
-          text: message.text,
+          text: frontText,
           bubbleColor: message.isCurrent ? Colors.green : Colors.grey[200],
           textColor: message.isCurrent ? Colors.white : Colors.grey[800],
           bottomLeft: message.isCurrent ? 12 : 0,
           bottomRight: message.isCurrent ? 0 : 12,
         ),
         back: BubbleSelf(
-          text: message.translated ?? "",
+          text: backText,
           bubbleColor: message.isCurrent ? Colors.green : Colors.grey[200],
           textColor: message.isCurrent ? Colors.black : Colors.grey[800],
           bottomLeft: message.isCurrent ? 12 : 0,
@@ -57,7 +76,7 @@ class BubbleSelf extends StatelessWidget {
       padding: EdgeInsets.all(10),
       margin: EdgeInsets.all(10),
       constraints: BoxConstraints(
-        maxWidth: MediaQuery.of(context).size.width * 0.6,
+        maxWidth: MediaQuery.of(context).size.width * 0.7,
       ),
       decoration: BoxDecoration(
         color: bubbleColor,

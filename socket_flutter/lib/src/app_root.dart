@@ -4,6 +4,7 @@ import 'package:socket_flutter/src/screen/auth/login/login_contoller.dart';
 import 'package:socket_flutter/src/screen/auth/login/login_sceen.dart';
 import 'package:socket_flutter/src/screen/auth/signup/signup_controller.dart';
 import 'package:socket_flutter/src/screen/auth/signup/signup_screen.dart';
+import 'package:socket_flutter/src/screen/main_tab/blocks/block_list_screen.dart';
 import 'package:socket_flutter/src/screen/main_tab/groups/groups_screen.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_controller.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_screen.dart';
@@ -53,6 +54,11 @@ final List<GetPage> _mainPages = [
         () => UserEditController(),
       ),
     ),
+  ),
+  GetPage(
+    name: BlockListScreen.routeName,
+    page: () => BlockListScreen(),
+    fullscreenDialog: true,
   ),
   GetPage(
     name: MessageScreen.routeName,

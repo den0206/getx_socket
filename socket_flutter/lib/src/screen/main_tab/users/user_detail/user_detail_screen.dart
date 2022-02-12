@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/screen/main_tab/users/user_detail/user_detail_controller.dart';
-import 'package:socket_flutter/src/screen/widget/custom_button.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socket_flutter/src/screen/widget/user_country_widget.dart';
 
@@ -46,69 +45,138 @@ class UserDetailScreen extends StatelessWidget {
                 SizedBox(
                   height: 40,
                 ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: controller.user.isCurrent
+                ProfileButtonsArea(
+                  buttons: controller.user.isCurrent
                       ? [
-                          CustomButton(
-                            title: "Groups",
-                            background: Colors.orange,
-                            onPressed: () {
+                          ProfileButton(
+                            title: "Group",
+                            icon: Icons.group,
+                            backColor: Colors.orange,
+                            onPress: () {
                               controller.openGroups();
                             },
                           ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          CustomButton(
+                          ProfileButton(
                             title: "Edit",
-                            background: Colors.green,
-                            onPressed: () {
+                            icon: Icons.edit,
+                            backColor: Colors.green,
+                            onPress: () {
                               controller.showEdit();
                             },
                           ),
-                          SizedBox(
-                            height: 20,
+                          ProfileButton(
+                            title: "BlockList",
+                            icon: Icons.block,
+                            backColor: Colors.yellow,
+                            mainColor: Colors.black,
+                            onPress: () {
+                              controller.showBlockList();
+                            },
                           ),
-                          CustomButton(
+                          ProfileButton(
                             title: "Logout",
-                            background: Colors.red,
-                            onPressed: () {
+                            icon: Icons.logout,
+                            backColor: Colors.red,
+                            onPress: () {
                               controller.tryLogout(context);
                             },
                           ),
                         ]
                       : [
-                          CustomButton(
+                          ProfileButton(
                             title: "Message",
-                            background: Colors.green,
-                            titleColor: Colors.white,
-                            onPressed: () {
+                            icon: Icons.message,
+                            backColor: Colors.green,
+                            onPress: () {
                               controller.startPrivateChat();
                             },
                           ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          CustomButton(
+                          ProfileButton(
                             title: controller.isBlocked ? "UnBlock" : "Block",
-                            titleColor: controller.isBlocked
-                                ? Colors.black
-                                : Colors.white,
-                            background: controller.isBlocked
+                            icon: Icons.block,
+                            backColor: controller.isBlocked
                                 ? Colors.yellow
                                 : Colors.purple,
-                            onPressed: () {
+                            mainColor: controller.isBlocked
+                                ? Colors.black
+                                : Colors.white,
+                            onPress: () {
                               controller.blockUser();
                             },
-                          )
+                          ),
                         ],
-                )
+                ),
               ],
             ),
           ),
         );
       },
+    );
+  }
+}
+
+class ProfileButtonsArea extends StatelessWidget {
+  const ProfileButtonsArea({
+    Key? key,
+    required this.buttons,
+  }) : super(key: key);
+  final List<ProfileButton> buttons;
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.count(
+      physics: NeverScrollableScrollPhysics(),
+      padding: EdgeInsets.all(10),
+      shrinkWrap: true,
+      mainAxisSpacing: 21,
+      crossAxisSpacing: 21,
+      childAspectRatio: 1.8,
+      crossAxisCount: buttons.length > 2 ? buttons.length ~/ 2 : buttons.length,
+      children: buttons,
+    );
+  }
+}
+
+class ProfileButton extends StatelessWidget {
+  const ProfileButton({
+    Key? key,
+    required this.title,
+    required this.icon,
+    required this.backColor,
+    required this.onPress,
+    this.mainColor = Colors.white,
+  }) : super(key: key);
+
+  final String title;
+  final IconData icon;
+  final Color backColor;
+  final Color mainColor;
+  final VoidCallback onPress;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onPress,
+      child: Container(
+        decoration: BoxDecoration(
+          color: backColor,
+          border: Border.all(color: Colors.green, width: 2),
+          shape: BoxShape.circle,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              icon,
+              color: mainColor,
+            ),
+            Text(
+              title,
+              style: TextStyle(color: mainColor),
+            )
+          ],
+        ),
+      ),
     );
   }
 }

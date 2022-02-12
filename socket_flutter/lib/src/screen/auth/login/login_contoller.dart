@@ -57,8 +57,10 @@ class LoginController extends GetxController {
 
   Future<void> pushSignUp() async {
     final result = await Get.toNamed(SignUpScreen.routeName);
+    if (result is ResponseAPI) {
+      final user = User.fromMap(result.data);
+      emailController.text = user.email;
 
-    if (result is bool && result) {
       /// snackbar
       Get.snackbar(
         "Success Create User",
