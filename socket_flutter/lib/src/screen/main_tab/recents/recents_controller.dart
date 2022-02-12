@@ -51,6 +51,7 @@ class RecentsController extends GetxController {
 
   Future<void> loadRecents() async {
     if (reachLast) {
+      print("Alread Reach Last");
       return;
     }
 

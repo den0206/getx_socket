@@ -370,17 +370,15 @@ class MessageCell extends GetView<MessageController> {
                       },
                     ),
                   ],
-                  child: FadeinWidget(
-                    child: Stack(
-                      children: [
-                        if (message.type == MessageType.text)
-                          TextBubble(message: message),
-                        if (message.type == MessageType.image)
-                          ImageBubble(message: message),
-                        if (message.type == MessageType.video)
-                          VideoBubble(message: message)
-                      ],
-                    ),
+                  child: Stack(
+                    children: [
+                      if (message.type == MessageType.text)
+                        TextBubble(message: message),
+                      if (message.type == MessageType.image)
+                        ImageBubble(message: message),
+                      if (message.type == MessageType.video)
+                        VideoBubble(message: message)
+                    ],
                   )),
             ],
           ),

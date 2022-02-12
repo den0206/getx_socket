@@ -34,15 +34,15 @@ class TextBubble extends StatelessWidget {
         fill: Fill.none,
         front: BubbleSelf(
           text: frontText,
-          bubbleColor: message.isCurrent ? Colors.green : Colors.grey[200],
-          textColor: message.isCurrent ? Colors.white : Colors.grey[800],
+          bubbleColor: message.isCurrent ? Colors.green : Colors.grey[200]!,
+          textColor: message.isCurrent ? Colors.white : Colors.grey[800]!,
           bottomLeft: message.isCurrent ? 12 : 0,
           bottomRight: message.isCurrent ? 0 : 12,
         ),
         back: BubbleSelf(
           text: backText,
-          bubbleColor: message.isCurrent ? Colors.green : Colors.grey[200],
-          textColor: message.isCurrent ? Colors.black : Colors.grey[800],
+          bubbleColor: message.isCurrent ? Colors.green : Colors.grey[200]!,
+          textColor: message.isCurrent ? Colors.black : Colors.grey[800]!,
           bottomLeft: message.isCurrent ? 12 : 0,
           bottomRight: message.isCurrent ? 0 : 12,
         ),
@@ -58,15 +58,15 @@ class BubbleSelf extends StatelessWidget {
   const BubbleSelf({
     Key? key,
     required this.text,
-    this.bubbleColor,
-    this.textColor,
+    required this.bubbleColor,
+    required this.textColor,
     required this.bottomLeft,
     required this.bottomRight,
   }) : super(key: key);
 
   final String text;
-  final Color? bubbleColor;
-  final Color? textColor;
+  final Color bubbleColor;
+  final Color textColor;
   final double bottomLeft;
   final double bottomRight;
 
@@ -80,6 +80,13 @@ class BubbleSelf extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         color: bubbleColor,
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 20.0,
+            offset: Offset(10, 10),
+            color: Colors.black54,
+          )
+        ],
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(16),
           topRight: Radius.circular(16),

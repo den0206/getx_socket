@@ -22,7 +22,7 @@ class MessageFileSheet extends StatelessWidget {
         shrinkWrap: true,
         mainAxisSpacing: 21.0,
         crossAxisSpacing: 21.0,
-        crossAxisCount: 3,
+        crossAxisCount: actions.length,
         children: actions,
       ),
     );
