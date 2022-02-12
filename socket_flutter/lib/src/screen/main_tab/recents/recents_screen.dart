@@ -65,6 +65,10 @@ class RecentsScreen extends StatelessWidget {
               SliverList(
                 delegate: SliverChildBuilderDelegate((context, index) {
                   final recent = controller.recents[index];
+
+                  if (index == controller.recents.length - 1) {
+                    controller.loadRecents();
+                  }
                   return RecentCell(recent: recent);
                 }, childCount: controller.recents.length),
               ),
