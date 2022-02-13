@@ -6,6 +6,7 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:socket_flutter/src/model/message.dart';
+import 'package:socket_flutter/src/screen/auth/signup/signup_screen.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_bubbles/image_bubble.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_bubbles/text_bubble.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_bubbles/video_bubble.dart';
@@ -33,11 +34,43 @@ class MessageScreen extends GetView<MessageController> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               if (controller.isPrivate) ...[
-                CountryFlagWidget(
-                    country: controller.extention.withUsers[0].country),
+                Column(
+                  children: [
+                    CountryFlagWidget(
+                      country: controller.extention.withUsers[0].country,
+                    ),
+                    Text(
+                      "(${controller.extention.withUsers[0].mainLanguage.name})",
+                      style: TextStyle(fontSize: 8.sp),
+                    ),
+                  ],
+                ),
                 Icon(Icons.loop),
-                CountryFlagWidget(
-                    country: AuthService.to.currentUser.value!.country)
+                GestureDetector(
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (context) {
+                        return selectLanguagePicker(
+                          onSelectedItemChanged: (index) {
+                            print(index);
+                          },
+                        );
+                      },
+                    );
+                  },
+                  child: Column(
+                    children: [
+                      CountryFlagWidget(
+                        country: AuthService.to.currentUser.value!.country,
+                      ),
+                      Text(
+                        "(${controller.extention.currentUser.mainLanguage.name})",
+                        style: TextStyle(fontSize: 8.sp),
+                      ),
+                    ],
+                  ),
+                )
               ],
             ],
           ),
@@ -350,6 +383,18 @@ class MessageCell extends GetView<MessageController> {
                           Get.back();
                         },
                       ),
+                    if (message.isTranslated)
+                      CupertinoContextMenuAction(
+                        child: Text(
+                          "Copy(Translated)",
+                          style: TextStyle(fontSize: 12.sp),
+                        ),
+                        onPressed: () async {
+                          final data = ClipboardData(text: message.translated);
+                          await Clipboard.setData(data);
+                          Get.back();
+                        },
+                      ),
                     if (message.isCurrent)
                       CupertinoContextMenuAction(
                         isDefaultAction: true,
@@ -390,10 +435,19 @@ class MessageCell extends GetView<MessageController> {
                   : MainAxisAlignment.start,
               children: [
                 if (controller.checkRead(message) && message.isCurrent)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                    child: Icon(
+                      Icons.done_all,
+                      color: Colors.grey,
+                      size: 10.sp,
+                    ),
+                  ),
+                if (message.isTranslated && message.isCurrent)
                   Icon(
-                    Icons.done_all,
+                    Icons.g_translate,
                     color: Colors.grey,
-                    size: 10.sp,
+                    size: 12.sp,
                   ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8),
@@ -406,7 +460,13 @@ class MessageCell extends GetView<MessageController> {
                       letterSpacing: 1,
                     ),
                   ),
-                )
+                ),
+                if (message.isTranslated && !message.isCurrent)
+                  Icon(
+                    Icons.g_translate,
+                    color: Colors.grey,
+                    size: 12.sp,
+                  ),
               ],
             ),
           )

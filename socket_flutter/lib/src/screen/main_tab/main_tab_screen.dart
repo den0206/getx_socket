@@ -42,6 +42,7 @@ class MainTabScreen extends StatelessWidget {
     ];
     return GetBuilder<MainTabController>(
       init: MainTabController(),
+      autoRemove: false,
       builder: (controller) {
         return DetectLifeCycleWidget(
           onChangeState: (state) {

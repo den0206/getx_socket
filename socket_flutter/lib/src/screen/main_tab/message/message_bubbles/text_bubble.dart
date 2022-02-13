@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:socket_flutter/src/model/message.dart';
 import 'package:flip_card/flip_card.dart';
+import 'package:sizer/sizer.dart';
 
 class TextBubble extends StatelessWidget {
   const TextBubble({Key? key, required this.message}) : super(key: key);
@@ -9,7 +10,7 @@ class TextBubble extends StatelessWidget {
 
   String get frontText {
     if (!message.isCurrent) {
-      if (message.translated != null) {
+      if (message.isTranslated) {
         return message.translated!;
       }
     }
@@ -18,7 +19,7 @@ class TextBubble extends StatelessWidget {
 
   String get backText {
     if (message.isCurrent) {
-      if (message.translated != null) {
+      if (message.isTranslated) {
         return message.translated!;
       }
     }
@@ -42,7 +43,7 @@ class TextBubble extends StatelessWidget {
         back: BubbleSelf(
           text: backText,
           bubbleColor: message.isCurrent ? Colors.green : Colors.grey[200]!,
-          textColor: message.isCurrent ? Colors.black : Colors.grey[800]!,
+          textColor: message.isCurrent ? Colors.white : Colors.grey[800]!,
           bottomLeft: message.isCurrent ? 12 : 0,
           bottomRight: message.isCurrent ? 0 : 12,
         ),
@@ -94,13 +95,16 @@ class BubbleSelf extends StatelessWidget {
           bottomRight: Radius.circular(bottomRight),
         ),
       ),
-      child: Text(
-        text,
-        style: TextStyle(
-          fontSize: 20,
-          letterSpacing: 1.5,
-          fontWeight: FontWeight.w600,
-          color: textColor,
+      child: FittedBox(
+        fit: BoxFit.fitWidth,
+        child: Text(
+          text,
+          style: TextStyle(
+            fontSize: 13.sp,
+            letterSpacing: 1.5,
+            fontWeight: FontWeight.w600,
+            color: textColor,
+          ),
         ),
       ),
     );
