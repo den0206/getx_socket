@@ -327,7 +327,7 @@ class MessageController extends GetxController {
         text: extract,
         currentTrs: after.value,
         src: extention.currentUser.mainLanguage,
-        tar: extention.targetLanguage,
+        tar: extention.targetLanguage.value,
       );
       if (trs == null) {
         throw NotFoundException("Not Found");

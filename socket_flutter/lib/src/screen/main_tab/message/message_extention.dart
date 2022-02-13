@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:get/state_manager.dart';
 import 'package:socket_flutter/src/api/message_api.dart';
 import 'package:socket_flutter/src/api/translate_api.dart';
 import 'package:socket_flutter/src/model/language.dart';
@@ -25,7 +26,7 @@ class MessageExtention {
   final RecentExtention re = RecentExtention();
   late IO.Socket socket;
 
-  Language targetLanguage = Language.english;
+  Rx<Language> targetLanguage = Language.english.obs;
 
   final int limit = 10;
 
@@ -294,7 +295,7 @@ extension MessageExtTranslation on MessageExtention {
       current = language;
     }
 
-    this.targetLanguage = current;
+    this.targetLanguage.call(current);
   }
 }
 

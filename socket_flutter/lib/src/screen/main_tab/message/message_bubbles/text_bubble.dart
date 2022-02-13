@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:socket_flutter/src/model/message.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:sizer/sizer.dart';
+import 'package:socket_flutter/src/screen/widget/common_dialog.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class TextBubble extends StatelessWidget {
   const TextBubble({Key? key, required this.message}) : super(key: key);
@@ -73,6 +75,27 @@ class BubbleSelf extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future<void> _tryOpenUrl(String url) async {
+      if (await canLaunch(url)) {
+        await showDialog(
+          context: context,
+          builder: (context) {
+            return CustomDialog(
+              title: "Open Url",
+              descripon: url,
+              onPress: () async {
+                await launch(url);
+              },
+              icon: Icons.open_in_browser,
+              mainColor: Colors.red,
+            );
+          },
+        );
+      } else {
+        throw 'Could not launch $text';
+      }
+    }
+
     return Container(
       padding: EdgeInsets.all(10),
       margin: EdgeInsets.all(10),
@@ -95,18 +118,34 @@ class BubbleSelf extends StatelessWidget {
           bottomRight: Radius.circular(bottomRight),
         ),
       ),
-      child: FittedBox(
-        fit: BoxFit.fitWidth,
-        child: Text(
-          text,
-          style: TextStyle(
-            fontSize: 13.sp,
-            letterSpacing: 1.5,
-            fontWeight: FontWeight.w600,
-            color: textColor,
-          ),
-        ),
+      child: GestureDetector(
+        onTap: _isLink(text)
+            ? () async {
+                if (!_isLink(text)) return;
+                await _tryOpenUrl(text);
+              }
+            : null,
+        child: FittedBox(
+            fit: BoxFit.fitWidth,
+            child: RichText(
+              text: TextSpan(
+                text: text,
+                style: TextStyle(
+                  fontSize: 13.sp,
+                  letterSpacing: 1.5,
+                  fontWeight: FontWeight.w600,
+                  color: _isLink(text) ? Colors.blueAccent : textColor,
+                  decoration: _isLink(text) ? TextDecoration.underline : null,
+                ),
+              ),
+            )),
       ),
     );
   }
+}
+
+bool _isLink(String input) {
+  final matcher = new RegExp(
+      r"(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)");
+  return matcher.hasMatch(input);
 }
