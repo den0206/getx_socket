@@ -5,6 +5,7 @@ import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/state_manager.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:socket_flutter/src/api/user_api.dart';
+import 'package:socket_flutter/src/model/language.dart';
 import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/screen/widget/common_dialog.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
@@ -17,6 +18,7 @@ class UserEditController extends GetxController {
 
   Rxn<File> userImage = Rxn<File>();
   final TextEditingController nameController = TextEditingController();
+  final Rxn<Language> selectLanguage = Rxn<Language>();
 
   final imageExt = ImageExtention();
   final RxBool isLoading = false.obs;
@@ -25,7 +27,9 @@ class UserEditController extends GetxController {
     if (editUser.name.isEmpty) {
       return false.obs;
     }
-    if (userImage.value != null || currentUser.name != editUser.name) {
+    if (userImage.value != null ||
+        currentUser.name != editUser.name ||
+        selectLanguage.value != currentUser.mainLanguage) {
       return true.obs;
     } else {
       return false.obs;
@@ -41,6 +45,7 @@ class UserEditController extends GetxController {
   void _onInit() {
     editUser = currentUser.copyWith();
     nameController.text = editUser.name;
+    selectLanguage.value = editUser.mainLanguage;
   }
 
   Future<void> selectImage() async {

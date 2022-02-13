@@ -12,7 +12,7 @@ class User {
   String name;
   final String email;
   final CountryCode country;
-  final Language mainLanguage;
+  Language mainLanguage;
 
   String fcmToken;
   List<String> blockedUsers;

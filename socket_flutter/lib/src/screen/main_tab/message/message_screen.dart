@@ -6,13 +6,13 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:socket_flutter/src/model/message.dart';
-import 'package:socket_flutter/src/screen/auth/signup/signup_screen.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_bubbles/image_bubble.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_bubbles/text_bubble.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_bubbles/video_bubble.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_controller.dart';
 import 'package:socket_flutter/src/screen/main_tab/users/user_detail/user_detail_screen.dart';
 import 'package:socket_flutter/src/screen/widget/animated_widget.dart';
+import 'package:socket_flutter/src/screen/widget/custom_picker.dart';
 import 'package:socket_flutter/src/screen/widget/loading_widget.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socket_flutter/src/screen/widget/user_country_widget.dart';
@@ -34,26 +34,16 @@ class MessageScreen extends GetView<MessageController> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               if (controller.isPrivate) ...[
-                Column(
-                  children: [
-                    CountryFlagWidget(
-                      country: controller.extention.withUsers[0].country,
-                    ),
-                    Text(
-                      "(${controller.extention.withUsers[0].mainLanguage.name})",
-                      style: TextStyle(fontSize: 8.sp),
-                    ),
-                  ],
-                ),
-                Icon(Icons.loop),
                 GestureDetector(
                   onTap: () {
                     showModalBottomSheet(
                       context: context,
                       builder: (context) {
                         return selectLanguagePicker(
-                          onSelectedItemChanged: (index) {
-                            print(index);
+                          title: "翻訳作の言語を選んで下さい。",
+                          onSelectedLang: (selectLang) {
+                            controller.extention.targetLanguage
+                                .call(selectLang);
                           },
                         );
                       },
@@ -62,14 +52,28 @@ class MessageScreen extends GetView<MessageController> {
                   child: Column(
                     children: [
                       CountryFlagWidget(
-                        country: AuthService.to.currentUser.value!.country,
+                        country: controller.extention.withUsers[0].country,
                       ),
-                      Text(
-                        "(${controller.extention.currentUser.mainLanguage.name})",
-                        style: TextStyle(fontSize: 8.sp),
+                      Obx(
+                        () => Text(
+                          "(${controller.extention.targetLanguage.value.name})",
+                          style: TextStyle(fontSize: 8.sp),
+                        ),
                       ),
                     ],
                   ),
+                ),
+                Icon(Icons.loop),
+                Column(
+                  children: [
+                    CountryFlagWidget(
+                      country: AuthService.to.currentUser.value!.country,
+                    ),
+                    Text(
+                      "(${controller.extention.currentUser.mainLanguage.name})",
+                      style: TextStyle(fontSize: 8.sp),
+                    ),
+                  ],
                 )
               ],
             ],

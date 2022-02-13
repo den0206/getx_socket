@@ -1,10 +1,9 @@
 import 'package:country_list_pick/country_list_pick.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:socket_flutter/src/model/language.dart';
 import 'package:socket_flutter/src/screen/auth/signup/signup_controller.dart';
 import 'package:socket_flutter/src/screen/widget/custom_button.dart';
+import 'package:socket_flutter/src/screen/widget/custom_picker.dart';
 import 'package:socket_flutter/src/screen/widget/custom_text_fields.dart';
 import 'package:socket_flutter/src/screen/widget/loading_widget.dart';
 import 'package:socket_flutter/src/utils/global_functions.dart';
@@ -91,43 +90,10 @@ class SignUpScreen extends GetView<SignUpController> {
                           SizedBox(
                             height: 10,
                           ),
-                          GestureDetector(
-                            child: Container(
-                              width: 60.w,
-                              height: 4.h,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey[350]!),
-                              ),
-                              child: Container(
-                                alignment: Alignment.centerLeft,
-                                child: Obx(() => Row(
-                                      children: [
-                                        Icon(Icons.arrow_drop_down),
-                                        controller.currentLanguage.value != null
-                                            ? Text(controller
-                                                .currentLanguage.value!.name)
-                                            : Text("Language")
-                                      ],
-                                    )),
-                              ),
-                            ),
-                            onTap: () {
-                              showModalBottomSheet(
-                                context: context,
-                                builder: (context) {
-                                  return selectLanguagePicker(
-                                    onSelectedItemChanged: (index) {
-                                      final all = Language.values
-                                          .map((e) => e)
-                                          .toList();
-                                      final lang = all[index];
-                                      controller.currentLanguage.call(lang);
-                                    },
-                                  );
-                                },
-                              );
-                            },
+                          selectlanguageArea(
+                            currentlang: controller.currentLanguage,
+                            onSelectedLang: (selectLang) =>
+                                controller.currentLanguage.call(selectLang),
                           ),
                           SizedBox(
                             height: 10,
@@ -161,27 +127,6 @@ class SignUpScreen extends GetView<SignUpController> {
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class selectLanguagePicker extends StatelessWidget {
-  const selectLanguagePicker({Key? key, this.onSelectedItemChanged})
-      : super(key: key);
-
-  final Function(int index)? onSelectedItemChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 30.h,
-      child: CupertinoPicker(
-        itemExtent: 50,
-        children: Language.values.map((l) {
-          return Text(l.name.capitalize!);
-        }).toList(),
-        onSelectedItemChanged: onSelectedItemChanged,
       ),
     );
   }

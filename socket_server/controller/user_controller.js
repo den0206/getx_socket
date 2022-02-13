@@ -123,6 +123,7 @@ async function updateUser(req, res) {
     const value = {
       name: body.name,
       blocked: body.blocked,
+      mainLanguage: body.mainLanguage,
       avatarUrl: imagePath,
     };
 
