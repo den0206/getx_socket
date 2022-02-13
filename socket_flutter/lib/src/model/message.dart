@@ -46,6 +46,10 @@ class Message {
     return readBy.contains(currentUser.id);
   }
 
+  bool get isTranslated {
+    return type == MessageType.text && translated != null;
+  }
+
   Message({
     required this.id,
     required this.chatRoomId,

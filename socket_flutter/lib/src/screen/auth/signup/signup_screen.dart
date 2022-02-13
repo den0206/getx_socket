@@ -116,21 +116,14 @@ class SignUpScreen extends GetView<SignUpController> {
                               showModalBottomSheet(
                                 context: context,
                                 builder: (context) {
-                                  return Container(
-                                    height: 30.h,
-                                    child: CupertinoPicker(
-                                      itemExtent: 50,
-                                      children: Language.values.map((l) {
-                                        return Text(l.name.capitalize!);
-                                      }).toList(),
-                                      onSelectedItemChanged: (index) {
-                                        final all = Language.values
-                                            .map((e) => e)
-                                            .toList();
-                                        final lang = all[index];
-                                        controller.currentLanguage.call(lang);
-                                      },
-                                    ),
+                                  return selectLanguagePicker(
+                                    onSelectedItemChanged: (index) {
+                                      final all = Language.values
+                                          .map((e) => e)
+                                          .toList();
+                                      final lang = all[index];
+                                      controller.currentLanguage.call(lang);
+                                    },
                                   );
                                 },
                               );
@@ -168,6 +161,27 @@ class SignUpScreen extends GetView<SignUpController> {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class selectLanguagePicker extends StatelessWidget {
+  const selectLanguagePicker({Key? key, this.onSelectedItemChanged})
+      : super(key: key);
+
+  final Function(int index)? onSelectedItemChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 30.h,
+      child: CupertinoPicker(
+        itemExtent: 50,
+        children: Language.values.map((l) {
+          return Text(l.name.capitalize!);
+        }).toList(),
+        onSelectedItemChanged: onSelectedItemChanged,
       ),
     );
   }
