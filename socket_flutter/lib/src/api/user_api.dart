@@ -77,6 +77,15 @@ class UserAPI extends APIBase {
     }
   }
 
+  Future<ResponseAPI> getById({required String id}) async {
+    try {
+      final Uri uri = setUri("$endpoint/id/${id}");
+      return await getRequest(uri: uri, useToken: true);
+    } catch (e) {
+      return catchAPIError(e.toString());
+    }
+  }
+
   Future<ResponseAPI> deleteUser() async {
     try {
       final Uri uri = setUri("$endpoint/delete");

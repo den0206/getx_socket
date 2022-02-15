@@ -16,6 +16,7 @@ router.put(
 );
 
 router.get('/blocks', checkAuth, userController.getBlockUsers);
+router.get('/id/:id', checkAuth, userController.getById);
 router.delete('/delete', checkAuth, userController.deleteUser);
 
 module.exports = router;

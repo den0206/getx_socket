@@ -176,7 +176,7 @@ class MessageScreen extends GetView<MessageController> {
                       child: TextField(
                         controller: controller.tc,
                         focusNode: controller.focusNode,
-                        maxLength: 50,
+                        maxLength: 70,
                         keyboardType: TextInputType.multiline,
                         textInputAction: TextInputAction.newline,
                         maxLines: 5,

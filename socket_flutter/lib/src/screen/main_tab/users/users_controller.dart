@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:socket_flutter/src/api/user_api.dart';
 import 'package:socket_flutter/src/model/page_feed.dart';
 import 'package:socket_flutter/src/model/user.dart';
+import 'package:socket_flutter/src/screen/main_tab/qr_code/qr_tab_screen.dart';
 import 'package:socket_flutter/src/screen/main_tab/recents/recents_controller.dart';
 import 'package:socket_flutter/src/screen/main_tab/users/user_detail/user_detail_screen.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
@@ -99,5 +100,12 @@ class UsersController extends GetxController {
 
   bool checkSelected(User user) {
     return selectedUsers.contains(user);
+  }
+
+  Future<void> showQrScreen() async {
+    final findUser = await Get.toNamed(QrTabScreen.routeName);
+    if (findUser == User) {
+      onTap(findUser);
+    }
   }
 }

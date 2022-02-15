@@ -15,6 +15,7 @@ const userSchema = mongoose.Schema({
   mainLanguage: {type: String, required: true},
   password: {type: String, required: true},
   blocked: [{type: mongoose.Schema.Types.ObjectId, ref: 'User', default: []}],
+  searchId: {type: String, unique: true},
 });
 
 userSchema.pre('remove', async function (next) {

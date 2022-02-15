@@ -42,6 +42,57 @@ class CustomButton extends StatelessWidget {
   }
 }
 
+class CustomCircleButton extends StatelessWidget {
+  const CustomCircleButton({
+    Key? key,
+    required this.title,
+    required this.icon,
+    this.size,
+    this.borderColor = Colors.green,
+    required this.backColor,
+    required this.onPress,
+    this.mainColor = Colors.white,
+  }) : super(key: key);
+
+  final String title;
+  final IconData icon;
+  final double? size;
+  final Color borderColor;
+  final Color backColor;
+  final Color mainColor;
+  final VoidCallback onPress;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onPress,
+      child: Container(
+        height: size,
+        width: size,
+        decoration: BoxDecoration(
+          color: backColor,
+          border: Border.all(color: borderColor, width: 2),
+          shape: BoxShape.circle,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              icon,
+              size: size != null ? size! / 2 : null,
+              color: mainColor,
+            ),
+            Text(
+              title,
+              style: TextStyle(color: mainColor),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class CircleImageButton extends StatelessWidget {
   const CircleImageButton({
     Key? key,

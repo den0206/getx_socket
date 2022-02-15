@@ -4,6 +4,7 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/screen/main_tab/users/user_detail/user_detail_controller.dart';
 import 'package:sizer/sizer.dart';
+import 'package:socket_flutter/src/screen/widget/custom_button.dart';
 import 'package:socket_flutter/src/screen/widget/user_country_widget.dart';
 
 class UserDetailScreen extends StatelessWidget {
@@ -48,7 +49,7 @@ class UserDetailScreen extends StatelessWidget {
                 ProfileButtonsArea(
                   buttons: controller.user.isCurrent
                       ? [
-                          ProfileButton(
+                          CustomCircleButton(
                             title: "Group",
                             icon: Icons.group,
                             backColor: Colors.orange,
@@ -56,7 +57,7 @@ class UserDetailScreen extends StatelessWidget {
                               controller.openGroups();
                             },
                           ),
-                          ProfileButton(
+                          CustomCircleButton(
                             title: "Edit",
                             icon: Icons.edit,
                             backColor: Colors.green,
@@ -64,7 +65,7 @@ class UserDetailScreen extends StatelessWidget {
                               controller.showEdit();
                             },
                           ),
-                          ProfileButton(
+                          CustomCircleButton(
                             title: "BlockList",
                             icon: Icons.block,
                             backColor: Colors.yellow,
@@ -73,7 +74,7 @@ class UserDetailScreen extends StatelessWidget {
                               controller.showBlockList();
                             },
                           ),
-                          ProfileButton(
+                          CustomCircleButton(
                             title: "Logout",
                             icon: Icons.logout,
                             backColor: Colors.red,
@@ -83,7 +84,7 @@ class UserDetailScreen extends StatelessWidget {
                           ),
                         ]
                       : [
-                          ProfileButton(
+                          CustomCircleButton(
                             title: "Message",
                             icon: Icons.message,
                             backColor: Colors.green,
@@ -91,7 +92,7 @@ class UserDetailScreen extends StatelessWidget {
                               controller.startPrivateChat();
                             },
                           ),
-                          ProfileButton(
+                          CustomCircleButton(
                             title: controller.isBlocked ? "UnBlock" : "Block",
                             icon: Icons.block,
                             backColor: controller.isBlocked
@@ -120,7 +121,7 @@ class ProfileButtonsArea extends StatelessWidget {
     Key? key,
     required this.buttons,
   }) : super(key: key);
-  final List<ProfileButton> buttons;
+  final List<CustomCircleButton> buttons;
 
   @override
   Widget build(BuildContext context) {
@@ -133,50 +134,6 @@ class ProfileButtonsArea extends StatelessWidget {
       childAspectRatio: 1.8,
       crossAxisCount: buttons.length > 2 ? buttons.length ~/ 2 : buttons.length,
       children: buttons,
-    );
-  }
-}
-
-class ProfileButton extends StatelessWidget {
-  const ProfileButton({
-    Key? key,
-    required this.title,
-    required this.icon,
-    required this.backColor,
-    required this.onPress,
-    this.mainColor = Colors.white,
-  }) : super(key: key);
-
-  final String title;
-  final IconData icon;
-  final Color backColor;
-  final Color mainColor;
-  final VoidCallback onPress;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onPress,
-      child: Container(
-        decoration: BoxDecoration(
-          color: backColor,
-          border: Border.all(color: Colors.green, width: 2),
-          shape: BoxShape.circle,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              icon,
-              color: mainColor,
-            ),
-            Text(
-              title,
-              style: TextStyle(color: mainColor),
-            )
-          ],
-        ),
-      ),
     );
   }
 }

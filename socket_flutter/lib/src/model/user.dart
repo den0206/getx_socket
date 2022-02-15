@@ -19,6 +19,8 @@ class User {
   String? avatarUrl;
   String? sessionToken;
 
+  String searchId;
+
   bool get isCurrent {
     final currentUser = AuthService.to.currentUser.value;
     if (currentUser == null) return false;
@@ -37,6 +39,7 @@ class User {
     required this.mainLanguage,
     required this.blockedUsers,
     required this.fcmToken,
+    required this.searchId,
     this.avatarUrl,
     this.sessionToken,
   });
@@ -51,6 +54,7 @@ class User {
       "mainLanguage": mainLanguage.name,
       "blocked": blockedUsers,
       "avatarUrl": avatarUrl,
+      "searchId": searchId,
       'sessionToken': sessionToken,
     };
   }
@@ -63,6 +67,7 @@ class User {
       country: getCountryFromCode(map["countryCode"] ?? "US"),
       mainLanguage: getLanguage(map["mainLanguage"] ?? "EN"),
       fcmToken: map["fcmToken"] ?? "",
+      searchId: map["searchId"] ?? map["id"],
       blockedUsers: List<String>.from(map["blocked"] ?? []),
       avatarUrl: map["avatarUrl"],
       sessionToken: map['sessionToken'],
@@ -80,6 +85,7 @@ class User {
     String? name,
     String? email,
     String? fcmToken,
+    String? searchId,
     List<String>? blockedUsers,
     String? avatarUrl,
     String? sessionToken,
@@ -91,6 +97,7 @@ class User {
       country: this.country,
       mainLanguage: this.mainLanguage,
       fcmToken: fcmToken ?? this.fcmToken,
+      searchId: searchId ?? this.searchId,
       blockedUsers: blockedUsers ?? this.blockedUsers,
       avatarUrl: avatarUrl ?? this.avatarUrl,
       sessionToken: sessionToken ?? this.sessionToken,
@@ -99,7 +106,7 @@ class User {
 
   @override
   String toString() {
-    return 'User(id: $id, name: $name, email: $email, country: $country, mainLanguage: $mainLanguage, fcmToken: $fcmToken, blockedUsers: $blockedUsers, avatarUrl: $avatarUrl, sessionToken: $sessionToken)';
+    return 'User(id: $id, name: $name, email: $email, country: $country, mainLanguage: $mainLanguage, fcmToken: $fcmToken, blockedUsers: $blockedUsers, avatarUrl: $avatarUrl, sessionToken: $sessionToken, searchId: $searchId)';
   }
 }
 
