@@ -38,6 +38,9 @@ dependencies:
   flip_card: ^0.6.0
   device_preview: ^0.8.0
   url_launcher: ^6.0.20
+  qr_flutter: ^4.0.0
+  flutter_barcode_scanner: ^2.0.0
+  uuid: ^3.0.5
 
 dev_dependencies:
   flutter_test:

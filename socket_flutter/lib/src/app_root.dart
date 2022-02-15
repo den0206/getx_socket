@@ -8,6 +8,7 @@ import 'package:socket_flutter/src/screen/main_tab/blocks/block_list_screen.dart
 import 'package:socket_flutter/src/screen/main_tab/groups/groups_screen.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_controller.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_screen.dart';
+import 'package:socket_flutter/src/screen/main_tab/qr_code/qr_tab_screen.dart';
 import 'package:socket_flutter/src/screen/main_tab/users/user_edit/user_edit_controller.dart';
 import 'package:socket_flutter/src/screen/main_tab/users/user_edit/user_edit_screen.dart';
 import 'package:socket_flutter/src/screen/main_tab/users/users_screen.dart';
@@ -70,6 +71,11 @@ final List<GetPage> _mainPages = [
   GetPage(
     name: GroupsScreen.routeName,
     page: () => GroupsScreen(),
+    fullscreenDialog: true,
+  ),
+  GetPage(
+    name: QrTabScreen.routeName,
+    page: () => QrTabScreen(),
     fullscreenDialog: true,
   )
 ];

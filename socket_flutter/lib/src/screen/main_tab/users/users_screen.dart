@@ -18,6 +18,16 @@ class UsersScreen extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             title: controller.isPrivate ? Text('Users') : Text("Group"),
+            actions: controller.isPrivate
+                ? [
+                    IconButton(
+                      icon: Icon(Icons.qr_code),
+                      onPressed: () {
+                        controller.showQrScreen();
+                      },
+                    )
+                  ]
+                : null,
           ),
           body: ListView.separated(
             separatorBuilder: (context, index) => Divider(

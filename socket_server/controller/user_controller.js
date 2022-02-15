@@ -2,6 +2,7 @@ const User = require('../model/user');
 const jwt = require('jsonwebtoken');
 const {encodeBase64, decodeToBase64} = require('../utils/base64');
 const AwsClient = require('../aws/aws_client');
+const {checkId} = require('../db/database');
 
 const bcrypt = require('bcrypt');
 
@@ -24,6 +25,7 @@ async function signUp(req, res, next) {
     email: body.email,
     countryCode: body.countryCode,
     mainLanguage: body.mainLanguage,
+    searchId: body.searchId,
     password: hashed,
   });
 
@@ -38,7 +40,7 @@ async function signUp(req, res, next) {
     await user.save();
     res.status(200).json({status: true, data: user});
   } catch (e) {
-    res.status(500).json({status: false, message: 'Can not create user'});
+    res.status(500).json({status: false, message: e.message});
   }
 }
 
@@ -82,6 +84,7 @@ async function getUsers(req, res) {
   }
 
   let users = await User.find(query)
+    .select(['-password', '-fcmToken'])
     .sort({_id: -1})
     .limit(limit + 1);
 
@@ -123,6 +126,7 @@ async function updateUser(req, res) {
     const value = {
       name: body.name,
       blocked: body.blocked,
+      searchId: body.searchId,
       mainLanguage: body.mainLanguage,
       avatarUrl: imagePath,
     };
@@ -175,6 +179,32 @@ async function getBlockUsers(req, res) {
   }
 }
 
+async function getById(req, res) {
+  const searchId = req.params.id;
+
+  try {
+    var findUser;
+    if (checkId(searchId)) {
+      findUser = await User.findById(searchId).select([
+        '-password',
+        '-fcmToken',
+      ]);
+    } else {
+      findUser = await User.findOne({searchId: searchId}).select([
+        '-password',
+        '-fcmToken',
+      ]);
+    }
+
+    if (!findUser)
+      res.status(400).json({status: false, message: 'No Find User'});
+
+    res.status(200).json({status: true, findUser});
+  } catch (e) {
+    res.status(500).json({status: false, message: e.message});
+  }
+}
+
 module.exports = {
   signUp,
   login,
@@ -182,4 +212,5 @@ module.exports = {
   updateUser,
   deleteUser,
   getBlockUsers,
+  getById,
 };
