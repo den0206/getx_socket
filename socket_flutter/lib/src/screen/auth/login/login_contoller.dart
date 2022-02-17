@@ -3,10 +3,12 @@ import 'package:get/get.dart';
 import 'package:socket_flutter/src/api/user_api.dart';
 import 'package:socket_flutter/src/model/response_api.dart';
 import 'package:socket_flutter/src/model/user.dart';
+import 'package:socket_flutter/src/screen/auth/reset_password/reset_password_screen.dart';
 import 'package:socket_flutter/src/screen/auth/signup/signup_screen.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
 import 'package:socket_flutter/src/service/notification_service.dart';
 import 'package:socket_flutter/src/service/storage_service.dart';
+import 'package:socket_flutter/src/utils/global_functions.dart';
 
 class LoginController extends GetxController {
   final TextEditingController emailController = TextEditingController();
@@ -61,21 +63,17 @@ class LoginController extends GetxController {
       final user = User.fromMap(result.data);
       emailController.text = user.email;
 
-      /// snackbar
-      Get.snackbar(
-        "Success Create User",
-        "Please Login",
-        icon: Icon(Icons.person, color: Colors.white),
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.green,
-        borderRadius: 20,
-        margin: EdgeInsets.all(15),
-        colorText: Colors.white,
-        duration: Duration(seconds: 4),
-        isDismissible: true,
-        dismissDirection: DismissDirection.down,
-        forwardAnimationCurve: Curves.easeOutBack,
-      );
+      showSnackBar(title: "Success Create User");
+    }
+  }
+
+  Future<void> pushResetPassword() async {
+    final result = await Get.toNamed(ResetPasswordScreen.routeName);
+    if (result is ResponseAPI) {
+      final user = User.fromMap(result.data);
+      emailController.text = user.email;
+
+      showSnackBar(title: "Reset Password");
     }
   }
 }
