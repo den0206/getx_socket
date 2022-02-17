@@ -2,6 +2,7 @@ import 'package:get/instance_manager.dart';
 import 'package:get/route_manager.dart';
 import 'package:socket_flutter/src/screen/auth/login/login_contoller.dart';
 import 'package:socket_flutter/src/screen/auth/login/login_sceen.dart';
+import 'package:socket_flutter/src/screen/auth/reset_password/reset_password_screen.dart';
 import 'package:socket_flutter/src/screen/auth/signup/signup_controller.dart';
 import 'package:socket_flutter/src/screen/auth/signup/signup_screen.dart';
 import 'package:socket_flutter/src/screen/main_tab/blocks/block_list_screen.dart';
@@ -40,6 +41,10 @@ final List<GetPage> _authPages = [
       () => Get.lazyPut(() => SignUpController()),
     ),
   ),
+  GetPage(
+    name: ResetPasswordScreen.routeName,
+    page: () => ResetPasswordScreen(),
+  )
 ];
 
 final List<GetPage> _mainPages = [

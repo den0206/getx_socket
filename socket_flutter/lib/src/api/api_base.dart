@@ -242,7 +242,15 @@ extension APIBaseExtention on APIBase {
   }
 }
 
-enum EndPoint { user, recent, message, group, translate, notification }
+enum EndPoint {
+  user,
+  recent,
+  message,
+  group,
+  translate,
+  notification,
+  resetpassword
+}
 
 extension EndPointEXT on EndPoint {
   String get name {
@@ -261,6 +269,8 @@ extension EndPointEXT on EndPoint {
         return "$APIVer/translate";
       case EndPoint.notification:
         return "$APIVer/notification";
+      case EndPoint.resetpassword:
+        return "$APIVer/resetpassword";
     }
   }
 }

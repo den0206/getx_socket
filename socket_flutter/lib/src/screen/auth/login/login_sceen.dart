@@ -59,7 +59,9 @@ class LoginScreen extends GetView<LoginController> {
                           child: Text(
                             "Forgot password",
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            controller.pushResetPassword();
+                          },
                         ),
                       ),
                       SizedBox(
