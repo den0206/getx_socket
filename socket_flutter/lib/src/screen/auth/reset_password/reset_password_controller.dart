@@ -3,8 +3,9 @@ import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/state_manager.dart';
 import 'package:socket_flutter/src/api/temp_token_api.dart';
 import 'package:socket_flutter/src/screen/widget/common_dialog.dart';
+import 'package:socket_flutter/src/screen/widget/loading_widget.dart';
 
-class ResetPasswordController extends GetxController {
+class ResetPasswordController extends LoadingGetController {
   VerifyState state = VerifyState.checkEmail;
   final TextEditingController emailTextField = TextEditingController();
   final TextEditingController passwordTextField = TextEditingController();
@@ -29,14 +30,13 @@ class ResetPasswordController extends GetxController {
     return currentTx != emailTextField;
   }
 
-  final RxBool isLoading = false.obs;
   bool buttonEnable = false;
 
   Future<void> sendRequest() async {
     if (currentTx.text == "") return;
 
     if (state != VerifyState.checkEmail) {
-      isLoading.call(true);
+      isOverlay.call(true);
       await Future.delayed(Duration(seconds: 1));
     }
 
@@ -80,7 +80,7 @@ class ResetPasswordController extends GetxController {
     } catch (e) {
       showError(e.toString());
     } finally {
-      isLoading.call(false);
+      isOverlay.call(false);
       buttonEnable = false;
       update();
     }

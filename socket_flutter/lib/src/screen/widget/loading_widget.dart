@@ -1,30 +1,41 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/state_manager.dart';
+import 'package:socket_flutter/src/utils/global_functions.dart';
+import 'package:get/get.dart';
 
-class OverlayLoadingWidget extends StatelessWidget {
-  const OverlayLoadingWidget(
-      {Key? key, required this.child, required this.isLoading})
-      : super(key: key);
+/// MARK  Abstract Class
 
-  final Widget child;
-  final RxBool isLoading;
+abstract class LoadingGetController extends GetxController {
+  final RxBool isOverlay = false.obs;
+}
+
+abstract class LoadingGetView<T extends LoadingGetController>
+    extends GetView<T> {
+  T get ctr;
+  Widget get child;
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => Stack(
-        fit: StackFit.expand,
-        children: [
-          child,
-          if (isLoading.value)
-            Container(
-              decoration: BoxDecoration(
-                color: Color.fromRGBO(0, 0, 0, 0.6),
-              ),
-              child: PlainLoadingWidget(),
-            )
-        ],
+    if (!Get.isRegistered<T>()) Get.lazyPut(() => ctr);
+
+    return GestureDetector(
+      onTap: () {
+        dismisskeyBord(context);
+      },
+      child: Obx(
+        () => Stack(
+          fit: StackFit.expand,
+          children: [
+            child,
+            if (controller.isOverlay.value)
+              Container(
+                decoration: BoxDecoration(
+                  color: Color.fromRGBO(0, 0, 0, 0.6),
+                ),
+                child: PlainLoadingWidget(),
+              )
+          ],
+        ),
       ),
     );
   }
