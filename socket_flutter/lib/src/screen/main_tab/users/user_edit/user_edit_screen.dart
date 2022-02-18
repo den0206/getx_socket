@@ -81,8 +81,16 @@ class UserEditScreen extends GetView<UserEditController> {
                       controller.editUser.mainLanguage = selectLang;
                     },
                   ),
-                  SizedBox(
-                    height: 40,
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      child: Text(
+                        "Change Email",
+                      ),
+                      onPressed: () {
+                        controller.showEditEmail();
+                      },
+                    ),
                   ),
                   Obx(
                     () => CustomButton(
@@ -106,7 +114,7 @@ class UserEditScreen extends GetView<UserEditController> {
                     onPressed: () {
                       controller.deleteAlert(context);
                     },
-                  )
+                  ),
                 ],
               ),
             ),

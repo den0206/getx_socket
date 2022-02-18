@@ -38,7 +38,7 @@ const messageRoute = require('./routes/message_route');
 const groupRoute = require('./routes/group_route');
 const translateRoute = require('./routes/translate_route');
 const notificationRoute = require('./routes/notification_route');
-const resetPasswordRoute = require('./routes/reset_password_route');
+const tempTokenRoute = require('./routes/temp_token_route');
 
 const v1 = process.env.API_URL;
 const ngrokToken = process.env.NGROKTOKEN;
@@ -54,7 +54,7 @@ app.use(`${v1}/messages`, messageRoute);
 app.use(`${v1}/groups`, groupRoute);
 app.use(`${v1}/translate`, translateRoute);
 app.use(`${v1}/notification`, notificationRoute);
-app.use(`${v1}/resetpassword`, resetPasswordRoute);
+app.use(`${v1}/temptoken`, tempTokenRoute);
 
 server.listen(port, () => {
   console.log('server Start', port);

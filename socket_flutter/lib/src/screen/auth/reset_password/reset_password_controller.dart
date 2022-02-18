@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/state_manager.dart';
-import 'package:socket_flutter/src/api/reset_password_api.dart';
+import 'package:socket_flutter/src/api/temp_token_api.dart';
 import 'package:socket_flutter/src/screen/widget/common_dialog.dart';
 
 class ResetPasswordController extends GetxController {
-  ResetState state = ResetState.checkEmail;
+  VerifyState state = VerifyState.checkEmail;
   final TextEditingController emailTextField = TextEditingController();
   final TextEditingController passwordTextField = TextEditingController();
   final TextEditingController verifyTextField = TextEditingController();
 
-  final ResetPasswordAPI _resetPasswordAPI = ResetPasswordAPI();
+  final TempTokenAPI _resetPasswordAPI = TempTokenAPI();
 
   late final String userId;
 
   TextEditingController get currentTx {
     switch (this.state) {
-      case ResetState.checkEmail:
+      case VerifyState.checkEmail:
         return emailTextField;
-      case ResetState.sendPassword:
+      case VerifyState.sendPassword:
         return passwordTextField;
-      case ResetState.verify:
+      case VerifyState.verify:
         return verifyTextField;
     }
   }
@@ -30,50 +30,48 @@ class ResetPasswordController extends GetxController {
   }
 
   final RxBool isLoading = false.obs;
+  bool buttonEnable = false;
 
   Future<void> sendRequest() async {
-    if (currentTx.text == "") {
-      showError("Confirm Text");
-      return;
-    }
+    if (currentTx.text == "") return;
 
-    if (state != ResetState.checkEmail) {
+    if (state != VerifyState.checkEmail) {
       isLoading.call(true);
       await Future.delayed(Duration(seconds: 1));
     }
 
     try {
       switch (this.state) {
-        case ResetState.checkEmail:
+        case VerifyState.checkEmail:
 
           /// validate Email
-          state = ResetState.sendPassword;
+          state = VerifyState.sendPassword;
           break;
-        case ResetState.sendPassword:
+        case VerifyState.sendPassword:
 
           /// validate Password
-          final res = await _resetPasswordAPI.request(emailTextField.text);
+          final res =
+              await _resetPasswordAPI.requestPassword(emailTextField.text);
 
           if (res.message != null &&
               res.message!.contains("Not find this Email")) {
             passwordTextField.clear();
-            state = ResetState.checkEmail;
+            state = VerifyState.checkEmail;
           }
 
           if (!res.status) break;
           userId = res.data;
-          state = ResetState.verify;
+          state = VerifyState.verify;
           break;
-        case ResetState.verify:
+        case VerifyState.verify:
           final data = {
             "userId": userId,
             "password": passwordTextField.text,
             "verify": verifyTextField.text
           };
 
-          final res = await _resetPasswordAPI.verify(data);
+          final res = await _resetPasswordAPI.verifyPassword(data);
           if (!res.status) break;
-          print(res.data);
 
           Get.back(result: res);
 
@@ -83,43 +81,61 @@ class ResetPasswordController extends GetxController {
       showError(e.toString());
     } finally {
       isLoading.call(false);
+      buttonEnable = false;
       update();
     }
   }
+
+  void checkField(String value) {
+    int minimum;
+    switch (this.state) {
+      case VerifyState.checkEmail:
+      case VerifyState.sendPassword:
+        minimum = 1;
+        break;
+      case VerifyState.verify:
+        minimum = 6;
+        break;
+    }
+
+    buttonEnable = value.length >= minimum;
+
+    update();
+  }
 }
 
-enum ResetState { checkEmail, sendPassword, verify }
+enum VerifyState { checkEmail, sendPassword, verify }
 
-extension ResetStateEXT on ResetState {
+extension VerifyStateEXT on VerifyState {
   String get title {
     switch (this) {
-      case ResetState.checkEmail:
+      case VerifyState.checkEmail:
         return "Check Email";
-      case ResetState.sendPassword:
+      case VerifyState.sendPassword:
         return "Send Password";
-      case ResetState.verify:
+      case VerifyState.verify:
         return "Verify";
     }
   }
 
   String get labelText {
     switch (this) {
-      case ResetState.checkEmail:
+      case VerifyState.checkEmail:
         return "Your Email";
-      case ResetState.sendPassword:
+      case VerifyState.sendPassword:
         return "New Password";
-      case ResetState.verify:
+      case VerifyState.verify:
         return "Verify Number";
     }
   }
 
   TextInputType get inputType {
     switch (this) {
-      case ResetState.checkEmail:
+      case VerifyState.checkEmail:
         return TextInputType.emailAddress;
-      case ResetState.sendPassword:
+      case VerifyState.sendPassword:
         return TextInputType.visiblePassword;
-      case ResetState.verify:
+      case VerifyState.verify:
         return TextInputType.number;
     }
   }
