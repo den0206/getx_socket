@@ -10,6 +10,7 @@ import 'package:socket_flutter/src/screen/main_tab/message/message_extention.dar
 import 'package:socket_flutter/src/screen/main_tab/message/message_file_sheet.dart';
 import 'package:socket_flutter/src/screen/main_tab/recents/recents_controller.dart';
 import 'package:socket_flutter/src/screen/widget/common_dialog.dart';
+import 'package:socket_flutter/src/screen/widget/loading_widget.dart';
 import 'package:socket_flutter/src/service/image_extention.dart';
 import 'package:socket_flutter/src/service/recent_extention.dart';
 import 'package:socket_flutter/src/service/storage_service.dart';
@@ -17,13 +18,12 @@ import 'package:socket_flutter/src/utils/global_functions.dart';
 import 'package:stream_transform/stream_transform.dart';
 import 'package:collection/collection.dart';
 
-class MessageController extends GetxController {
+class MessageController extends LoadingGetController {
   final TextEditingController tc = TextEditingController();
   final ScrollController sC = ScrollController();
 
   final RxList<Message> messages = RxList<Message>();
   final RxBool isLoading = false.obs;
-  final RxBool isOverLay = false.obs;
   bool isFirst = true;
 
   final focusNode = FocusNode();
@@ -111,19 +111,19 @@ class MessageController extends GetxController {
       required String text,
       String? translated,
       File? file}) async {
-    isOverLay.call(true);
+    isOverlay.call(true);
     await extention.sendMessage(
         type: type, text: text, translated: translated, file: file);
     tc.clear();
     showEmoji.call(false);
     after.call("");
-    isOverLay.call(false);
+    isOverlay.call(false);
     _scrollToBottom();
   }
 
   Future<void> deleteMessage(Message message) async {
     Get.back();
-    isOverLay.call(true);
+    isOverlay.call(true);
     try {
       final action = await extention.delete(message.id);
       if (action) {
@@ -151,7 +151,7 @@ class MessageController extends GetxController {
     } catch (e) {
       print(e.toString());
     } finally {
-      isOverLay.call(false);
+      isOverlay.call(false);
     }
   }
 

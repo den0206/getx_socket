@@ -5,18 +5,18 @@ import 'package:socket_flutter/src/model/response_api.dart';
 import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/screen/auth/reset_password/reset_password_screen.dart';
 import 'package:socket_flutter/src/screen/auth/signup/signup_screen.dart';
+import 'package:socket_flutter/src/screen/widget/loading_widget.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
 import 'package:socket_flutter/src/service/notification_service.dart';
 import 'package:socket_flutter/src/service/storage_service.dart';
 import 'package:socket_flutter/src/utils/global_functions.dart';
 
-class LoginController extends GetxController {
+class LoginController extends LoadingGetController {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
   final userAPI = UserAPI();
   final StorageService storage = StorageService.to;
-  final RxBool isLoading = false.obs;
 
   @override
   void onInit() {
@@ -34,7 +34,7 @@ class LoginController extends GetxController {
       "fcm": fcm,
     };
 
-    isLoading.call(true);
+    isOverlay.call(true);
 
     try {
       final ResponseAPI res = await userAPI.login(credential);
@@ -53,7 +53,7 @@ class LoginController extends GetxController {
     } catch (e) {
       print(e.toString());
     } finally {
-      isLoading.call(false);
+      isOverlay.call(false);
     }
   }
 

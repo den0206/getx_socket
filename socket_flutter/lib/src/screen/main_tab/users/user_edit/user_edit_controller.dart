@@ -9,10 +9,11 @@ import 'package:socket_flutter/src/model/language.dart';
 import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/screen/main_tab/users/user_edit/email/edit_email_screen.dart';
 import 'package:socket_flutter/src/screen/widget/common_dialog.dart';
+import 'package:socket_flutter/src/screen/widget/loading_widget.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
 import 'package:socket_flutter/src/service/image_extention.dart';
 
-class UserEditController extends GetxController {
+class UserEditController extends LoadingGetController {
   final User currentUser = AuthService.to.currentUser.value!;
   late final User editUser;
   final UserAPI _userAPI = UserAPI();
@@ -22,7 +23,6 @@ class UserEditController extends GetxController {
   final Rxn<Language> selectLanguage = Rxn<Language>();
 
   final imageExt = ImageExtention();
-  final RxBool isLoading = false.obs;
 
   RxBool get isChanged {
     if (editUser.name.isEmpty) {
@@ -58,7 +58,7 @@ class UserEditController extends GetxController {
 
   Future<void> updateUser() async {
     if (!isChanged.value) return;
-    isLoading.call(true);
+    isOverlay.call(true);
 
     await Future.delayed(Duration(milliseconds: 500));
 
@@ -70,7 +70,7 @@ class UserEditController extends GetxController {
     final newUser = User.fromMap(res.data);
     await AuthService.to.updateUser(newUser);
 
-    isLoading.call(false);
+    isOverlay.call(false);
 
     Get.back();
   }
@@ -99,7 +99,7 @@ class UserEditController extends GetxController {
   Future<void> deleteUser() async {
     await Future.delayed(Duration(milliseconds: 500));
 
-    isLoading.call(true);
+    isOverlay.call(true);
     try {
       final res = await _userAPI.deleteUser();
       if (!res.status) return;
@@ -109,7 +109,7 @@ class UserEditController extends GetxController {
     } catch (e) {
       print(e);
     } finally {
-      isLoading.call(false);
+      isOverlay.call(false);
     }
   }
 }

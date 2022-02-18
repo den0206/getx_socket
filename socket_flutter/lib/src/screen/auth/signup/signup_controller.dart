@@ -10,10 +10,11 @@ import 'package:socket_flutter/src/api/user_api.dart';
 import 'package:socket_flutter/src/model/language.dart';
 import 'package:socket_flutter/src/screen/auth/reset_password/reset_password_controller.dart';
 import 'package:socket_flutter/src/screen/widget/common_dialog.dart';
+import 'package:socket_flutter/src/screen/widget/loading_widget.dart';
 import 'package:socket_flutter/src/service/image_extention.dart';
 import 'package:socket_flutter/src/utils/global_functions.dart';
 
-class SignUpController extends GetxController {
+class SignUpController extends LoadingGetController {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emaiController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -24,8 +25,6 @@ class SignUpController extends GetxController {
   Rxn<Language> currentLanguage = Rxn<Language>();
 
   VerifyState state = VerifyState.checkEmail;
-
-  final RxBool isLoading = false.obs;
 
   final _userAPI = UserAPI();
   final _tempTokenAPI = TempTokenAPI();
@@ -50,7 +49,7 @@ class SignUpController extends GetxController {
       showError("Select Language");
       return;
     }
-    isLoading.call(true);
+    isOverlay.call(true);
     await Future.delayed(Duration(seconds: 1));
 
     try {
@@ -92,7 +91,7 @@ class SignUpController extends GetxController {
     } catch (e) {
       print(e.toString());
     } finally {
-      isLoading.call(false);
+      isOverlay.call(false);
       update();
     }
   }

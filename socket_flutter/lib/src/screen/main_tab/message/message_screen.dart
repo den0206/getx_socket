@@ -19,22 +19,21 @@ import 'package:socket_flutter/src/screen/widget/user_country_widget.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
 import 'package:socket_flutter/src/utils/global_functions.dart';
 
-class MessageScreen extends GetView<MessageController> {
-  const MessageScreen({Key? key}) : super(key: key);
-
+class MessageScreen extends LoadingGetView<MessageController> {
   static const routeName = '/MessageScreen';
+  @override
+  MessageController get ctr => MessageController();
 
   @override
-  Widget build(BuildContext context) {
-    return OverlayLoadingWidget(
-      isLoading: controller.isOverLay,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              if (controller.isPrivate) ...[
-                GestureDetector(
+  Widget get child {
+    return Scaffold(
+      appBar: AppBar(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            if (controller.isPrivate) ...[
+              Builder(builder: (context) {
+                return GestureDetector(
                   onTap: () {
                     showModalBottomSheet(
                       context: context,
@@ -62,178 +61,179 @@ class MessageScreen extends GetView<MessageController> {
                       ),
                     ],
                   ),
-                ),
-                Icon(Icons.loop),
-                Column(
-                  children: [
-                    CountryFlagWidget(
-                      country: AuthService.to.currentUser.value!.country,
-                    ),
-                    Text(
-                      "(${controller.extention.currentUser.mainLanguage.name})",
-                      style: TextStyle(fontSize: 8.sp),
-                    ),
-                  ],
-                )
-              ],
-            ],
-          ),
-          actions: [
-            Obx(
-              () => Row(
+                );
+              }),
+              Icon(Icons.loop),
+              Column(
                 children: [
-                  Text(
-                    controller.useRealtime.value ? "Realtime" : "No Realtime",
-                    style: TextStyle(fontSize: 10),
+                  CountryFlagWidget(
+                    country: AuthService.to.currentUser.value!.country,
                   ),
-                  Switch(
-                    value: controller.useRealtime.value,
-                    activeColor: Colors.orange,
-                    inactiveTrackColor: Colors.white,
-                    onChanged: (value) {
-                      controller.toggleReal();
-                    },
+                  Text(
+                    "(${controller.extention.currentUser.mainLanguage.name})",
+                    style: TextStyle(fontSize: 8.sp),
                   ),
                 ],
-              ),
-            )
+              )
+            ],
           ],
         ),
-        body: Column(
-          children: [
-            Obx(
-              () => controller.isLoading.value
-                  ? LoadingCellWidget()
-                  : Container(),
-            ),
-            Expanded(
-              child: Obx(
-                () => Stack(
-                  children: [
-                    Scrollbar(
-                      isAlwaysShown: true,
-                      controller: controller.sC,
-                      child: ListView.builder(
-                        itemCount: controller.messages.length,
-                        controller: controller.sC,
-                        reverse: true,
-                        itemBuilder: (context, index) {
-                          final message = controller.messages[index];
-
-                          return MessageCell(message: message);
-                        },
-                      ),
-                    ),
-                    _keybordBackround(context)
-                  ],
+        actions: [
+          Obx(
+            () => Row(
+              children: [
+                Text(
+                  controller.useRealtime.value ? "Realtime" : "No Realtime",
+                  style: TextStyle(fontSize: 10),
                 ),
+                Switch(
+                  value: controller.useRealtime.value,
+                  activeColor: Colors.orange,
+                  inactiveTrackColor: Colors.white,
+                  onChanged: (value) {
+                    controller.toggleReal();
+                  },
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+      body: Column(
+        children: [
+          Obx(
+            () =>
+                controller.isLoading.value ? LoadingCellWidget() : Container(),
+          ),
+          Expanded(
+            child: Obx(
+              () => Stack(
+                children: [
+                  Scrollbar(
+                    isAlwaysShown: true,
+                    controller: controller.sC,
+                    child: ListView.builder(
+                      itemCount: controller.messages.length,
+                      controller: controller.sC,
+                      reverse: true,
+                      itemBuilder: (context, index) {
+                        final message = controller.messages[index];
+
+                        return MessageCell(message: message);
+                      },
+                    ),
+                  ),
+                  _keybordBackround()
+                ],
               ),
             ),
-            _messageInput(context),
-            _emojiSpace()
-          ],
-        ),
+          ),
+          _messageInput(),
+          _emojiSpace()
+        ],
       ),
     );
   }
 
-  Widget _messageInput(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 20),
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: Row(
-          children: [
-            Expanded(
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 14),
-                height: 60,
-                decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(30),
-                  boxShadow: [
-                    BoxShadow(
-                      offset: Offset(0, 3),
-                      blurRadius: 5,
-                      color: Colors.black,
-                    )
-                  ],
-                ),
-                child: Row(
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.emoji_emotions_outlined),
-                      color: Colors.grey[500],
-                      onPressed: () {
-                        dismisskeyBord(context);
-                        controller.showEmoji.toggle();
-                      },
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                      child: TextField(
-                        controller: controller.tc,
-                        focusNode: controller.focusNode,
-                        maxLength: 70,
-                        keyboardType: TextInputType.multiline,
-                        textInputAction: TextInputAction.newline,
-                        maxLines: 5,
-                        decoration: InputDecoration(
-                          hintText: "Message...",
-                          hintStyle: TextStyle(
-                            height: 1.8,
-                          ),
-                          border: InputBorder.none,
-                          counterText: '',
-                        ),
-                        onChanged: (value) {
-                          controller.streamController.add(value);
-                        },
-                        onSubmitted: (value) {
-                          print("BREAK");
+  Widget _messageInput() {
+    return Builder(builder: (context) {
+      return Container(
+        padding: EdgeInsets.symmetric(vertical: 20),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          child: Row(
+            children: [
+              Expanded(
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 14),
+                  height: 60,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    borderRadius: BorderRadius.circular(30),
+                    boxShadow: [
+                      BoxShadow(
+                        offset: Offset(0, 3),
+                        blurRadius: 5,
+                        color: Colors.black,
+                      )
+                    ],
+                  ),
+                  child: Row(
+                    children: [
+                      IconButton(
+                        icon: Icon(Icons.emoji_emotions_outlined),
+                        color: Colors.grey[500],
+                        onPressed: () {
+                          dismisskeyBord(context);
+                          controller.showEmoji.toggle();
                         },
                       ),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        controller.showBottomSheet();
-                      },
-                      icon: Icon(Icons.attach_file, color: Colors.grey[500]),
-                    )
-                  ],
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: TextField(
+                          controller: controller.tc,
+                          focusNode: controller.focusNode,
+                          maxLength: 70,
+                          keyboardType: TextInputType.multiline,
+                          textInputAction: TextInputAction.newline,
+                          maxLines: 5,
+                          decoration: InputDecoration(
+                            hintText: "Message...",
+                            hintStyle: TextStyle(
+                              height: 1.8,
+                            ),
+                            border: InputBorder.none,
+                            counterText: '',
+                          ),
+                          onChanged: (value) {
+                            controller.streamController.add(value);
+                          },
+                          onSubmitted: (value) {
+                            print("BREAK");
+                          },
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          controller.showBottomSheet();
+                        },
+                        icon: Icon(Icons.attach_file, color: Colors.grey[500]),
+                      )
+                    ],
+                  ),
                 ),
               ),
-            ),
-            SizedBox(
-              width: 16,
-            ),
-            FloatingActionButton(
-              child: Icon(
-                Icons.send,
-                color: Colors.white,
-                size: 18,
+              SizedBox(
+                width: 16,
               ),
-              backgroundColor: Colors.green,
-              elevation: 0,
-              onPressed: () {
-                if (controller.tc.text.isEmpty) {
-                  return null;
-                } else {
-                  FocusScope.of(context).unfocus();
-                  controller.sendMessage(
-                    type: MessageType.text,
-                    text: controller.tc.text,
-                    translated: controller.after.value,
-                  );
-                }
-              },
-            ),
-          ],
+              FloatingActionButton(
+                child: Icon(
+                  Icons.send,
+                  color: Colors.white,
+                  size: 18,
+                ),
+                backgroundColor: Colors.green,
+                elevation: 0,
+                onPressed: () {
+                  if (controller.tc.text.isEmpty) {
+                    return null;
+                  } else {
+                    FocusScope.of(context).unfocus();
+                    controller.sendMessage(
+                      type: MessageType.text,
+                      text: controller.tc.text,
+                      translated: controller.after.value,
+                    );
+                  }
+                },
+              ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 
   Widget _emojiSpace() {
@@ -281,7 +281,7 @@ class MessageScreen extends GetView<MessageController> {
     );
   }
 
-  Widget _keybordBackround(BuildContext context) {
+  Widget _keybordBackround() {
     return KeyboardDismissOnTap(
       child: KeyboardVisibilityBuilder(
         builder: (p0, isKeyboardVisible) {
