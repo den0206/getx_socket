@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
 const tokenSchema = mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
+  tempId: {
+    type: String,
+    unique: true,
     required: true,
-    ref: 'User',
   },
   token: {type: String, required: true},
   createdAt: {
@@ -14,5 +14,5 @@ const tokenSchema = mongoose.Schema({
   },
 });
 
-const ResetPassword = mongoose.model('ResetPassword', tokenSchema);
-module.exports = ResetPassword;
+const TempToken = mongoose.model('TempToken', tokenSchema);
+module.exports = TempToken;

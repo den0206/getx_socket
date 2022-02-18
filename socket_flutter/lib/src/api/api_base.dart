@@ -249,7 +249,7 @@ enum EndPoint {
   group,
   translate,
   notification,
-  resetpassword
+  temptoken
 }
 
 extension EndPointEXT on EndPoint {
@@ -269,8 +269,8 @@ extension EndPointEXT on EndPoint {
         return "$APIVer/translate";
       case EndPoint.notification:
         return "$APIVer/notification";
-      case EndPoint.resetpassword:
-        return "$APIVer/resetpassword";
+      case EndPoint.temptoken:
+        return "$APIVer/temptoken";
     }
   }
 }

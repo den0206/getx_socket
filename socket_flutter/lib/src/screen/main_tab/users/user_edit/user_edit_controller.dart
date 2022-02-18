@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:socket_flutter/src/api/user_api.dart';
 import 'package:socket_flutter/src/model/language.dart';
 import 'package:socket_flutter/src/model/user.dart';
+import 'package:socket_flutter/src/screen/main_tab/users/user_edit/email/edit_email_screen.dart';
 import 'package:socket_flutter/src/screen/widget/common_dialog.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
 import 'package:socket_flutter/src/service/image_extention.dart';
@@ -72,6 +73,10 @@ class UserEditController extends GetxController {
     isLoading.call(false);
 
     Get.back();
+  }
+
+  Future<void> showEditEmail() async {
+    final _ = await Get.toNamed(EditEmailScreen.routeName);
   }
 
   Future<void> deleteAlert(BuildContext context) async {

@@ -21,13 +21,16 @@ class ResetPasswordScreen extends StatelessWidget {
           child: Scaffold(
             appBar: AppBar(
               title: Text(controller.state.title),
+              foregroundColor: Colors.black,
+              elevation: 0,
+              backgroundColor: Colors.transparent,
             ),
             body: Center(
               child: Flex(
                 direction: Axis.vertical,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  if (controller.state == ResetState.verify)
+                  if (controller.state == VerifyState.verify)
                     Text(
                       "Please Check Your Email",
                       style: TextStyle(
@@ -36,19 +39,34 @@ class ResetPasswordScreen extends StatelessWidget {
                     ),
                   Padding(
                     padding: const EdgeInsets.all(20.0),
-                    child: CustomTextField(
-                      controller: controller.currentTx,
-                      labelText: controller.state.labelText,
-                      inputType: controller.state.inputType,
-                      isSecure: controller.isSecure,
+                    child: Stack(
+                      children: [
+                        if (controller.state != VerifyState.verify)
+                          CustomTextField(
+                            controller: controller.currentTx,
+                            labelText: controller.state.labelText,
+                            inputType: controller.state.inputType,
+                            isSecure: controller.isSecure,
+                            onChange: controller.checkField,
+                          ),
+                        if (controller.state == VerifyState.verify)
+                          CustomPinCodeField(
+                            controller: controller.currentTx,
+                            inputType: controller.state.inputType,
+                            isSecure: controller.isSecure,
+                            onChange: controller.checkField,
+                          ),
+                      ],
                     ),
                   ),
                   CustomButton(
                     title: controller.state.title,
-                    onPressed: () {
-                      dismisskeyBord(context);
-                      controller.sendRequest();
-                    },
+                    onPressed: controller.buttonEnable
+                        ? () {
+                            dismisskeyBord(context);
+                            controller.sendRequest();
+                          }
+                        : null,
                   ),
                 ],
               ),

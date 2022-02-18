@@ -125,6 +125,7 @@ async function updateUser(req, res) {
 
     const value = {
       name: body.name,
+      email: body.email,
       blocked: body.blocked,
       searchId: body.searchId,
       mainLanguage: body.mainLanguage,
