@@ -89,7 +89,7 @@ async function getUsers(req, res) {
     .limit(limit + 1);
 
   if (!users)
-    return res.status(500).json({status: false, message: 'Not find any User'});
+    return res.status(400).json({status: false, message: 'Not find any User'});
 
   const hasNextPage = users.length > limit;
   users = hasNextPage ? users.slice(0, -1) : users;
@@ -152,7 +152,9 @@ async function deleteUser(req, res) {
   try {
     const findUser = await User.findById(userId);
     if (!findUser)
-      res.status(400).json({status: false, message: 'Can not find the user'});
+      return res
+        .status(400)
+        .json({status: false, message: 'Can not find the user'});
 
     /// delete with pre reletaion
     await findUser.delete();
