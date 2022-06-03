@@ -76,7 +76,8 @@ class BubbleSelf extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future<void> _tryOpenUrl(String url) async {
-      if (await canLaunch(url)) {
+      final Uri uri = Uri.parse(url);
+      if (await canLaunchUrl(uri)) {
         await showDialog(
           context: context,
           builder: (context) {
@@ -84,7 +85,7 @@ class BubbleSelf extends StatelessWidget {
               title: "Open Url",
               descripon: url,
               onPress: () async {
-                await launch(url);
+                await launchUrl(uri);
               },
               icon: Icons.open_in_browser,
               mainColor: Colors.red,

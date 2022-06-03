@@ -9,7 +9,7 @@ class UserAPI extends APIBase {
   Future<ResponseAPI> signUp(
       {required Map<String, dynamic> userData, File? avatarFile}) async {
     try {
-      final Uri uri = setUri("$endpoint/signup");
+      final Uri uri = setUri("/signup");
 
       if (avatarFile == null) {
         return await postRequest(uri: uri, body: userData);
@@ -21,16 +21,16 @@ class UserAPI extends APIBase {
         );
       }
     } catch (e) {
-      return catchAPIError(e.toString());
+      throw e;
     }
   }
 
   Future<ResponseAPI> login(Map<String, dynamic> credential) async {
     try {
-      final Uri uri = setUri("$endpoint/login");
+      final Uri uri = setUri("/login");
       return await postRequest(uri: uri, body: credential);
     } catch (e) {
-      return catchAPIError(e.toString());
+      throw e;
     }
   }
 
@@ -41,17 +41,17 @@ class UserAPI extends APIBase {
     };
 
     try {
-      final Uri uri = setUri("$endpoint/", query);
-      return await getRequest(uri: uri);
+      final Uri uri = setUri("/", query);
+      return await getRequest(uri: uri, useToken: true);
     } catch (e) {
-      return catchAPIError(e.toString());
+      throw e;
     }
   }
 
   Future<ResponseAPI> editUser(
       {required Map<String, dynamic> userData, File? avatarFile}) async {
     try {
-      final Uri uri = setUri("$endpoint/edit");
+      final Uri uri = setUri("/edit");
 
       if (avatarFile == null) {
         return await putRequest(uri: uri, body: userData, useToken: true);
@@ -64,34 +64,35 @@ class UserAPI extends APIBase {
             useToken: true);
       }
     } catch (e) {
-      return catchAPIError(e.toString());
+      throw e;
     }
   }
 
   Future<ResponseAPI> fetchBlocks() async {
     try {
-      final Uri uri = setUri("$endpoint/blocks");
+      final Uri uri = setUri("/blocks");
       return await getRequest(uri: uri, useToken: true);
     } catch (e) {
-      return catchAPIError(e.toString());
+      throw e;
     }
   }
 
   Future<ResponseAPI> getById({required String id}) async {
+    final Map<String, dynamic> query = {"id": id};
     try {
-      final Uri uri = setUri("$endpoint/id/${id}");
+      final Uri uri = setUri("/search", query);
       return await getRequest(uri: uri, useToken: true);
     } catch (e) {
-      return catchAPIError(e.toString());
+      throw e;
     }
   }
 
   Future<ResponseAPI> deleteUser() async {
     try {
-      final Uri uri = setUri("$endpoint/delete");
+      final Uri uri = setUri("/delete");
       return await deleteRequest(uri: uri, useToken: true);
     } catch (e) {
-      return catchAPIError(e.toString());
+      throw e;
     }
   }
 }

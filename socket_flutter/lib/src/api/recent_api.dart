@@ -1,37 +1,38 @@
 import 'package:socket_flutter/src/api/api_base.dart';
 import 'package:socket_flutter/src/model/recent.dart';
 import 'package:socket_flutter/src/model/response_api.dart';
-import 'package:socket_flutter/src/service/auth_service.dart';
 
 class RecentAPI extends APIBase {
   RecentAPI() : super(EndPoint.recent);
 
   Future<ResponseAPI> createChatRecent(Map<String, dynamic> recent) async {
     try {
-      final Uri uri = setUri("$endpoint/");
+      final Uri uri = setUri("/");
       return await postRequest(uri: uri, body: recent);
     } catch (e) {
-      return catchAPIError(e.toString());
+      throw e;
     }
   }
 
   Future<ResponseAPI> updateRecent(
       Recent recent, Map<String, dynamic> value) async {
+    final Map<String, dynamic> q = {"id": recent.id};
     try {
-      final Uri uri = setUri("$endpoint/${recent.id}");
+      final Uri uri = setUri("/update", q);
       return await putRequest(uri: uri, body: value, useToken: true);
     } catch (e) {
-      return catchAPIError(e.toString());
+      throw e;
     }
   }
 
   Future<ResponseAPI> findOneByRoomIdAndUserId(
       String userId, String chatRoomId) async {
+    final Map<String, dynamic> q = {"userId": userId, "chatRoomId": chatRoomId};
     try {
-      final Uri uri = setUri("$endpoint/$userId/$chatRoomId");
+      final Uri uri = setUri("/one", q);
       return await getRequest(uri: uri);
     } catch (e) {
-      return catchAPIError(e.toString());
+      throw e;
     }
   }
 
@@ -41,12 +42,13 @@ class RecentAPI extends APIBase {
     /// 使わない 1
     final Map<String, dynamic> query = {
       "userParams": includeUserParams ? "0" : "1",
+      "chatRoomId": chatRoomId
     };
     try {
-      final Uri uri = setUri("$endpoint/roomid/$chatRoomId", query);
+      final Uri uri = setUri("/roomid", query);
       return await getRequest(uri: uri);
     } catch (e) {
-      return catchAPIError(e.toString());
+      throw e;
     }
   }
 
@@ -57,20 +59,19 @@ class RecentAPI extends APIBase {
     };
 
     try {
-      final currentUser = AuthService.to.currentUser.value!;
-      final Uri uri = setUri("$endpoint/userid/${currentUser.id}", query);
+      final Uri uri = setUri("/userid", query);
       return await getRequest(uri: uri, useToken: true);
     } catch (e) {
-      return catchAPIError(e.toString());
+      throw e;
     }
   }
 
   Future<ResponseAPI> deleteRecent({required String recentId}) async {
     try {
-      final Uri uri = setUri("$endpoint/$recentId");
+      final Uri uri = setUri("/$recentId");
       return await deleteRequest(uri: uri, useToken: true);
     } catch (e) {
-      return catchAPIError(e.toString());
+      throw e;
     }
   }
 }

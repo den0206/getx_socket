@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 
@@ -103,22 +106,102 @@ class CustomDialog extends StatelessWidget {
   }
 }
 
-Future showError(String? message) {
-  return showDialog(
+void showError(String message) {
+  if (Get.context == null) return;
+  // InvalidTokenException or NoBindDataException　の場合,遷移をRoot に戻す
+
+  showCommonDialog(
     context: Get.context!,
-    builder: (context) {
-      return AlertDialog(
-        title: Text("Error"),
-        content: message != null ? Text(message) : Text("UnknownError"),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: Text("OK"),
-          ),
-        ],
-      );
-    },
+    title: "Error",
+    content: message,
+    backRoot: false,
   );
+}
+
+// アラートが表示されているかの分岐
+bool _isDialogShowing = false;
+
+void showCommonDialog({
+  required BuildContext context,
+  String? title,
+  String? content,
+  TextAlign? contentAlign = TextAlign.center,
+  bool backRoot = false,
+  VoidCallback? okAction,
+}) {
+  // アラートが表示されている場合、アラートを追加しない
+  if (_isDialogShowing) return;
+
+  _isDialogShowing = true;
+
+  if (Platform.isIOS) {
+    showCupertinoDialog(
+      context: context,
+      builder: (BuildContext ctx) {
+        return CupertinoAlertDialog(
+          title: title != null ? Text(title) : null,
+          content:
+              content != null ? Text(content, textAlign: contentAlign) : null,
+          actions: [
+            CupertinoDialogAction(
+              onPressed: () {
+                Navigator.of(context).pop();
+                if (backRoot && Navigator.canPop(context))
+                  // root　に戻す
+                  Navigator.popUntil(context, (route) => route.isFirst);
+              },
+              child: Text(okAction != null ? 'キャンセル' : "OK"),
+              isDefaultAction: false,
+              isDestructiveAction: false,
+            ),
+            if (okAction != null)
+              CupertinoDialogAction(
+                onPressed: () {
+                  okAction();
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+                isDefaultAction: true,
+                isDestructiveAction: true,
+              )
+          ],
+        );
+      },
+    ).then((value) => _isDialogShowing = false);
+  }
+  if (Platform.isAndroid) {
+    showDialog(
+      context: context,
+      builder: (BuildContext ctx) {
+        return AlertDialog(
+          title: title != null ? Center(child: Text(title)) : null,
+          content: content != null
+              ? Text(
+                  content,
+                  textAlign: contentAlign,
+                )
+              : null,
+          actions: [
+            TextButton(
+              child: Text(okAction != null ? 'キャンセル' : "OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+                if (backRoot && Navigator.canPop(context))
+                  // root　に戻す
+                  Navigator.popUntil(context, (route) => route.isFirst);
+              },
+            ),
+            if (okAction != null)
+              TextButton(
+                child: const Text('OK'),
+                onPressed: () {
+                  okAction();
+                  Navigator.of(context).pop();
+                },
+              ),
+          ],
+        );
+      },
+    ).then((value) => _isDialogShowing = false);
+  }
 }
