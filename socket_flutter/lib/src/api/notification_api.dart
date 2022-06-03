@@ -7,19 +7,19 @@ class NotificationAPI extends APIBase {
   Future<ResponseAPI> messageNotification(
       Map<String, dynamic> notificationData) async {
     try {
-      final Uri uri = setUri("$endpoint/");
+      final Uri uri = setUri("/");
       return await postRequest(uri: uri, body: notificationData);
     } catch (e) {
-      return catchAPIError(e.toString());
+      throw e;
     }
   }
 
   Future<ResponseAPI> getBadgesCount() async {
     try {
-      final Uri uri = setUri("$endpoint/getBadgeCount");
+      final Uri uri = setUri("/getBadgeCount");
       return await getRequest(uri: uri, useToken: true);
     } catch (e) {
-      return catchAPIError(e.toString());
+      throw e;
     }
   }
 }

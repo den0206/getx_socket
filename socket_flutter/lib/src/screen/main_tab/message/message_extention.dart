@@ -231,9 +231,9 @@ class MessageExtention {
     /// unique array
     final uniqueRead = [currentUser.id, ...message.readBy].toSet().toList();
 
-    final readBody = {"readBy": uniqueRead};
+    final value = {"messageId": message.id, "readBy": uniqueRead};
 
-    final res = await _messageAPI.updateReadStatus(message.id, readBody);
+    final res = await _messageAPI.updateReadStatus(value);
 
     if (res.status) {
       print("update Read ${message.id}");

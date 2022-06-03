@@ -19,11 +19,11 @@ class TranslateAPI extends APIBase {
       "tar": tar.code,
     };
     try {
-      final Uri uri = setUri("$endpoint/", query);
+      final Uri uri = setUri("/", query);
 
       return await getRequest(uri: uri, useToken: true);
     } catch (e) {
-      return catchAPIError(e.toString());
+      throw e;
     }
   }
 }

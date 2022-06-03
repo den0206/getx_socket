@@ -16,14 +16,13 @@ abstract class APIBase {
   final String host = Enviroment.getHost();
   final http.Client client = http.Client();
   final JsonCodec json = JsonCodec();
-  final Map<String, String> headers = {"Content-type": "application/json"};
+  final Map<String, String> headers = {
+    "Content-type": "application/json",
+    "x-api-key": dotenv.env["API_KEY"] ?? "No API Key"
+  };
 
-  final EndPoint endPointType;
-  APIBase(this.endPointType);
-
-  String get endpoint {
-    return endPointType.name;
-  }
+  final EndPoint endPoint;
+  APIBase(this.endPoint);
 
   String? get token {
     final user = AuthService.to.currentUser.value;
@@ -32,12 +31,6 @@ abstract class APIBase {
     }
 
     return "JWT ${user.sessionToken}";
-  }
-
-  void _setAPIKey() {
-    final apiKey = dotenv.env["API_KEY"];
-
-    headers["x-api-key"] = "${apiKey}";
   }
 
   void _setToken(bool useToken) {
@@ -96,9 +89,10 @@ abstract class APIBase {
   }
 
   Uri setUri(String path, [Map<String, dynamic>? query]) {
+    final String withPath = "${endPoint.name}${path}";
     return kDebugMode
-        ? Uri.http(host, path, query)
-        : Uri.https(host, path, query);
+        ? Uri.http(host, withPath, query)
+        : Uri.https(host, withPath, query);
   }
 }
 
@@ -107,7 +101,6 @@ extension APIBaseExtention on APIBase {
   // GET
   Future<ResponseAPI> getRequest({required Uri uri, useToken = false}) async {
     try {
-      _setAPIKey();
       _setToken(useToken);
 
       final res = await http.get(uri, headers: headers);
@@ -126,7 +119,6 @@ extension APIBaseExtention on APIBase {
       required Map<String, dynamic> body,
       useToken = false}) async {
     try {
-      _setAPIKey();
       _setToken(useToken);
 
       final String bodyParams = json.encode(body);
@@ -146,7 +138,6 @@ extension APIBaseExtention on APIBase {
       required Map<String, dynamic> body,
       useToken = false}) async {
     try {
-      _setAPIKey();
       _setToken(useToken);
 
       final String bodyParams = json.encode(body);
@@ -164,7 +155,6 @@ extension APIBaseExtention on APIBase {
   Future<ResponseAPI> deleteRequest(
       {required Uri uri, useToken = false}) async {
     try {
-      _setAPIKey();
       _setToken(useToken);
 
       final res = await http.delete(uri, headers: headers);
@@ -186,7 +176,6 @@ extension APIBaseExtention on APIBase {
     useToken = false,
   }) async {
     try {
-      _setAPIKey();
       _setToken(useToken);
       final contentType = lookupMimeType(file.path);
       if (contentType == null) throw Exception("NO Content Type");

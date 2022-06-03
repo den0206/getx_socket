@@ -14,15 +14,7 @@ class RootScreen extends StatelessWidget {
       init: AuthService(),
       builder: (service) {
         if (service.currentUser.value != null) {
-          return FutureBuilder(
-            future: service.loadUser(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                return MainTabScreen();
-              }
-              return CircularProgressIndicator();
-            },
-          );
+          return MainTabScreen();
         } else {
           return LoginScreen();
         }

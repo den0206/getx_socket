@@ -7,38 +7,38 @@ class TempTokenAPI extends APIBase {
   Future<ResponseAPI> requestNewEmail(String email) async {
     final body = {"email": email};
     try {
-      final Uri uri = setUri("$endpoint/requestNewEmail");
+      final Uri uri = setUri("/requestNewEmail");
       return await postRequest(uri: uri, body: body);
     } catch (e) {
-      return catchAPIError(e.toString());
+      throw e;
     }
   }
 
   Future<ResponseAPI> verifyEmail(Map<String, dynamic> data) async {
     try {
-      final Uri uri = setUri("$endpoint/verifyEmail");
+      final Uri uri = setUri("/verifyEmail");
       return await postRequest(uri: uri, body: data);
     } catch (e) {
-      return catchAPIError(e.toString());
+      throw e;
     }
   }
 
   Future<ResponseAPI> requestPassword(String email) async {
     final body = {"email": email};
     try {
-      final Uri uri = setUri("$endpoint/requestPassword");
+      final Uri uri = setUri("/requestPassword");
       return await postRequest(uri: uri, body: body);
     } catch (e) {
-      return catchAPIError(e.toString());
+      throw e;
     }
   }
 
   Future<ResponseAPI> verifyPassword(Map<String, dynamic> data) async {
     try {
-      final Uri uri = setUri("$endpoint/verifyPassword");
+      final Uri uri = setUri("/verifyPassword");
       return await postRequest(uri: uri, body: data);
     } catch (e) {
-      return catchAPIError(e.toString());
+      throw e;
     }
   }
 }
