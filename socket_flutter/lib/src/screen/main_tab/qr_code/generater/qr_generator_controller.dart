@@ -1,6 +1,7 @@
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:socket_flutter/src/api/user_api.dart';
 import 'package:socket_flutter/src/model/user.dart';
+import 'package:socket_flutter/src/screen/widget/common_dialog.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
 import 'package:uuid/uuid.dart';
 
@@ -27,7 +28,7 @@ class QrGeneratorController extends GetxController {
       await AuthService.to.updateUser(newUser);
       update();
     } catch (e) {
-      print(e.toString());
+      showError(e.toString());
     } finally {
       isLoading = false;
     }

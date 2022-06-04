@@ -25,12 +25,11 @@ class RecentAPI extends APIBase {
     }
   }
 
-  Future<ResponseAPI> findOneByRoomIdAndUserId(
-      String userId, String chatRoomId) async {
-    final Map<String, dynamic> q = {"userId": userId, "chatRoomId": chatRoomId};
+  Future<ResponseAPI> findOneByRoomIdAndUserId(String chatRoomId) async {
+    final Map<String, dynamic> q = {"chatRoomId": chatRoomId};
     try {
       final Uri uri = setUri("/one", q);
-      return await getRequest(uri: uri);
+      return await getRequest(uri: uri, useToken: true);
     } catch (e) {
       throw e;
     }
@@ -46,7 +45,7 @@ class RecentAPI extends APIBase {
     };
     try {
       final Uri uri = setUri("/roomid", query);
-      return await getRequest(uri: uri);
+      return await getRequest(uri: uri, useToken: true);
     } catch (e) {
       throw e;
     }

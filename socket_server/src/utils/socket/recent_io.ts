@@ -8,8 +8,9 @@ export function recentSocket(recentIO: Namespace) {
     console.log('Recent user id', userId);
     socket.join(userId);
 
-    socket.on('updateRecent', (data) => {
+    socket.on('update', (data) => {
       const roomIds = data['userIds'];
+      console.log(`Roomids ${roomIds}`);
       // multiple
       recentIO.to(roomIds).emit('update', data);
     });
@@ -17,7 +18,7 @@ export function recentSocket(recentIO: Namespace) {
     socket.on('deleteGroup', (data) => {
       const roomIds = data['userIds'];
       // multiple
-      recentIO.to(roomIds).emit('update', data);
+      recentIO.to(roomIds).emit('delete', data);
     });
 
     socket.on('disconnect', () => {

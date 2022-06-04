@@ -7,12 +7,12 @@ export function messageSocket(messageIO: Namespace, recentIO: Namespace) {
     const chatRoomId = q as string;
     socket.join(chatRoomId);
 
-    socket.on('message', (msg) => {
-      messageIO.to(chatRoomId).emit('message-receive', msg);
+    socket.on('new_message', (msg) => {
+      messageIO.to(chatRoomId).emit('new_message', msg);
     });
 
     socket.on('read', (ids) => {
-      messageIO.to(chatRoomId).emit('read-receive', ids);
+      messageIO.to(chatRoomId).emit('read', ids);
     });
 
     socket.on('update_recent', (data) => {

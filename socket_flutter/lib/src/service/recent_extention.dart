@@ -1,3 +1,5 @@
+import 'package:get/get_instance/get_instance.dart';
+import 'package:get/route_manager.dart';
 import 'package:socket_flutter/src/api/group_api.dart';
 import 'package:socket_flutter/src/api/recent_api.dart';
 import 'package:socket_flutter/src/model/group.dart';
@@ -32,9 +34,7 @@ class RecentExtention {
       includeUserParams: false,
     );
 
-    if (!res.status) {
-      return null;
-    }
+    if (!res.status) return null;
 
     final recents = [...res.data];
 
@@ -127,9 +127,7 @@ class RecentExtention {
   Future<List<Recent>> findByChatRoomId(String chatRoomId) async {
     final res = await _recentAPI.getByRoomID(chatRoomId);
 
-    if (!res.status) {
-      return [];
-    }
+    if (!res.status) return [];
 
     final recents = (res.data as List).map((r) => Recent.fromMap(r)).toList();
 
@@ -178,5 +176,12 @@ class RecentExtention {
       });
     }
     return recents;
+  }
+
+  void updateRecentSocket(
+      {required String userId, required String chatRoomId}) {
+    if (!Get.isRegistered<RecentsController>()) return;
+    RecentsController.to.recentIO
+        .sendUpdateRecent(userIds: userId, chatRoomId: chatRoomId);
   }
 }

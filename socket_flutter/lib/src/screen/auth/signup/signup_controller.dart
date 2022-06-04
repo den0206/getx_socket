@@ -89,7 +89,7 @@ class SignUpController extends LoadingGetController {
           break;
       }
     } catch (e) {
-      print(e.toString());
+      showError(e.toString());
     } finally {
       isOverlay.call(false);
       update();

@@ -25,7 +25,7 @@ messageRoute.post(
   messageController.sendVideoMessage
 );
 
-messageRoute.put('/updateRead', checkAuth, messageController.updateReadStatus);
+messageRoute.put('/update', checkAuth, messageController.updateReadStatus);
 messageRoute.delete('/delete', checkAuth, messageController.deleteMessage);
 
 export default messageRoute;

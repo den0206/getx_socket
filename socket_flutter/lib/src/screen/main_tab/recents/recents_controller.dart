@@ -7,7 +7,7 @@ import 'package:socket_flutter/src/model/recent.dart';
 import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_extention.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_screen.dart';
-import 'package:socket_flutter/src/screen/main_tab/recents/recent_io.dart';
+import 'package:socket_flutter/src/socket/recent_io.dart';
 
 class RecentsController extends GetxController {
   static RecentsController get to => Get.find();
