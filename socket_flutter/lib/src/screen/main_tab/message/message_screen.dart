@@ -110,7 +110,7 @@ class MessageScreen extends LoadingGetView<MessageController> {
               () => Stack(
                 children: [
                   Scrollbar(
-                    isAlwaysShown: true,
+                    // isAlwaysShown: true,
                     controller: controller.sC,
                     child: ListView.builder(
                       itemCount: controller.messages.length,
