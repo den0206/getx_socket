@@ -12,7 +12,7 @@ dependencies:
   chewie: ^1.2.2
   country_list_pick: ^1.0.1+5
   cupertino_icons: ^1.0.2
-  emoji_picker_flutter: ^1.1.1
+
   flutter:
     sdk: flutter
   flutter_keyboard_visibility: ^5.1.1
@@ -43,6 +43,7 @@ dependencies:
   uuid: ^3.0.5
   skeleton_text: ^3.0.0
   pin_code_fields: ^7.3.0
+  emoji_picker_flutter: ^1.2.1
 
 dev_dependencies:
   flutter_test:
