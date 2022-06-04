@@ -18,7 +18,7 @@ async function loadMessage(req: Request, res: Response) {
       cursor,
       specific: {chatRoomId},
       pop: 'userId',
-      exclued: 'password',
+      exclued: '-password',
     });
 
     new ResponseAPI(res, {data: data}).excute(200);

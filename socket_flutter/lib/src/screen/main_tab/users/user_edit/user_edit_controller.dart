@@ -59,20 +59,22 @@ class UserEditController extends LoadingGetController {
   Future<void> updateUser() async {
     if (!isChanged.value) return;
     isOverlay.call(true);
+    await Future.delayed(Duration(seconds: 1));
 
-    await Future.delayed(Duration(milliseconds: 500));
+    try {
+      final res = await _userAPI.editUser(
+          userData: editUser.toMap(), avatarFile: userImage.value);
 
-    final res = await _userAPI.editUser(
-        userData: editUser.toMap(), avatarFile: userImage.value);
+      if (!res.status) return;
 
-    if (!res.status) return;
-
-    final newUser = User.fromMap(res.data);
-    await AuthService.to.updateUser(newUser);
-
-    isOverlay.call(false);
-
-    Get.back();
+      final newUser = User.fromMap(res.data);
+      await AuthService.to.updateUser(newUser);
+      Get.back();
+    } catch (e) {
+      showError(e.toString());
+    } finally {
+      isOverlay.call(false);
+    }
   }
 
   Future<void> showEditEmail() async {
@@ -107,7 +109,7 @@ class UserEditController extends LoadingGetController {
       await AuthService.to.logout();
       Get.back();
     } catch (e) {
-      print(e);
+      showError(e.toString());
     } finally {
       isOverlay.call(false);
     }

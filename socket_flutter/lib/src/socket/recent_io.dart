@@ -5,31 +5,17 @@ import 'package:socket_flutter/src/model/group.dart';
 import 'package:socket_flutter/src/model/recent.dart';
 import 'package:socket_flutter/src/screen/main_tab/recents/recents_controller.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
-import 'package:socket_flutter/src/utils/enviremont.dart';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
-import 'package:socket_io_client/socket_io_client.dart';
+import 'package:socket_flutter/src/socket/socket_base.dart';
 
-class RecentIO {
-  late IO.Socket socket;
+class RecentIO extends SocketBase {
   final RecentAPI _recentApi = RecentAPI();
   final currentUser = AuthService.to.currentUser.value!;
 
-  RecentIO() {}
+  @override
+  NameSpace get nameSpace => NameSpace.recent;
 
-  initSocket() {
-    socket = IO.io(
-      "${Enviroment.getMainUrl()}/recents",
-      OptionBuilder()
-          .setTransports(['websocket'])
-          .setQuery({"userId": currentUser.id})
-          .enableForceNew()
-          .disableAutoConnect()
-          .build(),
-    );
-
-    socket.connect();
-    print("Init");
-  }
+  @override
+  Map<String, dynamic> get query => {"userId": currentUser.id};
 
   void destroySocket() {
     socket.dispose();
@@ -47,7 +33,7 @@ class RecentIO {
         "chatRoomId": chatRoomId,
       };
 
-      socket.emit("updateRecent", data);
+      socket.emit("update", data);
     }
   }
 
@@ -64,10 +50,8 @@ class RecentIO {
   void listenRecentUpdate(Function(Recent recent) listner) {
     socket.on("update", (data) async {
       final chatRoomId = data["chatRoomId"];
-      print("----UPDATE $chatRoomId");
 
-      final res =
-          await _recentApi.findOneByRoomIdAndUserId(currentUser.id, chatRoomId);
+      final res = await _recentApi.findOneByRoomIdAndUserId(chatRoomId);
       if (res.status) {
         final newRecent = Recent.fromMap(res.data);
 

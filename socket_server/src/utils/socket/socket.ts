@@ -1,7 +1,7 @@
 import socket from 'socket.io';
 import {Server} from 'http';
-import cors from 'cors';
 import {recentSocket} from './recent_io';
+import {messageSocket} from './message_io';
 
 export function connectIO(server: Server) {
   const local = process.env.LOCAL;
@@ -10,5 +10,6 @@ export function connectIO(server: Server) {
   var messageIO = io.of('/messages');
   var recentIO = io.of('/recents');
 
+  messageSocket(messageIO, recentIO);
   recentSocket(recentIO);
 }

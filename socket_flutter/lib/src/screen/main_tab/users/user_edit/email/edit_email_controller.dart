@@ -5,6 +5,7 @@ import 'package:socket_flutter/src/api/temp_token_api.dart';
 import 'package:socket_flutter/src/api/user_api.dart';
 import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/screen/auth/reset_password/reset_password_controller.dart';
+import 'package:socket_flutter/src/screen/widget/common_dialog.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
 
 class EditEmailController extends GetxController {
@@ -45,7 +46,7 @@ class EditEmailController extends GetxController {
           break;
       }
     } catch (e) {
-      print(e.toString());
+      showError(e.toString());
     } finally {
       update();
     }

@@ -5,6 +5,7 @@ import 'package:socket_flutter/src/model/response_api.dart';
 import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/screen/auth/reset_password/reset_password_screen.dart';
 import 'package:socket_flutter/src/screen/auth/signup/signup_screen.dart';
+import 'package:socket_flutter/src/screen/widget/common_dialog.dart';
 import 'package:socket_flutter/src/screen/widget/loading_widget.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
 import 'package:socket_flutter/src/service/notification_service.dart';
@@ -36,8 +37,12 @@ class LoginController extends LoadingGetController {
 
     isOverlay.call(true);
 
+    await Future.delayed(Duration(seconds: 1));
+
     try {
       final ResponseAPI res = await userAPI.login(credential);
+
+      if (!res.status) return;
 
       final userData = res.data["user"];
       final token = res.data["token"];
@@ -47,11 +52,10 @@ class LoginController extends LoadingGetController {
 
       await storage.saveLocal(StorageKey.user, user.toMap());
 
-      await Future.delayed(Duration(seconds: 1));
       await Get.delete<LoginController>();
       AuthService.to.currentUser.call(user);
     } catch (e) {
-      print(e.toString());
+      showError(e.toString());
     } finally {
       isOverlay.call(false);
     }

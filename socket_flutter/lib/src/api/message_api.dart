@@ -55,9 +55,9 @@ class MessageAPI extends APIBase {
     }
   }
 
-  Future<ResponseAPI> updateReadStatus(Map<String, dynamic> value) async {
+  Future<ResponseAPI> updateMessage(Map<String, dynamic> value) async {
     try {
-      final Uri uri = setUri("/updateRead");
+      final Uri uri = setUri("/update");
       return await putRequest(uri: uri, body: value, useToken: true);
     } catch (e) {
       throw e;
