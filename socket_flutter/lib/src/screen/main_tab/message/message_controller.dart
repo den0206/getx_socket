@@ -30,15 +30,12 @@ class MessageController extends LoadingGetController {
   final focusNode = FocusNode();
   final RxBool showEmoji = false.obs;
   final RxBool useRealtime = true.obs;
-  final StorageService storage = StorageService.to;
   late MessageIO _messageIO;
 
   /// extention
   final MessageExtention extention = Get.arguments;
 
-  bool get isPrivate {
-    return extention.withUsers.length == 1 ? true : false;
-  }
+  bool get isPrivate => extention.withUsers.length == 1 ? true : false;
 
   /// translate
   final StreamController<String> streamController = StreamController();
@@ -58,8 +55,6 @@ class MessageController extends LoadingGetController {
     addScrollController();
     await loadLocal();
     await loadMessages();
-    if (messages.isNotEmpty && sC.hasClients)
-      sC.jumpTo(sC.position.minScrollExtent);
 
     listnFocus();
   }
@@ -87,12 +82,8 @@ class MessageController extends LoadingGetController {
   }
 
   Future<void> loadLocal() async {
-    final currentReal = await storage.readBool(StorageKey.realtime);
-    if (currentReal == null) {
-      useRealtime.call(true);
-    } else {
-      useRealtime.call(currentReal);
-    }
+    final currentReal = await StorageKey.realtime.readBool();
+    useRealtime.call(currentReal ?? true);
   }
 
   Future<void> loadMessages() async {
@@ -173,6 +164,9 @@ class MessageController extends LoadingGetController {
         await loadMessages();
       }
     });
+
+    if (messages.isNotEmpty && sC.hasClients)
+      sC.jumpTo(sC.position.minScrollExtent);
   }
 
   Future<void> _scrollToBottom() async {
@@ -255,7 +249,7 @@ class MessageController extends LoadingGetController {
     tx.text = "";
     after.call("");
     useRealtime.toggle();
-    await storage.saveBool(StorageKey.realtime, useRealtime.value);
+    await StorageKey.realtime.saveBool(useRealtime.value);
   }
 
   void onChangeText(String text) {

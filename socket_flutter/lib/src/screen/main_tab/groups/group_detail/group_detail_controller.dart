@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get/route_manager.dart';
@@ -6,12 +7,30 @@ import 'package:socket_flutter/src/model/group.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_extention.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_screen.dart';
 import 'package:socket_flutter/src/screen/main_tab/recents/recents_controller.dart';
+import 'package:socket_flutter/src/screen/widget/common_dialog.dart';
 
 class GroupDetailController extends GetxController {
   GroupDetailController(this.group);
 
   final Group group;
   final GropuAPI _gropuAPI = GropuAPI();
+
+  Future<void> tryDeleteGroup(BuildContext context) async {
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return CustomDialog(
+          title: "Delete",
+          descripon: "Remove all Relation!",
+          icon: Icons.delete,
+          mainColor: Colors.red,
+          onPress: () async {
+            await deleteGroup();
+          },
+        );
+      },
+    );
+  }
 
   Future<void> deleteGroup() async {
     if (!group.isOwner) return;

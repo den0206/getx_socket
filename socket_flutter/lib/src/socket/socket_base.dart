@@ -29,6 +29,7 @@ abstract class SocketBase {
           .setTransports(['websocket'])
           .setQuery(query)
           .enableForceNew()
+          .enableReconnection()
           .disableAutoConnect()
           .build(),
     );

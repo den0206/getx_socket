@@ -38,7 +38,7 @@ async function getBadgeCount(req: Request, res: Response) {
 
     if (count.length < 1) res.status(200).json({status: true, data: 0});
     const total = count[0].counter;
-    new ResponseAPI(res, {message: total}).excute(200);
+    new ResponseAPI(res, {data: total}).excute(200);
   } catch (e: any) {
     new ResponseAPI(res, {message: e.message}).excute(500);
   }

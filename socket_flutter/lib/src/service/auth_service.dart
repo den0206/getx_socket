@@ -8,7 +8,6 @@ import 'package:socket_flutter/src/service/storage_service.dart';
 class AuthService extends GetxService {
   static AuthService get to => Get.find();
   final Rxn<User> currentUser = Rxn<User>();
-  final StorageService storage = StorageService.to;
 
   @override
   void onInit() async {
@@ -24,7 +23,8 @@ class AuthService extends GetxService {
 
   Future<void> loadUser() async {
     if (currentUser.value != null) return;
-    final value = await storage.readLocal(StorageKey.user);
+
+    final value = await StorageKey.user.loadString();
     if (value == null) return;
 
     this.currentUser.call(User.fromMap(value));
@@ -33,7 +33,7 @@ class AuthService extends GetxService {
 
   Future<void> updateUser(User newUser) async {
     newUser.sessionToken = currentUser.value!.sessionToken;
-    await storage.saveLocal(StorageKey.user, newUser.toMap());
+    await StorageKey.user.saveString(newUser.toMap());
     this.currentUser.call(newUser);
   }
 
@@ -41,7 +41,7 @@ class AuthService extends GetxService {
     await Get.delete<RecentsController>();
     await Get.delete<MainTabController>();
 
-    await storage.deleteLocal(StorageKey.user);
+    await StorageKey.user.deleteLocal();
     this.currentUser.value = null;
   }
 }
