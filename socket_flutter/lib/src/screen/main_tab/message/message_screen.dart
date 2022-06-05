@@ -409,6 +409,7 @@ class MessageCell extends GetView<MessageController> {
                           ),
                         ),
                         onPressed: () {
+                          Navigator.of(context).pop();
                           controller.deleteMessage(message);
                         },
                       ),

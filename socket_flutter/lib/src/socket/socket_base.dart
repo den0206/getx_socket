@@ -11,7 +11,7 @@ enum NameSpace {
       case NameSpace.recent:
         return "recents";
       case NameSpace.message:
-        return "message";
+        return "messages";
     }
   }
 }

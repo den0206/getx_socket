@@ -89,7 +89,8 @@ async function getUsers(req: Request, res: Response) {
 
 async function updateUser(req: Request, res: Response) {
   const userId = getUserIdFromRes(res);
-  const {name, email, blocked, searchId, mainLanguage, avatarUrl} = req.body;
+  const {name, email, searchId, mainLanguage, avatarUrl} = req.body;
+  let {blocked} = req.body;
   const file = req.file;
 
   try {
@@ -99,7 +100,10 @@ async function updateUser(req: Request, res: Response) {
       const extention = file.originalname.split('.').pop();
       const fileName = `${userId}/avatar/avatar.${extention}`;
       imagePath = await awsClient.uploadImagge(file, fileName);
+
+      blocked = JSON.parse(blocked);
     }
+
     const value = {
       name,
       email,
