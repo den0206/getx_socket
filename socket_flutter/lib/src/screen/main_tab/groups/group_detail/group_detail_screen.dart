@@ -32,7 +32,7 @@ class GroupDetailScreen extends GetView<GroupDetailController> {
                   background: Colors.red,
                   titleColor: Colors.white,
                   onPressed: () {
-                    controller.deleteGroup();
+                    controller.tryDeleteGroup(context);
                   },
                 ),
                 SizedBox(

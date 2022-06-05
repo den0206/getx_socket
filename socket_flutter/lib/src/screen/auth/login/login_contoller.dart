@@ -17,7 +17,6 @@ class LoginController extends LoadingGetController {
   final TextEditingController passwordController = TextEditingController();
 
   final userAPI = UserAPI();
-  final StorageService storage = StorageService.to;
 
   @override
   void onInit() {
@@ -50,7 +49,7 @@ class LoginController extends LoadingGetController {
       final user = User.fromMap(userData);
       user.sessionToken = token;
 
-      await storage.saveLocal(StorageKey.user, user.toMap());
+      await StorageKey.user.saveString(user.toMap());
 
       await Get.delete<LoginController>();
       AuthService.to.currentUser.call(user);

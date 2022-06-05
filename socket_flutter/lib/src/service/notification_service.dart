@@ -93,7 +93,7 @@ class NotificationService extends GetxService {
     required String lastMessage,
     String title = "New Message",
   }) async {
-    print(tokens);
+    print("Tokens $tokens");
     final Map<String, dynamic> data = {
       "registration_ids": tokens,
       "notification": {
@@ -111,8 +111,7 @@ class NotificationService extends GetxService {
       }
     };
 
-    final response = await _notificationApi.messageNotification(data);
-    print(response);
+    _notificationApi.messageNotification(data);
   }
 
   // Badges

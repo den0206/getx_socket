@@ -10,7 +10,6 @@ import 'package:socket_flutter/src/app_root.dart';
 import 'package:socket_flutter/src/service/notification_service.dart';
 
 import 'src/screen/root_screen.dart';
-import 'src/service/storage_service.dart';
 
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print("BackGround");
@@ -22,7 +21,6 @@ void main() async {
   await dotenv.load(fileName: ".env");
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
-  await Get.put(StorageService()).initStorage();
   await Get.put(NotificationService()).initService();
 
   runApp(DevicePreview(enabled: false, builder: (context) => MyApp()));

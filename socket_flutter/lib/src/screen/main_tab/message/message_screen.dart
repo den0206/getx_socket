@@ -216,16 +216,17 @@ class MessageScreen extends LoadingGetView<MessageController> {
                 ),
                 backgroundColor: Colors.green,
                 elevation: 0,
-                onPressed: () {
+                onPressed: () async {
                   if (controller.tx.text.isEmpty) {
                     return null;
                   } else {
-                    FocusScope.of(context).unfocus();
-                    controller.sendMessage(
+                    await controller.sendMessage(
                       type: MessageType.text,
                       text: controller.tx.text,
                       translated: controller.after.value,
                     );
+
+                    FocusScope.of(context).unfocus();
                   }
                 },
               ),
