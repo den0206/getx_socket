@@ -12,7 +12,7 @@ class AWSClient {
   private REGION = process.env.AWS_REGION;
 
   constructor() {
-    this.initStorage;
+    this.initStorage();
   }
 
   private initStorage() {

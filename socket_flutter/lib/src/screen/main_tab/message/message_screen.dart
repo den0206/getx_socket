@@ -173,7 +173,7 @@ class MessageScreen extends LoadingGetView<MessageController> {
                       ),
                       Expanded(
                         child: TextField(
-                          controller: controller.tc,
+                          controller: controller.tx,
                           focusNode: controller.focusNode,
                           maxLength: 70,
                           keyboardType: TextInputType.multiline,
@@ -217,13 +217,13 @@ class MessageScreen extends LoadingGetView<MessageController> {
                 backgroundColor: Colors.green,
                 elevation: 0,
                 onPressed: () {
-                  if (controller.tc.text.isEmpty) {
+                  if (controller.tx.text.isEmpty) {
                     return null;
                   } else {
                     FocusScope.of(context).unfocus();
                     controller.sendMessage(
                       type: MessageType.text,
-                      text: controller.tc.text,
+                      text: controller.tx.text,
                       translated: controller.after.value,
                     );
                   }
@@ -244,16 +244,16 @@ class MessageScreen extends LoadingGetView<MessageController> {
           height: 35.h,
           child: EmojiPicker(
             onEmojiSelected: (category, emoji) {
-              controller.tc
+              controller.tx
                 ..text += emoji.emoji
                 ..selection = TextSelection.fromPosition(
-                    TextPosition(offset: controller.tc.text.length));
+                    TextPosition(offset: controller.tx.text.length));
             },
             onBackspacePressed: () {
-              controller.tc
-                ..text = controller.tc.text.characters.skipLast(1).toString()
+              controller.tx
+                ..text = controller.tx.text.characters.skipLast(1).toString()
                 ..selection = TextSelection.fromPosition(
-                  TextPosition(offset: controller.tc.text.length),
+                  TextPosition(offset: controller.tx.text.length),
                 );
             },
             config: Config(
@@ -409,6 +409,7 @@ class MessageCell extends GetView<MessageController> {
                           ),
                         ),
                         onPressed: () {
+                          Navigator.of(context).pop();
                           controller.deleteMessage(message);
                         },
                       ),

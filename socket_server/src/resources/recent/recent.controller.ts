@@ -80,26 +80,25 @@ async function updateRecent(req: Request, res: Response) {
 
 async function findByRoomId(req: Request, res: Response) {
   const chatRoomId = req.query.chatRoomId as string;
-  const useUserParam = req.query.useuserParams as string;
+  const useUserParam = req.query.userParams as string;
 
   var recents;
 
   /// 使う(private) 0
   /// 使わない 1
-
-  switch (useUserParam) {
-    case '0':
-      recents = await RecentModel.find({chatRoomId}).populate(recentOpt);
-
-      break;
-    case '1':
-      recents = await RecentModel.find({chatRoomId});
-      break;
-    default:
-      return new ResponseAPI(res, {message: 'unknown query'}).excute(400);
-  }
-
   try {
+    switch (useUserParam) {
+      case '0':
+        recents = await RecentModel.find({chatRoomId}).populate(recentOpt);
+
+        break;
+      case '1':
+        recents = await RecentModel.find({chatRoomId});
+        break;
+      default:
+        return new ResponseAPI(res, {message: 'unknown query'}).excute(400);
+    }
+
     new ResponseAPI(res, {data: recents}).excute(200);
   } catch (e: any) {
     new ResponseAPI(res, {message: e.message}).excute(500);
@@ -107,7 +106,7 @@ async function findByRoomId(req: Request, res: Response) {
 }
 
 async function findOneByRoomAndUser(req: Request, res: Response) {
-  const userId = req.query.userId;
+  const userId = getUserIdFromRes(res);
   const chatRoomId = req.query.chatRoomId;
 
   try {

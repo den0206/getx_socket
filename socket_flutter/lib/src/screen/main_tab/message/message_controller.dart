@@ -8,18 +8,19 @@ import 'package:socket_flutter/src/model/custom_exception.dart';
 import 'package:socket_flutter/src/model/message.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_extention.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_file_sheet.dart';
-import 'package:socket_flutter/src/screen/main_tab/recents/recents_controller.dart';
+
 import 'package:socket_flutter/src/screen/widget/common_dialog.dart';
 import 'package:socket_flutter/src/screen/widget/loading_widget.dart';
 import 'package:socket_flutter/src/service/image_extention.dart';
-import 'package:socket_flutter/src/service/recent_extention.dart';
 import 'package:socket_flutter/src/service/storage_service.dart';
 import 'package:socket_flutter/src/utils/global_functions.dart';
 import 'package:stream_transform/stream_transform.dart';
 import 'package:collection/collection.dart';
 
+import '../../../socket/message_io.dart';
+
 class MessageController extends LoadingGetController {
-  final TextEditingController tc = TextEditingController();
+  final TextEditingController tx = TextEditingController();
   final ScrollController sC = ScrollController();
 
   final RxList<Message> messages = RxList<Message>();
@@ -30,6 +31,7 @@ class MessageController extends LoadingGetController {
   final RxBool showEmoji = false.obs;
   final RxBool useRealtime = true.obs;
   final StorageService storage = StorageService.to;
+  late MessageIO _messageIO;
 
   /// extention
   final MessageExtention extention = Get.arguments;
@@ -52,6 +54,7 @@ class MessageController extends LoadingGetController {
     super.onInit();
     extention.setTargetLanguage();
     streamText();
+    _addSocket();
     addScrollController();
     await loadLocal();
     await loadMessages();
@@ -59,19 +62,28 @@ class MessageController extends LoadingGetController {
       sC.jumpTo(sC.position.minScrollExtent);
 
     listnFocus();
-    listneNewChat();
-    listenReadStatus();
   }
 
   @override
   void onClose() {
-    sC.removeListener(() {});
     sC.dispose();
     focusNode.dispose();
-    extention.stopService();
+
+    _messageIO.destroySocket();
     streamController.close();
 
     super.onClose();
+  }
+
+  void _addSocket() {
+    _messageIO = MessageIO(this);
+    _messageIO.initSocket();
+
+    /// new message listner
+    _messageIO.addNewMessageListner();
+
+    /// read listner
+    _messageIO.addReadListner();
   }
 
   Future<void> loadLocal() async {
@@ -92,11 +104,12 @@ class MessageController extends LoadingGetController {
 
     try {
       final temp = await extention.loadMessage();
+      final unreads = await extention.updateReadList(temp);
+      if (unreads.isNotEmpty) _messageIO.sendUpdateRead(unreads);
 
       messages.addAll(temp);
     } catch (e) {
-      print(e);
-      // showError(e);
+      showError(e.toString());
     } finally {
       isLoading.call(false);
 
@@ -112,44 +125,35 @@ class MessageController extends LoadingGetController {
       String? translated,
       File? file}) async {
     isOverlay.call(true);
-    await extention.sendMessage(
-        type: type, text: text, translated: translated, file: file);
-    tc.clear();
-    showEmoji.call(false);
-    after.call("");
-    isOverlay.call(false);
-    _scrollToBottom();
+    try {
+      final newMessage = await extention.sendMessage(
+          type: type, text: text, translated: translated, file: file);
+
+      _messageIO.sendNewMessage(newMessage);
+      await extention.updateLastRecent(newMessage);
+      _messageIO.sendUpdateRecent(extention.userIds);
+      await extention.sendNotification(newMessage: newMessage);
+      showEmoji.call(false);
+      after.call("");
+      _scrollToBottom();
+      tx.clear();
+    } catch (e) {
+      showError(e.toString());
+    } finally {
+      isOverlay.call(false);
+    }
   }
 
   Future<void> deleteMessage(Message message) async {
-    Get.back();
     isOverlay.call(true);
+    await Future.delayed(Duration(seconds: 1));
     try {
-      final action = await extention.delete(message.id);
-      if (action) {
-        // BUG indexlast のメッセージを削除するとクラッシュ
-
-        final index = messages.indexOf(message);
-        if (index == messages.length) {
-          print("Call");
-          return;
-        } else {
-          messages.remove(message);
-        }
-        final re = RecentExtention();
-
-        /// last message is "Deleted"
-        final recents = await re.updateRecentWithLastMessage(
-            chatRoomId: message.chatRoomId);
-        if (recents.isNotEmpty) {
-          recents.forEach((recent) {
-            RecentsController.to.recentIO.sendUpdateRecent(
-                userIds: recent.user.id, chatRoomId: recent.chatRoomId);
-          });
-        }
-      }
+      final canDelete = await extention.deleteMessage(message);
+      if (!canDelete) return;
+      messages.remove(message);
+      await extention.updateDeleteRecent();
     } catch (e) {
-      print(e.toString());
+      showError(e.toString());
     } finally {
       isOverlay.call(false);
     }
@@ -225,36 +229,7 @@ class MessageController extends LoadingGetController {
     );
   }
 
-  /// MARK Listners
-
-  void listneNewChat() {
-    extention.addNerChatListner((message) {
-      messages.insert(0, message);
-    });
-  }
-
-  void listenReadStatus() {
-    extention.addReadListner((value) {
-      final uid = value["uid"];
-      final ids = value["ids"];
-
-      if (ids is List) {
-        /// update multiple read
-        final List<String> temp = List.castFrom(ids);
-
-        temp.forEach((String id) {
-          _readUI(id, uid);
-        });
-      }
-
-      if (ids is String) {
-        /// single read
-        _readUI(ids, uid);
-      }
-    });
-  }
-
-  void _readUI(String id, String uid) {
+  void readUI(String id, String uid) {
     final messageIds = messages.map((m) => m.id).toList();
     if (messageIds.contains(id)) {
       final index = messageIds.indexOf(id);
@@ -277,7 +252,7 @@ class MessageController extends LoadingGetController {
   }
 
   Future<void> toggleReal() async {
-    tc.text = "";
+    tx.text = "";
     after.call("");
     useRealtime.toggle();
     await storage.saveBool(StorageKey.realtime, useRealtime.value);
@@ -302,9 +277,9 @@ class MessageController extends LoadingGetController {
   }
 
   Future<void> checkText() async {
-    if (tc.text.length <= 3) return;
+    if (tx.text.length <= 3) return;
 
-    final sep = tc.text.trim().split("\n");
+    final sep = tx.text.trim().split("\n");
     newMap = sep.asMap();
 
     // 改行の際は呼ばない
@@ -334,7 +309,7 @@ class MessageController extends LoadingGetController {
       }
       after.call(trs);
     } catch (e) {
-      print(e.toString());
+      showError((e.toString()));
     } finally {
       isTranslationg.call(false);
     }

@@ -8,7 +8,7 @@ import getUserIdFromRes from '../../middleware/get_userid_res';
 import AWSClient from '../../utils/aws/aws_client';
 
 async function signUp(req: Request, res: Response) {
-  const {name, email, countryCode, mainLanguage, searchId, password} = req.body;
+  const {name, email, countryCode, mainLanguage, password} = req.body;
   const file = req.file;
 
   const isFind = await UserModel.findOne({email});
@@ -22,11 +22,11 @@ async function signUp(req: Request, res: Response) {
       email,
       countryCode,
       mainLanguage,
-      searchId,
       password,
     });
 
-    console.log(user);
+    user.searchId = user.id;
+
     if (file) {
       const awsClient = new AWSClient();
       const extention = file.originalname.split('.').pop();
@@ -89,7 +89,8 @@ async function getUsers(req: Request, res: Response) {
 
 async function updateUser(req: Request, res: Response) {
   const userId = getUserIdFromRes(res);
-  const {name, email, blocked, searchId, mainLanguage, avatarUrl} = req.body;
+  const {name, email, searchId, mainLanguage, avatarUrl} = req.body;
+  let {blocked} = req.body;
   const file = req.file;
 
   try {
@@ -99,7 +100,10 @@ async function updateUser(req: Request, res: Response) {
       const extention = file.originalname.split('.').pop();
       const fileName = `${userId}/avatar/avatar.${extention}`;
       imagePath = await awsClient.uploadImagge(file, fileName);
+
+      blocked = JSON.parse(blocked);
     }
+
     const value = {
       name,
       email,

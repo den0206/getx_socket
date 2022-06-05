@@ -10,9 +10,8 @@ import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
 import 'package:socket_flutter/src/service/notification_service.dart';
 import 'package:socket_flutter/src/service/recent_extention.dart';
-import 'package:socket_flutter/src/utils/enviremont.dart';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
-import 'package:socket_io_client/socket_io_client.dart';
+
+import '../../../model/recent.dart';
 
 /// MARK  Message関連のAPI処理等を纏める
 
@@ -24,7 +23,6 @@ class MessageExtention {
   final MessageAPI _messageAPI = MessageAPI();
   final TranslateAPI _translateAPI = TranslateAPI();
   final RecentExtention re = RecentExtention();
-  late IO.Socket socket;
 
   Rx<Language> targetLanguage = Language.english.obs;
 
@@ -33,83 +31,32 @@ class MessageExtention {
   bool reachLast = false;
   String? nextCursor;
 
-  bool get isSameLanguage {
-    return currentUser.mainLanguage == targetLanguage;
-  }
-
   MessageExtention({
     required this.chatRoomId,
     required this.withUsers,
-  }) {
-    _initSocket();
-  }
+  });
 
-  _initSocket() {
-    print(chatRoomId);
-    socket = IO.io(
-      "${Enviroment.getMainUrl()}/messages",
-      OptionBuilder()
-          .setTransports(['websocket'])
-          .setQuery({"chatID": chatRoomId})
-          .enableForceNew()
-          .disableAutoConnect()
-          .build(),
-    );
+  List<String> get userIds =>
+      [currentUser.id, ...withUsers.map((u) => u.id).toList()];
 
-    socket.connect();
-  }
-
-  void stopService() {
-    print("Destroy");
-    socket.dispose();
-    socket.destroy();
+  bool get isSameLanguage {
+    return currentUser.mainLanguage == targetLanguage;
   }
 
   Future<List<Message>> loadMessage() async {
     final res = await _messageAPI.loadMessage(
         chatRoomId: chatRoomId, limit: limit, nextCursor: nextCursor);
 
-    if (!res.status) {
-      print("Can not read Messages");
-      return [];
-    }
-
+    if (!res.status) throw Exception("Cant load messages");
     final Pages<Message> pages = Pages.fromMap(res.data, Message.fromJsonModel);
-
-    /// unread を絞り出す
-    final unreads = pages.pageFeeds
-        .where((message) => !message.isRead && !message.isCurrent)
-        .toList();
-
-    if (unreads.isNotEmpty) await updateReadLists(unreads);
 
     reachLast = !pages.pageInfo.hasNextPage;
     nextCursor = pages.pageInfo.nextPageCursor;
 
-    final temp = pages.pageFeeds;
-
-    return temp;
+    return pages.pageFeeds;
   }
 
-  void addNerChatListner(Function(Message message) listner) {
-    socket.on("message-receive", (data) {
-      final newMessage = Message.fromMap(data);
-
-      if (!newMessage.isCurrent) {
-        updateRead(message: newMessage, useSocket: true);
-      }
-
-      listner(newMessage);
-    });
-  }
-
-  void addReadListner(Function(Map<String, dynamic> readListner) readListner) {
-    socket.on("read-receive", (data) {
-      readListner(data);
-    });
-  }
-
-  Future<void> sendMessage({
+  Future<Message> sendMessage({
     required MessageType type,
     required String text,
     String? translated,
@@ -122,44 +69,43 @@ class MessageExtention {
       "userId": currentUser.id,
     };
 
-    var res;
+    try {
+      var res;
 
-    switch (type) {
-      case MessageType.text:
-        res = await _messageAPI.sendMessage(message: messageData);
-        break;
-      case MessageType.image:
-        if (file == null) return;
+      switch (type) {
+        case MessageType.text:
+          res = await _messageAPI.sendMessage(message: messageData);
+          break;
+        case MessageType.image:
+          if (file == null) throw Exception("File Error");
+          ;
 
-        res = await _messageAPI.sendImageMessage(
-          message: messageData,
-          file: file,
-        );
-        break;
-      case MessageType.video:
-        if (file == null) return;
-        res = await _messageAPI.sendVideoMessage(
-          message: messageData,
-          videoFile: file,
-        );
+          res = await _messageAPI.sendImageMessage(
+            message: messageData,
+            file: file,
+          );
+          break;
+        case MessageType.video:
+          if (file == null) throw Exception("File Error");
+          res = await _messageAPI.sendVideoMessage(
+            message: messageData,
+            videoFile: file,
+          );
+      }
+
+      if (!res.status) throw Exception("API Error");
+
+      final message = Message.fromMapWithUser(res.data, currentUser);
+
+      return message;
+    } catch (e) {
+      throw e;
     }
+  }
 
-    if (!res.status) {
-      print("Can not send Message");
-      return;
-    }
-
-    final message = Message.fromMapWithUser(res.data, currentUser);
-    if (socket.id == null) return;
-
-    socket.emit(
-      "message",
-      message.toMap(),
-    );
-    final userIds = [currentUser.id, ...withUsers.map((u) => u.id).toList()];
-
-    final existUsers =
-        await updateRecent(chatRoomId: chatRoomId, lastMessage: text);
+  Future<void> updateLastRecent(Message newMessage) async {
+    final existUsers = await updateRecent(
+        chatRoomId: chatRoomId, lastMessage: newMessage.text);
 
     /// Recent が消されているユーザーを求める
     final deleteUsers = userIds.toSet().difference(existUsers.toSet()).toList();
@@ -172,27 +118,35 @@ class MessageExtention {
         await re.createRecentAPI(id, currentUser.id, allUsers, chatRoomId);
       });
     }
+  }
 
+  Future<void> sendNotification({required Message newMessage}) async {
     final tokens = withUsers.map((u) => u.fcmToken).toList();
     await NotificationService.to
-        .pushNotification(tokens: tokens, lastMessage: message.text);
-
-    final Map<String, dynamic> data = {
-      "userIds": userIds,
-      "chatRoomId": chatRoomId,
-    };
-    socket.emit("update", data);
+        .pushNotification(tokens: tokens, lastMessage: newMessage.text);
   }
 
   /// MARK Delete Message
-  Future<bool> delete(String id) async {
-    final res = await _messageAPI.deleteMessage(id);
+  Future<void> updateDeleteRecent() async {
+    final remainRecents =
+        await re.updateRecentWithLastMessage(chatRoomId: chatRoomId);
 
-    if (res.message != null) {
-      print("Delete Fail!!!, ${res.message}");
+    if (remainRecents.isNotEmpty) {
+      remainRecents.forEach((Recent recent) {
+        re.updateRecentSocket(userId: recent.user.id, chatRoomId: chatRoomId);
+      });
     }
+  }
 
-    return res.status;
+  Future<bool> deleteMessage(Message message) async {
+    if (!message.isCurrent) throw Exception("Not Math userId");
+    try {
+      final res = await _messageAPI.deleteMessage(message.id);
+      if (!res.status) throw Exception("Not Delete message");
+      return res.status;
+    } catch (e) {
+      throw Exception(e.toString());
+    }
   }
 
   /// MARK Recent Status
@@ -207,47 +161,30 @@ class MessageExtention {
 
   /// MARK Read Status
 
-  Future<void> updateReadLists(List<Message> unreads) async {
-    print("-----Update READ!!");
-
+  Future<List<String>> updateReadList(List<Message> messages) async {
+    /// unread を絞り出す
+    final unreads = messages
+        .where((message) => !message.isRead && !message.isCurrent)
+        .toList();
+    if (unreads.isEmpty) return [];
     await Future.forEach(unreads, (Message message) async {
-      if (!message.isRead) {
-        await updateRead(message: message);
-      }
+      if (!message.isRead) await updateRead(message: message);
     });
 
-    final uid = currentUser.id;
-    final uds = unreads.map((u) => u.id).toList();
-    print("Multiple Update");
-    final value = {
-      "uid": uid,
-      "ids": uds,
-    };
-    socket.emit("read", value);
+    return unreads.map((u) => u.id).toList();
   }
 
   Future<void> updateRead(
       {required Message message, bool useSocket = false}) async {
-    /// unique array
     final uniqueRead = [currentUser.id, ...message.readBy].toSet().toList();
+    final body = {
+      "messageId": message.id,
+      "readBy": uniqueRead,
+    };
 
-    final value = {"messageId": message.id, "readBy": uniqueRead};
+    final res = await _messageAPI.updateMessage(body);
 
-    final res = await _messageAPI.updateReadStatus(value);
-
-    if (res.status) {
-      print("update Read ${message.id}");
-
-      /// use socket  only single update
-      if (useSocket) {
-        print("Single Update");
-        final value = {
-          "uid": currentUser.id,
-          "ids": message.id,
-        };
-        socket.emit("read", value);
-      }
-    }
+    if (!res.status) throw Exception("not update read");
   }
 }
 
@@ -298,13 +235,3 @@ extension MessageExtTranslation on MessageExtention {
     this.targetLanguage.call(current);
   }
 }
-
-
-//OLD
-   // final List<Map> translations = List.castFrom(res.data);
-    // var temp = "";
-    // translations.asMap().forEach((index, element) {
-    //   temp += element["text"];
-    //   if (index != translations.length - 1) temp += "\n";
-    // });
-// print(temp);

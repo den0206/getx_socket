@@ -6,6 +6,7 @@ import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/screen/main_tab/qr_code/qr_tab_screen.dart';
 import 'package:socket_flutter/src/screen/main_tab/recents/recents_controller.dart';
 import 'package:socket_flutter/src/screen/main_tab/users/user_detail/user_detail_screen.dart';
+import 'package:socket_flutter/src/screen/widget/common_dialog.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
 import 'package:socket_flutter/src/service/recent_extention.dart';
 
@@ -27,30 +28,29 @@ class UsersController extends GetxController {
   }
 
   Future<void> loadUsers() async {
-    if (reachLast) {
-      return;
+    if (reachLast) return;
+
+    try {
+      final res = await _userApi.getUsers(limit: limit, nextCursor: nextCursor);
+
+      if (!res.status) return;
+
+      /// use Generic User Model
+      final Pages<User> pages = Pages.fromMap(res.data, User.fromJsonModel);
+
+      // set;
+      reachLast = !pages.pageInfo.hasNextPage;
+      nextCursor = pages.pageInfo.nextPageCursor;
+      print("next cursor is ${nextCursor}");
+
+      final temp = pages.pageFeeds
+          .where((u) => u.id != AuthService.to.currentUser.value?.id)
+          .toList();
+
+      users.addAll(temp);
+    } catch (e) {
+      showError(e.toString());
     }
-
-    final res = await _userApi.getUsers(limit: limit, nextCursor: nextCursor);
-
-    if (res.message != null) {
-      print(res.message);
-      return;
-    }
-
-    /// use Generic User Model
-    final Pages<User> pages = Pages.fromMap(res.data, User.fromJsonModel);
-
-    // set;
-    reachLast = !pages.pageInfo.hasNextPage;
-    nextCursor = pages.pageInfo.nextPageCursor;
-    print("next cursor is ${nextCursor}");
-
-    final temp = pages.pageFeeds
-        .where((u) => u.id != AuthService.to.currentUser.value?.id)
-        .toList();
-
-    users.addAll(temp);
   }
 
   void onTap(User user) {
