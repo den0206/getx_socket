@@ -145,8 +145,10 @@ class MessageController extends LoadingGetController {
   }
 
   Future<void> deleteMessage(Message message) async {
+
     isOverlay.call(true);
     await Future.delayed(Duration(seconds: 1));
+
     try {
       final canDelete = await extention.deleteMessage(message);
       if (!canDelete) return;
@@ -155,7 +157,7 @@ class MessageController extends LoadingGetController {
     } catch (e) {
       showError(e.toString());
     } finally {
-      isOverlay.call(false);
+      isLoading.call(false);
     }
   }
 
