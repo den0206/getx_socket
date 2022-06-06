@@ -7,9 +7,13 @@ import {
   GroupModel,
 } from '../../utils/database/models';
 
+export async function hashdPassword(value: string): Promise<string> {
+  return await argon2.hash(value);
+}
+
 @pre<User>('save', async function (next) {
   if (this.isModified('password') || this.isNew) {
-    const hashed = await argon2.hash(this.password);
+    const hashed = await hashdPassword(this.password);
     this.password = hashed;
   }
   return next();

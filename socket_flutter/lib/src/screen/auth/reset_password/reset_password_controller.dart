@@ -104,9 +104,11 @@ class ResetPasswordController extends LoadingGetController {
   }
 }
 
-enum VerifyState { checkEmail, sendPassword, verify }
+enum VerifyState {
+  checkEmail,
+  sendPassword,
+  verify;
 
-extension VerifyStateEXT on VerifyState {
   String get title {
     switch (this) {
       case VerifyState.checkEmail:

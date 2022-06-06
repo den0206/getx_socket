@@ -17,10 +17,6 @@ class QrGenerateScreen extends StatelessWidget {
             direction: Axis.vertical,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                "Your Search Id",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
               Align(
                 alignment: Alignment.topRight,
                 child: Padding(
@@ -47,7 +43,7 @@ class QrGenerateScreen extends StatelessWidget {
                 version: QrVersions.auto,
                 backgroundColor: Colors.green,
                 foregroundColor: Colors.white,
-                size: 320,
+                size: 200,
                 gapless: false,
                 errorStateBuilder: (cxt, err) {
                   if (err != null) {

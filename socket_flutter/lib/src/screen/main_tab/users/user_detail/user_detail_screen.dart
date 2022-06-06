@@ -22,6 +22,16 @@ class UserDetailScreen extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             title: Text(controller.user.name),
+            actions: user.isCurrent
+                ? [
+                    IconButton(
+                      icon: Icon(Icons.settings),
+                      onPressed: () {
+                        controller.showSettings();
+                      },
+                    )
+                  ]
+                : null,
           ),
           body: Center(
             child: Column(

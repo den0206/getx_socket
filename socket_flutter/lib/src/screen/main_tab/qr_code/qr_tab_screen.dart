@@ -15,7 +15,6 @@ class QrTabScreen extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('QRCode'),
           bottom: PreferredSize(
             preferredSize: Size.fromHeight(20),
             child: TabBar(

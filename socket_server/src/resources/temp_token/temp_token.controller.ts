@@ -2,6 +2,7 @@ import {Request, Response} from 'express';
 import ResponseAPI from '../../utils/interface/response.api';
 import {UserModel, TempTokenModel} from '../../utils/database/models';
 import sendEmail from '../../utils/email/send_email';
+import {hashdPassword} from '../users/user.model';
 
 // Email
 
@@ -65,7 +66,7 @@ async function requestPassword(req: Request, res: Response) {
       '../email/template/requestResetPassword.handlebars'
     );
 
-    new ResponseAPI(res, {data: 'Send Change Password'}).excute(200);
+    new ResponseAPI(res, {data: isFind._id}).excute(200);
   } catch (e: any) {
     new ResponseAPI(res, {message: e.message}).excute(500);
   }
@@ -73,12 +74,15 @@ async function requestPassword(req: Request, res: Response) {
 
 async function verifyPassword(req: Request, res: Response) {
   const {userId, password, verify} = req.body;
+
   try {
     const passwordResetToken = await checkValid(userId, verify);
+
+    const hash = await hashdPassword(password);
     const newUser = await UserModel.findByIdAndUpdate(
       userId,
-      {$set: {password}},
-      {new: true}
+      {password: hash},
+      {new: true, useFindAndModify: true}
     );
     if (!newUser)
       return new ResponseAPI(res, {message: 'Not find the User'}).excute(400);
@@ -90,17 +94,18 @@ async function verifyPassword(req: Request, res: Response) {
       '../email/template/resetPassword.handlebars'
     );
 
-    await passwordResetToken.deleteOne();
+    await passwordResetToken.delete();
 
-    new ResponseAPI(res, {data: 'Success Valid Email'}).excute(200);
+    new ResponseAPI(res, {data: newUser}).excute(200);
   } catch (e: any) {
     new ResponseAPI(res, {message: e.message}).excute(500);
   }
 }
 
 // commone Functions
-async function generateNumberAndToken(tempId: string) {
+async function generateNumberAndToken(tempId: string): Promise<number> {
   const token = await TempTokenModel.findOne({tempId});
+
   if (token) await token.deleteOne();
   const generateNumber = Math.floor(100000 + Math.random() * 900000);
   const newToken = new TempTokenModel({
@@ -114,11 +119,16 @@ async function generateNumberAndToken(tempId: string) {
 }
 
 async function checkValid(tempId: string, verify: string) {
-  const currentToken = await TempTokenModel.findOne({tempId: tempId});
-  if (!currentToken) throw new Error('Invalid or expired password reset token');
-  const isValid = await currentToken.compareToken(verify);
-  if (!isValid) throw new Error('Invalid or expired password reset token');
-  return currentToken;
+  try {
+    const currentToken = await TempTokenModel.findOne({tempId: tempId});
+    if (!currentToken)
+      throw new Error('Invalid or expired password reset token');
+    const isValid = await currentToken.compareToken(verify);
+    if (!isValid) throw new Error('Invalid or expired password reset token');
+    return currentToken;
+  } catch (e: any) {
+    throw e;
+  }
 }
 
 export default {
