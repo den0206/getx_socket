@@ -7,6 +7,7 @@ import 'package:socket_flutter/src/screen/main_tab/blocks/block_list_screen.dart
 import 'package:socket_flutter/src/screen/main_tab/groups/groups_screen.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_extention.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_screen.dart';
+import 'package:socket_flutter/src/screen/main_tab/settings/contact_screen.dart';
 import 'package:socket_flutter/src/screen/main_tab/users/user_edit/user_edit_screen.dart';
 import 'package:socket_flutter/src/screen/widget/common_dialog.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
@@ -59,6 +60,10 @@ class UserDetailController extends GetxController {
 
   Future<void> showBlockList() async {
     final _ = await Get.toNamed(BlockListScreen.routeName);
+  }
+
+  Future<void> showSettings() async {
+    final _ = await Get.toNamed(ContactScreen.routeName);
   }
 
   Future<void> tryLogout(BuildContext context) async {

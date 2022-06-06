@@ -5,7 +5,6 @@ import http from 'http';
 import usersRoute from './resources/users/user.route';
 import {connectDB} from './utils/database/database';
 import recentRoute from './resources/recent/recent.route';
-import ResponseAPI from './utils/interface/response.api';
 import groupRoute from './resources/group/group.route';
 import messageRoute from './resources/message/message.route';
 import translateRoute from './resources/translate/translate.route';

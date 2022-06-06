@@ -111,6 +111,7 @@ class MessageScreen extends LoadingGetView<MessageController> {
                 children: [
                   Scrollbar(
                     // isAlwaysShown: true,
+                    thumbVisibility: true,
                     controller: controller.sC,
                     child: ListView.builder(
                       itemCount: controller.messages.length,

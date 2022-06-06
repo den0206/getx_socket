@@ -26,11 +26,11 @@ class QrGeneratorController extends GetxController {
       if (!res.status) return;
       final newUser = User.fromMap(res.data);
       await AuthService.to.updateUser(newUser);
-      update();
     } catch (e) {
       showError(e.toString());
     } finally {
       isLoading = false;
+      update();
     }
   }
 }

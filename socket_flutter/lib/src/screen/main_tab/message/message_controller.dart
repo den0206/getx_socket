@@ -136,7 +136,6 @@ class MessageController extends LoadingGetController {
   }
 
   Future<void> deleteMessage(Message message) async {
-
     isOverlay.call(true);
     await Future.delayed(Duration(seconds: 1));
 
@@ -148,7 +147,7 @@ class MessageController extends LoadingGetController {
     } catch (e) {
       showError(e.toString());
     } finally {
-      isLoading.call(false);
+      isOverlay.call(false);
     }
   }
 

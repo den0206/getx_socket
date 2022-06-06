@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
 import 'package:socket_flutter/src/screen/main_tab/main_tab_controller.dart';
+import 'package:socket_flutter/src/screen/main_tab/qr_code/qr_tab_screen.dart';
 import 'package:socket_flutter/src/screen/main_tab/recents/recents_screen.dart';
 import 'package:socket_flutter/src/screen/main_tab/users/user_detail/user_detail_screen.dart';
 import 'package:socket_flutter/src/screen/main_tab/users/users_screen.dart';
@@ -26,6 +27,10 @@ class MainTabScreen extends StatelessWidget {
         ),
       ),
       BottomNavigationBarItem(
+        label: "QR",
+        icon: Icon(Icons.qr_code),
+      ),
+      BottomNavigationBarItem(
         label: "Profile",
         icon: Icon(
           Icons.person,
@@ -36,7 +41,8 @@ class MainTabScreen extends StatelessWidget {
     final List<Widget> pages = [
       RecentsScreen(),
       UsersScreen(),
-      UserDetailScreen(AuthService.to.currentUser.value!)
+      QrTabScreen(),
+      UserDetailScreen(AuthService.to.currentUser.value!),
 
       /// current only log outbutton
     ];
