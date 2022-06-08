@@ -16,6 +16,8 @@ usersRoute.put(
   upload.single('image'),
   userController.updateUser
 );
+
+usersRoute.put('/updateBlock', checkAuth, userController.updateBlock);
 usersRoute.delete('/delete', checkAuth, userController.deleteUser);
 usersRoute.get('/blocks', checkAuth, userController.blockUsers);
 

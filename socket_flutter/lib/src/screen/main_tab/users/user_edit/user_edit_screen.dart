@@ -7,6 +7,9 @@ import 'package:socket_flutter/src/screen/widget/custom_picker.dart';
 import 'package:socket_flutter/src/screen/widget/custom_text_fields.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socket_flutter/src/screen/widget/loading_widget.dart';
+import 'package:socket_flutter/src/utils/consts_color.dart';
+
+import '../../../widget/neumorphic/buttons.dart';
 
 class UserEditScreen extends LoadingGetView<UserEditController> {
   static const routeName = '/EditUser';
@@ -26,7 +29,7 @@ class UserEditScreen extends LoadingGetView<UserEditController> {
         physics: BouncingScrollPhysics(),
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: ConstsColor.mainBackgroundColor,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(30),
               topRight: Radius.circular(30),
@@ -38,15 +41,17 @@ class UserEditScreen extends LoadingGetView<UserEditController> {
               SizedBox(
                 height: 40,
               ),
-              Obx(() => CircleImageButton(
-                    imageProvider: controller.userImage.value == null
-                        ? getUserImage(controller.editUser)
-                        : FileImage(controller.userImage.value!),
-                    size: 30.w,
-                    onTap: () {
-                      controller.selectImage();
-                    },
-                  )),
+              Obx(
+                () => NeumorphicAvatarButton(
+                  imageProvider: controller.userImage.value == null
+                      ? getUserImage(controller.editUser)
+                      : FileImage(controller.userImage.value!),
+                  size: 30.w,
+                  onTap: () {
+                    controller.selectImage();
+                  },
+                ),
+              ),
               SizedBox(
                 height: 40,
               ),

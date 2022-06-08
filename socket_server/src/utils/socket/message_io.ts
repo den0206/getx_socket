@@ -6,6 +6,7 @@ export function messageSocket(messageIO: Namespace, recentIO: Namespace) {
     if (!q) return;
     const chatRoomId = q as string;
     socket.join(chatRoomId);
+    console.log('Chat In', chatRoomId);
 
     socket.on('new_message', (msg) => {
       messageIO.to(chatRoomId).emit('new_message', msg);

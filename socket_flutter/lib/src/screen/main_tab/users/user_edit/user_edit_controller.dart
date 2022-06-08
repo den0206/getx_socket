@@ -75,7 +75,7 @@ class UserEditController extends LoadingGetController {
       if (newUser.avatarUrl != null)
         newUser.avatarUrl = "${newUser.avatarUrl}?v=${Random().nextInt(1000)}";
 
-      Get.back();
+      Get.back(result: newUser);
     } catch (e) {
       showError(e.toString());
     } finally {

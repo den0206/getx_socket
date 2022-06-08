@@ -7,16 +7,18 @@ import 'package:socket_flutter/src/screen/main_tab/blocks/block_list_screen.dart
 import 'package:socket_flutter/src/screen/main_tab/groups/groups_screen.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_extention.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_screen.dart';
-import 'package:socket_flutter/src/screen/main_tab/settings/contact_screen.dart';
+
 import 'package:socket_flutter/src/screen/main_tab/users/user_edit/user_edit_screen.dart';
 import 'package:socket_flutter/src/screen/widget/common_dialog.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
 import 'package:socket_flutter/src/service/recent_extention.dart';
 
+import '../../settings/contacts/contact_screen.dart';
+
 class UserDetailController extends GetxController {
   UserDetailController(this.user);
 
-  final User user;
+  User user;
   final currentUser = AuthService.to.currentUser.value!;
   final UserAPI _userAPI = UserAPI();
   bool isBlocked = false;
@@ -55,7 +57,12 @@ class UserDetailController extends GetxController {
   }
 
   Future<void> showEdit() async {
-    final _ = await Get.toNamed(UserEditScreen.routeName);
+    final editedUser = await Get.toNamed(UserEditScreen.routeName);
+
+    if (editedUser is User) {
+      user = editedUser;
+      update();
+    }
   }
 
   Future<void> showBlockList() async {
@@ -96,7 +103,7 @@ class UserDetailController extends GetxController {
       "blocked": currentUser.blockedUsers.toSet().toList()
     };
 
-    final res = await _userAPI.editUser(userData: data);
+    final res = await _userAPI.updateBlock(userData: data);
     if (!res.status) return;
 
     final newUser = User.fromMap(res.data);

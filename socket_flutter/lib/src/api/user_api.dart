@@ -68,6 +68,17 @@ class UserAPI extends APIBase {
     }
   }
 
+  Future<ResponseAPI> updateBlock({
+    required Map<String, dynamic> userData,
+  }) async {
+    try {
+      final Uri uri = setUri("/updateBlock");
+      return await putRequest(uri: uri, body: userData, useToken: true);
+    } catch (e) {
+      throw e;
+    }
+  }
+
   Future<ResponseAPI> fetchBlocks() async {
     try {
       final Uri uri = setUri("/blocks");

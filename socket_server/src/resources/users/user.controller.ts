@@ -90,7 +90,6 @@ async function getUsers(req: Request, res: Response) {
 async function updateUser(req: Request, res: Response) {
   const userId = getUserIdFromRes(res);
   const {name, email, searchId, mainLanguage, avatarUrl} = req.body;
-  let {blocked} = req.body;
   const file = req.file;
 
   try {
@@ -100,14 +99,11 @@ async function updateUser(req: Request, res: Response) {
       const extention = file.originalname.split('.').pop();
       const fileName = `${userId}/avatar/avatar.${extention}`;
       imagePath = await awsClient.uploadImagge(file, fileName);
-
-      blocked = JSON.parse(blocked);
     }
 
     const value = {
       name,
       email,
-      blocked,
       searchId,
       mainLanguage,
       avatarUrl: imagePath,
@@ -140,6 +136,29 @@ async function deleteUser(req: Request, res: Response) {
     console.log('=== Complete DELETE');
 
     new ResponseAPI(res, {data: isFind}).excute(200);
+  } catch (e: any) {
+    new ResponseAPI(res, {message: e.message}).excute(500);
+  }
+}
+
+async function updateBlock(req: Request, res: Response) {
+  const userId = getUserIdFromRes(res);
+  const {blocked} = req.body;
+
+  try {
+    const value = {
+      blocked,
+    };
+
+    const newUser = await UserModel.findByIdAndUpdate(userId, value, {
+      new: true,
+    });
+    if (!newUser)
+      return new ResponseAPI(res, {
+        message: 'Can not find edited user',
+      }).excute(400);
+
+    new ResponseAPI(res, {data: newUser}).excute(200);
   } catch (e: any) {
     new ResponseAPI(res, {message: e.message}).excute(500);
   }
@@ -195,6 +214,7 @@ export default {
   login,
   getUsers,
   updateUser,
+  updateBlock,
   deleteUser,
   blockUsers,
   getById,

@@ -22,7 +22,6 @@ class QrViewerScreen extends StatelessWidget {
                 UserCountryWidget(
                   user: controller.findUser!,
                   size: 40.w,
-                  addShadow: true,
                   onTap: () {
                     controller.selectFindUser();
                   },
