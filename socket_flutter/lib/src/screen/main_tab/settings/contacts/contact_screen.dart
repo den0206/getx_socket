@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:socket_flutter/src/screen/main_tab/settings/contact_controller.dart';
+
 import 'package:socket_flutter/src/screen/widget/loading_widget.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+
+import 'contact_controller.dart';
 
 class ContactScreen extends LoadingGetView<ContactController> {
   static const routeName = '/Contact';

@@ -8,6 +8,7 @@ import 'package:socket_flutter/src/screen/main_tab/recents/recents_controller.da
 import 'package:socket_flutter/src/screen/widget/overlap_avatars.dart';
 import 'package:socket_flutter/src/screen/widget/user_country_widget.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
+import 'package:socket_flutter/src/utils/consts_color.dart';
 
 class RecentsScreen extends StatelessWidget {
   const RecentsScreen({Key? key}) : super(key: key);
@@ -51,7 +52,7 @@ class RecentsScreen extends StatelessWidget {
                       Container(
                         height: 20,
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: ConstsColor.mainBackgroundColor,
                           borderRadius: BorderRadius.only(
                             topLeft: const Radius.circular(20.0),
                             topRight: const Radius.circular(20.0),
@@ -74,7 +75,7 @@ class RecentsScreen extends StatelessWidget {
               ),
               SliverFillRemaining(
                 child: Container(
-                  color: Colors.white,
+                  color: ConstsColor.mainBackgroundColor,
                 ),
                 hasScrollBody: false,
                 fillOverscroll: true,
@@ -101,9 +102,9 @@ class RecentCell extends GetView<RecentsController> {
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
         decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border(
-                bottom: BorderSide(color: Colors.grey.shade300, width: 0.5))),
+            color: ConstsColor.mainBackgroundColor,
+            border:
+                Border(bottom: BorderSide(color: Colors.black, width: 0.5))),
         child: Slidable(
           key: Key(recent.id),
           endActionPane: ActionPane(

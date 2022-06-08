@@ -1,11 +1,15 @@
-import 'package:country_list_pick/country_list_pick.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:socket_flutter/src/model/user.dart';
+import 'package:socket_flutter/src/screen/main_tab/settings/settings_screen.dart';
 import 'package:socket_flutter/src/screen/main_tab/users/user_detail/user_detail_controller.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socket_flutter/src/screen/widget/custom_button.dart';
+import 'package:socket_flutter/src/screen/widget/neumorphic/buttons.dart';
 import 'package:socket_flutter/src/screen/widget/user_country_widget.dart';
+
+import '../../../../utils/consts_color.dart';
 
 class UserDetailScreen extends StatelessWidget {
   const UserDetailScreen(this.user, {Key? key}) : super(key: key);
@@ -22,16 +26,6 @@ class UserDetailScreen extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             title: Text(controller.user.name),
-            actions: user.isCurrent
-                ? [
-                    IconButton(
-                      icon: Icon(Icons.settings),
-                      onPressed: () {
-                        controller.showSettings();
-                      },
-                    )
-                  ]
-                : null,
           ),
           body: Center(
             child: Column(
@@ -40,7 +34,7 @@ class UserDetailScreen extends StatelessWidget {
                 UserCountryWidget(
                   user: user,
                   size: 40.w,
-                  addShadow: true,
+                  useNeumorphic: true,
                 ),
                 SizedBox(
                   height: 40,
@@ -52,66 +46,55 @@ class UserDetailScreen extends StatelessWidget {
                       fontSize: 40.0,
                       color: Colors.black),
                 ),
-                Text(controller.user.email),
                 SizedBox(
                   height: 40,
                 ),
-                ProfileButtonsArea(
-                  buttons: controller.user.isCurrent
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: controller.user.isCurrent
                       ? [
-                          CustomCircleButton(
-                            title: "Group",
-                            icon: Icons.group,
-                            backColor: Colors.orange,
-                            onPress: () {
+                          NeumorphicIconButton(
+                            iconData: Icons.group,
+                            size: 35.sp,
+                            onPressed: () {
                               controller.openGroups();
                             },
                           ),
-                          CustomCircleButton(
-                            title: "Edit",
-                            icon: Icons.edit,
-                            backColor: Colors.green,
-                            onPress: () {
+                          NeumorphicIconButton(
+                            iconData: Icons.edit,
+                            size: 35.sp,
+                            onPressed: () {
                               controller.showEdit();
                             },
                           ),
-                          CustomCircleButton(
-                            title: "BlockList",
-                            icon: Icons.block,
-                            backColor: Colors.yellow,
-                            mainColor: Colors.black,
-                            onPress: () {
-                              controller.showBlockList();
-                            },
-                          ),
-                          CustomCircleButton(
-                            title: "Logout",
-                            icon: Icons.logout,
-                            backColor: Colors.red,
-                            onPress: () {
-                              controller.tryLogout(context);
+                          NeumorphicIconButton(
+                            iconData: Icons.settings,
+                            size: 35.sp,
+                            onPressed: () {
+                              showModalBottomSheet(
+                                context: context,
+                                backgroundColor:
+                                    ConstsColor.mainBackgroundColor,
+                                builder: (context) {
+                                  return SettingsScreen();
+                                },
+                              );
                             },
                           ),
                         ]
                       : [
-                          CustomCircleButton(
-                            title: "Message",
-                            icon: Icons.message,
-                            backColor: Colors.green,
-                            onPress: () {
+                          NeumorphicIconButton(
+                            iconData: Icons.message,
+                            size: 40.sp,
+                            onPressed: () {
                               controller.startPrivateChat();
                             },
                           ),
-                          CustomCircleButton(
-                            title: controller.isBlocked ? "UnBlock" : "Block",
-                            icon: Icons.block,
-                            backColor: controller.isBlocked
-                                ? Colors.yellow
-                                : Colors.purple,
-                            mainColor: controller.isBlocked
-                                ? Colors.black
-                                : Colors.white,
-                            onPress: () {
+                          NeumorphicIconButton(
+                            iconData: Icons.block,
+                            size: 40.sp,
+                            depth: controller.isBlocked ? -2 : 1,
+                            onPressed: () {
                               controller.blockUser();
                             },
                           ),
@@ -140,35 +123,10 @@ class ProfileButtonsArea extends StatelessWidget {
       padding: EdgeInsets.all(10),
       shrinkWrap: true,
       mainAxisSpacing: 21,
-      crossAxisSpacing: 21,
-      childAspectRatio: 1.8,
+      // crossAxisSpacing: 21,
+      childAspectRatio: 2.2,
       crossAxisCount: buttons.length > 2 ? buttons.length ~/ 2 : buttons.length,
       children: buttons,
-    );
-  }
-}
-
-class CountryFlagWidget extends StatelessWidget {
-  const CountryFlagWidget({
-    Key? key,
-    required this.country,
-    this.size = 30,
-  }) : super(key: key);
-
-  final CountryCode country;
-  final double size;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: size - 5,
-      width: size,
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: getCountryFlag(country),
-          fit: BoxFit.contain,
-        ),
-      ),
     );
   }
 }

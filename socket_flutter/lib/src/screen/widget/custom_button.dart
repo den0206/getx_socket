@@ -98,14 +98,13 @@ class CircleImageButton extends StatelessWidget {
     Key? key,
     required this.imageProvider,
     required this.size,
-    this.addShadow = true,
     this.fit = BoxFit.cover,
     this.onTap,
   }) : super(key: key);
 
   final ImageProvider imageProvider;
   final double size;
-  final bool addShadow;
+
   final BoxFit fit;
   final Function()? onTap;
 
@@ -123,16 +122,7 @@ class CircleImageButton extends StatelessWidget {
             image: imageProvider,
             fit: fit,
           ),
-          border: Border.all(color: Colors.green, width: 1),
-          boxShadow: addShadow
-              ? [
-                  BoxShadow(
-                    offset: Offset(0, 5),
-                    blurRadius: 15.0,
-                    color: Colors.grey,
-                  ),
-                ]
-              : null,
+          // border: Border.all(color: Colors.green, width: 1),
         ),
       ),
     );

@@ -1,8 +1,8 @@
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:socket_flutter/src/model/message.dart';
@@ -10,14 +10,16 @@ import 'package:socket_flutter/src/screen/main_tab/message/message_bubbles/image
 import 'package:socket_flutter/src/screen/main_tab/message/message_bubbles/text_bubble.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_bubbles/video_bubble.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_controller.dart';
-import 'package:socket_flutter/src/screen/main_tab/users/user_detail/user_detail_screen.dart';
 import 'package:socket_flutter/src/screen/widget/animated_widget.dart';
 import 'package:socket_flutter/src/screen/widget/custom_picker.dart';
 import 'package:socket_flutter/src/screen/widget/loading_widget.dart';
 import 'package:sizer/sizer.dart';
+import 'package:socket_flutter/src/screen/widget/neumorphic/buttons.dart';
 import 'package:socket_flutter/src/screen/widget/user_country_widget.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
 import 'package:socket_flutter/src/utils/global_functions.dart';
+
+import '../../../utils/neumorpic_style.dart';
 
 class MessageScreen extends LoadingGetView<MessageController> {
   static const routeName = '/MessageScreen';
@@ -145,78 +147,72 @@ class MessageScreen extends LoadingGetView<MessageController> {
           child: Row(
             children: [
               Expanded(
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 14),
-                  height: 60,
-                  decoration: BoxDecoration(
-                    color: Colors.grey[200],
-                    borderRadius: BorderRadius.circular(30),
-                    boxShadow: [
-                      BoxShadow(
-                        offset: Offset(0, 3),
-                        blurRadius: 5,
-                        color: Colors.black,
-                      )
-                    ],
+                child: Neumorphic(
+                  margin: EdgeInsets.only(left: 8, right: 8, top: 2, bottom: 4),
+                  style: commonNeumorphic(
+                    depth: -10,
+                    boxShape: NeumorphicBoxShape.stadium(),
                   ),
-                  child: Row(
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.emoji_emotions_outlined),
-                        color: Colors.grey[500],
-                        onPressed: () {
-                          dismisskeyBord(context);
-                          controller.showEmoji.toggle();
-                        },
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                        child: TextField(
-                          controller: controller.tx,
-                          focusNode: controller.focusNode,
-                          maxLength: 70,
-                          keyboardType: TextInputType.multiline,
-                          textInputAction: TextInputAction.newline,
-                          maxLines: 5,
-                          decoration: InputDecoration(
-                            hintText: "Message...",
-                            hintStyle: TextStyle(
-                              height: 1.8,
-                            ),
-                            border: InputBorder.none,
-                            counterText: '',
-                          ),
-                          onChanged: (value) {
-                            controller.streamController.add(value);
-                          },
-                          onSubmitted: (value) {
-                            print("BREAK");
+                  padding: EdgeInsets.symmetric(horizontal: 18),
+                  child: Container(
+                    height: 45,
+                    child: Row(
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.emoji_emotions_outlined),
+                          color: Colors.grey[500],
+                          onPressed: () {
+                            dismisskeyBord(context);
+                            controller.showEmoji.toggle();
                           },
                         ),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          controller.showBottomSheet();
-                        },
-                        icon: Icon(Icons.attach_file, color: Colors.grey[500]),
-                      )
-                    ],
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: TextField(
+                            controller: controller.tx,
+                            focusNode: controller.focusNode,
+                            maxLength: 70,
+                            keyboardType: TextInputType.multiline,
+                            textInputAction: TextInputAction.newline,
+                            maxLines: 5,
+                            decoration: InputDecoration(
+                              hintText: "Message...",
+                              hintStyle: TextStyle(
+                                height: 1.8,
+                              ),
+                              border: InputBorder.none,
+                              counterText: '',
+                            ),
+                            onChanged: (value) {
+                              controller.streamController.add(value);
+                            },
+                            onSubmitted: (value) {
+                              print("BREAK");
+                            },
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            controller.showBottomSheet();
+                          },
+                          icon:
+                              Icon(Icons.attach_file, color: Colors.grey[500]),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
               SizedBox(
                 width: 16,
               ),
-              FloatingActionButton(
-                child: Icon(
-                  Icons.send,
-                  color: Colors.white,
-                  size: 18,
-                ),
-                backgroundColor: Colors.green,
-                elevation: 0,
+              NeumorphicIconButton(
+                iconData: Icons.send,
+                size: 18,
+                // color: Colors.green,
+
                 onPressed: () async {
                   if (controller.tx.text.isEmpty) {
                     return null;

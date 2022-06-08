@@ -120,7 +120,7 @@ ImageProvider getUserImage(User user) {
       loadingBuilder: (context, child, loadingProgress) {
         if (loadingProgress != null) {
           return SkeletonAnimation(
-            shimmerColor: Colors.grey,
+            shimmerColor: Colors.white,
             borderRadius: BorderRadius.circular(20),
             shimmerDuration: 1000,
             child: child,
@@ -129,7 +129,7 @@ ImageProvider getUserImage(User user) {
         return child;
       },
       errorBuilder: (context, error, stackTrace) {
-        return Text("Error");
+        return Icon(Icons.question_answer_outlined);
       },
     ).image;
   }
