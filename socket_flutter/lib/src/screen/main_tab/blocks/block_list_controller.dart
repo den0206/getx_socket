@@ -17,13 +17,17 @@ class BlockListController extends GetxController {
   }
 
   Future<void> fetchBlocks() async {
-    final res = await _userAPI.fetchBlocks();
-    if (!res.status) return;
-    final items = res.data.cast<Map<String, dynamic>>();
-    final temp = List<User>.from(items.map((m) => User.fromMap(m)));
+    try {
+      final res = await _userAPI.fetchBlocks();
+      if (!res.status) return;
+      final items = res.data.cast<Map<String, dynamic>>();
+      final temp = List<User>.from(items.map((m) => User.fromMap(m)));
 
-    blocks.addAll(temp);
-    update();
+      blocks.addAll(temp);
+      update();
+    } catch (e) {
+      showError(e.toString());
+    }
   }
 
   Future<void> tryUnblock(BuildContext context, User user) async {
