@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/route_manager.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:socket_flutter/src/api/user_api.dart';
 import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/screen/main_tab/blocks/block_list_screen.dart';
@@ -23,12 +24,20 @@ class UserDetailController extends GetxController {
   final UserAPI _userAPI = UserAPI();
   bool isBlocked = false;
 
+  String? currentVersion;
+
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
 
     isBlocked = currentUser.checkBlocked(user);
+    await getInfo();
     update();
+  }
+
+  Future<void> getInfo() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    currentVersion = packageInfo.version;
   }
 
   Future<void> startPrivateChat() async {

@@ -3,6 +3,7 @@ import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:socket_flutter/src/api/notification_api.dart';
+import 'package:socket_flutter/src/screen/widget/common_dialog.dart';
 
 class NotificationService extends GetxService {
   static NotificationService get to => Get.find();
@@ -118,21 +119,26 @@ class NotificationService extends GetxService {
 
   Future<void> updateBadges() async {
     print('Background');
-    if (!canBadge) return;
-    final res = await _notificationApi.getBadgesCount();
-    if (!res.status) {
-      print("バッジの獲得不可");
-      return;
-    }
 
-    int badgeCount = res.data;
-    if (badgeCount > 0) {
-      if (badgeCount > 99) {
-        badgeCount = 99;
+    try {
+      if (!canBadge) return;
+      final res = await _notificationApi.getBadgesCount();
+      if (!res.status) {
+        print("バッジの獲得不可");
+        return;
       }
-      FlutterAppBadger.updateBadgeCount(badgeCount);
-    } else {
-      FlutterAppBadger.removeBadge();
+
+      int badgeCount = res.data;
+      if (badgeCount > 0) {
+        if (badgeCount > 99) {
+          badgeCount = 99;
+        }
+        FlutterAppBadger.updateBadgeCount(badgeCount);
+      } else {
+        FlutterAppBadger.removeBadge();
+      }
+    } catch (e) {
+      showError(e.toString());
     }
   }
 

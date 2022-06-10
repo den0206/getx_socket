@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:socket_flutter/src/screen/main_tab/users/user_detail/user_detail_controller.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -30,7 +31,9 @@ class SettingsScreen extends StatelessWidget {
                 ListTile(
                   title: Text("通知"),
                   trailing: Icon(Icons.arrow_forward_ios),
-                  onTap: () {},
+                  onTap: () {
+                    openAppSettings();
+                  },
                 ),
                 ListTile(
                   title: Text("レビュー"),
@@ -39,8 +42,7 @@ class SettingsScreen extends StatelessWidget {
                 ),
                 ListTile(
                   title: Text("バージョン"),
-                  trailing: Icon(Icons.arrow_forward_ios),
-                  onTap: () {},
+                  trailing: Text(controller.currentVersion ?? "unknown"),
                 ),
                 ListTile(
                   title: Text("ログアウト"),
@@ -48,6 +50,13 @@ class SettingsScreen extends StatelessWidget {
                   onTap: () {
                     Navigator.of(context).pop();
                     controller.tryLogout(context);
+                  },
+                ),
+                ListTile(
+                  title: Text("ブロックリスト"),
+                  trailing: Icon(Icons.arrow_forward_ios),
+                  onTap: () {
+                    controller.showBlockList();
                   },
                 ),
                 ListTile(

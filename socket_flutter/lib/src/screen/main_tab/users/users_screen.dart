@@ -1,9 +1,11 @@
-import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
 import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/screen/main_tab/users/users_controller.dart';
 import 'package:socket_flutter/src/screen/widget/common_dialog.dart';
 import 'package:socket_flutter/src/screen/widget/user_country_widget.dart';
+
+import '../../../utils/neumorpic_style.dart';
 
 class UsersScreen extends StatelessWidget {
   const UsersScreen({Key? key}) : super(key: key);
@@ -19,11 +21,7 @@ class UsersScreen extends StatelessWidget {
           appBar: AppBar(
             title: controller.isPrivate ? Text('Users') : Text("Group"),
           ),
-          body: ListView.separated(
-            separatorBuilder: (context, index) => Divider(
-              color: Colors.black,
-              height: 1,
-            ),
+          body: ListView.builder(
             itemCount: controller.users.length,
             itemBuilder: (context, index) {
               final User user = controller.users[index];
@@ -79,13 +77,22 @@ class UserCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: UserCountryWidget(user: user, size: 35),
-      selected: selected,
-      selectedColor: Colors.black,
-      selectedTileColor: Colors.grey.withOpacity(0.3),
-      title: Text(user.name),
+    return InkWell(
       onTap: onTap,
+      child: Neumorphic(
+        style: commonNeumorphic(depth: selected ? -1.5 : 0.6),
+        padding: EdgeInsets.all(10),
+        margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        child: Row(
+          children: [
+            UserCountryWidget(user: user, size: 35),
+            SizedBox(
+              width: 20,
+            ),
+            Text(user.name)
+          ],
+        ),
+      ),
     );
   }
 }
