@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:socket_flutter/src/screen/auth/login/login_contoller.dart';
-import 'package:socket_flutter/src/screen/widget/custom_button.dart';
 import 'package:socket_flutter/src/screen/widget/custom_text_fields.dart';
 import 'package:socket_flutter/src/screen/widget/loading_widget.dart';
 import 'package:socket_flutter/src/utils/global_functions.dart';
+
+import '../../widget/neumorphic/buttons.dart';
 
 class LoginScreen extends LoadingGetView<LoginController> {
   static const routeName = '/Login';
@@ -49,10 +50,8 @@ class LoginScreen extends LoadingGetView<LoginController> {
                   ),
                   Align(
                     alignment: Alignment.centerRight,
-                    child: TextButton(
-                      child: Text(
-                        "Forgot password",
-                      ),
+                    child: NeumorphicTextButton(
+                      title: "Forgot password",
                       onPressed: () {
                         controller.pushResetPassword();
                       },
@@ -62,7 +61,7 @@ class LoginScreen extends LoadingGetView<LoginController> {
                     height: 10,
                   ),
                   Builder(builder: (context) {
-                    return CustomButton(
+                    return NeumorphicCustomButtton(
                       title: "Login",
                       onPressed: () {
                         dismisskeyBord(context);
@@ -73,8 +72,8 @@ class LoginScreen extends LoadingGetView<LoginController> {
                   SizedBox(
                     height: 10,
                   ),
-                  TextButton(
-                    child: Text("Sign UP"),
+                  NeumorphicTextButton(
+                    title: "Sign UP",
                     onPressed: () {
                       controller.pushSignUp();
                     },

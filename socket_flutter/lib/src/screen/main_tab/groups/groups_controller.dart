@@ -23,7 +23,7 @@ class GroupsController extends GetxController {
 
     try {
       final res = await _gropuAPI.findByUserId(currentUser.id);
-
+      print(res);
       if (!res.status) {
         print("cant get groups");
         return;

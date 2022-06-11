@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:socket_flutter/src/screen/auth/reset_password/reset_password_controller.dart';
-import 'package:socket_flutter/src/screen/widget/custom_button.dart';
 import 'package:socket_flutter/src/screen/widget/custom_text_fields.dart';
 import 'package:socket_flutter/src/screen/widget/loading_widget.dart';
 import 'package:socket_flutter/src/utils/global_functions.dart';
+
+import '../../widget/neumorphic/buttons.dart';
 
 class ResetPasswordScreen extends LoadingGetView<ResetPasswordController> {
   static const routeName = '/ResetPassword';
@@ -58,7 +59,7 @@ class ResetPasswordScreen extends LoadingGetView<ResetPasswordController> {
                   ),
                 ),
                 Builder(builder: (context) {
-                  return CustomButton(
+                  return NeumorphicCustomButtton(
                     title: controller.state.title,
                     onPressed: controller.buttonEnable
                         ? () {
