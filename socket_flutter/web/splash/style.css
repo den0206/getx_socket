@@ -1,7 +1,11 @@
 body {
   margin:0;
   height:100%;
+<<<<<<< HEAD
+  background: #DCE6E7;
+=======
   background: #737373;
+>>>>>>> origin/main
   
   background-size: 100% 100%;
 }
@@ -36,7 +40,11 @@ body {
   body {
     margin:0;
     height:100%;
+<<<<<<< HEAD
+    background: #DCE6E7;
+=======
     background: #737373;
+>>>>>>> origin/main
     
     background-size: 100% 100%;
   }
