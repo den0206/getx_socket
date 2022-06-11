@@ -13,6 +13,21 @@ String getFileExtension(String fileName) {
   return "." + fileName.split('.').last;
 }
 
+List<CountryCode> getAllCountry() {
+  List<Map> jsonList = countriesEnglish;
+
+  final countries = jsonList
+      .map((json) => CountryCode(
+            name: json["name"],
+            code: json["code"],
+            dialCode: json["dial_code"],
+            flagUri: 'flags/${json['code'].toLowerCase()}.png',
+          ))
+      .toList();
+
+  return countries;
+}
+
 CountryCode getCountryFromCode(String code) {
   List<Map> jsonList = countriesEnglish;
 

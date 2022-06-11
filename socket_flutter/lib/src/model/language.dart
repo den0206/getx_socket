@@ -1,3 +1,5 @@
+import 'package:country_list_pick/country_list_pick.dart';
+
 enum Language {
   bulgarian,
   czech,
@@ -26,10 +28,8 @@ enum Language {
   slovak,
   slovenian,
   swedish,
-  chinese,
-}
+  chinese;
 
-extension LanguageEXT on Language {
   String get code {
     switch (this) {
       case Language.bulgarian:
@@ -89,5 +89,58 @@ extension LanguageEXT on Language {
       case Language.chinese:
         return "ZH";
     }
+  }
+}
+
+Language? originLang(CountryCode country) {
+  switch (country.code) {
+    case "BG":
+      return Language.bulgarian;
+    case "CZ":
+      return Language.czech;
+    case "DE":
+      return Language.german;
+    case "GR":
+      return Language.greek;
+    case "EL":
+      return Language.spanish;
+    case "EE":
+      return Language.estonian;
+    case "GB":
+      return Language.english_british;
+    case "US":
+      return Language.english_american;
+    case "FR":
+      return Language.french;
+    case "FI":
+      return Language.finnish;
+    case "HU":
+      return Language.hungarian;
+    case "LT":
+      return Language.lithuanian;
+    case "JP":
+      return Language.japanese;
+    case "IT":
+      return Language.italian;
+    case "LV":
+      return Language.latvian;
+    case "NL":
+      return Language.polish;
+    case "PT":
+      return Language.portuguese_pt;
+    case "RO":
+      return Language.romanian;
+    case "RU":
+      return Language.russian;
+    case "SK":
+      return Language.slovak;
+    case "SI":
+      return Language.slovenian;
+    case "SE":
+      return Language.swedish;
+    case "CN":
+      return Language.chinese;
+    default:
+      return null;
   }
 }

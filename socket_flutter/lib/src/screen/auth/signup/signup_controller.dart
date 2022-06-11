@@ -44,6 +44,11 @@ class SignUpController extends LoadingGetController {
     update();
   }
 
+  void autoSetLang(CountryCode code) {
+    final lang = originLang(code);
+    currentLanguage.call(lang);
+  }
+
   Future<void> signUp() async {
     if (currentLanguage.value == null) {
       showError("Select Language");
