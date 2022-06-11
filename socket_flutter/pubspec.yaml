@@ -69,7 +69,6 @@ flutter_icons:
   adaptive_icon_foreground: 'assets/icon/icon-android.png'
   android: true
   ios: true
-<<<<<<< HEAD
   adaptive_icon_background: '#DCE6E7'
 
 flutter_native_splash:
@@ -78,14 +77,4 @@ flutter_native_splash:
   fullscreen: true
   android_12:
     icon_background_color: '#DCE6E7'
-=======
-  adaptive_icon_background: '#737373'
-
-flutter_native_splash:
-  image: 'assets/icon/splash-icon.png'
-  color: '#737373'
-  fullscreen: true
-  android_12:
-    icon_background_color: '#737373'
->>>>>>> origin/main
     image: 'assets/icon/splash-icon.png'
