@@ -154,15 +154,18 @@ class MessageScreen extends LoadingGetView<MessageController> {
                     boxShape: NeumorphicBoxShape.stadium(),
                   ),
                   padding: EdgeInsets.symmetric(horizontal: 18),
-                  child: Container(
-                    height: 45,
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxHeight: 300.0,
+                    ),
                     child: Row(
                       children: [
                         IconButton(
                           icon: Icon(Icons.emoji_emotions_outlined),
                           color: Colors.grey[500],
-                          onPressed: () {
+                          onPressed: () async {
                             dismisskeyBord(context);
+                            await Future.delayed(Duration(milliseconds: 300));
                             controller.showEmoji.toggle();
                           },
                         ),
@@ -176,6 +179,7 @@ class MessageScreen extends LoadingGetView<MessageController> {
                             maxLength: 70,
                             keyboardType: TextInputType.multiline,
                             textInputAction: TextInputAction.newline,
+                            minLines: 1,
                             maxLines: 5,
                             decoration: InputDecoration(
                               hintText: "Message...",
