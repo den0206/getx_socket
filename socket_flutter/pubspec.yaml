@@ -48,6 +48,7 @@ dependencies:
   webview_flutter: ^3.0.4
   package_info_plus: ^1.4.2
   permission_handler: ^9.2.0
+  flutter_launcher_icons: ^0.9.3
 
 dev_dependencies:
   flutter_test:
@@ -58,4 +59,13 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/icon/
     - .env
+
+flutter_icons:
+  image_path: 'assets/icon/icon-ios.png'
+  image_path_ios: 'assets/icon/icon-ios.png'
+  adaptive_icon_foreground: 'assets/icon/icon-android.png'
+  android: true
+  ios: true
+  adaptive_icon_background: '#737373'
