@@ -40,7 +40,7 @@ class selectlanguageArea extends StatelessWidget {
                   children: [
                     Icon(Icons.arrow_drop_down),
                     currentlang.value != null
-                        ? Text(currentlang.value!.name)
+                        ? Text(currentlang.value!.name.toUpperCase())
                         : Text("Language")
                   ],
                 )),

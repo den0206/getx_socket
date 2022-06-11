@@ -80,6 +80,7 @@ class SignUpScreen extends LoadingGetView<SignUpController> {
                               onChanged: (CountryCode? code) {
                                 if (code == null) return;
                                 controller.currentCountry = code;
+                                controller.autoSetLang(code);
                               },
                               initialSelection: controller.currentCountry.code,
                               // useUiOverlay: true,
