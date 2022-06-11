@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
 
 import 'package:socket_flutter/src/model/language.dart';
@@ -29,23 +29,22 @@ class selectlanguageArea extends StatelessWidget {
           },
         );
       },
-      child: Container(
-        width: 60.w,
-        height: 4.h,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey[350]!),
-        ),
+      child: Neumorphic(
+        style: NeumorphicStyle(depth: -0.6, intensity: 1),
         child: Container(
-          alignment: Alignment.centerLeft,
-          child: Obx(() => Row(
-                children: [
-                  Icon(Icons.arrow_drop_down),
-                  currentlang.value != null
-                      ? Text(currentlang.value!.name)
-                      : Text("Language")
-                ],
-              )),
+          width: 60.w,
+          height: 8.h,
+          child: Container(
+            alignment: Alignment.centerLeft,
+            child: Obx(() => Row(
+                  children: [
+                    Icon(Icons.arrow_drop_down),
+                    currentlang.value != null
+                        ? Text(currentlang.value!.name)
+                        : Text("Language")
+                  ],
+                )),
+          ),
         ),
       ),
     );

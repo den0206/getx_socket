@@ -6,6 +6,7 @@ import 'package:socket_flutter/src/screen/widget/neumorphic/buttons.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
 import 'package:socket_flutter/src/utils/consts_color.dart';
 import 'package:socket_flutter/src/utils/neumorpic_style.dart';
+import 'package:sizer/sizer.dart';
 
 class QrGenerateScreen extends StatelessWidget {
   const QrGenerateScreen({Key? key}) : super(key: key);
@@ -15,31 +16,10 @@ class QrGenerateScreen extends StatelessWidget {
     return GetBuilder<QrGeneratorController>(
       init: QrGeneratorController(),
       builder: (controller) {
-        return Center(
-          child: Flex(
-            direction: Axis.vertical,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Align(
-                alignment: Alignment.topRight,
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  child: !controller.isLoading
-                      ? NeumorphicIconButton(
-                          iconData: Icons.refresh,
-                          size: 40,
-                          onPressed: () {
-                            controller.updateSearchId();
-                          },
-                        )
-                      : CircularProgressIndicator(
-                          valueColor:
-                              AlwaysStoppedAnimation<Color>(Colors.black),
-                        ),
-                ),
-              ),
-              Neumorphic(
+        return Stack(
+          children: [
+            Center(
+              child: Neumorphic(
                 padding: EdgeInsets.all(15),
                 style: commonNeumorphic(depth: 0.5),
                 child: QrImage(
@@ -65,8 +45,23 @@ class QrGenerateScreen extends StatelessWidget {
                   },
                 ),
               ),
-            ],
-          ),
+            ),
+            Positioned(
+              top: 5.h,
+              right: 20,
+              child: !controller.isLoading
+                  ? NeumorphicIconButton(
+                      iconData: Icons.refresh,
+                      size: 40,
+                      onPressed: () {
+                        controller.updateSearchId();
+                      },
+                    )
+                  : CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+                    ),
+            )
+          ],
         );
       },
     );

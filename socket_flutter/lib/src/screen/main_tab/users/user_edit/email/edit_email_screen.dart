@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:socket_flutter/src/screen/auth/reset_password/reset_password_controller.dart';
 import 'package:socket_flutter/src/screen/main_tab/users/user_edit/email/edit_email_controller.dart';
-import 'package:socket_flutter/src/screen/widget/custom_button.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socket_flutter/src/screen/widget/custom_text_fields.dart';
+
+import '../../../../widget/neumorphic/buttons.dart';
 
 class EditEmailScreen extends StatelessWidget {
   const EditEmailScreen({Key? key}) : super(key: key);
@@ -41,7 +42,7 @@ class EditEmailScreen extends StatelessWidget {
                 SizedBox(
                   height: 10.h,
                 ),
-                CustomButton(
+                NeumorphicCustomButtton(
                   title: "Update Email",
                   onPressed: () {
                     controller.updateEmail();

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/screen/main_tab/users/user_edit/user_edit_controller.dart';
-import 'package:socket_flutter/src/screen/widget/custom_button.dart';
 import 'package:socket_flutter/src/screen/widget/custom_picker.dart';
 import 'package:socket_flutter/src/screen/widget/custom_text_fields.dart';
 import 'package:sizer/sizer.dart';
@@ -80,17 +80,15 @@ class UserEditScreen extends LoadingGetView<UserEditController> {
               ),
               Align(
                 alignment: Alignment.centerRight,
-                child: TextButton(
-                  child: Text(
-                    "Change Email",
-                  ),
+                child: NeumorphicTextButton(
+                  title: "Change Email",
                   onPressed: () {
                     controller.showEditEmail();
                   },
                 ),
               ),
               Obx(
-                () => CustomButton(
+                () => NeumorphicCustomButtton(
                   title: "Edit",
                   width: 70.w,
                   background: Colors.green,
@@ -105,7 +103,7 @@ class UserEditScreen extends LoadingGetView<UserEditController> {
                 height: 40,
               ),
               Builder(builder: (context) {
-                return CustomButton(
+                return NeumorphicCustomButtton(
                   title: "Delete",
                   width: 70.w,
                   background: Colors.red,

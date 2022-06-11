@@ -1,7 +1,55 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:socket_flutter/src/utils/consts_color.dart';
 
+import '../../../utils/neumorpic_style.dart';
 import '../custom_button.dart';
+import 'package:sizer/sizer.dart';
+
+class NeumorphicCustomButtton extends StatelessWidget {
+  const NeumorphicCustomButtton({
+    Key? key,
+    required this.title,
+    this.titleColor = Colors.black,
+    this.width = 250,
+    this.height = 60,
+    this.background,
+    this.onPressed,
+  }) : super(key: key);
+
+  final String title;
+  final Color titleColor;
+  final double width;
+  final double height;
+  final Color? background;
+  final void Function()? onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: width,
+      height: height,
+      child: NeumorphicButton(
+        child: Center(
+          child: Text(
+            title,
+            style: TextStyle(
+              color: titleColor,
+              fontSize: 13.sp,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        onPressed: onPressed,
+        style: commonNeumorphic(
+          color:
+              onPressed != null ? background : ConstsColor.mainBackgroundColor,
+          // lightSource: LightSource.bottomRight,
+          depth: 1.2,
+        ),
+      ),
+    );
+  }
+}
 
 class NeumorphicIconButton extends StatelessWidget {
   const NeumorphicIconButton({
@@ -12,6 +60,7 @@ class NeumorphicIconButton extends StatelessWidget {
     this.size,
     this.depth,
     this.onPressed,
+    this.boxShape,
   }) : super(key: key);
 
   final IconData iconData;
@@ -19,6 +68,7 @@ class NeumorphicIconButton extends StatelessWidget {
   final Color? color;
   final double? size;
   final double? depth;
+  final NeumorphicBoxShape? boxShape;
   final void Function()? onPressed;
 
   @override
@@ -26,7 +76,7 @@ class NeumorphicIconButton extends StatelessWidget {
     return NeumorphicButton(
       padding: EdgeInsets.all(10),
       style: NeumorphicStyle(
-        boxShape: NeumorphicBoxShape.circle(),
+        boxShape: boxShape ?? NeumorphicBoxShape.circle(),
         color: color ?? ConstsColor.mainBackgroundColor,
         depth: depth ?? 1,
         intensity: 2,
@@ -68,6 +118,36 @@ class NeumorphicAvatarButton extends StatelessWidget {
         size: size,
         onTap: onTap,
       ),
+    );
+  }
+}
+
+class NeumorphicTextButton extends StatelessWidget {
+  const NeumorphicTextButton({
+    Key? key,
+    required this.title,
+    this.titleColor = Colors.green,
+    this.onPressed,
+  }) : super(key: key);
+
+  final String title;
+  final Color titleColor;
+  final void Function()? onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      child: NeumorphicText(
+        title,
+        style: NeumorphicStyle(
+          intensity: 1,
+          depth: 1,
+          color: titleColor,
+          surfaceIntensity: 2,
+        ),
+        textStyle: NeumorphicTextStyle(fontWeight: FontWeight.bold),
+      ),
+      onPressed: onPressed ?? null,
     );
   }
 }
