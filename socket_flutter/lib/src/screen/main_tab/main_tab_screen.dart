@@ -42,9 +42,10 @@ class MainTabScreen extends StatelessWidget {
             switch (state) {
               case AppLifecycleState.inactive:
                 print('非アクティブになったときの処理');
+                NotificationService.to.updateBadges();
                 break;
               case AppLifecycleState.paused:
-                NotificationService.to.updateBadges();
+                print("Paused");
                 break;
               case AppLifecycleState.resumed:
                 print("ForeGround");
