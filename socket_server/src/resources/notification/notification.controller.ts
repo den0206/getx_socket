@@ -3,7 +3,6 @@ import {Request, Response} from 'express';
 import ResponseAPI from '../../utils/interface/response.api';
 import getUserIdFromRes from '../../middleware/get_userid_res';
 import {RecentModel} from '../../utils/database/models';
-import {mongoose} from '@typegoose/typegoose';
 
 async function pushNotification(req: Request, res: Response) {
   const fcmURL = 'https://fcm.googleapis.com/fcm';
@@ -30,13 +29,14 @@ async function pushNotification(req: Request, res: Response) {
 
 async function getBadgeCount(req: Request, res: Response) {
   const userId = getUserIdFromRes(res);
+
   try {
     const count = await RecentModel.aggregate([
-      {$match: {userId: new mongoose.Types.ObjectId(userId)}},
+      {$match: {userId: userId}},
       {$group: {_id: null, counter: {$sum: '$counter'}}},
     ]);
 
-    if (count.length < 1) res.status(200).json({status: true, data: 0});
+    if (count.length < 1) return new ResponseAPI(res, {data: 0}).excute(200);
     const total = count[0].counter;
     new ResponseAPI(res, {data: total}).excute(200);
   } catch (e: any) {

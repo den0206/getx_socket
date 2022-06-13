@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
 import 'package:socket_flutter/src/utils/date_format.dart';
+import 'package:socket_flutter/src/utils/global_functions.dart';
 
 enum MessageType { text, image, video }
 
@@ -83,7 +84,7 @@ class Message {
       user: User.fromMap(map['userId']),
       readBy: List<String>.from(map["readBy"] ?? []),
       translated: map["translated"] ?? null,
-      imageUrl: map["imageUrl"] ?? null,
+      imageUrl: httpsToHttp(value: map["imageUrl"]) ?? null,
       videoUrl: map["videoUrl"] ?? null,
       date: DateTime.parse(map["date"]).toUtc(),
     );
@@ -97,7 +98,7 @@ class Message {
       user: user,
       readBy: List<String>.from(map["readBy"]),
       translated: map["translated"] ?? null,
-      imageUrl: map["imageUrl"] ?? null,
+      imageUrl: httpsToHttp(value: map["imageUrl"]) ?? null,
       videoUrl: map["videoUrl"] ?? null,
       date: DateTime.parse(map["date"]).toUtc(),
     );
