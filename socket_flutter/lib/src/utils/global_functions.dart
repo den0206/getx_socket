@@ -81,3 +81,9 @@ void showSnackBar({required String title}) {
     forwardAnimationCurve: Curves.easeOutBack,
   );
 }
+
+String? httpsToHttp({required String? value}) {
+  if (value == null) return null;
+  if (value.contains("https")) return value.replaceFirst("https", "http");
+  return value;
+}

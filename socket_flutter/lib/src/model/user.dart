@@ -70,7 +70,7 @@ class User {
       fcmToken: map["fcmToken"] ?? "",
       searchId: map["searchId"] ?? map["id"],
       blockedUsers: List<String>.from(map["blocked"] ?? []),
-      avatarUrl: map["avatarUrl"],
+      avatarUrl: httpsToHttp(value: map["avatarUrl"]),
       sessionToken: map['sessionToken'],
     );
   }

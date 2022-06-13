@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'package:mime/mime.dart';
+import 'package:socket_flutter/main.dart';
 import 'package:socket_flutter/src/model/custom_exception.dart';
 import 'package:socket_flutter/src/model/response_api.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
@@ -90,6 +91,7 @@ abstract class APIBase {
 
   Uri setUri(String path, [Map<String, dynamic>? query]) {
     final String withPath = "${endPoint.name}${path}";
+    if (useMain) return Uri.https(host, withPath, query);
     return kDebugMode
         ? Uri.http(host, withPath, query)
         : Uri.https(host, withPath, query);

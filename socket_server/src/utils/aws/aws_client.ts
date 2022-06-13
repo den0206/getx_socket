@@ -74,7 +74,8 @@ class AWSClient {
   private getUrlFromBucket(params: PutObjectCommandInput): string {
     const {Bucket, Key} = params;
 
-    return `https://${Bucket}.s3.${this.REGION}.amazonaws.com/${Key}`;
+    return `http://${Bucket}.s3.${this.REGION}.amazonaws.com/${Key}`;
+    // return `https://${Bucket}.s3.${this.REGION}.amazonaws.com/${Key}`;
   }
 }
 
