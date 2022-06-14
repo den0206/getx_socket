@@ -26,6 +26,20 @@ class UserDetailScreen extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             title: Text(controller.user.name),
+            actions: !user.isCurrent
+                ? [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: NeumorphicIconButton(
+                        icon: Icon(
+                          Icons.emergency_share,
+                          color: Colors.red[400],
+                        ),
+                        onPressed: () {},
+                      ),
+                    ),
+                  ]
+                : null,
           ),
           body: Center(
             child: Column(
@@ -54,22 +68,28 @@ class UserDetailScreen extends StatelessWidget {
                   children: controller.user.isCurrent
                       ? [
                           NeumorphicIconButton(
-                            iconData: Icons.group,
-                            size: 35.sp,
+                            icon: Icon(
+                              Icons.group,
+                              size: 35.sp,
+                            ),
                             onPressed: () {
                               controller.openGroups();
                             },
                           ),
                           NeumorphicIconButton(
-                            iconData: Icons.edit,
-                            size: 35.sp,
+                            icon: Icon(
+                              Icons.edit,
+                              size: 35.sp,
+                            ),
                             onPressed: () {
                               controller.showEdit();
                             },
                           ),
                           NeumorphicIconButton(
-                            iconData: Icons.settings,
-                            size: 35.sp,
+                            icon: Icon(
+                              Icons.settings,
+                              size: 35.sp,
+                            ),
                             onPressed: () {
                               showModalBottomSheet(
                                 context: context,
@@ -84,15 +104,19 @@ class UserDetailScreen extends StatelessWidget {
                         ]
                       : [
                           NeumorphicIconButton(
-                            iconData: Icons.message,
-                            size: 40.sp,
+                            icon: Icon(
+                              Icons.message,
+                              size: 40.sp,
+                            ),
                             onPressed: () {
                               controller.startPrivateChat();
                             },
                           ),
                           NeumorphicIconButton(
-                            iconData: Icons.block,
-                            size: 40.sp,
+                            icon: Icon(
+                              Icons.block,
+                              size: 40.sp,
+                            ),
                             depth: controller.isBlocked ? -2 : 1,
                             onPressed: () {
                               controller.blockUser();

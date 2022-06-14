@@ -51,8 +51,10 @@ class QrGenerateScreen extends StatelessWidget {
               right: 20,
               child: !controller.isLoading
                   ? NeumorphicIconButton(
-                      iconData: Icons.refresh,
-                      size: 40,
+                      icon: Icon(
+                        Icons.refresh,
+                        size: 40,
+                      ),
                       onPressed: () {
                         controller.updateSearchId();
                       },

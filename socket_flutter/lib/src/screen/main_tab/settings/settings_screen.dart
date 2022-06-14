@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:socket_flutter/src/screen/main_tab/users/user_detail/user_detail_controller.dart';
@@ -45,6 +46,21 @@ class SettingsScreen extends StatelessWidget {
                   trailing: Text(controller.currentVersion ?? "unknown"),
                 ),
                 ListTile(
+                  title: Text("お問い合わせ"),
+                  trailing: Icon(Icons.arrow_forward_ios),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    controller.showSettings();
+                  },
+                ),
+                ListTile(
+                  title: Text("キャッシュの削除"),
+                  trailing: Icon(Icons.arrow_forward_ios),
+                  onTap: () async {
+                    await DefaultCacheManager().emptyCache();
+                  },
+                ),
+                ListTile(
                   title: Text("ログアウト"),
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () {
@@ -57,14 +73,6 @@ class SettingsScreen extends StatelessWidget {
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () {
                     controller.showBlockList();
-                  },
-                ),
-                ListTile(
-                  title: Text("お問い合わせ"),
-                  trailing: Icon(Icons.arrow_forward_ios),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    controller.showSettings();
                   },
                 ),
               ],

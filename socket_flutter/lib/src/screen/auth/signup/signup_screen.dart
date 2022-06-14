@@ -118,6 +118,7 @@ class SignUpScreen extends LoadingGetView<SignUpController> {
                     ),
                     NeumorphicCustomButtton(
                       title: "SignUp",
+                      background: Colors.green,
                       onPressed: () {
                         controller.signUp();
                       },

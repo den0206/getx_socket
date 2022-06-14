@@ -43,6 +43,10 @@ class ResetPasswordScreen extends LoadingGetView<ResetPasswordController> {
                       if (controller.state != VerifyState.verify)
                         CustomTextField(
                           controller: controller.currentTx,
+                          icon: Icon(
+                            Icons.email,
+                            color: Colors.grey,
+                          ),
                           labelText: controller.state.labelText,
                           inputType: controller.state.inputType,
                           isSecure: controller.isSecure,
@@ -61,6 +65,8 @@ class ResetPasswordScreen extends LoadingGetView<ResetPasswordController> {
                 Builder(builder: (context) {
                   return NeumorphicCustomButtton(
                     title: controller.state.title,
+                    background: Colors.green,
+                    titleColor: Colors.white,
                     onPressed: controller.buttonEnable
                         ? () {
                             dismisskeyBord(context);
