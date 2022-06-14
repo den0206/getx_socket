@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/state_manager.dart';
@@ -71,9 +72,11 @@ class UserEditController extends LoadingGetController {
       final newUser = User.fromMap(res.data);
       await AuthService.to.updateUser(newUser);
 
-      // Tips update same url image
-      if (newUser.avatarUrl != null)
+      if (newUser.avatarUrl != null) {
+        await CachedNetworkImage.evictFromCache(newUser.avatarUrl!);
+        // Tips update same url image
         newUser.avatarUrl = "${newUser.avatarUrl}?v=${Random().nextInt(1000)}";
+      }
 
       Get.back(result: newUser);
     } catch (e) {

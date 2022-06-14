@@ -4,6 +4,7 @@ import 'package:get/route_manager.dart';
 import 'package:socket_flutter/src/model/group.dart';
 import 'package:socket_flutter/src/screen/main_tab/groups/groups_controller.dart';
 import 'package:socket_flutter/src/screen/main_tab/users/users_screen.dart';
+import 'package:socket_flutter/src/screen/widget/animated_widget.dart';
 import 'package:socket_flutter/src/screen/widget/overlap_avatars.dart';
 
 import '../../../utils/neumorpic_style.dart';
@@ -29,16 +30,19 @@ class GroupsScreen extends StatelessWidget {
               )
             ],
           ),
-          body: ListView.separated(
-            separatorBuilder: (context, index) => Divider(),
-            itemCount: controller.groups.length,
-            itemBuilder: (context, index) {
-              final group = controller.groups[index];
-              return GroupCell(
-                group: group,
-              );
-            },
-          ),
+          body: controller.groups.isEmpty
+              ? EmptyScreen(
+                  title: "No Group", path: "assets/lotties/no_group.json")
+              : ListView.separated(
+                  separatorBuilder: (context, index) => Divider(),
+                  itemCount: controller.groups.length,
+                  itemBuilder: (context, index) {
+                    final group = controller.groups[index];
+                    return GroupCell(
+                      group: group,
+                    );
+                  },
+                ),
         );
       },
     );

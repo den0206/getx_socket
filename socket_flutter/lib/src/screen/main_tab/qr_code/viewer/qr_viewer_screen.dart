@@ -50,7 +50,9 @@ class QrViewerScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  controller.startQrcodeScan();
+                },
               )
             ],
           ),

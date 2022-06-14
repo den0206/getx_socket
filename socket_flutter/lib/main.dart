@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
@@ -24,9 +25,9 @@ void main() async {
   await Firebase.initializeApp();
   await dotenv.load(fileName: ".env");
   HttpOverrides.global = PermitInvalidCertification();
-  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
-
   await Get.put(NotificationService()).initService();
+
+  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
   runApp(DevicePreview(enabled: false, builder: (context) => MyApp()));
 }
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
       builder: (context, orientation, deviceType) {
         return GetMaterialApp(
           title: 'Socket_Flutter',
+          debugShowCheckedModeBanner: kDebugMode,
           theme: ThemeData(
             appBarTheme: AppBarTheme(
               titleTextStyle: TextStyle(

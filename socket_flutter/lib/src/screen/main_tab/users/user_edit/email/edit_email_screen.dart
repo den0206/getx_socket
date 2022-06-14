@@ -18,37 +18,46 @@ class EditEmailScreen extends StatelessWidget {
       builder: (controller) {
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Title'),
+            title: const Text('Change Email'),
           ),
           body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                if (controller.state == VerifyState.checkEmail) ...[
-                  CustomTextField(
-                    controller: controller.emaiController,
-                    labelText: controller.state.labelText,
-                    inputType: controller.state.inputType,
-                    isSecure: false,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (controller.state == VerifyState.checkEmail) ...[
+                    CustomTextField(
+                      controller: controller.emaiController,
+                      icon: Icon(
+                        Icons.email,
+                        color: Colors.grey,
+                      ),
+                      labelText: controller.state.labelText,
+                      inputType: controller.state.inputType,
+                      isSecure: false,
+                    ),
+                  ],
+                  if (controller.state == VerifyState.verify) ...[
+                    CustomPinCodeField(
+                      controller: controller.pinController,
+                      inputType: controller.state.inputType,
+                      isSecure: false,
+                    )
+                  ],
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  NeumorphicCustomButtton(
+                    title: "Update Email",
+                    titleColor: Colors.white,
+                    background: Colors.green,
+                    onPressed: () {
+                      controller.updateEmail();
+                    },
                   ),
                 ],
-                if (controller.state == VerifyState.verify) ...[
-                  CustomPinCodeField(
-                    controller: controller.pinController,
-                    inputType: controller.state.inputType,
-                    isSecure: false,
-                  )
-                ],
-                SizedBox(
-                  height: 10.h,
-                ),
-                NeumorphicCustomButtton(
-                  title: "Update Email",
-                  onPressed: () {
-                    controller.updateEmail();
-                  },
-                ),
-              ],
+              ),
             ),
           ),
         );

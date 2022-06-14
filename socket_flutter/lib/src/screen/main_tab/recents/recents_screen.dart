@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:socket_flutter/src/model/recent.dart';
 import 'package:socket_flutter/src/screen/main_tab/main_tab_controller.dart';
 import 'package:socket_flutter/src/screen/main_tab/recents/recents_controller.dart';
+import 'package:socket_flutter/src/screen/widget/animated_widget.dart';
 import 'package:socket_flutter/src/screen/widget/overlap_avatars.dart';
 import 'package:socket_flutter/src/screen/widget/user_country_widget.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
@@ -77,7 +78,14 @@ class RecentsScreen extends StatelessWidget {
               ),
               SliverFillRemaining(
                 child: Container(
+                  alignment: Alignment.center,
                   color: ConstsColor.mainBackgroundColor,
+                  child: controller.recents.isEmpty
+                      ? EmptyScreen(
+                          title: "No Message",
+                          path: "assets/lotties/chat_girl.json",
+                        )
+                      : null,
                 ),
                 hasScrollBody: false,
                 fillOverscroll: true,

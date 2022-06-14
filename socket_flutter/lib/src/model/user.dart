@@ -1,8 +1,8 @@
 import 'dart:convert';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:country_list_pick/country_list_pick.dart';
 import 'package:flutter/material.dart';
-import 'package:skeleton_text/skeleton_text.dart';
 
 import 'package:socket_flutter/src/model/language.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
@@ -115,23 +115,7 @@ ImageProvider getUserImage(User user) {
   if (user.avatarUrl == null) {
     return Image.asset("assets/images/default_user.png").image;
   } else {
-    return Image.network(
-      user.avatarUrl!,
-      loadingBuilder: (context, child, loadingProgress) {
-        if (loadingProgress != null) {
-          return SkeletonAnimation(
-            shimmerColor: Colors.white,
-            borderRadius: BorderRadius.circular(20),
-            shimmerDuration: 1000,
-            child: child,
-          );
-        }
-        return child;
-      },
-      errorBuilder: (context, error, stackTrace) {
-        return Icon(Icons.question_answer_outlined);
-      },
-    ).image;
+    return CachedNetworkImageProvider(user.avatarUrl!);
   }
 }
 

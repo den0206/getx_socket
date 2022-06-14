@@ -9,7 +9,7 @@ class NeumorphicCustomButtton extends StatelessWidget {
   const NeumorphicCustomButtton({
     Key? key,
     required this.title,
-    this.titleColor = Colors.black,
+    this.titleColor = Colors.white,
     this.width = 250,
     this.height = 60,
     this.background,
@@ -54,19 +54,17 @@ class NeumorphicCustomButtton extends StatelessWidget {
 class NeumorphicIconButton extends StatelessWidget {
   const NeumorphicIconButton({
     Key? key,
-    required this.iconData,
+    required this.icon,
     this.color,
-    this.iconColor,
-    this.size,
     this.depth,
     this.onPressed,
     this.boxShape,
   }) : super(key: key);
 
-  final IconData iconData;
-  final Color? iconColor;
+  final Widget icon;
+
   final Color? color;
-  final double? size;
+
   final double? depth;
   final NeumorphicBoxShape? boxShape;
   final void Function()? onPressed;
@@ -81,11 +79,7 @@ class NeumorphicIconButton extends StatelessWidget {
         depth: depth ?? 1,
         intensity: 2,
       ),
-      child: Icon(
-        iconData,
-        size: size,
-        color: iconColor,
-      ),
+      child: icon,
       onPressed: onPressed,
     );
   }

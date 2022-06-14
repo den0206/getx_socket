@@ -22,12 +22,11 @@ class QrViewerController extends GetxController {
       final res = await _userAPI.getById(id: searchId);
       if (!res.status) return;
       findUser = User.fromMap(res.data);
+      update();
     } on PlatformException {
       showError('Failed to get platform version.');
     } catch (e) {
       showError(e.toString());
-    } finally {
-      update();
     }
   }
 

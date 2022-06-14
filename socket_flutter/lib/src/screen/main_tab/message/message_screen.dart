@@ -104,8 +104,9 @@ class MessageScreen extends LoadingGetView<MessageController> {
       body: Column(
         children: [
           Obx(
-            () =>
-                controller.isLoading.value ? LoadingCellWidget() : Container(),
+            () => controller.isLoading.value
+                ? FadeinWidget(child: LoadingCellWidget())
+                : Container(),
           ),
           Expanded(
             child: Obx(
@@ -213,10 +214,10 @@ class MessageScreen extends LoadingGetView<MessageController> {
                 width: 16,
               ),
               NeumorphicIconButton(
-                iconData: Icons.send,
-                size: 18,
-                // color: Colors.green,
-
+                icon: Icon(
+                  Icons.send,
+                  size: 18,
+                ),
                 onPressed: () async {
                   if (controller.tx.text.isEmpty) {
                     return null;

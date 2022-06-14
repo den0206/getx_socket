@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:skeleton_text/skeleton_text.dart';
 
 class CustomButton extends StatelessWidget {
   const CustomButton({
@@ -113,16 +114,32 @@ class CircleImageButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: size,
-        height: size,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: Colors.grey,
-          image: DecorationImage(
+          border: Border.all(
+            color: Colors.green,
+            width: 2,
+          ),
+        ),
+        child: ClipOval(
+          child: Image(
             image: imageProvider,
             fit: fit,
+            width: size,
+            height: size,
+            loadingBuilder: (context, child, event) {
+              if (event != null) {
+                return SkeletonAnimation(
+                  shimmerColor: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  shimmerDuration: 1000,
+                  child: child,
+                );
+              }
+              return child;
+            },
+            errorBuilder: (context, url, error) => new Icon(Icons.error),
           ),
-          // border: Border.all(color: Colors.green, width: 1),
         ),
       ),
     );
