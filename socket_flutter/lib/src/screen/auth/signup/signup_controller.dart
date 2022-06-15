@@ -8,11 +8,13 @@ import 'package:image_picker/image_picker.dart';
 import 'package:socket_flutter/src/api/temp_token_api.dart';
 import 'package:socket_flutter/src/api/user_api.dart';
 import 'package:socket_flutter/src/model/language.dart';
-import 'package:socket_flutter/src/screen/auth/reset_password/reset_password_controller.dart';
+
 import 'package:socket_flutter/src/screen/widget/common_dialog.dart';
 import 'package:socket_flutter/src/screen/widget/loading_widget.dart';
 import 'package:socket_flutter/src/service/image_extention.dart';
 import 'package:socket_flutter/src/utils/global_functions.dart';
+
+import '../../widget/custom_pin.dart';
 
 class SignUpController extends LoadingGetController {
   final TextEditingController nameController = TextEditingController();

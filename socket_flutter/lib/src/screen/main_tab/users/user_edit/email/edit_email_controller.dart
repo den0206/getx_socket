@@ -4,9 +4,10 @@ import 'package:get/route_manager.dart';
 import 'package:socket_flutter/src/api/temp_token_api.dart';
 import 'package:socket_flutter/src/api/user_api.dart';
 import 'package:socket_flutter/src/model/user.dart';
-import 'package:socket_flutter/src/screen/auth/reset_password/reset_password_controller.dart';
 import 'package:socket_flutter/src/screen/widget/common_dialog.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
+
+import '../../../../widget/custom_pin.dart';
 
 class EditEmailController extends GetxController {
   final TextEditingController emaiController = TextEditingController();
@@ -15,6 +16,19 @@ class EditEmailController extends GetxController {
   VerifyState state = VerifyState.checkEmail;
   final _tempTokenAPI = TempTokenAPI();
   final _userAPI = UserAPI();
+
+  bool buttonEnable = false;
+
+  TextEditingController? get currentTX {
+    switch (this.state) {
+      case VerifyState.checkEmail:
+        return emaiController;
+      case VerifyState.sendPassword:
+        return null;
+      case VerifyState.verify:
+        return pinController;
+    }
+  }
 
   Future<void> updateEmail() async {
     if (emaiController.text == "") return;
@@ -50,5 +64,22 @@ class EditEmailController extends GetxController {
     } finally {
       update();
     }
+  }
+
+  void checkField(String value) {
+    int minimum;
+    switch (this.state) {
+      case VerifyState.checkEmail:
+      case VerifyState.sendPassword:
+        minimum = 1;
+        break;
+      case VerifyState.verify:
+        minimum = 6;
+        break;
+    }
+
+    buttonEnable = value.length >= minimum;
+
+    update();
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/route_manager.dart';
+import 'package:get/state_manager.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:socket_flutter/src/api/user_api.dart';
 import 'package:socket_flutter/src/model/user.dart';
@@ -14,9 +14,10 @@ import 'package:socket_flutter/src/screen/widget/common_dialog.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
 import 'package:socket_flutter/src/service/recent_extention.dart';
 
+import '../../../widget/loading_widget.dart';
 import '../../settings/contacts/contact_screen.dart';
 
-class UserDetailController extends GetxController {
+class UserDetailController extends LoadingGetController {
   UserDetailController(this.user);
 
   User user;
@@ -25,6 +26,10 @@ class UserDetailController extends GetxController {
   bool isBlocked = false;
 
   String? currentVersion;
+  final reportField = TextEditingController();
+  RxBool get enableReport {
+    return (reportField.text.isNotEmpty && !user.isCurrent).obs;
+  }
 
   @override
   void onInit() async {
@@ -120,5 +125,19 @@ class UserDetailController extends GetxController {
 
     isBlocked = !isBlocked;
     update();
+  }
+
+  Future<void> sendReport(BuildContext context) async {
+    if (user.isCurrent) return;
+    isOverlay.call(true);
+    await Future.delayed(Duration(seconds: 1));
+    try {
+      reportField.clear();
+      Navigator.of(context).pop();
+    } catch (e) {
+      showError(e.toString());
+    } finally {
+      isOverlay.call(false);
+    }
   }
 }

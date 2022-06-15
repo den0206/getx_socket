@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:socket_flutter/src/model/user.dart';
+import 'package:socket_flutter/src/screen/main_tab/report/report_screen.dart';
 import 'package:socket_flutter/src/screen/main_tab/settings/settings_screen.dart';
 import 'package:socket_flutter/src/screen/main_tab/users/user_detail/user_detail_controller.dart';
 import 'package:sizer/sizer.dart';
@@ -21,23 +22,31 @@ class UserDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<UserDetailController>(
       init: UserDetailController(user),
-      initState: (_) {},
       builder: (controller) {
         return Scaffold(
           appBar: AppBar(
             title: Text(controller.user.name),
             actions: !user.isCurrent
                 ? [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: NeumorphicIconButton(
-                        icon: Icon(
-                          Icons.emergency_share,
-                          color: Colors.red[400],
+                    Builder(builder: (context) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: NeumorphicIconButton(
+                          icon: Icon(
+                            Icons.emergency_share,
+                            color: Colors.red[400],
+                          ),
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) {
+                                return ReportScreen(user);
+                              },
+                              fullscreenDialog: true,
+                            ));
+                          },
                         ),
-                        onPressed: () {},
-                      ),
-                    ),
+                      );
+                    }),
                   ]
                 : null,
           ),
@@ -115,6 +124,9 @@ class UserDetailScreen extends StatelessWidget {
                           NeumorphicIconButton(
                             icon: Icon(
                               Icons.block,
+                              color: controller.isBlocked
+                                  ? Colors.black
+                                  : Colors.red,
                               size: 40.sp,
                             ),
                             depth: controller.isBlocked ? -2 : 1,
