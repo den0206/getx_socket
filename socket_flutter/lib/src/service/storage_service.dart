@@ -5,7 +5,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 enum StorageKey {
   user,
   realtime,
-  fcmToken;
+  fcmToken,
+  checkTerms;
 
   String get keyString {
     switch (this) {
@@ -15,6 +16,8 @@ enum StorageKey {
         return "realtime";
       case StorageKey.fcmToken:
         return "fcmToken";
+      case StorageKey.checkTerms:
+        return "checkTerms";
     }
   }
 
@@ -40,7 +43,7 @@ enum StorageKey {
     return await pref.setBool(this.keyString, value);
   }
 
-  Future<bool?> readBool() async {
+  Future<bool?> loadBool() async {
     final pref = await SharedPreferences.getInstance();
     final value = await pref.getBool(this.keyString);
     return value ?? null;

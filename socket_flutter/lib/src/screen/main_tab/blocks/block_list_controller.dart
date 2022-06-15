@@ -49,20 +49,24 @@ class BlockListController extends GetxController {
 
   Future<void> blockUser(User user) async {
     if (user.isCurrent) return;
-    if (currentUser.checkBlocked(user)) {
-      currentUser.blockedUsers.remove(user.id);
-      blocks.removeWhere((element) => element.id == user.id);
-    } else {
-      currentUser.blockedUsers.add(user.id);
-    }
-    final Map<String, dynamic> data = {
-      "blocked": currentUser.blockedUsers.toSet().toList()
-    };
+    try {
+      if (currentUser.checkBlocked(user)) {
+        currentUser.blockedUsers.remove(user.id);
+        blocks.removeWhere((element) => element.id == user.id);
+      } else {
+        currentUser.blockedUsers.add(user.id);
+      }
+      final Map<String, dynamic> data = {
+        "blocked": currentUser.blockedUsers.toSet().toList()
+      };
 
-    final res = await _userAPI.editUser(userData: data);
-    if (!res.status) return;
-    final newUser = User.fromMap(res.data);
-    await AuthService.to.updateUser(newUser);
-    update();
+      final res = await _userAPI.updateBlock(userData: data);
+      if (!res.status) return;
+      final newUser = User.fromMap(res.data);
+      await AuthService.to.updateUser(newUser);
+      update();
+    } catch (e) {
+      showError(e.toString());
+    }
   }
 }

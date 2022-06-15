@@ -82,7 +82,7 @@ class MessageController extends LoadingGetController {
   }
 
   Future<void> loadLocal() async {
-    final currentReal = await StorageKey.realtime.readBool();
+    final currentReal = await StorageKey.realtime.loadBool();
     useRealtime.call(currentReal ?? true);
   }
 

@@ -5,6 +5,8 @@ import 'package:socket_flutter/src/api/temp_token_api.dart';
 import 'package:socket_flutter/src/screen/widget/common_dialog.dart';
 import 'package:socket_flutter/src/screen/widget/loading_widget.dart';
 
+import '../../widget/custom_pin.dart';
+
 class ResetPasswordController extends LoadingGetController {
   VerifyState state = VerifyState.checkEmail;
   final TextEditingController emailTextField = TextEditingController();
@@ -24,10 +26,6 @@ class ResetPasswordController extends LoadingGetController {
       case VerifyState.verify:
         return verifyTextField;
     }
-  }
-
-  bool get isSecure {
-    return currentTx != emailTextField;
   }
 
   bool buttonEnable = false;
@@ -101,44 +99,5 @@ class ResetPasswordController extends LoadingGetController {
     buttonEnable = value.length >= minimum;
 
     update();
-  }
-}
-
-enum VerifyState {
-  checkEmail,
-  sendPassword,
-  verify;
-
-  String get title {
-    switch (this) {
-      case VerifyState.checkEmail:
-        return "Check Email";
-      case VerifyState.sendPassword:
-        return "Send Password";
-      case VerifyState.verify:
-        return "Verify";
-    }
-  }
-
-  String get labelText {
-    switch (this) {
-      case VerifyState.checkEmail:
-        return "Your Email";
-      case VerifyState.sendPassword:
-        return "New Password";
-      case VerifyState.verify:
-        return "Verify Number";
-    }
-  }
-
-  TextInputType get inputType {
-    switch (this) {
-      case VerifyState.checkEmail:
-        return TextInputType.emailAddress;
-      case VerifyState.sendPassword:
-        return TextInputType.visiblePassword;
-      case VerifyState.verify:
-        return TextInputType.number;
-    }
   }
 }

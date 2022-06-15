@@ -17,10 +17,23 @@ class LoginController extends LoadingGetController {
   final TextEditingController passwordController = TextEditingController();
 
   final userAPI = UserAPI();
+  bool acceptTerms = false;
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
+
+    await loadTerms();
+  }
+
+  Future<void> loadTerms() async {
+    acceptTerms = await StorageKey.checkTerms.loadBool() ?? false;
+  }
+
+  Future<void> setTerms(BuildContext context) async {
+    if (!acceptTerms) return;
+    await StorageKey.checkTerms.saveBool(true);
+    Navigator.pop(context);
   }
 
   Future<void> login() async {
