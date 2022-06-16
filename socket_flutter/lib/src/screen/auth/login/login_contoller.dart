@@ -79,7 +79,7 @@ class LoginController extends LoadingGetController {
       final user = User.fromMap(result.data);
       emailController.text = user.email;
 
-      showSnackBar(title: "Success Create User");
+      showSnackBar(title: "Success Create User", message: "Please Login");
     }
   }
 
@@ -89,7 +89,7 @@ class LoginController extends LoadingGetController {
       final user = User.fromMap(result.data);
       emailController.text = user.email;
 
-      showSnackBar(title: "Reset Password");
+      showSnackBar(title: "Reset Password", message: "Please Login");
     }
   }
 }

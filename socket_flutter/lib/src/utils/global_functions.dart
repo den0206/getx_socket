@@ -65,13 +65,16 @@ Map<int, String> extractrMap(Map<int, String> oldMap, Map<int, String> newMap) {
   return res;
 }
 
-void showSnackBar({required String title}) {
+void showSnackBar(
+    {required String title,
+    required String message,
+    Color background = Colors.green}) {
   Get.snackbar(
     title,
-    "Please Login",
+    message,
     icon: Icon(Icons.person, color: Colors.white),
     snackPosition: SnackPosition.BOTTOM,
-    backgroundColor: Colors.green,
+    backgroundColor: background,
     borderRadius: 20,
     margin: EdgeInsets.all(15),
     colorText: Colors.white,

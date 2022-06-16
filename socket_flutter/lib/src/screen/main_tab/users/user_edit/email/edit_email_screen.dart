@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+
 import 'package:socket_flutter/src/screen/main_tab/users/user_edit/email/edit_email_controller.dart';
+import 'package:socket_flutter/src/screen/widget/loading_widget.dart';
 import '../../../../widget/custom_pin.dart';
 
-class EditEmailScreen extends StatelessWidget {
-  const EditEmailScreen({Key? key}) : super(key: key);
+class EditEmailScreen extends LoadingGetView<EditEmailController> {
+  @override
+  get ctr => EditEmailController();
+
   static const routeName = '/EditEmail';
 
   @override
-  Widget build(BuildContext context) {
+  Widget get child {
     return GetBuilder<EditEmailController>(
-      init: EditEmailController(),
       builder: (controller) {
         return Scaffold(
           appBar: AppBar(

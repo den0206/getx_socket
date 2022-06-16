@@ -13,6 +13,7 @@ import notificationRoute from './resources/notification/notification.route';
 import {connectIO} from './utils/socket/socket';
 import checkAPIKey from './middleware/check_api';
 import nodeSchedule from 'node-schedule';
+import reportRoute from './resources/report/report.route';
 const get = require('simple-get');
 
 class App {
@@ -52,6 +53,7 @@ class App {
     this.app.use(`${apiVer}/translate`, translateRoute);
     this.app.use(`${apiVer}/notification`, notificationRoute);
     this.app.use(`${apiVer}/temptoken`, tokenRoute);
+    this.app.use(`${apiVer}/report`, reportRoute);
   }
 
   private async initialiseDB(): Promise<void> {

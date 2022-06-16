@@ -60,7 +60,11 @@ class UserDetailScreen extends StatelessWidget {
                   useNeumorphic: true,
                 ),
                 SizedBox(
-                  height: 40,
+                  height: 20,
+                ),
+                if (user.isCurrent) ...[Text(user.email)],
+                SizedBox(
+                  height: 20,
                 ),
                 Text(
                   controller.user.name,

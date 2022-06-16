@@ -66,6 +66,7 @@ class EmptyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FadeinWidget(
+      duration: Duration(seconds: 1),
       child: Container(
         height: double.infinity,
         width: double.infinity,

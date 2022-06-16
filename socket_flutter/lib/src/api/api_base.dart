@@ -240,10 +240,9 @@ enum EndPoint {
   group,
   translate,
   notification,
-  temptoken
-}
+  temptoken,
+  report;
 
-extension EndPointEXT on EndPoint {
   String get name {
     final String APIVer = "/api/v1";
 
@@ -262,6 +261,8 @@ extension EndPointEXT on EndPoint {
         return "$APIVer/notification";
       case EndPoint.temptoken:
         return "$APIVer/temptoken";
+      case EndPoint.report:
+        return "$APIVer/report";
     }
   }
 }
