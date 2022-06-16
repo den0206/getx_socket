@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:get/state_manager.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:socket_flutter/src/api/report_api.dart';
 import 'package:socket_flutter/src/api/user_api.dart';
 import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/screen/main_tab/blocks/block_list_screen.dart';
@@ -13,6 +14,7 @@ import 'package:socket_flutter/src/screen/main_tab/users/user_edit/user_edit_scr
 import 'package:socket_flutter/src/screen/widget/common_dialog.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
 import 'package:socket_flutter/src/service/recent_extention.dart';
+import 'package:socket_flutter/src/utils/global_functions.dart';
 
 import '../../../widget/loading_widget.dart';
 import '../../settings/contacts/contact_screen.dart';
@@ -129,11 +131,22 @@ class UserDetailController extends LoadingGetController {
 
   Future<void> sendReport(BuildContext context) async {
     if (user.isCurrent) return;
+    final ReportAPI _reportAPI = ReportAPI();
     isOverlay.call(true);
     await Future.delayed(Duration(seconds: 1));
     try {
+      final reportData = {
+        "reported": user.id,
+        "reportedContent": reportField.text,
+      };
+      await _reportAPI.sendReport(reportData: reportData);
+
       reportField.clear();
       Navigator.of(context).pop();
+      showSnackBar(
+          title: "Thank you Report!",
+          message: "We will check soon!",
+          background: Colors.red);
     } catch (e) {
       showError(e.toString());
     } finally {

@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/route_manager.dart';
 import 'package:socket_flutter/src/api/temp_token_api.dart';
 import 'package:socket_flutter/src/api/user_api.dart';
 import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/screen/widget/common_dialog.dart';
+import 'package:socket_flutter/src/screen/widget/loading_widget.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
+import 'package:socket_flutter/src/utils/global_functions.dart';
 
 import '../../../../widget/custom_pin.dart';
 
-class EditEmailController extends GetxController {
+class EditEmailController extends LoadingGetController {
   final TextEditingController emaiController = TextEditingController();
   final TextEditingController pinController = TextEditingController();
 
@@ -31,13 +32,17 @@ class EditEmailController extends GetxController {
   }
 
   Future<void> updateEmail() async {
-    if (emaiController.text == "") return;
+    if (!buttonEnable) return;
+
+    isOverlay.call(true);
+    await Future.delayed(Duration(seconds: 1));
+
     try {
       switch (this.state) {
         case VerifyState.checkEmail:
           final res = await _tempTokenAPI.requestNewEmail(emaiController.text);
           if (!res.status) break;
-
+          buttonEnable = false;
           state = VerifyState.verify;
           break;
 
@@ -55,14 +60,18 @@ class EditEmailController extends GetxController {
           await AuthService.to.updateUser(newUser);
 
           Get.back();
+
+          showSnackBar(title: "Change Email", message: "Keep Mind");
           break;
         default:
           break;
       }
+
+      update();
     } catch (e) {
       showError(e.toString());
     } finally {
-      update();
+      isOverlay.call(false);
     }
   }
 

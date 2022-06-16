@@ -6,6 +6,7 @@ import {Recent} from '../../resources/recent/recent.model';
 import {Group} from '../../resources/group/group.model';
 import {Message} from '../../resources/message/message.model';
 import {TempToken} from '../../resources/temp_token/temp_token.model';
+import {Report} from '../../resources/report/report.model';
 
 export const UserModel = getModelForClass(User, commoneSchemaOption<User>({}));
 
@@ -27,6 +28,11 @@ export const MessageModel = getModelForClass(
 export const TempTokenModel = getModelForClass(
   TempToken,
   commoneSchemaOption<TempToken>({})
+);
+
+export const ReportModel = getModelForClass(
+  Report,
+  commoneSchemaOption({useTimestamp: true})
 );
 
 // utils

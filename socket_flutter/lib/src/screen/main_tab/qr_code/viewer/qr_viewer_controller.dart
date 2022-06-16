@@ -15,7 +15,7 @@ class QrViewerController extends GetxController {
       final result = await FlutterBarcodeScanner.scanBarcode(
           '#ff6666', "Cancel", true, ScanMode.QR);
 
-      if (result == "-1") throw Exception("Can't Scan QR");
+      if (result == "-1") return;
 
       String searchId = result;
 
@@ -23,6 +23,8 @@ class QrViewerController extends GetxController {
       if (!res.status) return;
       findUser = User.fromMap(res.data);
       update();
+    } on FormatException {
+      showError("ご利用できないQRです。");
     } on PlatformException {
       showError('Failed to get platform version.');
     } catch (e) {

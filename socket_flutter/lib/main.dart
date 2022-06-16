@@ -18,6 +18,8 @@ import 'src/screen/root_screen.dart';
 
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print("BackGround");
+  if (Get.isRegistered<NotificationService>())
+    NotificationService.to.showNotification(message);
 }
 
 void main() async {
@@ -32,7 +34,7 @@ void main() async {
   runApp(DevicePreview(enabled: false, builder: (context) => MyApp()));
 }
 
-const bool useMain = false;
+const bool useMain = true;
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
