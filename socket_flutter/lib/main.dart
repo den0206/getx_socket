@@ -17,19 +17,18 @@ import 'package:socket_flutter/src/utils/consts_color.dart';
 import 'src/screen/root_screen.dart';
 
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
   print("BackGround");
-  if (Get.isRegistered<NotificationService>())
-    NotificationService.to.showNotification(message);
 }
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+
   await dotenv.load(fileName: ".env");
   HttpOverrides.global = PermitInvalidCertification();
   await Get.put(NotificationService()).initService();
-
-  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
   runApp(DevicePreview(enabled: false, builder: (context) => MyApp()));
 }

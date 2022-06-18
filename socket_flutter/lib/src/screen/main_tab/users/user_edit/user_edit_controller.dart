@@ -72,7 +72,7 @@ class UserEditController extends LoadingGetController {
       final newUser = User.fromMap(res.data);
       await AuthService.to.updateUser(newUser);
 
-      if (newUser.avatarUrl != null) {
+      if (userImage.value != null) {
         await CachedNetworkImage.evictFromCache(newUser.avatarUrl!);
         // Tips update same url image
         newUser.avatarUrl = "${newUser.avatarUrl}?v=${Random().nextInt(1000)}";

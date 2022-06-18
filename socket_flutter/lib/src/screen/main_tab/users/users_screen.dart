@@ -26,6 +26,10 @@ class UsersScreen extends StatelessWidget {
             itemBuilder: (context, index) {
               final User user = controller.users[index];
 
+              if (index == controller.users.length - 1) {
+                controller.loadUsers();
+              }
+
               return Obx(
                 () => UserCell(
                   user: user,
