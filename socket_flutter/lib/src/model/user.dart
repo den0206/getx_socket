@@ -29,7 +29,8 @@ class User {
   }
 
   bool checkBlocked(User user) {
-    return this.blockedUsers.contains(user.id);
+    return this.blockedUsers.contains(user.id) ||
+        user.blockedUsers.contains(this.id);
   }
 
   List<String> get excludeIds {

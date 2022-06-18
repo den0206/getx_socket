@@ -38,7 +38,7 @@ class BlockListController extends GetxController {
           title: "UnBlock",
           descripon: "continue?",
           icon: Icons.message,
-          mainColor: Colors.yellow,
+          mainColor: Colors.green,
           onPress: () {
             blockUser(user);
           },
