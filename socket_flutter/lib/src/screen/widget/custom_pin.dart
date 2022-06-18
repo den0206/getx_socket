@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/utils.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 import 'custom_text_fields.dart';
@@ -12,22 +13,11 @@ enum VerifyState {
   String get title {
     switch (this) {
       case VerifyState.checkEmail:
-        return "Check Email";
+        return "Check Email".tr;
       case VerifyState.sendPassword:
-        return "Send Password";
+        return "Send Password".tr;
       case VerifyState.verify:
-        return "Verify";
-    }
-  }
-
-  String get labelText {
-    switch (this) {
-      case VerifyState.checkEmail:
-        return "Your Email";
-      case VerifyState.sendPassword:
-        return "New Password";
-      case VerifyState.verify:
-        return "Verify Number";
+        return "Verify Number".tr;
     }
   }
 
@@ -70,7 +60,7 @@ class PinCodeArea extends StatelessWidget {
         children: [
           if (currentState == VerifyState.verify)
             Text(
-              "Please Check Your Email",
+              "Please Check Your Email".tr,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
               ),
@@ -86,7 +76,7 @@ class PinCodeArea extends StatelessWidget {
                       Icons.email,
                       color: Colors.grey,
                     ),
-                    labelText: currentState.labelText,
+                    labelText: currentState.title,
                     inputType: currentState.inputType,
                     isSecure: currentState.isSecure,
                     onChange: onChange,

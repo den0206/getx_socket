@@ -57,7 +57,7 @@ class PlainLoadingWidget extends StatelessWidget {
             height: 24,
           ),
           Text(
-            "Loading...",
+            "Loading...".tr,
             style: TextStyle(
               color: Colors.white,
               fontSize: 24,

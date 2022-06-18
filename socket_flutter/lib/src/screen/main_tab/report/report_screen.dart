@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/utils.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socket_flutter/src/screen/main_tab/users/user_detail/user_detail_controller.dart';
 import 'package:socket_flutter/src/screen/widget/neumorphic/buttons.dart';
@@ -17,7 +18,7 @@ class ReportScreen extends LoadingGetView<UserDetailController> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Report ${user.name}',
+          '${"Report".tr} ${user.name}',
           style: TextStyle(
             color: Colors.red,
           ),
@@ -39,7 +40,7 @@ class ReportScreen extends LoadingGetView<UserDetailController> {
                   // maxLength: 200,
                   style: TextStyle(fontSize: 17),
                   decoration: InputDecoration(
-                    hintText: "Report about ${user.name}",
+                    hintText: "${"Report".tr} ${user.name}",
                     focusColor: Colors.black,
                     fillColor: Colors.white,
                     filled: true,
@@ -55,7 +56,7 @@ class ReportScreen extends LoadingGetView<UserDetailController> {
               ),
               Builder(builder: (context) {
                 return NeumorphicCustomButtton(
-                  title: "Send",
+                  title: "Send".tr,
                   background: Colors.green,
                   onPressed: !controller.enableReport.value
                       ? null

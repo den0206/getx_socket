@@ -19,7 +19,7 @@ class UsersScreen extends StatelessWidget {
       builder: (controller) {
         return Scaffold(
           appBar: AppBar(
-            title: controller.isPrivate ? Text('Users') : Text("Group"),
+            title: controller.isPrivate ? Text('Users'.tr) : Text("Group".tr),
           ),
           body: ListView.builder(
             itemCount: controller.users.length,
@@ -48,8 +48,8 @@ class UsersScreen extends StatelessWidget {
                       context: context,
                       builder: (context) {
                         return CustomDialog(
-                          title: "Group",
-                          descripon: "create group?",
+                          title: "Group".tr,
+                          descripon: "Create Group?".tr,
                           icon: Icons.group_add,
                           mainColor: Colors.green,
                           onPress: () {

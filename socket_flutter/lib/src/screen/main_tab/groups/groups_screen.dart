@@ -1,6 +1,7 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/route_manager.dart';
+import 'package:get/utils.dart';
 import 'package:socket_flutter/src/model/group.dart';
 import 'package:socket_flutter/src/screen/main_tab/groups/groups_controller.dart';
 import 'package:socket_flutter/src/screen/main_tab/users/users_screen.dart';
@@ -73,7 +74,7 @@ class GroupCell extends GetView<GroupsController> {
             SizedBox(
               width: 20,
             ),
-            Text(group.title != null ? group.title! : "Sample"),
+            Text(group.title != null ? group.title! : "Anonymous".tr),
           ],
         ),
       ),

@@ -37,7 +37,7 @@ class RecentsScreen extends StatelessWidget {
                 SliverAppBar(
                   backgroundColor: Colors.transparent,
                   toolbarHeight: 70,
-                  title: Text("Recents"),
+                  title: Text("Recents".tr),
                   leading: Center(
                     child: UserCountryWidget(
                       user: AuthService.to.currentUser.value!,
@@ -91,7 +91,7 @@ class RecentsScreen extends StatelessWidget {
                     color: ConstsColor.mainBackgroundColor,
                     child: controller.recents.isEmpty
                         ? EmptyScreen(
-                            title: "No Message",
+                            title: "No Message".tr,
                             path: "assets/lotties/chat_girl.json",
                           )
                         : null,
@@ -133,7 +133,7 @@ class NeumorphicRecentCell extends GetView<RecentsController> {
               children: [
                 SlidableAction(
                   backgroundColor: Colors.red,
-                  label: "Delete",
+                  label: "Delete".tr,
                   icon: Icons.delete,
                   onPressed: (context) {
                     controller.deleteRecent(recent);
@@ -159,7 +159,7 @@ class NeumorphicRecentCell extends GetView<RecentsController> {
                     Text(
                       recent.type == RecentType.private
                           ? recent.withUser!.name
-                          : recent.group?.title ?? "Group",
+                          : recent.group?.title ?? "Group".tr,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Color(0xff686795),

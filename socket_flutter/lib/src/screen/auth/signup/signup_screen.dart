@@ -47,14 +47,14 @@ class SignUpScreen extends LoadingGetView<SignUpController> {
                       ),
                       CustomTextField(
                         controller: controller.nameController,
-                        labelText: "name",
+                        labelText: "Name".tr,
                       ),
                       SizedBox(
                         height: 10,
                       ),
                       CustomTextField(
                         controller: controller.emaiController,
-                        labelText: "email",
+                        labelText: "Email".tr,
                       ),
                       SizedBox(
                         height: 10,
@@ -66,7 +66,7 @@ class SignUpScreen extends LoadingGetView<SignUpController> {
                           children: [
                             CountryListPick(
                               appBar: AppBar(
-                                title: Text("Select Your Country"),
+                                title: Text("Select Your Country".tr),
                               ),
                               theme: CountryTheme(
                                 labelColor: Colors.black,
@@ -103,7 +103,7 @@ class SignUpScreen extends LoadingGetView<SignUpController> {
                       ),
                       CustomTextField(
                         controller: controller.passwordController,
-                        labelText: "password",
+                        labelText: "Password".tr,
                         isSecure: true,
                       ),
                     ],
@@ -118,14 +118,14 @@ class SignUpScreen extends LoadingGetView<SignUpController> {
                       height: 10.h,
                     ),
                     NeumorphicCustomButtton(
-                      title: "SignUp",
+                      title: "Sign UP".tr,
                       background: Colors.green,
                       onPressed: () {
                         controller.signUp();
                       },
                     ),
                     NeumorphicTextButton(
-                      title: "Already have Acount",
+                      title: "Already have Acount".tr,
                       onPressed: () {
                         Get.back();
                       },

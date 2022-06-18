@@ -11,6 +11,7 @@ import 'package:get/instance_manager.dart';
 import 'package:get/route_manager.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socket_flutter/src/app_root.dart';
+import 'package:socket_flutter/src/languages/Locale_lang.dart';
 import 'package:socket_flutter/src/service/notification_service.dart';
 import 'package:socket_flutter/src/utils/consts_color.dart';
 
@@ -33,7 +34,7 @@ void main() async {
   runApp(DevicePreview(enabled: false, builder: (context) => MyApp()));
 }
 
-const bool useMain = false;
+const bool useMain = true;
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -45,6 +46,9 @@ class MyApp extends StatelessWidget {
         return GetMaterialApp(
           title: 'Socket_Flutter',
           debugShowCheckedModeBanner: kDebugMode,
+          translations: LocaleLang(),
+          locale: Get.deviceLocale,
+          fallbackLocale: const Locale("en", "US"),
           theme: ThemeData(
             appBarTheme: AppBarTheme(
               titleTextStyle: TextStyle(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/utils.dart';
 import 'package:socket_flutter/src/screen/main_tab/qr_code/generater/qr_generator_screen.dart';
 import 'package:socket_flutter/src/screen/main_tab/qr_code/viewer/qr_viewer_screen.dart';
 
@@ -23,7 +24,7 @@ class QrTabScreen extends StatelessWidget {
               tabs: [
                 Tab(
                     child: Text(
-                  "Generate",
+                  "Generate".tr,
                   style: TextStyle(
                     fontSize: 20.0,
                     color: Colors.black54,
@@ -31,7 +32,7 @@ class QrTabScreen extends StatelessWidget {
                 )),
                 Tab(
                     child: Text(
-                  "Viewer",
+                  "Viewer".tr,
                   style: TextStyle(
                     fontSize: 20.0,
                     color: Colors.black54,

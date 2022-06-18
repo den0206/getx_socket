@@ -66,7 +66,7 @@ class QrViewerScreen extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        "Scan QR",
+                        "Scan QR".tr,
                         style: TextStyle(
                             color: mainColor,
                             fontWeight: FontWeight.bold,
