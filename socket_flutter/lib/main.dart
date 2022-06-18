@@ -33,7 +33,7 @@ void main() async {
   runApp(DevicePreview(enabled: false, builder: (context) => MyApp()));
 }
 
-const bool useMain = true;
+const bool useMain = false;
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);

@@ -1,4 +1,5 @@
 import {HydratedDocument, Model, PopulateOptions} from 'mongoose';
+import mongoose from 'mongoose';
 
 export async function usePagenation<T>({
   model,
@@ -9,6 +10,7 @@ export async function usePagenation<T>({
   exclued,
   opt,
   specific,
+  blockUsers,
 }: {
   model: Model<T>;
   limit: number;
@@ -18,6 +20,7 @@ export async function usePagenation<T>({
   exclued?: string | string[];
   opt?: PopulateOptions | PopulateOptions[];
   specific?: {};
+  blockUsers?: string[];
 }) {
   let query = {};
 
@@ -25,6 +28,13 @@ export async function usePagenation<T>({
     query = {
       _id: {
         $lt: Base64.decodeToBase64(cursor),
+        $nin: blockUsers,
+      },
+    };
+  } else if (blockUsers) {
+    query = {
+      _id: {
+        $nin: blockUsers,
       },
     };
   }
