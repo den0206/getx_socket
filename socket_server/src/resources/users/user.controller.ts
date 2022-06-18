@@ -73,6 +73,7 @@ async function login(req: Request, res: Response) {
 async function getUsers(req: Request, res: Response) {
   const cursor = req.query.cursor as string;
   const limit: number = parseInt(req.query.limit as string) || 10;
+  const {blockUsers} = req.body;
 
   try {
     const data = await usePagenation({
@@ -80,7 +81,7 @@ async function getUsers(req: Request, res: Response) {
       limit,
       cursor,
       select: ['-password', '-fcmToken'],
-      specific: {_id: {$ne: []}},
+      blockUsers: blockUsers,
     });
     new ResponseAPI(res, {data: data}).excute(200);
   } catch (e: any) {

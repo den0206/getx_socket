@@ -8,7 +8,7 @@ const usersRoute = Router();
 
 usersRoute.post('/signup', upload.single('image'), userController.signUp);
 usersRoute.post('/login', userController.login);
-usersRoute.get('/', checkAuth, userController.getUsers);
+usersRoute.post('/', checkAuth, userController.getUsers);
 
 usersRoute.put(
   '/edit',

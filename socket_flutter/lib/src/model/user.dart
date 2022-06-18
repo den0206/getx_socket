@@ -32,6 +32,14 @@ class User {
     return this.blockedUsers.contains(user.id);
   }
 
+  List<String> get excludeIds {
+    // flatmap
+    return [
+      blockedUsers,
+      [id]
+    ].expand((element) => element).toList();
+  }
+
   User({
     required this.id,
     required this.name,

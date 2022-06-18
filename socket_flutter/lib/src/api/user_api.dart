@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:socket_flutter/src/api/api_base.dart';
 import 'package:socket_flutter/src/model/response_api.dart';
+import 'package:socket_flutter/src/service/auth_service.dart';
 
 class UserAPI extends APIBase {
   UserAPI() : super(EndPoint.user);
@@ -40,9 +41,12 @@ class UserAPI extends APIBase {
       "cursor": nextCursor,
     };
 
+    final excludeIds = AuthService.to.currentUser.value!.excludeIds;
+    final Map<String, dynamic> blocks = {"blockUsers": excludeIds};
+
     try {
       final Uri uri = setUri("/", query);
-      return await getRequest(uri: uri, useToken: true);
+      return await postRequest(uri: uri, body: blocks, useToken: true);
     } catch (e) {
       throw e;
     }
