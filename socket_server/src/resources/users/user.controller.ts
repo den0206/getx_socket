@@ -80,6 +80,7 @@ async function getUsers(req: Request, res: Response) {
       limit,
       cursor,
       select: ['-password', '-fcmToken'],
+      specific: {_id: {$ne: []}},
     });
     new ResponseAPI(res, {data: data}).excute(200);
   } catch (e: any) {
