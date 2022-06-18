@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/utils.dart';
 import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/screen/main_tab/users/user_edit/user_edit_controller.dart';
 import 'package:socket_flutter/src/screen/widget/custom_picker.dart';
@@ -23,7 +24,7 @@ class UserEditScreen extends LoadingGetView<UserEditController> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: const Text('Edit User'),
+        title: Text('Edit User'.tr),
       ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
@@ -59,7 +60,7 @@ class UserEditScreen extends LoadingGetView<UserEditController> {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: CustomTextField(
                   controller: controller.nameController,
-                  labelText: "name",
+                  labelText: "Name".tr,
                   icon: Icon(
                     Icons.person,
                     color: Colors.black,
@@ -81,7 +82,7 @@ class UserEditScreen extends LoadingGetView<UserEditController> {
               Align(
                 alignment: Alignment.centerRight,
                 child: NeumorphicTextButton(
-                  title: "Change Email",
+                  title: "Change Email".tr,
                   onPressed: () {
                     controller.showEditEmail();
                   },
@@ -89,7 +90,7 @@ class UserEditScreen extends LoadingGetView<UserEditController> {
               ),
               Obx(
                 () => NeumorphicCustomButtton(
-                  title: "Edit",
+                  title: "Edit".tr,
                   width: 70.w,
                   background: Colors.green,
                   onPressed: controller.isChanged.value
@@ -104,7 +105,7 @@ class UserEditScreen extends LoadingGetView<UserEditController> {
               ),
               Builder(builder: (context) {
                 return NeumorphicCustomButtton(
-                  title: "Delete",
+                  title: "Delete".tr,
                   width: 70.w,
                   background: Colors.red,
                   onPressed: () {

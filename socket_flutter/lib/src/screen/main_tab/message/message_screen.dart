@@ -41,7 +41,9 @@ class MessageScreen extends LoadingGetView<MessageController> {
                       context: context,
                       builder: (context) {
                         return selectLanguagePicker(
-                          title: "翻訳作の言語を選んで下さい。",
+                          title:
+                              "Please select the language of your translation"
+                                  .tr,
                           onSelectedLang: (selectLang) {
                             controller.extention.targetLanguage
                                 .call(selectLang);
@@ -183,7 +185,7 @@ class MessageScreen extends LoadingGetView<MessageController> {
                             minLines: 1,
                             maxLines: 5,
                             decoration: InputDecoration(
-                              hintText: "Message...",
+                              hintText: "Message...".tr,
                               hintStyle: TextStyle(
                                 height: 1.8,
                               ),
@@ -383,7 +385,7 @@ class MessageCell extends GetView<MessageController> {
                     if (message.type == MessageType.text)
                       CupertinoContextMenuAction(
                         isDefaultAction: true,
-                        child: Text("Copy"),
+                        child: Text("Copy".tr),
                         onPressed: () async {
                           final data = ClipboardData(text: message.text);
                           await Clipboard.setData(data);
@@ -393,7 +395,7 @@ class MessageCell extends GetView<MessageController> {
                     if (message.isTranslated)
                       CupertinoContextMenuAction(
                         child: Text(
-                          "Copy(Translated)",
+                          "Copy(Translated)".tr,
                           style: TextStyle(fontSize: 12.sp),
                         ),
                         onPressed: () async {
@@ -405,8 +407,8 @@ class MessageCell extends GetView<MessageController> {
                     if (message.isCurrent)
                       CupertinoContextMenuAction(
                         isDefaultAction: true,
-                        child: const Text(
-                          'Delete',
+                        child: Text(
+                          'Delete'.tr,
                           style: TextStyle(
                             color: Colors.red,
                           ),
@@ -417,7 +419,7 @@ class MessageCell extends GetView<MessageController> {
                         },
                       ),
                     CupertinoContextMenuAction(
-                      child: const Text('Cancel'),
+                      child: Text('Cancel'.tr),
                       onPressed: () {
                         Navigator.pop(context);
                       },

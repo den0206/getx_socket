@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/utils.dart';
 import 'package:socket_flutter/src/model/message.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:sizer/sizer.dart';
@@ -82,7 +83,7 @@ class BubbleSelf extends StatelessWidget {
           context: context,
           builder: (context) {
             return CustomDialog(
-              title: "Open Url",
+              title: "Open Url".tr,
               descripon: url,
               onPress: () async {
                 await launchUrl(uri);

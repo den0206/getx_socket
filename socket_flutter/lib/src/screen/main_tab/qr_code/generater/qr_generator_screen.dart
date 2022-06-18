@@ -34,7 +34,7 @@ class QrGenerateScreen extends StatelessWidget {
                       return Container(
                         child: Center(
                           child: Text(
-                            "Uh oh! Something went wrong...",
+                            "Uh oh! Something went wrong...".tr,
                             textAlign: TextAlign.center,
                           ),
                         ),

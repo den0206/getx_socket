@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/utils.dart';
 
 import 'package:socket_flutter/src/screen/widget/loading_widget.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -16,7 +17,7 @@ class ContactScreen extends LoadingGetView<ContactController> {
   Widget get child {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('お問合せ'),
+        title: Text('Contact'.tr),
       ),
       body: GetBuilder<ContactController>(
         builder: (controller) {
@@ -29,7 +30,7 @@ class ContactScreen extends LoadingGetView<ContactController> {
                   onPageStarted: (_) {},
                 )
               : Center(
-                  child: Text("インターネットに接続されていません"),
+                  child: Text("No Internet connection".tr),
                 );
         },
       ),

@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/get_utils/get_utils.dart';
 import 'package:lottie/lottie.dart';
 import 'package:socket_flutter/src/screen/auth/login/login_contoller.dart';
+import 'package:socket_flutter/src/screen/main_tab/settings/settings_screen.dart';
 import 'package:socket_flutter/src/screen/widget/animated_widget.dart';
 import 'package:socket_flutter/src/screen/widget/custom_text_fields.dart';
 import 'package:socket_flutter/src/screen/widget/loading_widget.dart';
@@ -47,12 +49,9 @@ class LoginScreen extends LoadingGetView<LoginController> {
                         width: 300,
                         height: 300,
                       ),
-                      SizedBox(
-                        height: 3.h,
-                      ),
                       CustomTextField(
                         controller: controller.emailController,
-                        labelText: "Email",
+                        labelText: "Email".tr,
                         icon: Icon(
                           Icons.email,
                           color: Colors.grey,
@@ -63,7 +62,7 @@ class LoginScreen extends LoadingGetView<LoginController> {
                       ),
                       CustomTextField(
                         controller: controller.passwordController,
-                        labelText: "Password",
+                        labelText: "Password".tr,
                         isSecure: true,
                         icon: Icon(
                           Icons.lock,
@@ -73,13 +72,27 @@ class LoginScreen extends LoadingGetView<LoginController> {
                       SizedBox(
                         height: 10,
                       ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: NeumorphicTextButton(
-                          title: "Forgot password",
-                          onPressed: () {
-                            controller.pushResetPassword();
-                          },
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        child: Row(
+                          children: [
+                            NeumorphicIconButton(
+                              icon: Icon(
+                                Icons.language,
+                                size: 20.sp,
+                              ),
+                              onPressed: () {
+                                showLocaleLangs(context);
+                              },
+                            ),
+                            Spacer(),
+                            NeumorphicTextButton(
+                              title: "Forgot Password".tr,
+                              onPressed: () {
+                                controller.pushResetPassword();
+                              },
+                            ),
+                          ],
                         ),
                       ),
                       SizedBox(
@@ -87,7 +100,7 @@ class LoginScreen extends LoadingGetView<LoginController> {
                       ),
                       Builder(builder: (context) {
                         return NeumorphicCustomButtton(
-                          title: "Login",
+                          title: "Login".tr,
                           background: Colors.green,
                           onPressed: () {
                             dismisskeyBord(context);
@@ -99,7 +112,7 @@ class LoginScreen extends LoadingGetView<LoginController> {
                         height: 10,
                       ),
                       NeumorphicTextButton(
-                        title: "Sign UP",
+                        title: "Sign UP".tr,
                         onPressed: () {
                           controller.pushSignUp();
                         },
@@ -175,7 +188,7 @@ class LoginScreen extends LoadingGetView<LoginController> {
                                 },
                               ),
                               Text(
-                                'I have read and accept',
+                                'I have read and accept'.tr,
                                 style: TextStyle(fontSize: 12),
                                 overflow: TextOverflow.ellipsis,
                                 softWrap: true,
@@ -188,7 +201,7 @@ class LoginScreen extends LoadingGetView<LoginController> {
                       Expanded(
                         flex: 1,
                         child: NeumorphicCustomButtton(
-                          title: "Accept",
+                          title: "Accept".tr,
                           background: Colors.green,
                           onPressed: !current.acceptTerms
                               ? null

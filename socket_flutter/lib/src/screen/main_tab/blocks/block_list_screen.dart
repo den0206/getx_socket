@@ -16,7 +16,7 @@ class BlockListScreen extends StatelessWidget {
       builder: (controller) {
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Block List'),
+            title: Text('Block List'.tr),
           ),
           body: ListView.separated(
             separatorBuilder: (context, index) => Divider(),
@@ -31,7 +31,7 @@ class BlockListScreen extends StatelessWidget {
                   children: [
                     SlidableAction(
                       backgroundColor: Colors.yellow,
-                      label: "UnBlock",
+                      label: "Block deletion".tr,
                       icon: Icons.message,
                       onPressed: (context) {
                         controller.blockUser(user);

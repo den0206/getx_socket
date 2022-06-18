@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
+import 'package:get/route_manager.dart';
+import 'package:get/utils.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:socket_flutter/src/languages/Locale_lang.dart';
 import 'package:socket_flutter/src/screen/main_tab/users/user_detail/user_detail_controller.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -11,7 +14,7 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings'),
+        title: Text('Settings'.tr),
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
@@ -30,31 +33,32 @@ class SettingsScreen extends StatelessWidget {
               context: context,
               tiles: [
                 ListTile(
-                  title: Text("通知"),
+                  title: Text("Notification".tr),
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () {
                     openAppSettings();
                   },
                 ),
-
-                // ListTile(
-                //   title: Text("レビュー"),
-                //   trailing: Icon(Icons.arrow_forward_ios),
-                //   onTap: () {},
-                // ),
                 ListTile(
-                  title: Text("バージョン"),
+                  title: Text("Version".tr),
                   trailing: Text(controller.currentVersion ?? "unknown"),
                 ),
                 ListTile(
-                  title: Text("ブロックリスト"),
+                  title: Text("Select Language".tr),
+                  trailing: Icon(Icons.arrow_forward_ios),
+                  onTap: () {
+                    showLocaleLangs(context);
+                  },
+                ),
+                ListTile(
+                  title: Text("Block List".tr),
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () {
                     controller.showBlockList();
                   },
                 ),
                 ListTile(
-                  title: Text("お問い合わせ"),
+                  title: Text("Contact".tr),
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () {
                     Navigator.of(context).pop();
@@ -62,14 +66,14 @@ class SettingsScreen extends StatelessWidget {
                   },
                 ),
                 ListTile(
-                  title: Text("キャッシュの削除"),
+                  title: Text("Clear Cache".tr),
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () async {
                     await DefaultCacheManager().emptyCache();
                   },
                 ),
                 ListTile(
-                  title: Text("ログアウト"),
+                  title: Text("Logout".tr),
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () {
                     Navigator.of(context).pop();
@@ -84,3 +88,45 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 }
+
+Future<dynamic> showLocaleLangs(BuildContext context) {
+  return showDialog(
+    context: context,
+    builder: (builder) {
+      return AlertDialog(
+        title: Text("Choose Your Language".tr),
+        content: Container(
+          width: double.maxFinite,
+          child: ListView.separated(
+            shrinkWrap: true,
+            itemCount: LocaleLangs.values.length,
+            separatorBuilder: (context, index) => Divider(
+              color: Colors.black,
+            ),
+            itemBuilder: (context, index) {
+              final current = LocaleLangs.values[index];
+              return ListTile(
+                title: Text(
+                  current.title,
+                ),
+                onTap: () {
+                  print(current);
+                  Get.back();
+                  Get.updateLocale(current.locale);
+                },
+              );
+            },
+          ),
+        ),
+      );
+    },
+  );
+}
+
+
+
+ // ListTile(
+  //   title: Text("レビュー"),
+  //   trailing: Icon(Icons.arrow_forward_ios),
+  //   onTap: () {},
+  // ),

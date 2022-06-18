@@ -41,7 +41,7 @@ class selectlanguageArea extends StatelessWidget {
                     Icon(Icons.arrow_drop_down),
                     currentlang.value != null
                         ? Text(currentlang.value!.name.toUpperCase())
-                        : Text("Language")
+                        : Text("Language".tr)
                   ],
                 )),
           ),
@@ -54,7 +54,7 @@ class selectlanguageArea extends StatelessWidget {
 class selectLanguagePicker extends StatelessWidget {
   const selectLanguagePicker({
     Key? key,
-    this.title = "言語を選んで下さい",
+    this.title = "Choose Your Languag",
     this.onSelectedLang,
   }) : super(key: key);
 

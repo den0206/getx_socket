@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/utils.dart';
 import 'package:socket_flutter/src/screen/main_tab/groups/group_detail/group_detail_controller.dart';
 import 'package:socket_flutter/src/screen/widget/overlap_avatars.dart';
 import 'package:sizer/sizer.dart';
@@ -31,7 +32,7 @@ class GroupDetailScreen extends GetView<GroupDetailController> {
               ),
               if (controller.group.isOwner) ...[
                 NeumorphicCustomButtton(
-                  title: "Delete Group",
+                  title: "Delete Group".tr,
                   background: Colors.red,
                   titleColor: Colors.white,
                   onPressed: () {
@@ -43,7 +44,7 @@ class GroupDetailScreen extends GetView<GroupDetailController> {
                 ),
               ],
               NeumorphicCustomButtton(
-                title: "Message",
+                title: "Message".tr,
                 background: Colors.green,
                 titleColor: Colors.white,
                 onPressed: () {

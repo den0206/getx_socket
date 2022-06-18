@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
+import 'package:get/utils.dart';
 
 class CustomDialog extends StatelessWidget {
   const CustomDialog({
@@ -66,7 +67,7 @@ class CustomDialog extends StatelessWidget {
                         Navigator.pop(context);
                       },
                       child: Text(
-                        "Cancel",
+                        "Cancel".tr,
                       ),
                     ),
                     ElevatedButton(
@@ -80,7 +81,7 @@ class CustomDialog extends StatelessWidget {
                         onPress();
                       },
                       child: Text(
-                        "OK",
+                        "OK".tr,
                       ),
                     ),
                   ],
@@ -112,7 +113,7 @@ void showError(String message) {
 
   showCommonDialog(
     context: Get.context!,
-    title: "Error",
+    title: "Error".tr,
     content: message,
     backRoot: false,
   );
@@ -150,7 +151,7 @@ void showCommonDialog({
                   // root　に戻す
                   Navigator.popUntil(context, (route) => route.isFirst);
               },
-              child: Text(okAction != null ? 'キャンセル' : "OK"),
+              child: Text(okAction != null ? 'Cancel'.tr : "OK".tr),
               isDefaultAction: false,
               isDestructiveAction: false,
             ),
@@ -160,7 +161,7 @@ void showCommonDialog({
                   okAction();
                   Navigator.of(context).pop();
                 },
-                child: Text('OK'),
+                child: Text('OK'.tr),
                 isDefaultAction: true,
                 isDestructiveAction: true,
               )
@@ -183,7 +184,7 @@ void showCommonDialog({
               : null,
           actions: [
             TextButton(
-              child: Text(okAction != null ? 'キャンセル' : "OK"),
+              child: Text(okAction != null ? 'Cancel'.tr : "OK".tr),
               onPressed: () {
                 Navigator.of(context).pop();
                 if (backRoot && Navigator.canPop(context))
@@ -193,7 +194,7 @@ void showCommonDialog({
             ),
             if (okAction != null)
               TextButton(
-                child: const Text('OK'),
+                child: Text('OK'.tr),
                 onPressed: () {
                   okAction();
                   Navigator.of(context).pop();
