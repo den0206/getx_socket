@@ -5,10 +5,20 @@ import 'package:get/route_manager.dart';
 import 'package:socket_flutter/src/api/user_api.dart';
 import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/screen/widget/common_dialog.dart';
+import 'package:socket_flutter/src/service/auth_service.dart';
+
+import '../../users/user_detail/user_detail_screen.dart';
 
 class QrViewerController extends GetxController {
   final UserAPI _userAPI = UserAPI();
   User? findUser;
+
+  @override
+  void onInit() async {
+    super.onInit();
+    findUser = AuthService.to.currentUser.value!;
+    update();
+  }
 
   Future<void> startQrcodeScan() async {
     try {
@@ -33,6 +43,14 @@ class QrViewerController extends GetxController {
   }
 
   void selectFindUser() {
-    Get.back(result: findUser);
+    if (findUser == null) return;
+    Get.to(
+      UserDetailScreen(findUser!),
+    );
+  }
+
+  void resetFindUser() {
+    findUser = null;
+    update();
   }
 }

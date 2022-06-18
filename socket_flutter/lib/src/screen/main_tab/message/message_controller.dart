@@ -11,6 +11,7 @@ import 'package:socket_flutter/src/screen/main_tab/message/message_file_sheet.da
 
 import 'package:socket_flutter/src/screen/widget/common_dialog.dart';
 import 'package:socket_flutter/src/screen/widget/loading_widget.dart';
+import 'package:socket_flutter/src/service/auth_service.dart';
 import 'package:socket_flutter/src/service/image_extention.dart';
 import 'package:socket_flutter/src/service/storage_service.dart';
 import 'package:socket_flutter/src/utils/global_functions.dart';
@@ -36,6 +37,12 @@ class MessageController extends LoadingGetController {
   final MessageExtention extention = Get.arguments;
 
   bool get isPrivate => extention.withUsers.length == 1 ? true : false;
+
+  bool get isBlocked {
+    if (!isPrivate) return false;
+    final currentUser = AuthService.to.currentUser.value!;
+    return extention.withUsers[0].checkBlocked(currentUser);
+  }
 
   /// translate
   final StreamController<String> streamController = StreamController();
@@ -117,6 +124,8 @@ class MessageController extends LoadingGetController {
       File? file}) async {
     isOverlay.call(true);
     try {
+      if (isBlocked) throw Exception("Can't send This Message");
+
       final newMessage = await extention.sendMessage(
           type: type, text: text, translated: translated, file: file);
 

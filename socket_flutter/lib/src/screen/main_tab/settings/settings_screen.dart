@@ -36,14 +36,22 @@ class SettingsScreen extends StatelessWidget {
                     openAppSettings();
                   },
                 ),
-                ListTile(
-                  title: Text("レビュー"),
-                  trailing: Icon(Icons.arrow_forward_ios),
-                  onTap: () {},
-                ),
+
+                // ListTile(
+                //   title: Text("レビュー"),
+                //   trailing: Icon(Icons.arrow_forward_ios),
+                //   onTap: () {},
+                // ),
                 ListTile(
                   title: Text("バージョン"),
                   trailing: Text(controller.currentVersion ?? "unknown"),
+                ),
+                ListTile(
+                  title: Text("ブロックリスト"),
+                  trailing: Icon(Icons.arrow_forward_ios),
+                  onTap: () {
+                    controller.showBlockList();
+                  },
                 ),
                 ListTile(
                   title: Text("お問い合わせ"),
@@ -66,13 +74,6 @@ class SettingsScreen extends StatelessWidget {
                   onTap: () {
                     Navigator.of(context).pop();
                     controller.tryLogout(context);
-                  },
-                ),
-                ListTile(
-                  title: Text("ブロックリスト"),
-                  trailing: Icon(Icons.arrow_forward_ios),
-                  onTap: () {
-                    controller.showBlockList();
                   },
                 ),
               ],

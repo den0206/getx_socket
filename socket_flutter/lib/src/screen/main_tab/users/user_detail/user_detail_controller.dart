@@ -48,24 +48,30 @@ class UserDetailController extends LoadingGetController {
   }
 
   Future<void> startPrivateChat() async {
-    if (user.isCurrent) return;
+    try {
+      if (user.isCurrent || user.checkBlocked(currentUser)) {
+        throw Exception("Can't Send Message");
+      }
 
-    final cr = RecentExtention();
+      final cr = RecentExtention();
 
-    final chatRoomId = await cr
-        .createPrivateChatRoom(currentUser.id, user.id, [currentUser, user]);
+      final chatRoomId = await cr
+          .createPrivateChatRoom(currentUser.id, user.id, [currentUser, user]);
 
-    if (chatRoomId == null) {
-      print("Not Generate ChatID");
-      return;
+      if (chatRoomId == null) {
+        print("Not Generate ChatID");
+        return;
+      }
+
+      Get.until((route) => route.isFirst);
+
+      final MessageExtention extention =
+          MessageExtention(chatRoomId: chatRoomId, withUsers: [user]);
+
+      Get.toNamed(MessageScreen.routeName, arguments: extention);
+    } catch (e) {
+      showError(e.toString());
     }
-
-    Get.until((route) => route.isFirst);
-
-    final MessageExtention extention =
-        MessageExtention(chatRoomId: chatRoomId, withUsers: [user]);
-
-    Get.toNamed(MessageScreen.routeName, arguments: extention);
   }
 
   Future<void> openGroups() async {
