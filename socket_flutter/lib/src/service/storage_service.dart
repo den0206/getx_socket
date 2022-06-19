@@ -6,7 +6,8 @@ enum StorageKey {
   user,
   realtime,
   fcmToken,
-  checkTerms;
+  checkTerms,
+  locale;
 
   String get keyString {
     switch (this) {
@@ -18,6 +19,8 @@ enum StorageKey {
         return "fcmToken";
       case StorageKey.checkTerms:
         return "checkTerms";
+      case StorageKey.locale:
+        return "locale";
     }
   }
 

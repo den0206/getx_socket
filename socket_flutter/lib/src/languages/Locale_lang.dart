@@ -29,6 +29,14 @@ enum LocaleLangs {
   }
 }
 
+Locale getLocale(String? value) {
+  final LocaleLangs l = LocaleLangs.values.firstWhere(
+    (c) => c.name == value,
+    orElse: () => LocaleLangs.English,
+  );
+  return l.locale;
+}
+
 class LocaleLang extends Translations {
   @override
   Map<String, Map<String, String>> get keys => {

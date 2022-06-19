@@ -6,6 +6,7 @@ import 'package:get/utils.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:socket_flutter/src/languages/Locale_lang.dart';
 import 'package:socket_flutter/src/screen/main_tab/users/user_detail/user_detail_controller.dart';
+import 'package:socket_flutter/src/service/storage_service.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -109,10 +110,11 @@ Future<dynamic> showLocaleLangs(BuildContext context) {
                 title: Text(
                   current.title,
                 ),
-                onTap: () {
+                onTap: () async {
                   print(current);
                   Get.back();
-                  Get.updateLocale(current.locale);
+                  await Get.updateLocale(current.locale);
+                  await StorageKey.locale.saveString(current.name);
                 },
               );
             },
