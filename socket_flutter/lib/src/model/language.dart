@@ -8,7 +8,6 @@ enum Language {
   greek,
   spanish,
   estonian,
-  english,
   english_british,
   english_american,
   french,
@@ -20,7 +19,6 @@ enum Language {
   latvian,
   dutch,
   polish,
-  portuguese,
   portuguese_pt,
   portuguese_brazilian,
   romanian,
@@ -30,7 +28,20 @@ enum Language {
   swedish,
   chinese;
 
-  String get code {
+  String get source_lang {
+    switch (this) {
+      case Language.english_british:
+      case Language.english_american:
+        return "EN";
+      case Language.portuguese_pt:
+      case Language.portuguese_brazilian:
+        return "PT";
+      default:
+        return this.target_lang;
+    }
+  }
+
+  String get target_lang {
     switch (this) {
       case Language.bulgarian:
         return "BG";
@@ -46,8 +57,6 @@ enum Language {
         return "ES";
       case Language.estonian:
         return "ET";
-      case Language.english:
-        return "EN";
       case Language.english_british:
         return "EN-GB";
       case Language.english_american:
@@ -70,8 +79,6 @@ enum Language {
         return "NL";
       case Language.polish:
         return "PL";
-      case Language.portuguese:
-        return "PT";
       case Language.portuguese_pt:
         return "PT-PT";
       case Language.portuguese_brazilian:
