@@ -15,8 +15,8 @@ class TranslateAPI extends APIBase {
     final Map<String, dynamic> query = {
       "texts": texts,
       "paragraphs": paragraphs,
-      "src": src.code,
-      "tar": tar.code,
+      "src": src.source_lang,
+      "tar": tar.target_lang,
     };
     try {
       final Uri uri = setUri("/", query);

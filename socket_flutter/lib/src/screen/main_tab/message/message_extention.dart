@@ -24,7 +24,7 @@ class MessageExtention {
   final TranslateAPI _translateAPI = TranslateAPI();
   final RecentExtention re = RecentExtention();
 
-  Rx<Language> targetLanguage = Language.english.obs;
+  Rx<Language> targetLanguage = Language.english_american.obs;
 
   final int limit = 10;
 
@@ -226,8 +226,9 @@ extension MessageExtTranslation on MessageExtention {
   void setTargetLanguage({Language? language}) {
     Language current;
     if (language == null) {
-      current =
-          withUsers.length == 1 ? withUsers[0].mainLanguage : Language.english;
+      current = withUsers.length == 1
+          ? withUsers[0].mainLanguage
+          : Language.english_american;
     } else {
       current = language;
     }
