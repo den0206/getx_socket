@@ -185,7 +185,7 @@ class MessageScreen extends LoadingGetView<MessageController> {
                             minLines: 1,
                             maxLines: 5,
                             decoration: InputDecoration(
-                              hintText: "Message...".tr,
+                              hintText: "Message...",
                               hintStyle: TextStyle(
                                 height: 1.8,
                               ),

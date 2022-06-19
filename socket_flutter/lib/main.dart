@@ -13,6 +13,7 @@ import 'package:sizer/sizer.dart';
 import 'package:socket_flutter/src/app_root.dart';
 import 'package:socket_flutter/src/languages/Locale_lang.dart';
 import 'package:socket_flutter/src/service/notification_service.dart';
+import 'package:socket_flutter/src/service/storage_service.dart';
 import 'package:socket_flutter/src/utils/consts_color.dart';
 
 import 'src/screen/root_screen.dart';
@@ -31,10 +32,12 @@ void main() async {
   HttpOverrides.global = PermitInvalidCertification();
   await Get.put(NotificationService()).initService();
 
+  _currentLocale = getLocale(await StorageKey.locale.loadString());
   runApp(DevicePreview(enabled: false, builder: (context) => MyApp()));
 }
 
 const bool useMain = true;
+Locale? _currentLocale;
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -47,7 +50,7 @@ class MyApp extends StatelessWidget {
           title: 'Socket_Flutter',
           debugShowCheckedModeBanner: kDebugMode,
           translations: LocaleLang(),
-          locale: Get.deviceLocale,
+          locale: _currentLocale ?? Get.deviceLocale,
           fallbackLocale: const Locale("en", "US"),
           theme: ThemeData(
             appBarTheme: AppBarTheme(
