@@ -37,7 +37,7 @@ class UserDetailController extends LoadingGetController {
   void onInit() async {
     super.onInit();
 
-    isBlocked = currentUser.checkBlocked(user);
+    isBlocked = currentUser.checkBlock(user);
     await getInfo();
     update();
   }
@@ -49,7 +49,7 @@ class UserDetailController extends LoadingGetController {
 
   Future<void> startPrivateChat() async {
     try {
-      if (user.isCurrent || user.checkBlocked(currentUser)) {
+      if (user.isCurrent || user.checkBlock(currentUser)) {
         throw Exception("Can't Send Message");
       }
 
@@ -115,7 +115,7 @@ class UserDetailController extends LoadingGetController {
   Future<void> blockUser() async {
     if (user.isCurrent) return;
 
-    if (currentUser.checkBlocked(user)) {
+    if (currentUser.checkBlock(user)) {
       currentUser.blockedUsers.remove(user.id);
     } else {
       currentUser.blockedUsers.add(user.id);

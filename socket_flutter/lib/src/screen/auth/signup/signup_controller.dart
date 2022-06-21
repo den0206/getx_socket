@@ -4,6 +4,7 @@ import 'package:country_list_pick/country_list_pick.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:get/state_manager.dart';
+import 'package:get/utils.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:socket_flutter/src/api/temp_token_api.dart';
 import 'package:socket_flutter/src/api/user_api.dart';
@@ -30,6 +31,16 @@ class SignUpController extends LoadingGetController {
 
   final _userAPI = UserAPI();
   final _tempTokenAPI = TempTokenAPI();
+
+  String get buttonTitle {
+    switch (this.state) {
+      case VerifyState.checkEmail:
+      case VerifyState.sendPassword:
+        return "Sign UP".tr;
+      case VerifyState.verify:
+        return "Verify Number".tr;
+    }
+  }
 
   @override
   void onInit() {

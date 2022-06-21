@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/utils.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:socket_flutter/src/utils/validator.dart';
 
 import 'custom_text_fields.dart';
 import 'neumorphic/buttons.dart';
@@ -34,6 +35,28 @@ enum VerifyState {
 
   bool get isSecure {
     return this != VerifyState.checkEmail;
+  }
+
+  int get minLength {
+    switch (this) {
+      case VerifyState.checkEmail:
+        return 1;
+      case VerifyState.sendPassword:
+        return 5;
+      case VerifyState.verify:
+        return 6;
+    }
+  }
+
+  String? validator(String? value) {
+    switch (this) {
+      case VerifyState.checkEmail:
+        return validateEmail(value);
+      case VerifyState.sendPassword:
+        return validPassword(value);
+      case VerifyState.verify:
+        return null;
+    }
   }
 }
 
@@ -79,6 +102,7 @@ class PinCodeArea extends StatelessWidget {
                     labelText: currentState.title,
                     inputType: currentState.inputType,
                     isSecure: currentState.isSecure,
+                    validator: currentState.validator,
                     onChange: onChange,
                   ),
                 if (currentState == VerifyState.verify)
