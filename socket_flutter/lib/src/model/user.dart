@@ -28,7 +28,11 @@ class User {
     return currentUser.id == this.id;
   }
 
-  bool checkBlocked(User user) {
+  bool checkBlock(User user) {
+    return this.blockedUsers.contains(user.id);
+  }
+
+  bool canContact(User user) {
     return this.blockedUsers.contains(user.id) ||
         user.blockedUsers.contains(this.id);
   }

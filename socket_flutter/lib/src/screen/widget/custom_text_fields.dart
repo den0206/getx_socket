@@ -16,7 +16,7 @@ class CustomTextField extends StatelessWidget {
   final String labelText;
   final TextInputType? inputType;
   final bool isSecure;
-  final FormFieldValidator<String>? validator;
+  final FormFieldValidator<String?>? validator;
   final Widget? icon;
   final Function(String text)? onChange;
 

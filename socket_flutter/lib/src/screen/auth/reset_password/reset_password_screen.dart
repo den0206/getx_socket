@@ -10,6 +10,7 @@ class ResetPasswordScreen extends LoadingGetView<ResetPasswordController> {
 
   @override
   ResetPasswordController get ctr => ResetPasswordController();
+  final _formKey = GlobalKey<FormState>(debugLabel: '_ResetPasswordState');
 
   @override
   Widget get child {
@@ -22,15 +23,19 @@ class ResetPasswordScreen extends LoadingGetView<ResetPasswordController> {
             elevation: 0,
             backgroundColor: Colors.transparent,
           ),
-          body: PinCodeArea(
-            currentState: controller.state,
-            currentTX: controller.currentTx,
-            onChange: controller.checkField,
-            onPressed: !controller.buttonEnable
-                ? null
-                : () {
-                    controller.sendRequest;
-                  },
+          body: Form(
+            key: _formKey,
+            child: PinCodeArea(
+              currentState: controller.state,
+              currentTX: controller.currentTx,
+              onChange: controller.checkField,
+              onPressed: !controller.buttonEnable
+                  ? null
+                  : () {
+                      if (_formKey.currentState?.validate() ?? false)
+                        controller.sendRequest();
+                    },
+            ),
           ),
         );
       },

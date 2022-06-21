@@ -76,6 +76,11 @@ class ResetPasswordController extends LoadingGetController {
           break;
       }
     } catch (e) {
+      if (e.toString() == "Error During Communication: Not find this Email") {
+        state = VerifyState.checkEmail;
+        emailTextField.clear();
+        passwordTextField.clear();
+      }
       showError(e.toString());
     } finally {
       isOverlay.call(false);
@@ -85,18 +90,7 @@ class ResetPasswordController extends LoadingGetController {
   }
 
   void checkField(String value) {
-    int minimum;
-    switch (this.state) {
-      case VerifyState.checkEmail:
-      case VerifyState.sendPassword:
-        minimum = 1;
-        break;
-      case VerifyState.verify:
-        minimum = 6;
-        break;
-    }
-
-    buttonEnable = value.length >= minimum;
+    buttonEnable = value.length >= this.state.minLength;
 
     update();
   }

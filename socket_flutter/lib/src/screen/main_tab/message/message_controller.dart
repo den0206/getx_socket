@@ -41,7 +41,7 @@ class MessageController extends LoadingGetController {
   bool get isBlocked {
     if (!isPrivate) return false;
     final currentUser = AuthService.to.currentUser.value!;
-    return extention.withUsers[0].checkBlocked(currentUser);
+    return extention.withUsers[0].canContact(currentUser);
   }
 
   /// translate

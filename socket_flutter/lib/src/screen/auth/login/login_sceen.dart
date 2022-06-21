@@ -11,6 +11,7 @@ import 'package:socket_flutter/src/screen/widget/custom_text_fields.dart';
 import 'package:socket_flutter/src/screen/widget/loading_widget.dart';
 import 'package:socket_flutter/src/utils/global_functions.dart';
 import 'package:sizer/sizer.dart';
+import 'package:socket_flutter/src/utils/validator.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import '../../widget/neumorphic/buttons.dart';
 
@@ -52,6 +53,7 @@ class LoginScreen extends LoadingGetView<LoginController> {
                       CustomTextField(
                         controller: controller.emailController,
                         labelText: "Email".tr,
+                        validator: validateEmail,
                         icon: Icon(
                           Icons.email,
                           color: Colors.grey,
@@ -63,6 +65,7 @@ class LoginScreen extends LoadingGetView<LoginController> {
                       CustomTextField(
                         controller: controller.passwordController,
                         labelText: "Password".tr,
+                        validator: validPassword,
                         isSecure: true,
                         icon: Icon(
                           Icons.lock,
@@ -104,7 +107,9 @@ class LoginScreen extends LoadingGetView<LoginController> {
                           background: Colors.green,
                           onPressed: () {
                             dismisskeyBord(context);
-                            controller.login();
+                            if (_formKey.currentState?.validate() ?? false) {
+                              controller.login();
+                            }
                           },
                         );
                       }),

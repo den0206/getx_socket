@@ -50,7 +50,7 @@ class BlockListController extends GetxController {
   Future<void> blockUser(User user) async {
     if (user.isCurrent) return;
     try {
-      if (currentUser.checkBlocked(user)) {
+      if (currentUser.checkBlock(user)) {
         currentUser.blockedUsers.remove(user.id);
         blocks.removeWhere((element) => element.id == user.id);
       } else {

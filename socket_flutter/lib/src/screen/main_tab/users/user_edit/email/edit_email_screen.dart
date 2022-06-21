@@ -11,6 +11,7 @@ class EditEmailScreen extends LoadingGetView<EditEmailController> {
   get ctr => EditEmailController();
 
   static const routeName = '/EditEmail';
+  final _formKey = GlobalKey<FormState>(debugLabel: 'EditEmail');
 
   @override
   Widget get child {
@@ -21,15 +22,19 @@ class EditEmailScreen extends LoadingGetView<EditEmailController> {
             title: Text('Change Email'.tr),
           ),
           body: controller.currentTX != null
-              ? PinCodeArea(
-                  currentState: controller.state,
-                  currentTX: controller.currentTX!,
-                  onChange: controller.checkField,
-                  onPressed: !controller.buttonEnable
-                      ? null
-                      : () {
-                          controller.updateEmail();
-                        },
+              ? Form(
+                  key: _formKey,
+                  child: PinCodeArea(
+                    currentState: controller.state,
+                    currentTX: controller.currentTX!,
+                    onChange: controller.checkField,
+                    onPressed: !controller.buttonEnable
+                        ? null
+                        : () {
+                            if (_formKey.currentState?.validate() ?? false)
+                              controller.updateEmail();
+                          },
+                  ),
                 )
               : Container(),
         );
