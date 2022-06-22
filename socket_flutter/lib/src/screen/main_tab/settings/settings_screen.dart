@@ -90,7 +90,8 @@ class SettingsScreen extends StatelessWidget {
   }
 }
 
-Future<dynamic> showLocaleLangs(BuildContext context) {
+Future<dynamic> showLocaleLangs(BuildContext context,
+    [Function(LocaleLangs current)? onPressed]) {
   return showDialog(
     context: context,
     builder: (builder) {
@@ -111,10 +112,10 @@ Future<dynamic> showLocaleLangs(BuildContext context) {
                   current.title,
                 ),
                 onTap: () async {
-                  print(current);
                   Get.back();
                   await Get.updateLocale(current.locale);
                   await StorageKey.locale.saveString(current.name);
+                  if (onPressed != null) onPressed(current);
                 },
               );
             },

@@ -159,7 +159,7 @@ class LoginScreen extends LoadingGetView<LoginController> {
                         flex: 7,
                         child: FutureBuilder(
                             future: rootBundle
-                                .loadString("assets/markdown/privacy.md"),
+                                .loadString(controller.currentLang.termsPath),
                             builder: (BuildContext context,
                                 AsyncSnapshot<String> snapshot) {
                               if (snapshot.hasData) {
@@ -183,6 +183,7 @@ class LoginScreen extends LoadingGetView<LoginController> {
                         flex: 1,
                         child: Material(
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Checkbox(
                                 value: current.acceptTerms,
@@ -198,7 +199,20 @@ class LoginScreen extends LoadingGetView<LoginController> {
                                 overflow: TextOverflow.ellipsis,
                                 softWrap: true,
                                 maxLines: 2,
-                              )
+                              ),
+                              NeumorphicIconButton(
+                                color: Colors.white,
+                                icon: Icon(
+                                  Icons.language,
+                                  size: 15.sp,
+                                ),
+                                onPressed: () {
+                                  showLocaleLangs(
+                                    context,
+                                    controller.updateTerms,
+                                  );
+                                },
+                              ),
                             ],
                           ),
                         ),

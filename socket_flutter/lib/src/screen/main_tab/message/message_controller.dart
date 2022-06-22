@@ -28,7 +28,7 @@ class MessageController extends LoadingGetController {
   final RxBool isLoading = false.obs;
   bool isFirst = true;
 
-  final focusNode = FocusNode();
+  final FocusNode? focusNode = FocusNode();
   final RxBool showEmoji = false.obs;
   final RxBool useRealtime = true.obs;
   late MessageIO _messageIO;
@@ -69,7 +69,7 @@ class MessageController extends LoadingGetController {
   @override
   void onClose() {
     sC.dispose();
-    focusNode.dispose();
+    if (focusNode != null) focusNode!.dispose();
 
     _messageIO.destroySocket();
     streamController.close();
@@ -246,9 +246,10 @@ class MessageController extends LoadingGetController {
   }
 
   void listnFocus() {
-    focusNode.addListener(
+    if (focusNode == null) return;
+    focusNode!.addListener(
       () {
-        if (focusNode.hasFocus) {
+        if (focusNode!.hasFocus) {
           showEmoji.call(false);
         }
       },
