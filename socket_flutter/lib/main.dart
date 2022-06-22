@@ -7,12 +7,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:get/instance_manager.dart';
 import 'package:get/route_manager.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socket_flutter/src/app_root.dart';
 import 'package:socket_flutter/src/languages/Locale_lang.dart';
-import 'package:socket_flutter/src/service/notification_service.dart';
 import 'package:socket_flutter/src/service/storage_service.dart';
 import 'package:socket_flutter/src/utils/consts_color.dart';
 
@@ -30,9 +28,8 @@ void main() async {
 
   await dotenv.load(fileName: ".env");
   HttpOverrides.global = PermitInvalidCertification();
-  await Get.put(NotificationService()).initService();
 
-  _currentLocale = getLocale(await StorageKey.locale.loadString());
+  _currentLocale = getLocale(await StorageKey.locale.loadString()).locale;
   runApp(DevicePreview(enabled: false, builder: (context) => MyApp()));
 }
 

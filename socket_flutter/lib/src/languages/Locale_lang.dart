@@ -27,14 +27,26 @@ enum LocaleLangs {
         return "Chinese".tr;
     }
   }
+
+  String get termsPath {
+    switch (this) {
+      case LocaleLangs.English:
+        return "assets/markdown/privacy_eng.md";
+      case LocaleLangs.Japanese:
+        return "assets/markdown/privacy_jpn.md";
+      case LocaleLangs.Chinese:
+        return "assets/markdown/privacy_china.md";
+    }
+  }
 }
 
-Locale getLocale(String? value) {
+LocaleLangs getLocale(String? value) {
   final LocaleLangs l = LocaleLangs.values.firstWhere(
     (c) => c.name == value,
     orElse: () => LocaleLangs.English,
   );
-  return l.locale;
+  // if you know Locale use l.locale
+  return l;
 }
 
 class LocaleLang extends Translations {

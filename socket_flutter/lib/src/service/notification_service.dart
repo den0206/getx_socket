@@ -5,6 +5,12 @@ import 'package:get/get.dart';
 import 'package:socket_flutter/src/api/notification_api.dart';
 import 'package:socket_flutter/src/screen/widget/common_dialog.dart';
 
+// 登録時の共通化
+Future<void> registerNotification() async {
+  if (!Get.isRegistered<NotificationService>())
+    await Get.put(NotificationService()).initService();
+}
+
 class NotificationService extends GetxService {
   static NotificationService get to => Get.find();
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =

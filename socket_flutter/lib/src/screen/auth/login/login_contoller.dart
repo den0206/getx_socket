@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:socket_flutter/src/api/user_api.dart';
+import 'package:socket_flutter/src/languages/Locale_lang.dart';
 import 'package:socket_flutter/src/model/response_api.dart';
 import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/screen/auth/reset_password/reset_password_screen.dart';
@@ -18,16 +19,26 @@ class LoginController extends LoadingGetController {
 
   final userAPI = UserAPI();
   bool acceptTerms = false;
+  LocaleLangs currentLang = LocaleLangs.English;
 
   @override
   void onInit() async {
     super.onInit();
 
-    await loadTerms();
+    await _initTerms();
   }
 
-  Future<void> loadTerms() async {
+  Future<void> _initTerms() async {
+    final temp = await StorageKey.locale.loadString();
+    if (temp != null) currentLang = getLocale(temp);
+
     acceptTerms = await StorageKey.checkTerms.loadBool() ?? false;
+  }
+
+  void updateTerms(LocaleLangs lang) {
+    // 利用規約の更新
+    currentLang = lang;
+    update();
   }
 
   Future<void> setTerms(BuildContext context) async {
@@ -37,6 +48,8 @@ class LoginController extends LoadingGetController {
   }
 
   Future<void> login() async {
+    await registerNotification();
+
     final fcm = await NotificationService.to.getFCMToken();
 
     if (fcm == null) return;

@@ -59,9 +59,9 @@ async function login(req: Request, res: Response) {
 
   try {
     const secret = process.env.JWT_SECRET_KEY || 'mysecretkey';
-    const expiresIn = process.env.JWT_EXPIRES_IN;
+    // const expiresIn = process.env.JWT_EXPIRES_IN;
     const payload = {userid: isFind.id, email: isFind.email};
-    const token = jwt.sign(payload, secret, {expiresIn: expiresIn});
+    const token = jwt.sign(payload, secret);
 
     const data = {user: isFind, token};
     new ResponseAPI(res, {data}).excute(200);

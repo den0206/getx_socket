@@ -8,14 +8,15 @@ import 'package:socket_flutter/src/screen/widget/custom_picker.dart';
 import 'package:socket_flutter/src/screen/widget/custom_text_fields.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socket_flutter/src/screen/widget/loading_widget.dart';
+import 'package:socket_flutter/src/screen/widget/neumorphic/buttons.dart';
 import 'package:socket_flutter/src/utils/consts_color.dart';
-
-import '../../../widget/neumorphic/buttons.dart';
+import 'package:socket_flutter/src/utils/validator.dart';
 
 class UserEditScreen extends LoadingGetView<UserEditController> {
   static const routeName = '/EditUser';
   @override
   UserEditController get ctr => UserEditController();
+  final _formKey = GlobalKey<FormState>(debugLabel: '_EditUserState');
 
   @override
   Widget get child {
@@ -56,48 +57,56 @@ class UserEditScreen extends LoadingGetView<UserEditController> {
               SizedBox(
                 height: 40,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: CustomTextField(
-                  controller: controller.nameController,
-                  labelText: "Name".tr,
-                  icon: Icon(
-                    Icons.person,
-                    color: Colors.black,
-                  ),
-                  onChange: (text) {
-                    controller.editUser.name = text;
-                  },
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              selectlanguageArea(
-                currentlang: controller.selectLanguage,
-                onSelectedLang: (selectLang) {
-                  controller.editUser.mainLanguage = selectLang;
-                },
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: NeumorphicTextButton(
-                  title: "Change Email".tr,
-                  onPressed: () {
-                    controller.showEditEmail();
-                  },
-                ),
-              ),
-              Obx(
-                () => NeumorphicCustomButtton(
-                  title: "Edit".tr,
-                  width: 70.w,
-                  background: Colors.green,
-                  onPressed: controller.isChanged.value
-                      ? () {
-                          controller.updateUser();
-                        }
-                      : null,
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: CustomTextField(
+                        controller: controller.nameController,
+                        labelText: "Name".tr,
+                        validator: valideName,
+                        icon: Icon(
+                          Icons.person,
+                          color: Colors.black,
+                        ),
+                        onChange: (text) {
+                          controller.editUser.name = text;
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    selectlanguageArea(
+                      currentlang: controller.selectLanguage,
+                      onSelectedLang: (selectLang) {
+                        controller.editUser.mainLanguage = selectLang;
+                      },
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: NeumorphicTextButton(
+                        title: "Change Email".tr,
+                        onPressed: () {
+                          controller.showEditEmail();
+                        },
+                      ),
+                    ),
+                    Obx(
+                      () => NeumorphicCustomButtton(
+                        title: "Edit".tr,
+                        width: 70.w,
+                        background: Colors.green,
+                        onPressed: controller.isChanged.value
+                            ? () {
+                                controller.updateUser();
+                              }
+                            : null,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               SizedBox(
