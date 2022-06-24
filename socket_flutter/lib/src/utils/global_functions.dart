@@ -65,15 +65,17 @@ Map<int, String> extractrMap(Map<int, String> oldMap, Map<int, String> newMap) {
   return res;
 }
 
-void showSnackBar(
-    {required String title,
-    required String message,
-    Color background = Colors.green}) {
+void showSnackBar({
+  required String title,
+  required String message,
+  Color background = Colors.green,
+  SnackPosition position = SnackPosition.BOTTOM,
+}) {
   Get.snackbar(
     title,
     message,
     icon: Icon(Icons.person, color: Colors.white),
-    snackPosition: SnackPosition.BOTTOM,
+    snackPosition: position,
     backgroundColor: background,
     borderRadius: 20,
     margin: EdgeInsets.all(15),

@@ -103,9 +103,10 @@ class RecentsController extends GetxController {
       withUsers: argumentUser,
     );
 
-    final _ = await Get.toNamed(MessageScreen.routeName, arguments: extention);
+    await resetCounter(recent);
 
-    resetCounter(recent);
+    final _ = await Get.toNamed(MessageScreen.routeName, arguments: extention);
+    update();
   }
 
   void listenRecent() {
@@ -124,16 +125,14 @@ class RecentsController extends GetxController {
     });
   }
 
-  void resetCounter(Recent tempRecent) {
+  Future<void> resetCounter(Recent tempRecent) async {
     if (tempRecent.counter != 0) {
       print("Reset Counter");
       tempRecent.counter = 0;
 
-      update();
-
       final value = {"counter": 0};
 
-      _recentApi.updateRecent(tempRecent, value);
+      await _recentApi.updateRecent(tempRecent, value);
     }
   }
 
