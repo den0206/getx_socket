@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:gallery_saver/gallery_saver.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:video_compress/video_compress.dart';
 
@@ -41,5 +42,11 @@ class ImageExtention {
     );
 
     return thumbail;
+  }
+
+  Future<bool> downloadImage(String imageUrl) async {
+    final result = await GallerySaver.saveImage(imageUrl);
+
+    return result ?? false;
   }
 }

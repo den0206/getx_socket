@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:socket_flutter/src/model/message.dart';
 import 'package:sizer/sizer.dart';
+import 'package:socket_flutter/src/screen/widget/common_dialog.dart';
+import 'package:socket_flutter/src/service/image_extention.dart';
+import 'package:socket_flutter/src/utils/global_functions.dart';
 
 class ImageBubble extends StatelessWidget {
   const ImageBubble({Key? key, required this.message}) : super(key: key);
@@ -72,7 +75,34 @@ class ImageDetailScreen extends StatelessWidget {
         backgroundColor: Colors.black,
         appBar: AppBar(
           backgroundColor: Colors.black,
+          iconTheme: IconThemeData(color: Colors.white),
           elevation: 0,
+          actions: [
+            IconButton(
+              icon: Icon(
+                Icons.download,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                showCommonDialog(
+                    context: context,
+                    title: "Image",
+                    content: "Donwload Image??",
+                    okAction: () async {
+                      final result =
+                          await ImageExtention().downloadImage(imageUrl);
+
+                      if (result) {
+                        showSnackBar(
+                          title: "Success",
+                          message: "Dowmload Image",
+                          position: SnackPosition.TOP,
+                        );
+                      }
+                    });
+              },
+            )
+          ],
         ),
         body: Center(
           child: ClipRRect(

@@ -13,6 +13,7 @@ import 'package:socket_flutter/src/screen/widget/overlap_avatars.dart';
 import 'package:socket_flutter/src/screen/widget/user_country_widget.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
 import 'package:socket_flutter/src/utils/consts_color.dart';
+import 'package:z_time_ago/z_time_ago.dart';
 
 import '../../../utils/neumorpic_style.dart';
 
@@ -28,6 +29,7 @@ class RecentsScreen extends StatelessWidget {
         return CupertinoPageScaffold(
           backgroundColor: Colors.green,
           child: RefreshIndicator(
+            color: Colors.green,
             notificationPredicate: (notification) => Platform.isAndroid,
             onRefresh: () async {
               await controller.reLoad();
@@ -186,25 +188,39 @@ class NeumorphicRecentCell extends GetView<RecentsController> {
                     )
                   ],
                 ),
-                if (recent.counter != 0) ...[
-                  Spacer(),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 10),
-                    height: 30,
-                    width: 30,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.green,
-                    ),
-                    child: Center(
-                        child: Text(
-                      "${recent.counter}",
-                      style: TextStyle(
-                        color: Colors.white,
+                Spacer(),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text(
+                      ZTimeAgo().getTimeAgo(
+                        date: recent.date,
+                        language: Language.english,
                       ),
-                    )),
-                  )
-                ]
+                    ),
+                    if (recent.counter != 0) ...[
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Container(
+                          margin: EdgeInsets.symmetric(horizontal: 10),
+                          height: 30,
+                          width: 30,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.green,
+                          ),
+                          child: Center(
+                              child: Text(
+                            "${recent.counter}",
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          )),
+                        ),
+                      )
+                    ]
+                  ],
+                ),
               ],
             ),
           ),
