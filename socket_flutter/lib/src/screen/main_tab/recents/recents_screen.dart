@@ -13,8 +13,7 @@ import 'package:socket_flutter/src/screen/widget/overlap_avatars.dart';
 import 'package:socket_flutter/src/screen/widget/user_country_widget.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
 import 'package:socket_flutter/src/utils/consts_color.dart';
-import 'package:z_time_ago/z_time_ago.dart';
-
+import 'package:socket_flutter/src/utils/date_format.dart';
 import '../../../utils/neumorpic_style.dart';
 
 class RecentsScreen extends StatelessWidget {
@@ -192,12 +191,7 @@ class NeumorphicRecentCell extends GetView<RecentsController> {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Text(
-                      ZTimeAgo().getTimeAgo(
-                        date: recent.date,
-                        language: Language.english,
-                      ),
-                    ),
+                    Text(DateFormatter.getVerBoseDateString(recent.date, true)),
                     if (recent.counter != 0) ...[
                       Padding(
                         padding: const EdgeInsets.only(top: 10),

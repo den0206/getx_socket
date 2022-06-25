@@ -45,7 +45,8 @@ class RecentsController extends GetxController {
     reachLast = false;
     nextCursor = null;
     recents.clear();
-
+    update();
+    await Future.delayed(Duration(milliseconds: 500));
     await loadRecents();
   }
 
@@ -65,6 +66,7 @@ class RecentsController extends GetxController {
       nextCursor = pages.pageInfo.nextPageCursor;
 
       final temp = pages.pageFeeds;
+      print(temp.length);
       recents.addAll(temp);
       recents.sort((a, b) => b.date.compareTo(a.date));
 

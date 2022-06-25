@@ -1,7 +1,7 @@
 import 'package:intl/intl.dart';
 
 class DateFormatter {
-  static String getVerBoseDateString(DateTime dateTime) {
+  static String getVerBoseDateString(DateTime dateTime, [bool isOmit = false]) {
     DateTime now = DateTime.now();
     DateTime justNow = now.subtract(Duration(minutes: 1));
     DateTime localDateTime = dateTime.toLocal();
@@ -25,6 +25,11 @@ class DateFormatter {
       String weekday = DateFormat('EEEE').format(localDateTime);
       return weekday;
     }
-    return '${DateFormat('yMd').format(dateTime)}, $roughTimeString';
+
+    if (isOmit) {
+      return '${DateFormat('yMd').format(dateTime)}';
+    } else {
+      return '${DateFormat('yMd').format(dateTime)}, $roughTimeString';
+    }
   }
 }
