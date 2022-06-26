@@ -10,6 +10,7 @@ export async function usePagenation<T>({
   exclued,
   opt,
   specific,
+  sort = {_id: -1},
   blockUsers,
 }: {
   model: Model<T>;
@@ -20,6 +21,7 @@ export async function usePagenation<T>({
   exclued?: string | string[];
   opt?: PopulateOptions | PopulateOptions[];
   specific?: {};
+  sort?: {};
   blockUsers?: string[];
 }) {
   let query = {};
@@ -48,21 +50,21 @@ export async function usePagenation<T>({
     array = await model
       .find(query)
       .select(select)
-      .sort({_id: -1})
+      .sort(sort)
       .limit(limit + 1)
       .populate(pop, exclued);
   } else if (opt) {
     array = await model
       .find(query)
       .select(select)
-      .sort({_id: -1})
+      .sort(sort)
       .limit(limit + 1)
       .populate(opt);
   } else {
     array = await model
       .find(query)
       .select(select)
-      .sort({_id: -1})
+      .sort(sort)
       .limit(limit + 1);
   }
 

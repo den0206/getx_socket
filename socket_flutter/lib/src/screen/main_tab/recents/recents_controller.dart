@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/route_manager.dart';
@@ -19,7 +20,9 @@ class RecentsController extends GetxController {
 
   String? nextCursor;
   bool reachLast = false;
+  bool isLoading = false;
 
+  final sc = ScrollController();
   final RecentIO recentIO = RecentIO();
 
   @override
@@ -27,7 +30,7 @@ class RecentsController extends GetxController {
     super.onInit();
 
     await loadRecents();
-
+    addSCListner();
     recentIO.initSocket();
     listenRecent();
     listenRecentDelete();
@@ -37,6 +40,9 @@ class RecentsController extends GetxController {
   void onClose() {
     super.onClose();
 
+    sc.removeListener(() {});
+    sc.dispose();
+
     print("Destroy RECENT");
     recentIO.destroySocket();
   }
@@ -44,14 +50,26 @@ class RecentsController extends GetxController {
   Future<void> reLoad() async {
     reachLast = false;
     nextCursor = null;
+    isLoading = false;
     recents.clear();
     update();
+
     await Future.delayed(Duration(milliseconds: 500));
     await loadRecents();
   }
 
+  void addSCListner() {
+    sc.addListener(() {
+      if (sc.position.pixels >= sc.position.maxScrollExtent * 0.95) {
+        loadRecents();
+      }
+    });
+  }
+
   Future<void> loadRecents() async {
-    if (reachLast) return;
+    if (reachLast || isLoading) return;
+    print("Pagination");
+    isLoading = true;
 
     try {
       final res =
@@ -73,6 +91,8 @@ class RecentsController extends GetxController {
       update();
     } catch (e) {
       showError(e.toString());
+    } finally {
+      isLoading = false;
     }
   }
 

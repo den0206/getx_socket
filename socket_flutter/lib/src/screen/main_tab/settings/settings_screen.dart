@@ -3,7 +3,7 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:get/route_manager.dart';
 import 'package:get/utils.dart';
-import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 
 import 'package:permission_handler/permission_handler.dart';
 import 'package:socket_flutter/src/languages/Locale_lang.dart';
@@ -116,8 +116,7 @@ Future<dynamic> showLocaleLangs(BuildContext context,
                 onTap: () async {
                   Get.back();
                   await Get.updateLocale(current.locale);
-                  print(current.locale.languageCode);
-                  await initializeDateFormatting();
+                  Intl.defaultLocale = current.locale.languageCode;
                   await StorageKey.locale.saveString(current.name);
                   if (onPressed != null) onPressed(current);
                 },

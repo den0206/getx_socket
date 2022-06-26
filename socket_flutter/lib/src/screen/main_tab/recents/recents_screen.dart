@@ -34,6 +34,8 @@ class RecentsScreen extends StatelessWidget {
               await controller.reLoad();
             },
             child: CustomScrollView(
+              controller: controller.sc,
+              physics: AlwaysScrollableScrollPhysics(),
               slivers: [
                 SliverAppBar(
                   backgroundColor: Colors.transparent,
@@ -80,9 +82,6 @@ class RecentsScreen extends StatelessWidget {
                   delegate: SliverChildBuilderDelegate((context, index) {
                     final recent = controller.recents[index];
 
-                    if (index == controller.recents.length - 1) {
-                      controller.loadRecents();
-                    }
                     return NeumorphicRecentCell(recent: recent);
                   }, childCount: controller.recents.length),
                 ),
