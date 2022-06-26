@@ -42,7 +42,7 @@ class Recent {
       'withUser': withUser?.toMap(),
       'lastMessage': lastMessage,
       'counter': counter,
-      'date': date.millisecondsSinceEpoch,
+      'date': date.toUtc().toIso8601String(),
     };
   }
 
@@ -56,7 +56,7 @@ class Recent {
       group: map["group"] != null ? Group.fromMap(map["group"]) : null,
       lastMessage: map['lastMessage'] ?? '',
       counter: map['counter']?.toInt() ?? 0,
-      date: DateTime.parse(map["date"]).toUtc(),
+      date: DateTime.parse(map["date"]).toLocal(),
     );
   }
 

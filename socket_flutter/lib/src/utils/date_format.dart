@@ -1,7 +1,11 @@
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
 class DateFormatter {
-  static String getVerBoseDateString(DateTime dateTime) {
+  static String getVerBoseDateString(DateTime dateTime, [bool isOmit = false]) {
+    final locale = Intl.defaultLocale;
+    initializeDateFormatting(locale);
+
     DateTime now = DateTime.now();
     DateTime justNow = now.subtract(Duration(minutes: 1));
     DateTime localDateTime = dateTime.toLocal();
@@ -9,7 +13,10 @@ class DateFormatter {
       return "Just Now";
     }
 
-    String roughTimeString = DateFormat('jm').format(dateTime);
+    String roughTimeString = DateFormat(
+      'jm',
+      locale,
+    ).format(dateTime);
     if (localDateTime.day == now.day &&
         localDateTime.month == now.month &&
         localDateTime.year == now.year) {
@@ -25,6 +32,11 @@ class DateFormatter {
       String weekday = DateFormat('EEEE').format(localDateTime);
       return weekday;
     }
-    return '${DateFormat('yMd').format(dateTime)}, $roughTimeString';
+
+    if (isOmit) {
+      return '${DateFormat('yMd', locale).format(dateTime)}';
+    } else {
+      return '${DateFormat('yMd', locale).format(dateTime)}, $roughTimeString';
+    }
   }
 }

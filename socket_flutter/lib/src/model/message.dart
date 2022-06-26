@@ -72,7 +72,7 @@ class Message {
       "translated": translated ?? null,
       "imageUrl": imageUrl ?? null,
       "videoUrl": videoUrl ?? null,
-      'date': date.toIso8601String(),
+      'date': date.toUtc().toIso8601String(),
     };
   }
 
@@ -86,7 +86,7 @@ class Message {
       translated: map["translated"] ?? null,
       imageUrl: httpsToHttp(value: map["imageUrl"]) ?? null,
       videoUrl: map["videoUrl"] ?? null,
-      date: DateTime.parse(map["date"]).toUtc(),
+      date: DateTime.parse(map["date"]).toLocal(),
     );
   }
 
