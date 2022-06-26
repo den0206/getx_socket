@@ -68,7 +68,6 @@ class RecentsController extends GetxController {
 
   Future<void> loadRecents() async {
     if (reachLast || isLoading) return;
-    print("Pagination");
     isLoading = true;
 
     try {
@@ -84,7 +83,6 @@ class RecentsController extends GetxController {
       nextCursor = pages.pageInfo.nextPageCursor;
 
       final temp = pages.pageFeeds;
-      print(temp.length);
       recents.addAll(temp);
       recents.sort((a, b) => b.date.compareTo(a.date));
 
