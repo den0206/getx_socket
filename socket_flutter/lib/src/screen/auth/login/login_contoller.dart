@@ -50,21 +50,20 @@ class LoginController extends LoadingGetController {
   Future<void> login() async {
     await registerNotification();
 
-    final fcm = await NotificationService.to.getFCMToken();
-
-    if (fcm == null) return;
-
-    final Map<String, dynamic> credential = {
-      "email": emailController.text,
-      "password": passwordController.text,
-      "fcm": fcm,
-    };
-
     isOverlay.call(true);
 
     await Future.delayed(Duration(seconds: 1));
 
     try {
+      final fcm = await NotificationService.to.getFCMToken();
+
+      if (fcm == null) throw Exception("Can't get FCM");
+
+      final Map<String, dynamic> credential = {
+        "email": emailController.text.toLowerCase(),
+        "password": passwordController.text,
+        "fcm": fcm,
+      };
       final ResponseAPI res = await userAPI.login(credential);
 
       if (!res.status) return;

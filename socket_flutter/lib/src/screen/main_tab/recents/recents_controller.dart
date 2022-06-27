@@ -16,7 +16,7 @@ class RecentsController extends GetxController {
 
   final List<Recent> recents = [];
   final RecentAPI _recentApi = RecentAPI();
-  final int limit = 5;
+  final int limit = 10;
 
   String? nextCursor;
   bool reachLast = false;
@@ -123,9 +123,10 @@ class RecentsController extends GetxController {
       withUsers: argumentUser,
     );
 
+    final _ = await Get.toNamed(MessageScreen.routeName, arguments: extention);
+
     await resetCounter(recent);
 
-    final _ = await Get.toNamed(MessageScreen.routeName, arguments: extention);
     update();
   }
 
