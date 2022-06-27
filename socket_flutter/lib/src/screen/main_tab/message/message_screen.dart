@@ -59,8 +59,10 @@ class MessageScreen extends LoadingGetView<MessageController> {
                       ),
                       Obx(
                         () => Text(
-                          "(${controller.extention.targetLanguage.value.name})",
+                          "(${controller.extention.targetLanguage.value.source_lang})",
                           style: TextStyle(fontSize: 8.sp),
+                          softWrap: true,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ],
@@ -74,7 +76,7 @@ class MessageScreen extends LoadingGetView<MessageController> {
                     country: AuthService.to.currentUser.value!.country,
                   ),
                   Text(
-                    "(${controller.extention.currentUser.mainLanguage.name})",
+                    "(${controller.extention.currentUser.mainLanguage.source_lang})",
                     style: TextStyle(fontSize: 8.sp),
                   ),
                 ],

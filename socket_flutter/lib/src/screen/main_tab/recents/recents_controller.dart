@@ -16,7 +16,7 @@ class RecentsController extends GetxController {
 
   final List<Recent> recents = [];
   final RecentAPI _recentApi = RecentAPI();
-  final int limit = 5;
+  final int limit = 10;
 
   String? nextCursor;
   bool reachLast = false;
@@ -68,7 +68,6 @@ class RecentsController extends GetxController {
 
   Future<void> loadRecents() async {
     if (reachLast || isLoading) return;
-    print("Pagination");
     isLoading = true;
 
     try {
@@ -84,7 +83,6 @@ class RecentsController extends GetxController {
       nextCursor = pages.pageInfo.nextPageCursor;
 
       final temp = pages.pageFeeds;
-      print(temp.length);
       recents.addAll(temp);
       recents.sort((a, b) => b.date.compareTo(a.date));
 
@@ -125,9 +123,10 @@ class RecentsController extends GetxController {
       withUsers: argumentUser,
     );
 
+    final _ = await Get.toNamed(MessageScreen.routeName, arguments: extention);
+
     await resetCounter(recent);
 
-    final _ = await Get.toNamed(MessageScreen.routeName, arguments: extention);
     update();
   }
 

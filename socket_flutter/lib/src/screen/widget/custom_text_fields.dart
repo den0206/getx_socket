@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:get/state_manager.dart';
 
 class CustomTextField extends StatelessWidget {
-  const CustomTextField(
-      {Key? key,
-      required this.controller,
-      required this.labelText,
-      this.inputType,
-      this.isSecure = false,
-      this.validator,
-      this.icon,
-      this.onChange})
-      : super(key: key);
+  const CustomTextField({
+    Key? key,
+    required this.controller,
+    required this.labelText,
+    this.inputType,
+    this.isSecure = false,
+    this.validator,
+    this.icon,
+    this.onChange,
+  }) : super(key: key);
 
   final TextEditingController controller;
   final String labelText;
@@ -22,27 +23,44 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: controller,
-      decoration: InputDecoration(
-        prefixIcon: icon,
-        hintText: labelText,
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.black,
+    RxBool visiblity = isSecure.obs;
+
+    return Obx(
+      () {
+        return TextFormField(
+          controller: controller,
+          decoration: InputDecoration(
+            prefixIcon: icon,
+            suffixIcon: isSecure
+                ? IconButton(
+                    icon: Icon(
+                      visiblity.value ? Icons.visibility : Icons.visibility_off,
+                      color: Colors.grey,
+                    ),
+                    onPressed: () {
+                      visiblity.toggle();
+                    },
+                  )
+                : null,
+            hintText: labelText,
+            focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                color: Colors.black,
+              ),
+            ),
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                color: Colors.black,
+              ),
+            ),
           ),
-        ),
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.black,
-          ),
-        ),
-      ),
-      cursorColor: Colors.black,
-      keyboardType: inputType,
-      validator: validator,
-      obscureText: isSecure,
-      onChanged: onChange,
+          cursorColor: Colors.black,
+          keyboardType: inputType,
+          validator: validator,
+          obscureText: visiblity.value,
+          onChanged: onChange,
+        );
+      },
     );
   }
 }

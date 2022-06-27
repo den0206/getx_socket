@@ -69,11 +69,12 @@ class SignUpController extends LoadingGetController {
     }
     isOverlay.call(true);
     await Future.delayed(Duration(seconds: 1));
+    final String emailLower = emaiController.text.toLowerCase();
 
     try {
       switch (this.state) {
         case VerifyState.checkEmail:
-          final res = await _tempTokenAPI.requestNewEmail(emaiController.text);
+          final res = await _tempTokenAPI.requestNewEmail(emailLower);
           if (!res.status) break;
 
           state = VerifyState.verify;
@@ -81,7 +82,7 @@ class SignUpController extends LoadingGetController {
         case VerifyState.verify:
           final Map<String, dynamic> userData = {
             "name": nameController.text,
-            "email": emaiController.text,
+            "email": emailLower,
             "countryCode": currentCountry.code,
             "mainLanguage": currentLanguage.value!.name,
             "password": passwordController.text,
