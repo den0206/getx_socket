@@ -147,10 +147,10 @@ class RecentsController extends GetxController {
   }
 
   Future<void> resetCounter(Recent tempRecent) async {
-    if (tempRecent.counter != 0) {
-      print("Reset Counter");
-      tempRecent.counter = 0;
-
+    int index = recents.indexWhere((recent) => recent.id == tempRecent.id);
+    final isUpdate = recents[index].counter != 0;
+    if (isUpdate) {
+      recents[index].counter = 0;
       final value = {"counter": 0};
 
       await _recentApi.updateRecent(tempRecent, value);
