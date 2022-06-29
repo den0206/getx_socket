@@ -11,6 +11,11 @@ class GroupsController extends GetxController {
   final GropuAPI _gropuAPI = GropuAPI();
 
   final List<Group> groups = [];
+  bool isLoading = false;
+
+  bool get isCompEmpty {
+    return groups.isEmpty && !isLoading;
+  }
 
   @override
   void onInit() async {
@@ -20,14 +25,12 @@ class GroupsController extends GetxController {
 
   Future<void> loadGroups() async {
     final currentUser = AuthService.to.currentUser.value!;
+    isLoading = true;
 
     try {
       final res = await _gropuAPI.findByUserId(currentUser.id);
       print(res);
-      if (!res.status) {
-        print("cant get groups");
-        return;
-      }
+      if (!res.status) return;
 
       final items = res.data.cast<Map<String, dynamic>>();
       final List<Group> temp =
@@ -38,6 +41,8 @@ class GroupsController extends GetxController {
       update();
     } catch (e) {
       showError(e.toString());
+    } finally {
+      isLoading = false;
     }
   }
 
