@@ -89,7 +89,7 @@ class RecentsScreen extends StatelessWidget {
                   child: Container(
                     alignment: Alignment.center,
                     color: ConstsColor.mainBackgroundColor,
-                    child: controller.recents.isEmpty
+                    child: controller.isCompEmpty
                         ? EmptyScreen(
                             title: "No Message".tr,
                             path: "assets/lotties/chat_girl.json",

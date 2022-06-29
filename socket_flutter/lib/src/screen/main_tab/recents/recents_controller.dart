@@ -22,6 +22,10 @@ class RecentsController extends GetxController {
   bool reachLast = false;
   bool isLoading = false;
 
+  bool get isCompEmpty {
+    return recents.isEmpty && !isLoading;
+  }
+
   final sc = ScrollController();
   final RecentIO recentIO = RecentIO();
 

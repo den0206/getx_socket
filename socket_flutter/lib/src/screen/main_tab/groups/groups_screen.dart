@@ -31,7 +31,7 @@ class GroupsScreen extends StatelessWidget {
               )
             ],
           ),
-          body: controller.groups.isEmpty
+          body: controller.isCompEmpty
               ? EmptyScreen(
                   title: "No Group", path: "assets/lotties/no_group.json")
               : ListView.separated(
