@@ -31,10 +31,46 @@
               "client_type": 3
             },
             {
-              "client_id": "533410216148-vppl3ruhaaaqt82p4797thr9g2poecr3.apps.googleusercontent.com",
+              "client_id": "533410216148-acsvvt2onm2suvuvd5upf9mc3vmn1q69.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.socketFlutter"
+                "bundle_id": "com.yuuki.inventalk"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:533410216148:android:e96ff1ddca451ef742e341",
+        "android_client_info": {
+          "package_name": "com.yuuki.inventalk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "533410216148-momlq8thl5sgbafsa1ecdpt9doj32a9a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMDlfyxnDdblOw7aYdAF2HplwlmI6woyY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "533410216148-momlq8thl5sgbafsa1ecdpt9doj32a9a.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "533410216148-acsvvt2onm2suvuvd5upf9mc3vmn1q69.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.yuuki.inventalk"
               }
             }
           ]

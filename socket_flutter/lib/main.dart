@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
     return Sizer(
       builder: (context, orientation, deviceType) {
         return GetMaterialApp(
-          title: 'Socket_Flutter',
+          title: 'InvenTalk',
           debugShowCheckedModeBanner: kDebugMode,
           translations: LocaleLang(),
           locale: _currentLocale ?? Get.deviceLocale,

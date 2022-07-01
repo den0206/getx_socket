@@ -1,4 +1,4 @@
-package com.example.socket_flutter
+package com.yuuki.inventalk
 
 import io.flutter.embedding.android.FlutterActivity
 
