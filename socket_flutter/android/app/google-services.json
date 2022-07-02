@@ -1,73 +1,37 @@
 {
   "project_info": {
-    "project_number": "533410216148",
-    "project_id": "getx-socket",
-    "storage_bucket": "getx-socket.appspot.com"
+    "project_number": "459671535126",
+    "project_id": "inventalk-bf09a",
+    "storage_bucket": "inventalk-bf09a.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:533410216148:android:0f68594e413592f642e341",
-        "android_client_info": {
-          "package_name": "com.example.socket_flutter"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "533410216148-momlq8thl5sgbafsa1ecdpt9doj32a9a.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBMDlfyxnDdblOw7aYdAF2HplwlmI6woyY"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "533410216148-momlq8thl5sgbafsa1ecdpt9doj32a9a.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "533410216148-acsvvt2onm2suvuvd5upf9mc3vmn1q69.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.yuuki.inventalk"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:533410216148:android:e96ff1ddca451ef742e341",
+        "mobilesdk_app_id": "1:459671535126:android:3befff6f97d44596e07f37",
         "android_client_info": {
           "package_name": "com.yuuki.inventalk"
         }
       },
       "oauth_client": [
         {
-          "client_id": "533410216148-momlq8thl5sgbafsa1ecdpt9doj32a9a.apps.googleusercontent.com",
+          "client_id": "459671535126-p80birf5ocodn19083bufgpt1qh4aqcf.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBMDlfyxnDdblOw7aYdAF2HplwlmI6woyY"
+          "current_key": "AIzaSyAemyqnQF7eUu7HcwtKgTW7M7HtM9NMVrI"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "533410216148-momlq8thl5sgbafsa1ecdpt9doj32a9a.apps.googleusercontent.com",
+              "client_id": "459671535126-p80birf5ocodn19083bufgpt1qh4aqcf.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "533410216148-acsvvt2onm2suvuvd5upf9mc3vmn1q69.apps.googleusercontent.com",
+              "client_id": "459671535126-2g2ql9mjv6cc1m223toros9paapla70e.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
                 "bundle_id": "com.yuuki.inventalk"
