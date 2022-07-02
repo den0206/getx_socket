@@ -36,7 +36,15 @@ class NotificationService extends GetxService {
   }
 
   Future<void> requestPermission() async {
-    await _firebaseMessaging.requestPermission();
+    await _firebaseMessaging.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
   }
 
   Future<void> initService() async {
@@ -68,7 +76,7 @@ class NotificationService extends GetxService {
   void listenForeground() {
     FirebaseMessaging.onMessage.listen(
       (RemoteMessage message) {
-        print("FOREGROUND");
+        print("FOREGROUND Notifications");
         showNotification(message);
       },
     );
