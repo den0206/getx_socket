@@ -1,0 +1,4 @@
+FLAVOR=stg
+
+APP_ID_PREFIX=
+APP_NAME_PREFIX=stg.

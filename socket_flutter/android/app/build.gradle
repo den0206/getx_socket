@@ -12,6 +12,17 @@ if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 
+def dartEnvironmentVariables = [:];
+if (project.hasProperty('dart-defines')) {
+    // カンマ区切りかつBase64でエンコードされている dart-defines をデコードして変数に格納します。
+    dartEnvironmentVariables = dartEnvironmentVariables + project.property('dart-defines')
+        .split(',')
+        .collectEntries { entry ->
+            def pair = new String(entry.decodeBase64(), 'UTF-8').split('=')
+            [(pair.first()): pair.last()]
+        }
+}
+
 def flutterRoot = localProperties.getProperty('flutter.sdk')
 if (flutterRoot == null) {
     throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
@@ -56,6 +67,20 @@ android {
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         multiDexEnabled true 
+
+
+        if(dartEnvironmentVariables.FLAVOR == 'dev') {
+            applicationIdSuffix ""
+            manifestPlaceholders += [appNamePrefix:"dev."]
+        } else if(dartEnvironmentVariables.FLAVOR == 'stg') {
+            applicationIdSuffix ""
+            manifestPlaceholders += [appNamePrefix:"stg."]
+        } else if(dartEnvironmentVariables.FLAVOR == 'prod') {
+            applicationIdSuffix ""
+            manifestPlaceholders += [appNamePrefix:""]
+        } else {
+            throw new GradleException("unknown flavor" + dartEnvironmentVariables.FLAVOR + "has passed")
+        }
     }
 
    signingConfigs {

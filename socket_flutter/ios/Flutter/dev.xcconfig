@@ -1,0 +1,4 @@
+FLAVOR=dev
+
+APP_ID_PREFIX=
+APP_NAME_PREFIX=dev.
