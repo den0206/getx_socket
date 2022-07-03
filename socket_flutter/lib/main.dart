@@ -30,6 +30,9 @@ void main() async {
   HttpOverrides.global = PermitInvalidCertification();
 
   _currentLocale = getLocale(await StorageKey.locale.loadString()).locale;
+
+  const flavor = String.fromEnvironment('FLAVOR');
+  print(flavor);
   runApp(DevicePreview(enabled: false, builder: (context) => MyApp()));
 }
 
