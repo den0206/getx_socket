@@ -52,4 +52,4 @@ app.*.map.json
 .env*
 
 .fvm/flutter_sdk
-+ **/ios/Flutter/DartDefines.xcconfig
+**/ios/Flutter/DartDefines.xcconfig
