@@ -19,7 +19,6 @@ class Enviroment {
           break;
         case "prod":
           domainHost = dotenv.env['PRODUCT_HOST']!;
-
           break;
         default:
           assert(false);
@@ -37,23 +36,21 @@ class Enviroment {
     print(flavor);
 
     if (useMain) {
-      String domainHost;
+      String url;
 
       switch (flavor) {
         case "dev":
         case "stg":
-          domainHost = dotenv.env['STAGING_SOCKET']!;
+          url = dotenv.env['STAGING_SOCKET']!;
           break;
         case "prod":
-          domainHost = dotenv.env['PRODUCT_SOCKET']!;
-
+          url = dotenv.env['PRODUCT_SOCKET']!;
           break;
         default:
           assert(false);
-          domainHost = "";
+          url = "";
       }
-
-      return domainHost;
+      return url;
     } else {
       return io.Platform.isAndroid
           ? "http://10.0.2.2:3000"
