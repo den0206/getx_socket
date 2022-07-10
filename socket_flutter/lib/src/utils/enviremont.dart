@@ -7,8 +7,6 @@ import '../../main.dart';
 class Enviroment {
   static String getHost() {
     const flavor = String.fromEnvironment('FLAVOR');
-    print(flavor);
-
     if (useMain) {
       String domainHost;
 
