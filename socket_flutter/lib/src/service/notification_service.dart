@@ -84,22 +84,27 @@ class NotificationService extends GetxService {
 
   void showNotification(RemoteMessage message) {
     RemoteNotification? notification = message.notification;
+    print("Call");
 
     if (notification != null) {
       flutterLocalNotificationsPlugin.show(
-          notification.hashCode,
-          notification.title,
-          notification.body,
-          NotificationDetails(
-              android: AndroidNotificationDetails(
-                channel.id,
-                channel.name,
-                channelDescription: channel.description,
-                icon: 'launch_background',
-                importance: Importance.high,
-                priority: Priority.high,
+        notification.hashCode,
+        notification.title,
+        notification.body,
+        NotificationDetails(
+          android: AndroidNotificationDetails(
+            channel.id,
+            channel.name,
+            channelDescription: channel.description,
+            icon: 'launch_background',
+            importance: Importance.high,
+            priority: Priority.high,
+          ),
+          iOS: IOSNotificationDetails(
+              // badgeNumber: 10,
               ),
-              iOS: IOSNotificationDetails()));
+        ),
+      );
     }
   }
 
@@ -114,10 +119,11 @@ class NotificationService extends GetxService {
     final Map<String, dynamic> data = {
       "registration_ids": tokens,
       "notification": {
-        "Title": title,
+        "title": title,
         "body": lastMessage,
         "content_available": true,
         "priority": "high",
+        // "badge": 10,
         "click_action": "FLUTTER_NOTIFICATION_CLICK",
       },
       "data": {
@@ -133,18 +139,23 @@ class NotificationService extends GetxService {
 
   // Badges
 
+  Future<int> getBadges() async {
+    if (!canBadge) return 0;
+    final res = await _notificationApi.getBadgesCount();
+    if (!res.status) {
+      print("バッジの獲得不可");
+      return 0;
+    }
+
+    int badgeCount = res.data;
+    return badgeCount;
+  }
+
   Future<void> updateBadges() async {
     print('Background');
 
     try {
-      if (!canBadge) return;
-      final res = await _notificationApi.getBadgesCount();
-      if (!res.status) {
-        print("バッジの獲得不可");
-        return;
-      }
-
-      int badgeCount = res.data;
+      int badgeCount = await getBadges();
       if (badgeCount > 0) {
         if (badgeCount > 99) {
           badgeCount = 99;
