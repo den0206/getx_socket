@@ -52,3 +52,4 @@ app.*.map.json
 .env*
 
 .fvm/flutter_sdk
+test_user.txt

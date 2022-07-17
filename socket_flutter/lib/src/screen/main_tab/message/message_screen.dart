@@ -20,6 +20,8 @@ import 'package:socket_flutter/src/service/auth_service.dart';
 import 'package:socket_flutter/src/utils/global_functions.dart';
 
 import '../../../utils/neumorpic_style.dart';
+import '../report/report_controller.dart';
+import '../report/report_screen.dart';
 
 class MessageScreen extends LoadingGetView<MessageController> {
   static const routeName = '/MessageScreen';
@@ -418,6 +420,34 @@ class MessageCell extends GetView<MessageController> {
                         onPressed: () {
                           Navigator.of(context).pop();
                           controller.deleteMessage(message);
+                        },
+                      ),
+                    if (!message.isCurrent)
+                      CupertinoContextMenuAction(
+                        isDefaultAction: true,
+                        child: Text(
+                          'Report'.tr,
+                          style: TextStyle(
+                            color: Colors.red,
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+
+                          Navigator.of(context)
+                              .push(MaterialPageRoute(
+                            builder: (context) {
+                              return ReportScreen(message.user, message);
+                            },
+                            fullscreenDialog: true,
+                            maintainState: false,
+                          ))
+                              .then(
+                            (value) async {
+                              if (Get.isRegistered<ReportController>())
+                                await Get.delete<ReportController>();
+                            },
+                          );
                         },
                       ),
                     CupertinoContextMenuAction(

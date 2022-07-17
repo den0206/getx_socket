@@ -17,12 +17,6 @@ class RecentIO extends SocketBase {
   @override
   Map<String, dynamic> get query => {"userId": currentUser.id};
 
-  void destroySocket() {
-    socket.dispose();
-    socket.destroy();
-    print("RecentIO DESTROY");
-  }
-
   /// MARK  送信
 
   void sendUpdateRecent(
