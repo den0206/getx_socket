@@ -1,4 +1,5 @@
 import {prop, pre, Ref} from '@typegoose/typegoose';
+import {Message} from '../message/message.model';
 import {User} from '../users/user.model';
 
 export class Report {
@@ -6,6 +7,8 @@ export class Report {
   informer: Ref<User>;
   @prop({required: true, ref: () => User})
   reported: Ref<User>;
+  @prop({ref: () => Message})
+  message: Ref<Message>;
   @prop({required: true})
   reportedContent: string;
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/get.dart';
 import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/screen/main_tab/report/report_screen.dart';
 import 'package:socket_flutter/src/screen/main_tab/settings/settings_screen.dart';
@@ -11,6 +11,7 @@ import 'package:socket_flutter/src/screen/widget/neumorphic/buttons.dart';
 import 'package:socket_flutter/src/screen/widget/user_country_widget.dart';
 
 import '../../../../utils/consts_color.dart';
+import '../../report/report_controller.dart';
 
 class UserDetailScreen extends StatelessWidget {
   const UserDetailScreen(this.user, {Key? key}) : super(key: key);
@@ -37,12 +38,20 @@ class UserDetailScreen extends StatelessWidget {
                             color: Colors.red[400],
                           ),
                           onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(
+                            Navigator.of(context)
+                                .push(MaterialPageRoute(
                               builder: (context) {
-                                return ReportScreen(user);
+                                return ReportScreen(user, null);
                               },
                               fullscreenDialog: true,
-                            ));
+                            ))
+                                .then(
+                              (value) async {
+                                if (Get.isRegistered<ReportController>())
+                                  await Get.delete<ReportController>();
+                              },
+                            );
+                            ;
                           },
                         ),
                       );

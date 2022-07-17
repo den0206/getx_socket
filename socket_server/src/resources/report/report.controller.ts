@@ -4,14 +4,19 @@ import ResponseAPI from '../../utils/interface/response.api';
 import getUserIdFromRes from '../../middleware/get_userid_res';
 async function reportUser(req: Request, res: Response) {
   const informer = getUserIdFromRes(res);
-  const {reported, reportedContent} = req.body;
+  const {reported, reportedContent, message} = req.body;
 
   try {
     const isFind = await UserModel.findById(reported);
     if (!isFind)
       return new ResponseAPI(res, {message: 'No Exist User'}).excute(400);
 
-    const report = new ReportModel({informer, reported, reportedContent});
+    const report = new ReportModel({
+      informer,
+      reported,
+      reportedContent,
+      message,
+    });
     await report.save();
     new ResponseAPI(res, {data: report}).excute(200);
   } catch (e: any) {
