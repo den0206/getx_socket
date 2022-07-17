@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:get/utils.dart';
+import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-import 'package:socket_flutter/src/screen/main_tab/users/user_detail/user_detail_controller.dart';
+import 'package:socket_flutter/src/model/message.dart';
+import 'package:socket_flutter/src/screen/main_tab/report/report_controller.dart';
+
 import 'package:socket_flutter/src/screen/widget/neumorphic/buttons.dart';
 import '../../../model/user.dart';
 import '../../widget/loading_widget.dart';
 
-class ReportScreen extends LoadingGetView<UserDetailController> {
+class ReportScreen extends LoadingGetView<ReportController> {
   final User user;
+  final Message? message;
 
-  ReportScreen(this.user);
+  ReportScreen(this.user, this.message);
   @override
-  UserDetailController get ctr => UserDetailController(user);
+  ReportController get ctr => ReportController(user: user, message: message);
 
   @override
   Widget get child {
