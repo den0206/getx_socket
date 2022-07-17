@@ -8,7 +8,7 @@ class ImageExtention {
   final ImagePicker _imagePicker = ImagePicker();
   Future<File?> selectImage({required ImageSource imageSource}) async {
     final XFile? _image = await _imagePicker.pickImage(
-      source: ImageSource.gallery,
+      source: imageSource,
       imageQuality: 85,
     );
 

@@ -192,8 +192,15 @@ class MessageController extends LoadingGetController {
     final List<MessageFileButton> actions = [
       MessageFileButton(
         icon: Icons.camera,
-        onPress: () {
-          print("Camera");
+        onPress: () async {
+          final takedPicture =
+              await imageExtention.selectImage(imageSource: ImageSource.camera);
+
+          if (takedPicture != null) {
+            await sendMessage(
+                type: MessageType.image, text: "image", file: takedPicture);
+            Get.back();
+          }
         },
       ),
       MessageFileButton(
