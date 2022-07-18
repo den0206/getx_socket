@@ -26,6 +26,7 @@ class SignUpController extends LoadingGetController {
   File? userImage;
   CountryCode currentCountry = getCountryFromCode("US");
   Rxn<Language> currentLanguage = Rxn<Language>();
+  bool acceptTerms = false;
 
   VerifyState state = VerifyState.checkEmail;
 
@@ -40,6 +41,10 @@ class SignUpController extends LoadingGetController {
       case VerifyState.verify:
         return "Verify Number".tr;
     }
+  }
+
+  bool get buttonEnable {
+    return acceptTerms;
   }
 
   @override
