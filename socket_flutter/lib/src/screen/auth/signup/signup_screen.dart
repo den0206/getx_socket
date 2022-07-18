@@ -1,4 +1,5 @@
 import 'package:country_list_pick/country_list_pick.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
@@ -13,6 +14,7 @@ import 'package:socket_flutter/src/utils/validator.dart';
 
 import '../../widget/custom_pin.dart';
 import '../../widget/neumorphic/buttons.dart';
+import '../login/login_sceen.dart';
 
 class SignUpScreen extends LoadingGetView<SignUpController> {
   static const routeName = '/SignUp';
@@ -115,6 +117,44 @@ class SignUpScreen extends LoadingGetView<SignUpController> {
                           validator: validPassword,
                           isSecure: true,
                         ),
+                        SizedBox(
+                          height: 2.h,
+                        ),
+                        Row(
+                          children: [
+                            Checkbox(
+                              value: controller.acceptTerms,
+                              activeColor: Colors.green,
+                              onChanged: (value) {
+                                if (value == null) return;
+                                controller.acceptTerms = value;
+                                controller.update();
+                              },
+                            ),
+                            Builder(builder: (context) {
+                              return RichText(
+                                text: TextSpan(
+                                  style: TextStyle(
+                                      fontSize: 12, color: Colors.black),
+                                  children: [
+                                    TextSpan(text: "I agree".tr),
+                                    TextSpan(
+                                      text: "the Terms of Use".tr,
+                                      style: TextStyle(
+                                        color: Colors.blue,
+                                        decoration: TextDecoration.underline,
+                                      ),
+                                      recognizer: TapGestureRecognizer()
+                                        ..onTap = () async {
+                                          await showTermsDialog(context);
+                                        },
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }),
+                          ],
+                        )
                       ],
                       if (controller.state == VerifyState.verify) ...[
                         CustomPinCodeField(
@@ -129,11 +169,14 @@ class SignUpScreen extends LoadingGetView<SignUpController> {
                       NeumorphicCustomButtton(
                         title: controller.buttonTitle,
                         background: Colors.green,
-                        onPressed: () {
-                          if (_formKey.currentState?.validate() ?? false) {
-                            controller.signUp();
-                          }
-                        },
+                        onPressed: controller.buttonEnable
+                            ? () {
+                                if (_formKey.currentState?.validate() ??
+                                    false) {
+                                  controller.signUp();
+                                }
+                              }
+                            : null,
                       ),
                       if (controller.state == VerifyState.checkEmail) ...[
                         NeumorphicTextButton(
