@@ -100,7 +100,7 @@ class NotificationService extends GetxService {
             importance: Importance.high,
             priority: Priority.high,
           ),
-          iOS: IOSNotificationDetails(
+          iOS: DarwinNotificationDetails(
               // badgeNumber: 10,
               ),
         ),

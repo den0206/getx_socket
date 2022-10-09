@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:socket_flutter/src/utils/global_functions.dart';
 import 'package:get/get.dart';
+import 'package:socket_flutter/src/utils/global_functions.dart';
 
 /// MARK  Abstract Class
 

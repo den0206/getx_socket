@@ -1,6 +1,5 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
-
 import 'package:socket_flutter/src/api/report_api.dart';
 import 'package:socket_flutter/src/model/message.dart';
 import 'package:socket_flutter/src/model/user.dart';

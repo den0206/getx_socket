@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-
 import 'package:socket_flutter/src/api/user_api.dart';
 import 'package:socket_flutter/src/model/page_feed.dart';
 import 'package:socket_flutter/src/model/user.dart';

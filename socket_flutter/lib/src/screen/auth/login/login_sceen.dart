@@ -4,15 +4,16 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:lottie/lottie.dart';
+import 'package:sizer/sizer.dart';
 import 'package:socket_flutter/src/screen/auth/login/login_contoller.dart';
 import 'package:socket_flutter/src/screen/main_tab/settings/settings_screen.dart';
 import 'package:socket_flutter/src/screen/widget/animated_widget.dart';
 import 'package:socket_flutter/src/screen/widget/custom_text_fields.dart';
 import 'package:socket_flutter/src/screen/widget/loading_widget.dart';
 import 'package:socket_flutter/src/utils/global_functions.dart';
-import 'package:sizer/sizer.dart';
 import 'package:socket_flutter/src/utils/validator.dart';
 import 'package:visibility_detector/visibility_detector.dart';
+
 import '../../widget/neumorphic/buttons.dart';
 
 class LoginScreen extends LoadingGetView<LoginController> {

@@ -1,12 +1,12 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:sizer/sizer.dart';
 import 'package:socket_flutter/src/screen/main_tab/qr_code/generater/qr_generator_controller.dart';
 import 'package:socket_flutter/src/screen/widget/neumorphic/buttons.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
 import 'package:socket_flutter/src/utils/consts_color.dart';
 import 'package:socket_flutter/src/utils/neumorpic_style.dart';
-import 'package:sizer/sizer.dart';
 
 class QrGenerateScreen extends StatelessWidget {
   const QrGenerateScreen({Key? key}) : super(key: key);

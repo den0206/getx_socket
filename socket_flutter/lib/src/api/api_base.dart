@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-
+import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
 import 'package:mime/mime.dart';
 import 'package:socket_flutter/main.dart';
 import 'package:socket_flutter/src/model/custom_exception.dart';
@@ -10,8 +12,6 @@ import 'package:socket_flutter/src/model/response_api.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
 import 'package:socket_flutter/src/service/image_extention.dart';
 import 'package:socket_flutter/src/utils/enviremont.dart';
-import 'package:http/http.dart' as http;
-import 'package:http_parser/http_parser.dart';
 
 abstract class APIBase {
   final String host = Enviroment.getHost();

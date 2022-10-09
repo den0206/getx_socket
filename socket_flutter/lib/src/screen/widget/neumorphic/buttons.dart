@@ -1,9 +1,9 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:sizer/sizer.dart';
 import 'package:socket_flutter/src/utils/consts_color.dart';
 
 import '../../../utils/neumorpic_style.dart';
 import '../custom_button.dart';
-import 'package:sizer/sizer.dart';
 
 class NeumorphicCustomButtton extends StatelessWidget {
   const NeumorphicCustomButtton({

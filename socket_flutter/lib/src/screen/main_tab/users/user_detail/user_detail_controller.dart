@@ -7,7 +7,6 @@ import 'package:socket_flutter/src/screen/main_tab/blocks/block_list_screen.dart
 import 'package:socket_flutter/src/screen/main_tab/groups/groups_screen.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_extention.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_screen.dart';
-
 import 'package:socket_flutter/src/screen/main_tab/users/user_edit/user_edit_screen.dart';
 import 'package:socket_flutter/src/screen/widget/common_dialog.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';

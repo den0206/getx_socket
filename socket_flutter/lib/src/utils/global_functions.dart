@@ -1,9 +1,9 @@
+import 'package:collection/collection.dart';
 import 'package:country_list_pick/support/code_countries_en.dart';
 import 'package:country_list_pick/support/code_country.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:socket_flutter/src/model/language.dart';
-import 'package:collection/collection.dart';
 
 void dismisskeyBord(BuildContext context) {
   FocusScope.of(context).unfocus();

@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-
 import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/screen/main_tab/main_tab_controller.dart';
 import 'package:socket_flutter/src/screen/main_tab/recents/recents_controller.dart';

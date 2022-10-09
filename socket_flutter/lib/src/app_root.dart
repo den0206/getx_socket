@@ -10,7 +10,6 @@ import 'package:socket_flutter/src/screen/main_tab/message/message_controller.da
 import 'package:socket_flutter/src/screen/main_tab/message/message_screen.dart';
 import 'package:socket_flutter/src/screen/main_tab/qr_code/qr_tab_screen.dart';
 import 'package:socket_flutter/src/screen/main_tab/settings/contacts/contact_screen.dart';
-
 import 'package:socket_flutter/src/screen/main_tab/users/user_edit/email/edit_email_screen.dart';
 import 'package:socket_flutter/src/screen/main_tab/users/user_edit/user_edit_controller.dart';
 import 'package:socket_flutter/src/screen/main_tab/users/user_edit/user_edit_screen.dart';

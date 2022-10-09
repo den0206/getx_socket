@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -8,7 +9,6 @@ import 'package:socket_flutter/src/model/custom_exception.dart';
 import 'package:socket_flutter/src/model/message.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_extention.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_file_sheet.dart';
-
 import 'package:socket_flutter/src/screen/widget/common_dialog.dart';
 import 'package:socket_flutter/src/screen/widget/loading_widget.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
@@ -16,7 +16,6 @@ import 'package:socket_flutter/src/service/image_extention.dart';
 import 'package:socket_flutter/src/service/storage_service.dart';
 import 'package:socket_flutter/src/utils/global_functions.dart';
 import 'package:stream_transform/stream_transform.dart';
-import 'package:collection/collection.dart';
 
 import '../../../socket/message_io.dart';
 

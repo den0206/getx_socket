@@ -1,8 +1,8 @@
+import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/utils.dart';
-import 'package:socket_flutter/src/model/message.dart';
-import 'package:flip_card/flip_card.dart';
 import 'package:sizer/sizer.dart';
+import 'package:socket_flutter/src/model/message.dart';
 import 'package:socket_flutter/src/screen/widget/common_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
 
