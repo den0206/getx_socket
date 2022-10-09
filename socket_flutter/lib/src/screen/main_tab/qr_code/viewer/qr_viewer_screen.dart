@@ -1,7 +1,7 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
-import 'package:socket_flutter/src/screen/main_tab/qr_code/viewer/qr_viewer_controller.dart';
 import 'package:sizer/sizer.dart';
+import 'package:socket_flutter/src/screen/main_tab/qr_code/viewer/qr_viewer_controller.dart';
 import 'package:socket_flutter/src/screen/widget/neumorphic/buttons.dart';
 import 'package:socket_flutter/src/screen/widget/user_country_widget.dart';
 import 'package:socket_flutter/src/utils/neumorpic_style.dart';

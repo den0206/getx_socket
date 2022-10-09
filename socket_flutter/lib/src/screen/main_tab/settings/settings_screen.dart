@@ -4,7 +4,6 @@ import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:get/route_manager.dart';
 import 'package:get/utils.dart';
 import 'package:intl/intl.dart';
-
 import 'package:permission_handler/permission_handler.dart';
 import 'package:socket_flutter/src/languages/Locale_lang.dart';
 import 'package:socket_flutter/src/screen/main_tab/users/user_detail/user_detail_controller.dart';

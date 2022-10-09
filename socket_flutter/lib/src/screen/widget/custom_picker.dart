@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
-
-import 'package:socket_flutter/src/model/language.dart';
 import 'package:sizer/sizer.dart';
+import 'package:socket_flutter/src/model/language.dart';
 
 class selectlanguageArea extends StatelessWidget {
   const selectlanguageArea(

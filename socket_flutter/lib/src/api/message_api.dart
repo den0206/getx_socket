@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:socket_flutter/src/model/response_api.dart';
+
 import 'api_base.dart';
 
 class MessageAPI extends APIBase {

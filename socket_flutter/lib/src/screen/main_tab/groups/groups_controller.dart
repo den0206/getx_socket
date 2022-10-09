@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-
 import 'package:socket_flutter/src/api/group_api.dart';
 import 'package:socket_flutter/src/model/group.dart';
 import 'package:socket_flutter/src/screen/main_tab/groups/group_detail/group_detail_controller.dart';

@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socket_flutter/src/model/message.dart';
 import 'package:socket_flutter/src/screen/main_tab/report/report_controller.dart';
-
 import 'package:socket_flutter/src/screen/widget/neumorphic/buttons.dart';
+
 import '../../../model/user.dart';
 import '../../widget/loading_widget.dart';
 

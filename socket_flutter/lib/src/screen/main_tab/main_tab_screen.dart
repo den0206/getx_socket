@@ -1,6 +1,6 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
-
+import 'package:sizer/sizer.dart';
 import 'package:socket_flutter/src/screen/main_tab/main_tab_controller.dart';
 import 'package:socket_flutter/src/screen/main_tab/qr_code/qr_tab_screen.dart';
 import 'package:socket_flutter/src/screen/main_tab/recents/recents_screen.dart';
@@ -10,7 +10,6 @@ import 'package:socket_flutter/src/screen/widget/detect_lifecycle_widget.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
 import 'package:socket_flutter/src/service/notification_service.dart';
 import 'package:socket_flutter/src/utils/consts_color.dart';
-import 'package:sizer/sizer.dart';
 import 'package:socket_flutter/src/utils/neumorpic_style.dart';
 
 class MainTabScreen extends StatelessWidget {

@@ -1,7 +1,6 @@
 import 'package:country_list_pick/support/code_country.dart';
 import 'package:flutter/material.dart';
 import 'package:socket_flutter/src/model/user.dart';
-
 import 'package:socket_flutter/src/screen/widget/custom_button.dart';
 import 'package:socket_flutter/src/screen/widget/neumorphic/buttons.dart';
 

@@ -3,13 +3,12 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
-
+import 'package:sizer/sizer.dart';
 import 'package:socket_flutter/src/screen/auth/signup/signup_controller.dart';
 import 'package:socket_flutter/src/screen/widget/custom_button.dart';
 import 'package:socket_flutter/src/screen/widget/custom_picker.dart';
 import 'package:socket_flutter/src/screen/widget/custom_text_fields.dart';
 import 'package:socket_flutter/src/screen/widget/loading_widget.dart';
-import 'package:sizer/sizer.dart';
 import 'package:socket_flutter/src/utils/validator.dart';
 
 import '../../widget/custom_pin.dart';

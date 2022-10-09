@@ -5,6 +5,7 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:sizer/sizer.dart';
 import 'package:socket_flutter/src/model/message.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_bubbles/image_bubble.dart';
 import 'package:socket_flutter/src/screen/main_tab/message/message_bubbles/text_bubble.dart';
@@ -13,7 +14,6 @@ import 'package:socket_flutter/src/screen/main_tab/message/message_controller.da
 import 'package:socket_flutter/src/screen/widget/animated_widget.dart';
 import 'package:socket_flutter/src/screen/widget/custom_picker.dart';
 import 'package:socket_flutter/src/screen/widget/loading_widget.dart';
-import 'package:sizer/sizer.dart';
 import 'package:socket_flutter/src/screen/widget/neumorphic/buttons.dart';
 import 'package:socket_flutter/src/screen/widget/user_country_widget.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';

@@ -1,6 +1,6 @@
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-
 import 'dart:io' as io;
+
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import '../../main.dart';
 

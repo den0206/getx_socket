@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
-import 'package:socket_flutter/src/model/message.dart';
 import 'package:sizer/sizer.dart';
+import 'package:socket_flutter/src/model/message.dart';
 import 'package:socket_flutter/src/screen/widget/common_dialog.dart';
 import 'package:socket_flutter/src/service/image_extention.dart';
 import 'package:socket_flutter/src/utils/global_functions.dart';

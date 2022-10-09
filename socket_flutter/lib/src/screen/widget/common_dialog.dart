@@ -59,7 +59,7 @@ class CustomDialog extends StatelessWidget {
                   children: [
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                          primary: Colors.grey,
+                          backgroundColor: Colors.grey,
                           textStyle: TextStyle(
                             color: Colors.white,
                           )),
@@ -72,7 +72,7 @@ class CustomDialog extends StatelessWidget {
                     ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                          primary: mainColor,
+                          backgroundColor: mainColor,
                           textStyle: TextStyle(
                             color: Colors.white,
                           )),
