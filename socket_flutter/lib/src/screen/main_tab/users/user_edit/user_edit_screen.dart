@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/utils.dart';
+import 'package:sizer/sizer.dart';
 import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/screen/main_tab/users/user_edit/user_edit_controller.dart';
 import 'package:socket_flutter/src/screen/widget/custom_picker.dart';
 import 'package:socket_flutter/src/screen/widget/custom_text_fields.dart';
-import 'package:sizer/sizer.dart';
 import 'package:socket_flutter/src/screen/widget/loading_widget.dart';
 import 'package:socket_flutter/src/screen/widget/neumorphic/buttons.dart';
 import 'package:socket_flutter/src/utils/consts_color.dart';
@@ -28,9 +28,9 @@ class UserEditScreen extends LoadingGetView<UserEditController> {
         title: Text('Edit User'.tr),
       ),
       body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: ConstsColor.mainBackgroundColor,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(30),
@@ -40,7 +40,7 @@ class UserEditScreen extends LoadingGetView<UserEditController> {
           constraints: BoxConstraints(maxHeight: 100.h),
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 40,
               ),
               Obx(
@@ -54,7 +54,7 @@ class UserEditScreen extends LoadingGetView<UserEditController> {
                   },
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 40,
               ),
               Form(
@@ -67,7 +67,7 @@ class UserEditScreen extends LoadingGetView<UserEditController> {
                         controller: controller.nameController,
                         labelText: "Name".tr,
                         validator: valideName,
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.person,
                           color: Colors.black,
                         ),
@@ -76,10 +76,10 @@ class UserEditScreen extends LoadingGetView<UserEditController> {
                         },
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
-                    selectlanguageArea(
+                    SelectlanguageArea(
                       currentlang: controller.selectLanguage,
                       onSelectedLang: (selectLang) {
                         controller.editUser.mainLanguage = selectLang;
@@ -109,7 +109,7 @@ class UserEditScreen extends LoadingGetView<UserEditController> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 40,
               ),
               Builder(builder: (context) {

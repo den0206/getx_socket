@@ -99,14 +99,14 @@ class BubbleSelf extends StatelessWidget {
     }
 
     return Container(
-      padding: EdgeInsets.all(10),
-      margin: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
       constraints: BoxConstraints(
         maxWidth: MediaQuery.of(context).size.width * 0.7,
       ),
       decoration: BoxDecoration(
         color: bubbleColor,
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             blurRadius: 20.0,
             offset: Offset(10, 10),
@@ -114,8 +114,8 @@ class BubbleSelf extends StatelessWidget {
           )
         ],
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(16),
-          topRight: Radius.circular(16),
+          topLeft: const Radius.circular(16),
+          topRight: const Radius.circular(16),
           bottomLeft: Radius.circular(bottomLeft),
           bottomRight: Radius.circular(bottomRight),
         ),
@@ -147,7 +147,7 @@ class BubbleSelf extends StatelessWidget {
 }
 
 bool _isLink(String input) {
-  final matcher = new RegExp(
+  final matcher = RegExp(
       r"(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)");
   return matcher.hasMatch(input);
 }

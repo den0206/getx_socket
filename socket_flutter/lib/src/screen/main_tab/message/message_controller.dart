@@ -97,7 +97,7 @@ class MessageController extends LoadingGetController {
 
     isLoading.call(true);
 
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
 
     try {
       final temp = await extention.loadMessage();
@@ -145,7 +145,7 @@ class MessageController extends LoadingGetController {
 
   Future<void> deleteMessage(Message message) async {
     isOverlay.call(true);
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
 
     try {
       final canDelete = await extention.deleteMessage(message);
@@ -174,8 +174,9 @@ class MessageController extends LoadingGetController {
       }
     });
 
-    if (messages.isNotEmpty && sC.hasClients)
+    if (messages.isNotEmpty && sC.hasClients) {
       sC.jumpTo(sC.position.minScrollExtent);
+    }
   }
 
   Future<void> _scrollToBottom() async {
@@ -279,7 +280,7 @@ class MessageController extends LoadingGetController {
   }
 
   void streamText() {
-    streamController.stream.debounce(Duration(seconds: 1)).listen((s) {
+    streamController.stream.debounce(const Duration(seconds: 1)).listen((s) {
       // backspaceの時は呼ばない
       if (!searchText.contains(s) && useRealtime.value) checkText();
 
@@ -294,7 +295,7 @@ class MessageController extends LoadingGetController {
     newMap = sep.asMap();
 
     // 改行の際は呼ばない
-    if (!DeepCollectionEquality().equals(oldMap, newMap)) {
+    if (!const DeepCollectionEquality().equals(oldMap, newMap)) {
       translateText();
     }
     oldMap = newMap;

@@ -52,12 +52,10 @@ class VideoBubbleController extends GetxController {
       ],
       placeholder: Container(
         color: Colors.black87,
-        child: Container(
-          child: Center(
-              child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-          )),
-        ),
+        child: const Center(
+            child: CircularProgressIndicator(
+          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+        )),
       ),
     );
   }
@@ -89,8 +87,8 @@ class VideoBubble extends StatelessWidget {
       init: VideoBubbleController(message.videoUrl!),
       builder: (controller) {
         return Container(
-          margin: EdgeInsets.only(bottom: 10, right: 10.0),
-          constraints: BoxConstraints(
+          margin: const EdgeInsets.only(bottom: 10, right: 10.0),
+          constraints: const BoxConstraints(
             maxHeight: 250,
             maxWidth: 300,
           ),
@@ -113,10 +111,10 @@ class VideoBubble extends StatelessWidget {
                         height: 50.w,
                         fit: BoxFit.contain,
                         errorBuilder: (context, error, stackTrace) {
-                          return ErrorImageWidget();
+                          return const ErrorImageWidget();
                         },
                       ),
-                      Icon(
+                      const Icon(
                         Icons.play_circle_fill,
                         color: Colors.black,
                         size: 80,
@@ -139,16 +137,16 @@ class ErrorImageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
+      borderRadius: const BorderRadius.all(
+        Radius.circular(8.0),
+      ),
+      clipBehavior: Clip.hardEdge,
       child: Image.asset(
         'assets/images/logo.png',
         width: 200.0,
         height: 200.0,
         fit: BoxFit.cover,
       ),
-      borderRadius: BorderRadius.all(
-        Radius.circular(8.0),
-      ),
-      clipBehavior: Clip.hardEdge,
     );
   }
 }

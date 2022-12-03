@@ -13,11 +13,6 @@ class ContactController extends LoadingGetController {
     await check();
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
   Future check() async {
     isOverlay.call(true);
 

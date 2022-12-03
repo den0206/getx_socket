@@ -27,12 +27,12 @@ enum StorageKey {
   Future<bool> saveString(dynamic value) async {
     final pref = await SharedPreferences.getInstance();
     final encoded = json.encode(value);
-    return await pref.setString(this.keyString, encoded);
+    return await pref.setString(keyString, encoded);
   }
 
   Future<dynamic> loadString() async {
     final pref = await SharedPreferences.getInstance();
-    final value = await pref.getString(this.keyString);
+    final value = pref.getString(keyString);
     if (value == null) {
       print("No Local Storage");
       return null;
@@ -43,13 +43,13 @@ enum StorageKey {
 
   Future<bool> saveBool(bool value) async {
     final pref = await SharedPreferences.getInstance();
-    return await pref.setBool(this.keyString, value);
+    return await pref.setBool(keyString, value);
   }
 
   Future<bool?> loadBool() async {
     final pref = await SharedPreferences.getInstance();
-    final value = await pref.getBool(this.keyString);
-    return value ?? null;
+    final value = pref.getBool(keyString);
+    return value;
   }
 
   Future<bool> deleteLocal() async {

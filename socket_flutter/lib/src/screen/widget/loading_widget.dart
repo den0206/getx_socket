@@ -29,10 +29,10 @@ abstract class LoadingGetView<T extends LoadingGetController>
             child,
             if (controller.isOverlay.value)
               Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Color.fromRGBO(0, 0, 0, 0.6),
                 ),
-                child: PlainLoadingWidget(),
+                child: const PlainLoadingWidget(),
               )
           ],
         ),
@@ -50,15 +50,15 @@ class PlainLoadingWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CircularProgressIndicator(
+          const CircularProgressIndicator(
             valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
           ),
-          SizedBox(
+          const SizedBox(
             height: 24,
           ),
           Text(
             "Loading...".tr,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 24,
               decoration: TextDecoration.none,
@@ -77,8 +77,8 @@ class LoadingCellWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+    return const Padding(
+      padding: EdgeInsets.symmetric(vertical: 10),
       child: Center(
           child: CupertinoActivityIndicator(
         radius: 12.0,

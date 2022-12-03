@@ -10,7 +10,7 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/route_manager.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socket_flutter/src/app_root.dart';
-import 'package:socket_flutter/src/languages/Locale_lang.dart';
+import 'package:socket_flutter/src/languages/locale_lang.dart';
 import 'package:socket_flutter/src/service/storage_service.dart';
 import 'package:socket_flutter/src/utils/consts_color.dart';
 
@@ -33,7 +33,7 @@ void main() async {
 
   const flavor = String.fromEnvironment('FLAVOR');
   print(flavor);
-  runApp(DevicePreview(enabled: false, builder: (context) => MyApp()));
+  runApp(DevicePreview(enabled: false, builder: (context) => const MyApp()));
 }
 
 const bool useMain = true;
@@ -59,8 +59,8 @@ class MyApp extends StatelessWidget {
                 fontSize: 17.sp,
                 fontWeight: FontWeight.bold,
               ),
-              iconTheme: IconThemeData(color: Colors.black54),
-              actionsIconTheme: IconThemeData(color: Colors.black54),
+              iconTheme: const IconThemeData(color: Colors.black54),
+              actionsIconTheme: const IconThemeData(color: Colors.black54),
               elevation: 1,
               backgroundColor: ConstsColor.mainBackgroundColor,
             ),
@@ -79,6 +79,7 @@ class PermitInvalidCertification extends HttpOverrides {
   HttpClient createHttpClient(SecurityContext? context) {
     return super.createHttpClient(context)
       ..badCertificateCallback =
+          // ignore: unrelated_type_equality_checks
           (X509Certificate cert, host, port) => host == true;
   }
 }

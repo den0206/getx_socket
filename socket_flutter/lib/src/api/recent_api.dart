@@ -10,7 +10,7 @@ class RecentAPI extends APIBase {
       final Uri uri = setUri("/");
       return await postRequest(uri: uri, body: recent);
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -21,7 +21,7 @@ class RecentAPI extends APIBase {
       final Uri uri = setUri("/update", q);
       return await putRequest(uri: uri, body: value, useToken: true);
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -31,7 +31,7 @@ class RecentAPI extends APIBase {
       final Uri uri = setUri("/one", q);
       return await getRequest(uri: uri, useToken: true);
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -47,7 +47,7 @@ class RecentAPI extends APIBase {
       final Uri uri = setUri("/roomid", query);
       return await getRequest(uri: uri, useToken: true);
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -61,7 +61,7 @@ class RecentAPI extends APIBase {
       final Uri uri = setUri("/userid", query);
       return await getRequest(uri: uri, useToken: true);
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -70,7 +70,7 @@ class RecentAPI extends APIBase {
       final Uri uri = setUri("/$recentId");
       return await deleteRequest(uri: uri, useToken: true);
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 }

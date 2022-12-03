@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class DetectLifeCycleWidget extends StatefulWidget {
-  DetectLifeCycleWidget({
+  const DetectLifeCycleWidget({
     Key? key,
     required this.child,
     required this.onChangeState,

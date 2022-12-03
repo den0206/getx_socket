@@ -25,9 +25,9 @@ class MainTabScreen extends StatelessWidget {
     ];
 
     final List<Widget> pages = [
-      RecentsScreen(),
-      UsersScreen(),
-      QrTabScreen(),
+      const RecentsScreen(),
+      const UsersScreen(),
+      const QrTabScreen(),
       UserDetailScreen(AuthService.to.currentUser.value!),
 
       /// current only log outbutton
@@ -57,9 +57,10 @@ class MainTabScreen extends StatelessWidget {
           child: Scaffold(
             body: pages[controller.currentIndex],
             bottomNavigationBar: Container(
-              margin: EdgeInsets.only(bottom: 20),
+              margin: const EdgeInsets.only(bottom: 20),
               height: kBottomNavigationBarHeight,
-              decoration: BoxDecoration(color: ConstsColor.mainBackgroundColor),
+              decoration:
+                  const BoxDecoration(color: ConstsColor.mainBackgroundColor),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: bottomIcons
@@ -68,17 +69,17 @@ class MainTabScreen extends StatelessWidget {
                       .map(
                         (entry) => NeumorphicRadio(
                           style: commonRatioStyle(),
-                          padding: EdgeInsets.all(10),
-                          child: Icon(
-                            entry.value,
-                            size: 30.sp,
-                          ),
+                          padding: const EdgeInsets.all(10),
                           value: entry.key,
                           groupValue: controller.currentIndex,
                           onChanged: (int? index) {
                             if (index == null) return;
                             controller.setIndex(index);
                           },
+                          child: Icon(
+                            entry.value,
+                            size: 30.sp,
+                          ),
                         ),
                       )
                       .toList()),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 class FadeinWidget extends StatefulWidget {
-  FadeinWidget({Key? key, required this.child, this.duration})
+  const FadeinWidget({Key? key, required this.child, this.duration})
       : super(key: key);
 
   final Widget child;
@@ -22,9 +22,7 @@ class _FadeinWidgetState extends State<FadeinWidget>
     super.initState();
     controller = AnimationController(
       vsync: this,
-      duration: widget.duration == null
-          ? Duration(milliseconds: 600)
-          : widget.duration,
+      duration: widget.duration ?? const Duration(milliseconds: 600),
     );
 
     animation = CurvedAnimation(parent: controller, curve: Curves.easeIn);
@@ -66,8 +64,8 @@ class EmptyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FadeinWidget(
-      duration: Duration(seconds: 1),
-      child: Container(
+      duration: const Duration(seconds: 1),
+      child: SizedBox(
         height: double.infinity,
         width: double.infinity,
         child: Column(
@@ -76,9 +74,9 @@ class EmptyScreen extends StatelessWidget {
           children: [
             Text(
               title,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             LottieBuilder.asset(

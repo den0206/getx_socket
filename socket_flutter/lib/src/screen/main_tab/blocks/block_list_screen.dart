@@ -19,14 +19,14 @@ class BlockListScreen extends StatelessWidget {
             title: Text('Block List'.tr),
           ),
           body: ListView.separated(
-            separatorBuilder: (context, index) => Divider(),
+            separatorBuilder: (context, index) => const Divider(),
             itemCount: controller.blocks.length,
             itemBuilder: (context, index) {
               final user = controller.blocks[index];
               return Slidable(
                 key: Key(user.id),
                 endActionPane: ActionPane(
-                  motion: ScrollMotion(),
+                  motion: const ScrollMotion(),
                   extentRatio: 0.25,
                   children: [
                     SlidableAction(

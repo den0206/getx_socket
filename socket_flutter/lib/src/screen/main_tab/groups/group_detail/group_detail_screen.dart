@@ -40,7 +40,7 @@ class GroupDetailScreen extends GetView<GroupDetailController> {
                     controller.tryDeleteGroup(context);
                   },
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
               ],

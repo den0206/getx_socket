@@ -11,8 +11,6 @@ import 'package:socket_flutter/src/service/auth_service.dart';
 import 'package:socket_flutter/src/service/notification_service.dart';
 import 'package:socket_flutter/src/service/recent_extention.dart';
 
-import '../../../model/recent.dart';
-
 /// MARK  Message関連のAPI処理等を纏める
 
 class MessageExtention {
@@ -40,7 +38,7 @@ class MessageExtention {
       [currentUser.id, ...withUsers.map((u) => u.id).toList()];
 
   bool get isSameLanguage {
-    return currentUser.mainLanguage == targetLanguage;
+    return currentUser.mainLanguage == targetLanguage.value;
   }
 
   Future<List<Message>> loadMessage() async {
@@ -78,7 +76,7 @@ class MessageExtention {
           break;
         case MessageType.image:
           if (file == null) throw Exception("File Error");
-          ;
+          {}
 
           res = await _messageAPI.sendImageMessage(
             message: messageData,
@@ -99,7 +97,7 @@ class MessageExtention {
 
       return message;
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -132,9 +130,9 @@ class MessageExtention {
         await re.updateRecentWithLastMessage(chatRoomId: chatRoomId);
 
     if (remainRecents.isNotEmpty) {
-      remainRecents.forEach((Recent recent) {
+      for (var recent in remainRecents) {
         re.updateRecentSocket(userId: recent.user.id, chatRoomId: chatRoomId);
-      });
+      }
     }
   }
 
@@ -203,22 +201,24 @@ extension MessageExtTranslation on MessageExtention {
     final data = Map.from(res.data);
     // <int,String> へcast
     final Map<int, String> current = {};
-    data.entries.forEach((map) => {current[int.parse(map.key)] = map.value});
-    print("今回の翻訳 ${current}");
+    for (var map in data.entries) {
+      current[int.parse(map.key)] = map.value;
+    }
+    print("今回の翻訳 $current");
 
     // 翻訳済みのテキストを段落つきのmapへ
     final alreadyTrs = currentTrs.trim().split("\n").asMap();
 
     var newMap = Map.of(alreadyTrs);
-    current.entries.forEach((element) {
+    for (var element in current.entries) {
       newMap[element.key] = element.value;
-    });
+    }
 
     var temp = "";
-    newMap.entries.forEach((element) {
+    for (var element in newMap.entries) {
       temp += element.value;
       if (element.key != newMap.keys.last) temp += "\n";
-    });
+    }
 
     return temp;
   }
@@ -233,6 +233,6 @@ extension MessageExtTranslation on MessageExtention {
       current = language;
     }
 
-    this.targetLanguage.call(current);
+    targetLanguage.call(current);
   }
 }

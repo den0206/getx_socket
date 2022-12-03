@@ -33,7 +33,7 @@ class Message {
   bool get isCurrent {
     final currentUser = AuthService.to.currentUser.value;
     if (currentUser == null) return false;
-    return this.user.id == currentUser.id;
+    return user.id == currentUser.id;
   }
 
   String get formattedTime {
@@ -69,9 +69,9 @@ class Message {
       'chatRoomId': chatRoomId,
       'text': text,
       'userId': user.toMap(),
-      "translated": translated ?? null,
-      "imageUrl": imageUrl ?? null,
-      "videoUrl": videoUrl ?? null,
+      "translated": translated,
+      "imageUrl": imageUrl,
+      "videoUrl": videoUrl,
       'date': date.toUtc().toIso8601String(),
     };
   }
@@ -83,9 +83,9 @@ class Message {
       text: map['text'] ?? '',
       user: User.fromMap(map['userId']),
       readBy: List<String>.from(map["readBy"] ?? []),
-      translated: map["translated"] ?? null,
-      imageUrl: httpsToHttp(value: map["imageUrl"]) ?? null,
-      videoUrl: map["videoUrl"] ?? null,
+      translated: map["translated"],
+      imageUrl: httpsToHttp(value: map["imageUrl"]),
+      videoUrl: map["videoUrl"],
       date: DateTime.parse(map["date"]).toLocal(),
     );
   }
@@ -97,9 +97,9 @@ class Message {
       text: map['text'] ?? '',
       user: user,
       readBy: List<String>.from(map["readBy"]),
-      translated: map["translated"] ?? null,
-      imageUrl: httpsToHttp(value: map["imageUrl"]) ?? null,
-      videoUrl: map["videoUrl"] ?? null,
+      translated: map["translated"],
+      imageUrl: httpsToHttp(value: map["imageUrl"]),
+      videoUrl: map["videoUrl"],
       date: DateTime.parse(map["date"]).toUtc(),
     );
   }

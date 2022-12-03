@@ -23,7 +23,7 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: height,
       width: width,
       child: ElevatedButton(
@@ -33,11 +33,11 @@ class CustomButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
           ),
         ),
+        onPressed: onPressed,
         child: Text(
           title,
           style: TextStyle(color: titleColor),
         ),
-        onPressed: onPressed,
       ),
     );
   }
@@ -138,7 +138,7 @@ class CircleImageButton extends StatelessWidget {
               }
               return child;
             },
-            errorBuilder: (context, url, error) => new Icon(Icons.error),
+            errorBuilder: (context, url, error) => const Icon(Icons.error),
           ),
         ),
       ),

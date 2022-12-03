@@ -16,7 +16,7 @@ import 'package:socket_flutter/src/utils/enviremont.dart';
 abstract class APIBase {
   final String host = Enviroment.getHost();
   final http.Client client = http.Client();
-  final JsonCodec json = JsonCodec();
+  final JsonCodec json = const JsonCodec();
   final Map<String, String> headers = {
     "Content-type": "application/json",
     "x-api-key": dotenv.env["API_KEY"] ?? "No API Key"
@@ -90,7 +90,7 @@ abstract class APIBase {
   }
 
   Uri setUri(String path, [Map<String, dynamic>? query]) {
-    final String withPath = "${endPoint.name}${path}";
+    final String withPath = "${endPoint.name}$path";
     if (useMain) return Uri.https(host, withPath, query);
     return kDebugMode
         ? Uri.http(host, withPath, query)
@@ -107,9 +107,9 @@ extension APIBaseExtention on APIBase {
 
       final res = await http.get(uri, headers: headers);
       return _filterResponse(res);
-    } on UnauthorisedException catch (unauth) {
+    } on UnauthorisedException {
       await AuthService.to.logout();
-      throw unauth;
+      rethrow;
     } on SocketException {
       throw Exception("No Internet");
     }
@@ -126,9 +126,9 @@ extension APIBaseExtention on APIBase {
       final String bodyParams = json.encode(body);
       final res = await http.post(uri, headers: headers, body: bodyParams);
       return _filterResponse(res);
-    } on UnauthorisedException catch (unauth) {
+    } on UnauthorisedException {
       await AuthService.to.logout();
-      throw unauth;
+      rethrow;
     } on SocketException {
       throw Exception("No Internet");
     }
@@ -145,9 +145,9 @@ extension APIBaseExtention on APIBase {
       final String bodyParams = json.encode(body);
       final res = await http.put(uri, headers: headers, body: bodyParams);
       return _filterResponse(res);
-    } on UnauthorisedException catch (unauth) {
+    } on UnauthorisedException {
       await AuthService.to.logout();
-      throw unauth;
+      rethrow;
     } on SocketException {
       throw Exception("No Internet");
     }
@@ -161,9 +161,9 @@ extension APIBaseExtention on APIBase {
 
       final res = await http.delete(uri, headers: headers);
       return _filterResponse(res);
-    } on UnauthorisedException catch (unauth) {
+    } on UnauthorisedException {
       await AuthService.to.logout();
-      throw unauth;
+      rethrow;
     } on SocketException {
       throw Exception("No Internet");
     }
@@ -224,9 +224,9 @@ extension APIBaseExtention on APIBase {
 
       final res = await request.send();
       return _filterStream(res);
-    } on UnauthorisedException catch (unauth) {
+    } on UnauthorisedException {
       await AuthService.to.logout();
-      throw unauth;
+      rethrow;
     } on SocketException {
       throw Exception("No Internet");
     }
@@ -244,7 +244,7 @@ enum EndPoint {
   report;
 
   String get name {
-    final String APIVer = "/api/v1";
+    const String APIVer = "/api/v1";
 
     switch (this) {
       case EndPoint.user:

@@ -22,18 +22,18 @@ class ReportScreen extends LoadingGetView<ReportController> {
       appBar: AppBar(
         title: Text(
           '${"Report".tr} ${user.name}',
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.red,
           ),
         ),
       ),
-      body: Container(
+      body: SizedBox(
         width: double.infinity,
         child: SingleChildScrollView(
           child: Column(
             children: [
               Container(
-                margin: EdgeInsets.symmetric(vertical: 30),
+                margin: const EdgeInsets.symmetric(vertical: 30),
                 constraints: BoxConstraints(maxWidth: 80.w),
                 child: TextField(
                   controller: controller.reportField,
@@ -41,15 +41,15 @@ class ReportScreen extends LoadingGetView<ReportController> {
                   cursorColor: Colors.black,
                   maxLines: 10,
                   // maxLength: 200,
-                  style: TextStyle(fontSize: 17),
+                  style: const TextStyle(fontSize: 17),
                   decoration: InputDecoration(
                     hintText: "${"Report".tr} ${user.name}",
                     focusColor: Colors.black,
                     fillColor: Colors.white,
                     filled: true,
-                    border: OutlineInputBorder(
+                    border: const OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.black)),
-                    focusedBorder: OutlineInputBorder(
+                    focusedBorder: const OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.black),
                     ),
                     contentPadding: const EdgeInsets.all(10),

@@ -40,7 +40,7 @@ class UsersController extends GetxController {
       // set;
       reachLast = !pages.pageInfo.hasNextPage;
       nextCursor = pages.pageInfo.nextPageCursor;
-      print("next cursor is ${nextCursor}");
+      print("next cursor is $nextCursor");
 
       final temp = pages.pageFeeds
           .where((u) => u.id != AuthService.to.currentUser.value?.id)

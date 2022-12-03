@@ -18,7 +18,7 @@ class ResetPasswordController extends LoadingGetController {
   late final String userId;
 
   TextEditingController get currentTx {
-    switch (this.state) {
+    switch (state) {
       case VerifyState.checkEmail:
         return emailTextField;
       case VerifyState.sendPassword:
@@ -35,11 +35,11 @@ class ResetPasswordController extends LoadingGetController {
 
     if (state != VerifyState.checkEmail) {
       isOverlay.call(true);
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 1));
     }
 
     try {
-      switch (this.state) {
+      switch (state) {
         case VerifyState.checkEmail:
 
           /// validate Email
@@ -90,7 +90,7 @@ class ResetPasswordController extends LoadingGetController {
   }
 
   void checkField(String value) {
-    buttonEnable = value.length >= this.state.minLength;
+    buttonEnable = value.length >= state.minLength;
 
     update();
   }

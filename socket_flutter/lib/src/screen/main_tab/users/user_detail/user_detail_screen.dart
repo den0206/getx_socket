@@ -47,11 +47,11 @@ class UserDetailScreen extends StatelessWidget {
                             ))
                                 .then(
                               (value) async {
-                                if (Get.isRegistered<ReportController>())
+                                if (Get.isRegistered<ReportController>()) {
                                   await Get.delete<ReportController>();
+                                }
                               },
                             );
-                            ;
                           },
                         ),
                       );
@@ -68,21 +68,21 @@ class UserDetailScreen extends StatelessWidget {
                   size: 40.w,
                   useNeumorphic: true,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 if (user.isCurrent) ...[Text(user.email)],
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Text(
                   controller.user.name,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 40.0,
                       color: Colors.black),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 40,
                 ),
                 Row(
@@ -118,7 +118,7 @@ class UserDetailScreen extends StatelessWidget {
                                 backgroundColor:
                                     ConstsColor.mainBackgroundColor,
                                 builder: (context) {
-                                  return SettingsScreen();
+                                  return const SettingsScreen();
                                 },
                               );
                             },
@@ -168,8 +168,8 @@ class ProfileButtonsArea extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.count(
-      physics: NeverScrollableScrollPhysics(),
-      padding: EdgeInsets.all(10),
+      physics: const NeverScrollableScrollPhysics(),
+      padding: const EdgeInsets.all(10),
       shrinkWrap: true,
       mainAxisSpacing: 21,
       // crossAxisSpacing: 21,

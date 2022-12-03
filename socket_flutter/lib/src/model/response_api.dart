@@ -13,7 +13,7 @@ class ResponseAPI {
     return ResponseAPI(
       status: map['status'],
       data: map['data'],
-      message: map['message'] != null ? map['message'] : null,
+      message: map['message'],
     );
   }
 

@@ -25,10 +25,17 @@ class NeumorphicCustomButtton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: width,
       height: height,
       child: NeumorphicButton(
+        onPressed: onPressed,
+        style: commonNeumorphic(
+          color:
+              onPressed != null ? background : ConstsColor.mainBackgroundColor,
+          // lightSource: LightSource.bottomRight,
+          depth: 1.2,
+        ),
         child: Center(
           child: Text(
             title,
@@ -38,13 +45,6 @@ class NeumorphicCustomButtton extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-        ),
-        onPressed: onPressed,
-        style: commonNeumorphic(
-          color:
-              onPressed != null ? background : ConstsColor.mainBackgroundColor,
-          // lightSource: LightSource.bottomRight,
-          depth: 1.2,
         ),
       ),
     );
@@ -72,15 +72,15 @@ class NeumorphicIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return NeumorphicButton(
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       style: NeumorphicStyle(
-        boxShape: boxShape ?? NeumorphicBoxShape.circle(),
+        boxShape: boxShape ?? const NeumorphicBoxShape.circle(),
         color: color ?? ConstsColor.mainBackgroundColor,
         depth: depth ?? 1,
         intensity: 2,
       ),
-      child: icon,
       onPressed: onPressed,
+      child: icon,
     );
   }
 }
@@ -99,8 +99,8 @@ class NeumorphicAvatarButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Neumorphic(
-      padding: EdgeInsets.all(10),
-      style: NeumorphicStyle(
+      padding: const EdgeInsets.all(10),
+      style: const NeumorphicStyle(
         boxShape: NeumorphicBoxShape.circle(),
         color: ConstsColor.mainBackgroundColor,
         depth: 1,
@@ -131,6 +131,7 @@ class NeumorphicTextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
+      onPressed: onPressed,
       child: NeumorphicText(
         title,
         style: NeumorphicStyle(
@@ -141,7 +142,6 @@ class NeumorphicTextButton extends StatelessWidget {
         ),
         textStyle: NeumorphicTextStyle(fontWeight: FontWeight.bold),
       ),
-      onPressed: onPressed ?? null,
     );
   }
 }

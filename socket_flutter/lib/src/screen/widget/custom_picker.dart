@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:socket_flutter/src/model/language.dart';
 
-class selectlanguageArea extends StatelessWidget {
-  const selectlanguageArea(
+class SelectlanguageArea extends StatelessWidget {
+  const SelectlanguageArea(
       {Key? key, required this.currentlang, this.onSelectedLang})
       : super(key: key);
 
@@ -19,7 +19,7 @@ class selectlanguageArea extends StatelessWidget {
         showModalBottomSheet(
           context: context,
           builder: (context) {
-            return selectLanguagePicker(
+            return SelectLanguagePicker(
               onSelectedLang: (selectLang) {
                 currentlang.call(selectLang);
                 if (onSelectedLang != null) onSelectedLang!(selectLang);
@@ -29,15 +29,15 @@ class selectlanguageArea extends StatelessWidget {
         );
       },
       child: Neumorphic(
-        style: NeumorphicStyle(depth: -0.6, intensity: 1),
-        child: Container(
+        style: const NeumorphicStyle(depth: -0.6, intensity: 1),
+        child: SizedBox(
           width: 60.w,
           height: 8.h,
           child: Container(
             alignment: Alignment.centerLeft,
             child: Obx(() => Row(
                   children: [
-                    Icon(Icons.arrow_drop_down),
+                    const Icon(Icons.arrow_drop_down),
                     currentlang.value != null
                         ? Text(currentlang.value!.name.toUpperCase())
                         : Text("Language".tr)
@@ -50,8 +50,8 @@ class selectlanguageArea extends StatelessWidget {
   }
 }
 
-class selectLanguagePicker extends StatelessWidget {
-  const selectLanguagePicker({
+class SelectLanguagePicker extends StatelessWidget {
+  const SelectLanguagePicker({
     Key? key,
     this.title = "Choose Your Languag",
     this.onSelectedLang,
@@ -70,12 +70,12 @@ class selectLanguagePicker extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 15),
           child: Text(
             title,
-            style: TextStyle(
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
             ),
           ),
         ),
-        Container(
+        SizedBox(
           height: 30.h,
           child: CupertinoPicker(
             itemExtent: 50,

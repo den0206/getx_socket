@@ -36,7 +36,7 @@ class RecentsScreen extends StatelessWidget {
             },
             child: CustomScrollView(
               controller: controller.sc,
-              physics: AlwaysScrollableScrollPhysics(),
+              physics: const AlwaysScrollableScrollPhysics(),
               slivers: [
                 SliverAppBar(
                   backgroundColor: Colors.transparent,
@@ -59,7 +59,7 @@ class RecentsScreen extends StatelessWidget {
                     },
                   ),
                 SliverToBoxAdapter(
-                  child: Container(
+                  child: SizedBox(
                     // color: Colors.green,
                     height: 20,
                     child: Column(
@@ -67,11 +67,11 @@ class RecentsScreen extends StatelessWidget {
                       children: <Widget>[
                         Container(
                           height: 20,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             color: ConstsColor.mainBackgroundColor,
                             borderRadius: BorderRadius.only(
-                              topLeft: const Radius.circular(20.0),
-                              topRight: const Radius.circular(20.0),
+                              topLeft: Radius.circular(20.0),
+                              topRight: Radius.circular(20.0),
                             ),
                           ),
                         ),
@@ -87,6 +87,8 @@ class RecentsScreen extends StatelessWidget {
                   }, childCount: controller.recents.length),
                 ),
                 SliverFillRemaining(
+                  hasScrollBody: false,
+                  fillOverscroll: true,
                   child: Container(
                     alignment: Alignment.center,
                     color: ConstsColor.mainBackgroundColor,
@@ -97,8 +99,6 @@ class RecentsScreen extends StatelessWidget {
                           )
                         : null,
                   ),
-                  hasScrollBody: false,
-                  fillOverscroll: true,
                 ),
               ],
             ),
@@ -124,12 +124,12 @@ class NeumorphicRecentCell extends GetView<RecentsController> {
         color: ConstsColor.mainBackgroundColor,
         child: Neumorphic(
           style: commonNeumorphic(depth: 0.6),
-          padding: EdgeInsets.all(10),
-          margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+          padding: const EdgeInsets.all(10),
+          margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
           child: Slidable(
             key: Key(recent.id),
             endActionPane: ActionPane(
-              motion: ScrollMotion(),
+              motion: const ScrollMotion(),
               extentRatio: 0.25,
               children: [
                 SlidableAction(
@@ -150,7 +150,7 @@ class NeumorphicRecentCell extends GetView<RecentsController> {
                         size: 35,
                       )
                     : OverlapAvatars(users: recent.group!.members),
-                SizedBox(
+                const SizedBox(
                   width: 20,
                 ),
                 Column(
@@ -162,22 +162,23 @@ class NeumorphicRecentCell extends GetView<RecentsController> {
                           ? recent.withUser!.name
                           : recent.group?.title ?? "Group".tr,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Color(0xff686795),
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                         letterSpacing: 1.5,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     Container(
-                      constraints: BoxConstraints(minWidth: 100, maxWidth: 200),
+                      constraints:
+                          const BoxConstraints(minWidth: 100, maxWidth: 200),
                       child: Text(
                         recent.lastMessage,
                         maxLines: 2,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.black,
                           fontSize: 14,
                           letterSpacing: 1.2,
@@ -187,7 +188,7 @@ class NeumorphicRecentCell extends GetView<RecentsController> {
                     )
                   ],
                 ),
-                Spacer(),
+                const Spacer(),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -196,17 +197,17 @@ class NeumorphicRecentCell extends GetView<RecentsController> {
                       Padding(
                         padding: const EdgeInsets.only(top: 10),
                         child: Container(
-                          margin: EdgeInsets.symmetric(horizontal: 10),
+                          margin: const EdgeInsets.symmetric(horizontal: 10),
                           height: 30,
                           width: 30,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             shape: BoxShape.circle,
                             color: Colors.green,
                           ),
                           child: Center(
                               child: Text(
                             "${recent.counter}",
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.white,
                             ),
                           )),
@@ -236,15 +237,15 @@ class RecentCell extends GetView<RecentsController> {
         controller.pushMessageScreen(recent);
       },
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-        decoration: BoxDecoration(
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+        decoration: const BoxDecoration(
             color: ConstsColor.mainBackgroundColor,
             border:
                 Border(bottom: BorderSide(color: Colors.black, width: 0.5))),
         child: Slidable(
           key: Key(recent.id),
           endActionPane: ActionPane(
-            motion: ScrollMotion(),
+            motion: const ScrollMotion(),
             extentRatio: 0.25,
             children: [
               SlidableAction(
@@ -265,7 +266,7 @@ class RecentCell extends GetView<RecentsController> {
                       size: 35,
                     )
                   : OverlapAvatars(users: recent.group!.members),
-              SizedBox(
+              const SizedBox(
                 width: 20,
               ),
               Column(
@@ -277,22 +278,23 @@ class RecentCell extends GetView<RecentsController> {
                         ? recent.withUser!.name
                         : recent.group?.title ?? "Group",
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Color(0xff686795),
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                       letterSpacing: 1.5,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   Container(
-                    constraints: BoxConstraints(minWidth: 100, maxWidth: 200),
+                    constraints:
+                        const BoxConstraints(minWidth: 100, maxWidth: 200),
                     child: Text(
                       recent.lastMessage,
                       maxLines: 2,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.black,
                         fontSize: 14,
                         letterSpacing: 1.2,
@@ -303,19 +305,19 @@ class RecentCell extends GetView<RecentsController> {
                 ],
               ),
               if (recent.counter != 0) ...[
-                Spacer(),
+                const Spacer(),
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: 10),
+                  margin: const EdgeInsets.symmetric(horizontal: 10),
                   height: 30,
                   width: 30,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.green,
                   ),
                   child: Center(
                       child: Text(
                     "${recent.counter}",
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                     ),
                   )),
@@ -336,7 +338,7 @@ Widget buildAndroidRefreshIndicator(
   double refreshTriggerPullDistance,
   double refreshIndicatorExtent,
 ) {
-  const Curve opacityCurve = const Interval(0.4, 0.8, curve: Curves.easeInOut);
+  const Curve opacityCurve = Interval(0.4, 0.8, curve: Curves.easeInOut);
   return Align(
     alignment: Alignment.bottomCenter,
     child: Padding(

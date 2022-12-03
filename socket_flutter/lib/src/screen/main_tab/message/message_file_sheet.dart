@@ -7,8 +7,8 @@ class MessageFileSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(25),
-      decoration: BoxDecoration(
+      padding: const EdgeInsets.all(25),
+      decoration: const BoxDecoration(
         color: Colors.white,
         boxShadow: [
           BoxShadow(

@@ -17,9 +17,9 @@ class ImageBubble extends StatelessWidget {
         Get.to(ImageDetailScreen(imageUrl: message.imageUrl!));
       },
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(
+          borderRadius: const BorderRadius.all(
             (Radius.circular(8)),
           ),
           border: Border.all(color: Colors.grey, width: 2),
@@ -32,8 +32,8 @@ class ImageBubble extends StatelessWidget {
           loadingBuilder: (context, child, loadingProgress) {
             if (loadingProgress == null) return child;
             return Container(
-              margin: EdgeInsets.only(bottom: 10, right: 10.0),
-              decoration: BoxDecoration(
+              margin: const EdgeInsets.only(bottom: 10, right: 10.0),
+              decoration: const BoxDecoration(
                 color: Colors.grey,
                 borderRadius: BorderRadius.all(
                   Radius.circular(8.0),
@@ -75,11 +75,11 @@ class ImageDetailScreen extends StatelessWidget {
         backgroundColor: Colors.black,
         appBar: AppBar(
           backgroundColor: Colors.black,
-          iconTheme: IconThemeData(color: Colors.white),
+          iconTheme: const IconThemeData(color: Colors.white),
           elevation: 0,
           actions: [
             IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.download,
                 color: Colors.white,
               ),
@@ -109,7 +109,7 @@ class ImageDetailScreen extends StatelessWidget {
             borderRadius: BorderRadius.circular(16),
             child: FadeInImage(
               image: Image.network(imageUrl).image,
-              placeholder: AssetImage("assets/images/default_user.png"),
+              placeholder: const AssetImage("assets/images/default_user.png"),
             ),
           ),
         ),

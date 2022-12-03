@@ -10,7 +10,7 @@ class TempTokenAPI extends APIBase {
       final Uri uri = setUri("/requestNewEmail");
       return await postRequest(uri: uri, body: body);
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -19,7 +19,7 @@ class TempTokenAPI extends APIBase {
       final Uri uri = setUri("/verifyEmail");
       return await postRequest(uri: uri, body: data);
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -29,7 +29,7 @@ class TempTokenAPI extends APIBase {
       final Uri uri = setUri("/requestPassword");
       return await postRequest(uri: uri, body: body);
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -38,7 +38,7 @@ class TempTokenAPI extends APIBase {
       final Uri uri = setUri("/verifyPassword");
       return await postRequest(uri: uri, body: data);
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 }

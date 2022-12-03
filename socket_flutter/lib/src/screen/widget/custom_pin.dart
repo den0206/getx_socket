@@ -84,7 +84,7 @@ class PinCodeArea extends StatelessWidget {
           if (currentState == VerifyState.verify)
             Text(
               "Please Check Your Email".tr,
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -95,7 +95,7 @@ class PinCodeArea extends StatelessWidget {
                 if (currentState != VerifyState.verify)
                   CustomTextField(
                     controller: currentTX,
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.email,
                       color: Colors.grey,
                     ),
@@ -174,7 +174,7 @@ class CustomPinCodeField extends StatelessWidget {
         selectedFillColor: Colors.white,
       ),
       cursorColor: Colors.black,
-      animationDuration: Duration(milliseconds: 300),
+      animationDuration: const Duration(milliseconds: 300),
       enableActiveFill: false,
       keyboardType: inputType,
       onChanged: onChange ?? (value) {},

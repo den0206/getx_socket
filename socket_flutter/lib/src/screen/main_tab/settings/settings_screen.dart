@@ -5,7 +5,7 @@ import 'package:get/route_manager.dart';
 import 'package:get/utils.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:socket_flutter/src/languages/Locale_lang.dart';
+import 'package:socket_flutter/src/languages/locale_lang.dart';
 import 'package:socket_flutter/src/screen/main_tab/users/user_detail/user_detail_controller.dart';
 import 'package:socket_flutter/src/service/storage_service.dart';
 
@@ -23,7 +23,7 @@ class SettingsScreen extends StatelessWidget {
             onPressed: () {
               Navigator.of(context).pop();
             },
-            icon: Icon(Icons.close),
+            icon: const Icon(Icons.close),
           )
         ],
       ),
@@ -36,7 +36,7 @@ class SettingsScreen extends StatelessWidget {
               tiles: [
                 ListTile(
                   title: Text("Notification".tr),
-                  trailing: Icon(Icons.arrow_forward_ios),
+                  trailing: const Icon(Icons.arrow_forward_ios),
                   onTap: () {
                     openAppSettings();
                   },
@@ -47,21 +47,21 @@ class SettingsScreen extends StatelessWidget {
                 ),
                 ListTile(
                   title: Text("Select Language".tr),
-                  trailing: Icon(Icons.arrow_forward_ios),
+                  trailing: const Icon(Icons.arrow_forward_ios),
                   onTap: () {
                     showLocaleLangs(context);
                   },
                 ),
                 ListTile(
                   title: Text("Block List".tr),
-                  trailing: Icon(Icons.arrow_forward_ios),
+                  trailing: const Icon(Icons.arrow_forward_ios),
                   onTap: () {
                     controller.showBlockList();
                   },
                 ),
                 ListTile(
                   title: Text("Contact".tr),
-                  trailing: Icon(Icons.arrow_forward_ios),
+                  trailing: const Icon(Icons.arrow_forward_ios),
                   onTap: () {
                     Navigator.of(context).pop();
                     controller.showSettings();
@@ -69,14 +69,14 @@ class SettingsScreen extends StatelessWidget {
                 ),
                 ListTile(
                   title: Text("Clear Cache".tr),
-                  trailing: Icon(Icons.arrow_forward_ios),
+                  trailing: const Icon(Icons.arrow_forward_ios),
                   onTap: () async {
                     await DefaultCacheManager().emptyCache();
                   },
                 ),
                 ListTile(
                   title: Text("Logout".tr),
-                  trailing: Icon(Icons.arrow_forward_ios),
+                  trailing: const Icon(Icons.arrow_forward_ios),
                   onTap: () {
                     Navigator.of(context).pop();
                     controller.tryLogout(context);
@@ -98,12 +98,12 @@ Future<dynamic> showLocaleLangs(BuildContext context,
     builder: (builder) {
       return AlertDialog(
         title: Text("Choose Your Language".tr),
-        content: Container(
+        content: SizedBox(
           width: double.maxFinite,
           child: ListView.separated(
             shrinkWrap: true,
             itemCount: LocaleLangs.values.length,
-            separatorBuilder: (context, index) => Divider(
+            separatorBuilder: (context, index) => const Divider(
               color: Colors.black,
             ),
             itemBuilder: (context, index) {

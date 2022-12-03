@@ -11,14 +11,14 @@ class QrViewerScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color mainColor = Colors.green;
+    const Color mainColor = Colors.green;
     return GetBuilder<QrViewerController>(
       init: QrViewerController(),
       builder: (controller) {
         return Stack(
           children: [
             if (controller.findUser != null) ...[
-              Container(
+              SizedBox(
                 height: double.infinity,
                 width: double.infinity,
                 child: Column(
@@ -37,7 +37,7 @@ class QrViewerScreen extends StatelessWidget {
                     ),
                     Text(
                       controller.findUser!.name,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 40.0,
                           color: Colors.black),
@@ -49,7 +49,7 @@ class QrViewerScreen extends StatelessWidget {
                   top: 5.h,
                   right: 20,
                   child: NeumorphicIconButton(
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.close,
                       size: 40,
                     ),
@@ -60,7 +60,7 @@ class QrViewerScreen extends StatelessWidget {
             ] else ...[
               Center(
                 child: NeumorphicButton(
-                  padding: EdgeInsets.all(15),
+                  padding: const EdgeInsets.all(15),
                   style: commonNeumorphic(depth: 0.5),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,

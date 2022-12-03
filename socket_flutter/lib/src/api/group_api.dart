@@ -9,7 +9,7 @@ class GropuAPI extends APIBase {
       final Uri uri = setUri("/");
       return await postRequest(uri: uri, body: group, useToken: true);
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -18,7 +18,7 @@ class GropuAPI extends APIBase {
       final Uri uri = setUri("/userId");
       return await getRequest(uri: uri, useToken: true);
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -29,7 +29,7 @@ class GropuAPI extends APIBase {
       final Uri uri = setUri("/delete", q);
       return await deleteRequest(uri: uri, useToken: true);
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 }

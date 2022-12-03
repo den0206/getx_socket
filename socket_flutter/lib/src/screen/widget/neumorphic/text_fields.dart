@@ -28,12 +28,13 @@ class NeumorphicCustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Neumorphic(
-      margin: EdgeInsets.only(left: 8, right: 8, top: 2, bottom: 4),
+      margin: const EdgeInsets.only(left: 8, right: 8, top: 2, bottom: 4),
       style: commonNeumorphic(
         depth: -10,
-        boxShape: NeumorphicBoxShape.stadium(),
+        boxShape: const NeumorphicBoxShape.stadium(),
       ),
-      padding: padding ?? EdgeInsets.symmetric(vertical: 14, horizontal: 18),
+      padding:
+          padding ?? const EdgeInsets.symmetric(vertical: 14, horizontal: 18),
       child: TextFormField(
         controller: controller,
         decoration: InputDecoration(

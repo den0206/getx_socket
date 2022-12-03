@@ -14,7 +14,7 @@ class RootScreen extends StatelessWidget {
       init: AuthService(),
       builder: (service) {
         if (service.currentUser.value != null) {
-          return MainTabScreen();
+          return const MainTabScreen();
         } else {
           return LoginScreen();
         }

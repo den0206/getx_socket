@@ -23,7 +23,7 @@ class TranslateAPI extends APIBase {
 
       return await getRequest(uri: uri, useToken: true);
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 }

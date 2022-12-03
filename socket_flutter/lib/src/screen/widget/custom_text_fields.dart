@@ -43,12 +43,12 @@ class CustomTextField extends StatelessWidget {
                   )
                 : null,
             hintText: labelText,
-            focusedBorder: UnderlineInputBorder(
+            focusedBorder: const UnderlineInputBorder(
               borderSide: BorderSide(
                 color: Colors.black,
               ),
             ),
-            enabledBorder: UnderlineInputBorder(
+            enabledBorder: const UnderlineInputBorder(
               borderSide: BorderSide(
                 color: Colors.black,
               ),
