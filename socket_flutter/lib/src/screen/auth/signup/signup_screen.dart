@@ -28,7 +28,7 @@ class SignUpScreen extends LoadingGetView<SignUpController> {
       builder: (controller) {
         return Scaffold(
           body: Container(
-            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
             width: double.infinity,
             height: double.infinity,
             child: Form(
@@ -48,7 +48,7 @@ class SignUpScreen extends LoadingGetView<SignUpController> {
                             controller.selectImage();
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         CustomTextField(
@@ -56,7 +56,7 @@ class SignUpScreen extends LoadingGetView<SignUpController> {
                           labelText: "Name".tr,
                           validator: valideName,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         CustomTextField(
@@ -64,10 +64,10 @@ class SignUpScreen extends LoadingGetView<SignUpController> {
                           labelText: "Email".tr,
                           validator: validateEmail,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
-                        Container(
+                        SizedBox(
                           width: double.infinity,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,15 +96,15 @@ class SignUpScreen extends LoadingGetView<SignUpController> {
                                 // useUiOverlay: true,
                                 useSafeArea: false,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
-                              selectlanguageArea(
+                              SelectlanguageArea(
                                 currentlang: controller.currentLanguage,
                                 onSelectedLang: (selectLang) =>
                                     controller.currentLanguage.call(selectLang),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                             ],
@@ -133,13 +133,13 @@ class SignUpScreen extends LoadingGetView<SignUpController> {
                             Builder(builder: (context) {
                               return RichText(
                                 text: TextSpan(
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 12, color: Colors.black),
                                   children: [
                                     TextSpan(text: "I agree".tr),
                                     TextSpan(
                                       text: "the Terms of Use".tr,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: Colors.blue,
                                         decoration: TextDecoration.underline,
                                       ),

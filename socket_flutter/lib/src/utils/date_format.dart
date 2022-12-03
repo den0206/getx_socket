@@ -7,7 +7,7 @@ class DateFormatter {
     initializeDateFormatting(locale);
 
     DateTime now = DateTime.now();
-    DateTime justNow = now.subtract(Duration(minutes: 1));
+    DateTime justNow = now.subtract(const Duration(minutes: 1));
     DateTime localDateTime = dateTime.toLocal();
     if (!localDateTime.difference(justNow).isNegative) {
       return "Just Now";
@@ -22,7 +22,7 @@ class DateFormatter {
         localDateTime.year == now.year) {
       return roughTimeString;
     }
-    DateTime yesterday = now.subtract(Duration(days: 1));
+    DateTime yesterday = now.subtract(const Duration(days: 1));
     if (localDateTime.day == yesterday.day &&
         localDateTime.month == now.month &&
         localDateTime.year == now.year) {
@@ -34,7 +34,7 @@ class DateFormatter {
     }
 
     if (isOmit) {
-      return '${DateFormat('yMd', locale).format(dateTime)}';
+      return DateFormat('yMd', locale).format(dateTime);
     } else {
       return '${DateFormat('yMd', locale).format(dateTime)}, $roughTimeString';
     }

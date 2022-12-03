@@ -9,18 +9,13 @@ class QrGeneratorController extends GetxController {
   final UserAPI _userAPI = UserAPI();
   bool isLoading = false;
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
   Future<void> updateSearchId() async {
     isLoading = true;
     update();
 
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
     try {
-      final Map<String, dynamic> data = {"searchId": Uuid().v4()};
+      final Map<String, dynamic> data = {"searchId": const Uuid().v4()};
 
       final res = await _userAPI.editUser(userData: data);
       if (!res.status) return;

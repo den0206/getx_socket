@@ -27,7 +27,7 @@ class LoginScreen extends LoadingGetView<LoginController> {
   Widget get child {
     return Builder(builder: (context) {
       return VisibilityDetector(
-        key: Key("Login"),
+        key: const Key("Login"),
         onVisibilityChanged: (visibilityInfo) {
           var visiblePercentage = visibilityInfo.visibleFraction * 100;
           if (visiblePercentage == 100) {
@@ -39,7 +39,7 @@ class LoginScreen extends LoadingGetView<LoginController> {
           body: Container(
             width: double.infinity,
             height: double.infinity,
-            padding: EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Center(
               child: SingleChildScrollView(
                 child: Form(
@@ -55,12 +55,12 @@ class LoginScreen extends LoadingGetView<LoginController> {
                         controller: controller.emailController,
                         labelText: "Email".tr,
                         validator: validateEmail,
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.email,
                           color: Colors.grey,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 30,
                       ),
                       CustomTextField(
@@ -68,16 +68,16 @@ class LoginScreen extends LoadingGetView<LoginController> {
                         labelText: "Password".tr,
                         validator: validPassword,
                         isSecure: true,
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.lock,
                           color: Colors.grey,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(vertical: 10),
+                        padding: const EdgeInsets.symmetric(vertical: 10),
                         child: Row(
                           children: [
                             NeumorphicIconButton(
@@ -89,7 +89,7 @@ class LoginScreen extends LoadingGetView<LoginController> {
                                 showLocaleLangs(context);
                               },
                             ),
-                            Spacer(),
+                            const Spacer(),
                             NeumorphicTextButton(
                               title: "Forgot Password".tr,
                               onPressed: () {
@@ -99,7 +99,7 @@ class LoginScreen extends LoadingGetView<LoginController> {
                           ],
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Builder(builder: (context) {
@@ -114,7 +114,7 @@ class LoginScreen extends LoadingGetView<LoginController> {
                           },
                         );
                       }),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       NeumorphicTextButton(
@@ -151,7 +151,7 @@ Future<void> showTermsDialog(BuildContext context) {
               child: Container(
                 width: 85.w,
                 height: MediaQuery.of(context).size.height - 80,
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(16)),
@@ -176,7 +176,7 @@ Future<void> showTermsDialog(BuildContext context) {
                               );
                             }
 
-                            return Center(
+                            return const Center(
                               child: CircularProgressIndicator(),
                             );
                           }),
@@ -198,7 +198,7 @@ Future<void> showTermsDialog(BuildContext context) {
                             ),
                             Text(
                               'I have read and accept'.tr,
-                              style: TextStyle(fontSize: 12),
+                              style: const TextStyle(fontSize: 12),
                               overflow: TextOverflow.ellipsis,
                               softWrap: true,
                               maxLines: 2,

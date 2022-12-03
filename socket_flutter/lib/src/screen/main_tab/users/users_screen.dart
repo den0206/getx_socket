@@ -41,7 +41,6 @@ class UsersScreen extends StatelessWidget {
           ),
           floatingActionButton: !controller.isPrivate
               ? FloatingActionButton(
-                  child: Icon(Icons.add),
                   backgroundColor: Colors.green,
                   onPressed: () {
                     showDialog(
@@ -59,6 +58,7 @@ class UsersScreen extends StatelessWidget {
                       },
                     );
                   },
+                  child: const Icon(Icons.add),
                 )
               : null,
         );
@@ -85,12 +85,12 @@ class UserCell extends StatelessWidget {
       onTap: onTap,
       child: Neumorphic(
         style: commonNeumorphic(depth: selected ? -1.5 : 0.6),
-        padding: EdgeInsets.all(10),
-        margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        padding: const EdgeInsets.all(10),
+        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         child: Row(
           children: [
             UserCountryWidget(user: user, size: 35),
-            SizedBox(
+            const SizedBox(
               width: 20,
             ),
             Text(user.name)

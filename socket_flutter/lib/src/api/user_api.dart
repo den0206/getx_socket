@@ -22,7 +22,7 @@ class UserAPI extends APIBase {
         );
       }
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -31,7 +31,7 @@ class UserAPI extends APIBase {
       final Uri uri = setUri("/login");
       return await postRequest(uri: uri, body: credential);
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -48,7 +48,7 @@ class UserAPI extends APIBase {
       final Uri uri = setUri("/", query);
       return await postRequest(uri: uri, body: blocks, useToken: true);
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -68,7 +68,7 @@ class UserAPI extends APIBase {
             useToken: true);
       }
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -79,7 +79,7 @@ class UserAPI extends APIBase {
       final Uri uri = setUri("/updateBlock");
       return await putRequest(uri: uri, body: userData, useToken: true);
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -88,7 +88,7 @@ class UserAPI extends APIBase {
       final Uri uri = setUri("/blocks");
       return await getRequest(uri: uri, useToken: true);
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -98,7 +98,7 @@ class UserAPI extends APIBase {
       final Uri uri = setUri("/search", query);
       return await getRequest(uri: uri, useToken: true);
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -107,7 +107,7 @@ class UserAPI extends APIBase {
       final Uri uri = setUri("/delete");
       return await deleteRequest(uri: uri, useToken: true);
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 }

@@ -35,7 +35,9 @@ class MessageIO extends SocketBase {
       final uid = value["uid"];
       final ids = value["ids"];
       final List<String> temp = List.castFrom(ids);
-      temp.forEach((String id) => controller.readUI(id, uid));
+      for (var id in temp) {
+        controller.readUI(id, uid);
+      }
     });
   }
 

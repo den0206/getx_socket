@@ -61,7 +61,7 @@ class UserEditController extends LoadingGetController {
   Future<void> updateUser() async {
     if (!isChanged.value) return;
     isOverlay.call(true);
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
 
     try {
       final res = await _userAPI.editUser(
@@ -108,7 +108,7 @@ class UserEditController extends LoadingGetController {
   }
 
   Future<void> deleteUser() async {
-    await Future.delayed(Duration(milliseconds: 500));
+    await Future.delayed(const Duration(milliseconds: 500));
 
     isOverlay.call(true);
     try {

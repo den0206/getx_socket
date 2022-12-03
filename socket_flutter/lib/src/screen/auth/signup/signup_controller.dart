@@ -33,7 +33,7 @@ class SignUpController extends LoadingGetController {
   final _tempTokenAPI = TempTokenAPI();
 
   String get buttonTitle {
-    switch (this.state) {
+    switch (state) {
       case VerifyState.checkEmail:
       case VerifyState.sendPassword:
         return "Sign UP".tr;
@@ -44,11 +44,6 @@ class SignUpController extends LoadingGetController {
 
   bool get buttonEnable {
     return acceptTerms;
-  }
-
-  @override
-  void onInit() {
-    super.onInit();
   }
 
   Future<void> selectImage() async {
@@ -72,11 +67,11 @@ class SignUpController extends LoadingGetController {
       return;
     }
     isOverlay.call(true);
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
     final String emailLower = emaiController.text.toLowerCase();
 
     try {
-      switch (this.state) {
+      switch (state) {
         case VerifyState.checkEmail:
           final res = await _tempTokenAPI.requestNewEmail(emailLower);
           if (!res.status) break;

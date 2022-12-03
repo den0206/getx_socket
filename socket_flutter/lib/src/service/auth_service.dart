@@ -27,24 +27,25 @@ class AuthService extends GetxService {
     final value = await StorageKey.user.loadString();
     if (value == null) return;
 
-    this.currentUser.call(User.fromMap(value));
+    currentUser.call(User.fromMap(value));
     print(currentUser.value.toString());
   }
 
   Future<void> updateUser(User newUser) async {
     newUser.sessionToken = currentUser.value!.sessionToken;
     await StorageKey.user.saveString(newUser.toMap());
-    this.currentUser.call(newUser);
+    currentUser.call(newUser);
   }
 
   Future<void> logout() async {
     await Get.delete<RecentsController>();
     await Get.delete<MainTabController>();
 
-    if (Get.isRegistered<ReportController>())
+    if (Get.isRegistered<ReportController>()) {
       await Get.delete<ReportController>();
+    }
 
     await StorageKey.user.deleteLocal();
-    this.currentUser.value = null;
+    currentUser.value = null;
   }
 }

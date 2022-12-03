@@ -15,8 +15,8 @@ class OverlapAvatars extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 15),
-      child: Container(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      child: SizedBox(
         height: size,
         child: ListView.builder(
           shrinkWrap: true,

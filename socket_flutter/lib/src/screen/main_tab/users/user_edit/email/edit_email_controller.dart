@@ -21,7 +21,7 @@ class EditEmailController extends LoadingGetController {
   bool buttonEnable = false;
 
   TextEditingController? get currentTX {
-    switch (this.state) {
+    switch (state) {
       case VerifyState.checkEmail:
         return emaiController;
       case VerifyState.sendPassword:
@@ -35,10 +35,10 @@ class EditEmailController extends LoadingGetController {
     if (!buttonEnable) return;
 
     isOverlay.call(true);
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
 
     try {
-      switch (this.state) {
+      switch (state) {
         case VerifyState.checkEmail:
           final res = await _tempTokenAPI.requestNewEmail(emaiController.text);
           if (!res.status) break;
@@ -76,7 +76,7 @@ class EditEmailController extends LoadingGetController {
   }
 
   void checkField(String value) {
-    buttonEnable = value.length >= this.state.minLength;
+    buttonEnable = value.length >= state.minLength;
 
     update();
   }

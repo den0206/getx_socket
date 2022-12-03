@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:socket_flutter/src/api/user_api.dart';
-import 'package:socket_flutter/src/languages/Locale_lang.dart';
+import 'package:socket_flutter/src/languages/locale_lang.dart';
 import 'package:socket_flutter/src/model/response_api.dart';
 import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/screen/auth/reset_password/reset_password_screen.dart';
@@ -52,7 +52,7 @@ class LoginController extends LoadingGetController {
 
     isOverlay.call(true);
 
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
 
     try {
       final fcm = await NotificationService.to.getFCMToken();

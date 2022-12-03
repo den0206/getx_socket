@@ -24,16 +24,15 @@ class User {
   bool get isCurrent {
     final currentUser = AuthService.to.currentUser.value;
     if (currentUser == null) return false;
-    return currentUser.id == this.id;
+    return currentUser.id == id;
   }
 
   bool checkBlock(User user) {
-    return this.blockedUsers.contains(user.id);
+    return blockedUsers.contains(user.id);
   }
 
   bool canContact(User user) {
-    return this.blockedUsers.contains(user.id) ||
-        user.blockedUsers.contains(this.id);
+    return blockedUsers.contains(user.id) || user.blockedUsers.contains(id);
   }
 
   List<String> get excludeIds {
@@ -107,8 +106,8 @@ class User {
       id: id ?? this.id,
       name: name ?? this.name,
       email: email ?? this.email,
-      country: this.country,
-      mainLanguage: this.mainLanguage,
+      country: country,
+      mainLanguage: mainLanguage,
       fcmToken: fcmToken ?? this.fcmToken,
       searchId: searchId ?? this.searchId,
       blockedUsers: blockedUsers ?? this.blockedUsers,

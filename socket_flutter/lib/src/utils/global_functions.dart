@@ -10,7 +10,7 @@ void dismisskeyBord(BuildContext context) {
 }
 
 String getFileExtension(String fileName) {
-  return "." + fileName.split('.').last;
+  return ".${fileName.split('.').last}";
 }
 
 List<CountryCode> getAllCountry() {
@@ -52,16 +52,14 @@ Language getLanguage(String lang) {
 Map<int, String> extractrMap(Map<int, String> oldMap, Map<int, String> newMap) {
   final Map<int, String> res = Map<int, String>();
 
-  newMap.entries.forEach(
-    (map) {
-      final index = oldMap.keys.firstWhereOrNull((o) => map.key == o);
-      if (index != null) {
-        if (map.value != oldMap[map.key]) res[index] = map.value;
-      } else {
-        res[map.key] = map.value;
-      }
-    },
-  );
+  for (var map in newMap.entries) {
+    final index = oldMap.keys.firstWhereOrNull((o) => map.key == o);
+    if (index != null) {
+      if (map.value != oldMap[map.key]) res[index] = map.value;
+    } else {
+      res[map.key] = map.value;
+    }
+  }
   return res;
 }
 
@@ -74,13 +72,13 @@ void showSnackBar({
   Get.snackbar(
     title,
     message,
-    icon: Icon(Icons.person, color: Colors.white),
+    icon: const Icon(Icons.person, color: Colors.white),
     snackPosition: position,
     backgroundColor: background,
     borderRadius: 20,
-    margin: EdgeInsets.all(15),
+    margin: const EdgeInsets.all(15),
     colorText: Colors.white,
-    duration: Duration(seconds: 4),
+    duration: const Duration(seconds: 4),
     isDismissible: true,
     dismissDirection: DismissDirection.down,
     forwardAnimationCurve: Curves.easeOutBack,

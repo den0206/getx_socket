@@ -10,7 +10,7 @@ class NotificationAPI extends APIBase {
       final Uri uri = setUri("/");
       return await postRequest(uri: uri, body: notificationData);
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -19,7 +19,7 @@ class NotificationAPI extends APIBase {
       final Uri uri = setUri("/getBadgeCount");
       return await getRequest(uri: uri, useToken: true);
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 }

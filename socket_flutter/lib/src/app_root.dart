@@ -27,7 +27,7 @@ class AppRoot {
 final List<GetPage> _authPages = [
   GetPage(
     name: RootScreen.routeName,
-    page: () => RootScreen(),
+    page: () => const RootScreen(),
   ),
   GetPage(
     name: LoginScreen.routeName,
@@ -52,7 +52,7 @@ final List<GetPage> _authPages = [
 final List<GetPage> _mainPages = [
   GetPage(
     name: UsersScreen.routeName,
-    page: () => UsersScreen(),
+    page: () => const UsersScreen(),
   ),
   GetPage(
     name: UserEditScreen.routeName,
@@ -65,7 +65,7 @@ final List<GetPage> _mainPages = [
   ),
   GetPage(
     name: BlockListScreen.routeName,
-    page: () => BlockListScreen(),
+    page: () => const BlockListScreen(),
     fullscreenDialog: true,
   ),
   GetPage(
@@ -77,12 +77,12 @@ final List<GetPage> _mainPages = [
   ),
   GetPage(
     name: GroupsScreen.routeName,
-    page: () => GroupsScreen(),
+    page: () => const GroupsScreen(),
     fullscreenDialog: true,
   ),
   GetPage(
     name: QrTabScreen.routeName,
-    page: () => QrTabScreen(),
+    page: () => const QrTabScreen(),
     fullscreenDialog: true,
   ),
   GetPage(

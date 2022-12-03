@@ -7,8 +7,9 @@ import 'package:socket_flutter/src/screen/widget/common_dialog.dart';
 
 // 登録時の共通化
 Future<void> registerNotification() async {
-  if (!Get.isRegistered<NotificationService>())
+  if (!Get.isRegistered<NotificationService>()) {
     await Get.put(NotificationService()).initService();
+  }
 }
 
 class NotificationService extends GetxService {
@@ -28,11 +29,6 @@ class NotificationService extends GetxService {
     await requestPermission();
     listenForeground();
     canBadge = await FlutterAppBadger.isAppBadgeSupported();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
   }
 
   Future<void> requestPermission() async {
@@ -100,7 +96,7 @@ class NotificationService extends GetxService {
             importance: Importance.high,
             priority: Priority.high,
           ),
-          iOS: DarwinNotificationDetails(
+          iOS: const DarwinNotificationDetails(
               // badgeNumber: 10,
               ),
         ),

@@ -12,11 +12,6 @@ class QrViewerController extends GetxController {
   final UserAPI _userAPI = UserAPI();
   User? findUser;
 
-  @override
-  void onInit() async {
-    super.onInit();
-  }
-
   Future<void> startQrcodeScan() async {
     try {
       final result = await FlutterBarcodeScanner.scanBarcode(

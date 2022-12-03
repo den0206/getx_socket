@@ -58,7 +58,7 @@ class RecentsController extends GetxController {
     recents.clear();
     update();
 
-    await Future.delayed(Duration(milliseconds: 500));
+    await Future.delayed(const Duration(milliseconds: 500));
     await loadRecents();
   }
 
@@ -163,7 +163,7 @@ class RecentsController extends GetxController {
 
   void listenRecentDelete() {
     recentIO.listenRecentDelete((chatRoomid) {
-      print("deleted ${chatRoomid}");
+      print("deleted $chatRoomid");
       if (recents.map((r) => r.chatRoomId).contains(chatRoomid)) {
         recents.removeWhere((r) => r.chatRoomId == chatRoomid);
         update();

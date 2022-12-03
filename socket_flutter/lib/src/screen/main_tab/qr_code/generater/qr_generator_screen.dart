@@ -20,7 +20,7 @@ class QrGenerateScreen extends StatelessWidget {
           children: [
             Center(
               child: Neumorphic(
-                padding: EdgeInsets.all(15),
+                padding: const EdgeInsets.all(15),
                 style: commonNeumorphic(depth: 0.5),
                 child: QrImage(
                   data: AuthService.to.currentUser.value!.searchId,
@@ -31,12 +31,10 @@ class QrGenerateScreen extends StatelessWidget {
                   gapless: false,
                   errorStateBuilder: (cxt, err) {
                     if (err != null) {
-                      return Container(
-                        child: Center(
-                          child: Text(
-                            "Uh oh! Something went wrong...".tr,
-                            textAlign: TextAlign.center,
-                          ),
+                      return Center(
+                        child: Text(
+                          "Uh oh! Something went wrong...".tr,
+                          textAlign: TextAlign.center,
                         ),
                       );
                     }
@@ -51,7 +49,7 @@ class QrGenerateScreen extends StatelessWidget {
               right: 20,
               child: !controller.isLoading
                   ? NeumorphicIconButton(
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.refresh,
                         size: 40,
                       ),
@@ -59,7 +57,7 @@ class QrGenerateScreen extends StatelessWidget {
                         controller.updateSearchId();
                       },
                     )
-                  : CircularProgressIndicator(
+                  : const CircularProgressIndicator(
                       valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
                     ),
             )

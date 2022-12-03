@@ -9,11 +9,11 @@ enum LocaleLangs {
   Locale get locale {
     switch (this) {
       case LocaleLangs.English:
-        return Locale("en", "US");
+        return const Locale("en", "US");
       case LocaleLangs.Japanese:
-        return Locale("ja", "JP");
+        return const Locale("ja", "JP");
       case LocaleLangs.Chinese:
-        return Locale("zh", "CN");
+        return const Locale("zh", "CN");
     }
   }
 

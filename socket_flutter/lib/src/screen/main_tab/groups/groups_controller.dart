@@ -47,7 +47,7 @@ class GroupsController extends GetxController {
 
   Future<void> pushGroupScreen(Group group) async {
     final deletedId = await Get.to(
-      () => GroupDetailScreen(),
+      () => const GroupDetailScreen(),
       binding: BindingsBuilder(
         () => Get.lazyPut(() => GroupDetailController(group)),
       ),

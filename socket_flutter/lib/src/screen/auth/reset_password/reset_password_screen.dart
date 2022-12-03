@@ -32,8 +32,9 @@ class ResetPasswordScreen extends LoadingGetView<ResetPasswordController> {
               onPressed: !controller.buttonEnable
                   ? null
                   : () {
-                      if (_formKey.currentState?.validate() ?? false)
+                      if (_formKey.currentState?.validate() ?? false) {
                         controller.sendRequest();
+                      }
                     },
             ),
           ),

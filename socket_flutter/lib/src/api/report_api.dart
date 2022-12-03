@@ -11,7 +11,7 @@ class ReportAPI extends APIBase {
 
       return await postRequest(uri: uri, body: reportData, useToken: true);
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 }

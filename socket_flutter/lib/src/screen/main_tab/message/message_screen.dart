@@ -42,7 +42,7 @@ class MessageScreen extends LoadingGetView<MessageController> {
                     showModalBottomSheet(
                       context: context,
                       builder: (context) {
-                        return selectLanguagePicker(
+                        return SelectLanguagePicker(
                           title:
                               "Please select the language of your translation"
                                   .tr,
@@ -71,7 +71,7 @@ class MessageScreen extends LoadingGetView<MessageController> {
                   ),
                 );
               }),
-              Icon(Icons.loop),
+              const Icon(Icons.loop),
               Column(
                 children: [
                   CountryFlagWidget(
@@ -92,7 +92,7 @@ class MessageScreen extends LoadingGetView<MessageController> {
               children: [
                 Text(
                   controller.useRealtime.value ? "Realtime" : "No Realtime",
-                  style: TextStyle(fontSize: 10),
+                  style: const TextStyle(fontSize: 10),
                 ),
                 Switch(
                   value: controller.useRealtime.value,
@@ -111,7 +111,7 @@ class MessageScreen extends LoadingGetView<MessageController> {
         children: [
           Obx(
             () => controller.isLoading.value
-                ? FadeinWidget(child: LoadingCellWidget())
+                ? const FadeinWidget(child: LoadingCellWidget())
                 : Container(),
           ),
           Expanded(
@@ -148,35 +148,37 @@ class MessageScreen extends LoadingGetView<MessageController> {
   Widget _messageInput() {
     return Builder(builder: (context) {
       return Container(
-        padding: EdgeInsets.symmetric(vertical: 20),
+        padding: const EdgeInsets.symmetric(vertical: 20),
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Row(
             children: [
               Expanded(
                 child: Neumorphic(
-                  margin: EdgeInsets.only(left: 8, right: 8, top: 2, bottom: 4),
+                  margin: const EdgeInsets.only(
+                      left: 8, right: 8, top: 2, bottom: 4),
                   style: commonNeumorphic(
                     depth: -10,
-                    boxShape: NeumorphicBoxShape.stadium(),
+                    boxShape: const NeumorphicBoxShape.stadium(),
                   ),
-                  padding: EdgeInsets.symmetric(horizontal: 18),
+                  padding: const EdgeInsets.symmetric(horizontal: 18),
                   child: ConstrainedBox(
-                    constraints: BoxConstraints(
+                    constraints: const BoxConstraints(
                       maxHeight: 300.0,
                     ),
                     child: Row(
                       children: [
                         IconButton(
-                          icon: Icon(Icons.emoji_emotions_outlined),
+                          icon: const Icon(Icons.emoji_emotions_outlined),
                           color: Colors.grey[500],
                           onPressed: () async {
                             dismisskeyBord(context);
-                            await Future.delayed(Duration(milliseconds: 300));
+                            await Future.delayed(
+                                const Duration(milliseconds: 300));
                             controller.showEmoji.toggle();
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         Expanded(
@@ -188,7 +190,7 @@ class MessageScreen extends LoadingGetView<MessageController> {
                             textInputAction: TextInputAction.newline,
                             minLines: 1,
                             maxLines: 5,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               hintText: "Message...",
                               hintStyle: TextStyle(
                                 height: 1.8,
@@ -216,17 +218,17 @@ class MessageScreen extends LoadingGetView<MessageController> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 16,
               ),
               NeumorphicIconButton(
-                icon: Icon(
+                icon: const Icon(
                   Icons.send,
                   size: 18,
                 ),
                 onPressed: () async {
                   if (controller.tx.text.isEmpty) {
-                    return null;
+                    return;
                   } else {
                     await controller.sendMessage(
                       type: MessageType.text,
@@ -265,7 +267,7 @@ class MessageScreen extends LoadingGetView<MessageController> {
                   TextPosition(offset: controller.tx.text.length),
                 );
             },
-            config: Config(
+            config: const Config(
               columns: 7,
               emojiSizeMax: 32.0,
               verticalSpacing: 0,
@@ -297,7 +299,7 @@ class MessageScreen extends LoadingGetView<MessageController> {
           return isKeyboardVisible || controller.showEmoji.value
               ? Obx(() {
                   return FadeinWidget(
-                    duration: Duration(milliseconds: 200),
+                    duration: const Duration(milliseconds: 200),
                     child: Stack(
                       children: [
                         Container(
@@ -309,7 +311,7 @@ class MessageScreen extends LoadingGetView<MessageController> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               if (controller.isTranslationg.value)
-                                FadeinWidget(child: WaveLoading()),
+                                const FadeinWidget(child: WaveLoading()),
                               if (controller.after.value != "")
                                 BubbleSelf(
                                   text: controller.after.value,
@@ -325,17 +327,17 @@ class MessageScreen extends LoadingGetView<MessageController> {
                           Align(
                             alignment: Alignment.bottomLeft,
                             child: Padding(
-                              padding: EdgeInsets.all(24.0),
+                              padding: const EdgeInsets.all(24.0),
                               child: FloatingActionButton(
                                 backgroundColor: Colors.green[300],
-                                child: Icon(
-                                  Icons.g_translate,
-                                  color: Colors.white,
-                                ),
                                 heroTag: "translate",
                                 onPressed: () {
                                   controller.checkText();
                                 },
+                                child: const Icon(
+                                  Icons.g_translate,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           )
@@ -355,7 +357,7 @@ class WaveLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SpinKitWave(
+    return const SpinKitWave(
       color: Color(0xffffffff),
       size: 30,
     );
@@ -413,7 +415,7 @@ class MessageCell extends GetView<MessageController> {
                         isDefaultAction: true,
                         child: Text(
                           'Delete'.tr,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.red,
                           ),
                         ),
@@ -427,7 +429,7 @@ class MessageCell extends GetView<MessageController> {
                         isDefaultAction: true,
                         child: Text(
                           'Report'.tr,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.red,
                           ),
                         ),
@@ -444,8 +446,9 @@ class MessageCell extends GetView<MessageController> {
                           ))
                               .then(
                             (value) async {
-                              if (Get.isRegistered<ReportController>())
+                              if (Get.isRegistered<ReportController>()) {
                                 await Get.delete<ReportController>();
+                              }
                             },
                           );
                         },
@@ -470,7 +473,7 @@ class MessageCell extends GetView<MessageController> {
             ],
           ),
           Padding(
-            padding: EdgeInsets.only(top: 5),
+            padding: const EdgeInsets.only(top: 5),
             child: Row(
               mainAxisAlignment: message.isCurrent
                   ? MainAxisAlignment.end
@@ -492,10 +495,10 @@ class MessageCell extends GetView<MessageController> {
                     size: 12.sp,
                   ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: Text(
                     message.formattedTime,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Color(0xffAEABC9),
                       fontSize: 11,
                       fontWeight: FontWeight.bold,

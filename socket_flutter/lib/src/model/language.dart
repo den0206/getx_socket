@@ -28,6 +28,7 @@ enum Language {
   swedish,
   chinese;
 
+  // ignore: non_constant_identifier_names
   String get source_lang {
     switch (this) {
       case Language.english_british:
@@ -37,10 +38,11 @@ enum Language {
       case Language.portuguese_brazilian:
         return "PT";
       default:
-        return this.target_lang;
+        return target_lang;
     }
   }
 
+  // ignore: non_constant_identifier_names
   String get target_lang {
     switch (this) {
       case Language.bulgarian:

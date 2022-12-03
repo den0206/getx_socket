@@ -31,27 +31,27 @@ class CustomDialog extends StatelessWidget {
         alignment: Alignment.topCenter,
         children: [
           Padding(
-            padding: EdgeInsets.fromLTRB(10, 70, 10, 10),
+            padding: const EdgeInsets.fromLTRB(10, 70, 10, 10),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
                   title,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
                 Text(
                   descripon,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 20,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Row(
@@ -60,7 +60,7 @@ class CustomDialog extends StatelessWidget {
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.grey,
-                          textStyle: TextStyle(
+                          textStyle: const TextStyle(
                             color: Colors.white,
                           )),
                       onPressed: () {
@@ -73,7 +73,7 @@ class CustomDialog extends StatelessWidget {
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           backgroundColor: mainColor,
-                          textStyle: TextStyle(
+                          textStyle: const TextStyle(
                             color: Colors.white,
                           )),
                       onPressed: () {
@@ -147,13 +147,13 @@ void showCommonDialog({
             CupertinoDialogAction(
               onPressed: () {
                 Navigator.of(context).pop();
-                if (backRoot && Navigator.canPop(context))
-                  // root　に戻す
+                if (backRoot && Navigator.canPop(context)) {
                   Navigator.popUntil(context, (route) => route.isFirst);
+                }
               },
-              child: Text(okAction != null ? 'Cancel'.tr : "OK".tr),
               isDefaultAction: false,
               isDestructiveAction: false,
+              child: Text(okAction != null ? 'Cancel'.tr : "OK".tr),
             ),
             if (okAction != null)
               CupertinoDialogAction(
@@ -161,9 +161,9 @@ void showCommonDialog({
                   okAction();
                   Navigator.of(context).pop();
                 },
-                child: Text('OK'.tr),
                 isDefaultAction: true,
                 isDestructiveAction: true,
+                child: Text('OK'.tr),
               )
           ],
         );
@@ -187,9 +187,9 @@ void showCommonDialog({
               child: Text(okAction != null ? 'Cancel'.tr : "OK".tr),
               onPressed: () {
                 Navigator.of(context).pop();
-                if (backRoot && Navigator.canPop(context))
-                  // root　に戻す
+                if (backRoot && Navigator.canPop(context)) {
                   Navigator.popUntil(context, (route) => route.isFirst);
+                }
               },
             ),
             if (okAction != null)

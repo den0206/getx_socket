@@ -26,6 +26,6 @@ NeumorphicRadioStyle commonRatioStyle({Color? selectedColor}) {
     intensity: 1,
     selectedDepth: -5,
     unselectedDepth: 5,
-    boxShape: NeumorphicBoxShape.circle(),
+    boxShape: const NeumorphicBoxShape.circle(),
   );
 }

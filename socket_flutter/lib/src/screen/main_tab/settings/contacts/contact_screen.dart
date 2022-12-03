@@ -8,6 +8,8 @@ import 'contact_controller.dart';
 
 class ContactScreen extends LoadingGetView<ContactController> {
   static const routeName = '/Contact';
+  @override
+  // ignore: overridden_fields
   final key = UniqueKey();
   @override
   ContactController get ctr => ContactController();

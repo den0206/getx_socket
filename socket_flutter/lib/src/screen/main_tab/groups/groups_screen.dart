@@ -24,7 +24,7 @@ class GroupsScreen extends StatelessWidget {
             title: const Text('Groups'),
             actions: [
               IconButton(
-                icon: Icon(Icons.person_add),
+                icon: const Icon(Icons.person_add),
                 onPressed: () {
                   Get.toNamed(UsersScreen.routeName, arguments: false);
                 },
@@ -32,10 +32,10 @@ class GroupsScreen extends StatelessWidget {
             ],
           ),
           body: controller.isCompEmpty
-              ? EmptyScreen(
+              ? const EmptyScreen(
                   title: "No Group", path: "assets/lotties/no_group.json")
               : ListView.separated(
-                  separatorBuilder: (context, index) => Divider(),
+                  separatorBuilder: (context, index) => const Divider(),
                   itemCount: controller.groups.length,
                   itemBuilder: (context, index) {
                     final group = controller.groups[index];
@@ -66,12 +66,12 @@ class GroupCell extends GetView<GroupsController> {
       },
       child: Neumorphic(
         style: commonNeumorphic(depth: 0.6),
-        padding: EdgeInsets.all(10),
-        margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        padding: const EdgeInsets.all(10),
+        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         child: Row(
           children: [
             OverlapAvatars(users: group.members),
-            SizedBox(
+            const SizedBox(
               width: 20,
             ),
             Text(group.title != null ? group.title! : "Anonymous".tr),

@@ -10,14 +10,17 @@ class QrTabScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> _tabView = [QrGenerateScreen(), QrViewerScreen()];
+    final List<Widget> _tabView = [
+      const QrGenerateScreen(),
+      const QrViewerScreen()
+    ];
 
     return DefaultTabController(
       length: 2,
       child: Scaffold(
         appBar: AppBar(
           bottom: PreferredSize(
-            preferredSize: Size.fromHeight(20),
+            preferredSize: const Size.fromHeight(20),
             child: TabBar(
               indicatorColor: Colors.green,
               indicatorWeight: 4,
@@ -25,7 +28,7 @@ class QrTabScreen extends StatelessWidget {
                 Tab(
                     child: Text(
                   "Generate".tr,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 20.0,
                     color: Colors.black54,
                   ),
@@ -33,7 +36,7 @@ class QrTabScreen extends StatelessWidget {
                 Tab(
                     child: Text(
                   "Viewer".tr,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 20.0,
                     color: Colors.black54,
                   ),

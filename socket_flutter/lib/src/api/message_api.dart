@@ -14,7 +14,7 @@ class MessageAPI extends APIBase {
 
       return await postRequest(uri: uri, body: message, useToken: true);
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -25,7 +25,7 @@ class MessageAPI extends APIBase {
       return await updateSingleFile(
           uri: uri, body: message, file: file, useToken: true);
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -36,7 +36,7 @@ class MessageAPI extends APIBase {
       return await updateSingleFile(
           uri: uri, body: message, file: videoFile, useToken: true);
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -52,7 +52,7 @@ class MessageAPI extends APIBase {
 
       return await getRequest(uri: uri, useToken: true);
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -61,7 +61,7 @@ class MessageAPI extends APIBase {
       final Uri uri = setUri("/update");
       return await putRequest(uri: uri, body: value, useToken: true);
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -71,7 +71,7 @@ class MessageAPI extends APIBase {
       final Uri uri = setUri("/delete", q);
       return await deleteRequest(uri: uri, useToken: true);
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 }
