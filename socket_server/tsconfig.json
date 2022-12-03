@@ -10,7 +10,8 @@
     "strictNullChecks": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "skipLibCheck": true
   },
   "files": ["./node_modules/@types/node/index.d.ts"],
   "include": ["src/**/*.ts", "index.ts"],
