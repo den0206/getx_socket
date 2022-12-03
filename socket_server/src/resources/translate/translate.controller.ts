@@ -31,6 +31,7 @@ async function textTR(req: Request, res: Response) {
   try {
     const options: AxiosRequestConfig = {
       method: 'GET',
+      headers: {'accept-encoding': '*'},
       params: params,
     };
     const trs = await client.get('/translate', options);
