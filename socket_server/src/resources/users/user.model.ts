@@ -1,10 +1,10 @@
-import {prop, pre, Ref} from '@typegoose/typegoose';
+import {pre, prop, Ref} from '@typegoose/typegoose';
 import argon2 from 'argon2';
 import AWSClient from '../../utils/aws/aws_client';
 import {
+  GroupModel,
   MessageModel,
   RecentModel,
-  GroupModel,
 } from '../../utils/database/models';
 
 export async function hashdPassword(value: string): Promise<string> {
@@ -20,24 +20,24 @@ export async function hashdPassword(value: string): Promise<string> {
 })
 @pre<User>('remove', async function (next) {
   console.log('=== Start USER DELETE');
-  console.log('DELETE RELATION', this._id);
+  console.log('DELETE RELATION', (await this)._id);
 
   // Messageの削除
-  await MessageModel.deleteMany({userId: this._id});
+  await MessageModel.deleteMany({userId: (await this)._id});
 
   // Recentの削除
-  await RecentModel.deleteMany({userId: this._id});
-  await RecentModel.deleteMany({withUserId: this._id});
+  await RecentModel.deleteMany({userId: (await this)._id});
+  await RecentModel.deleteMany({withUserId: (await this)._id});
 
   // Groupの削除
-  await GroupModel.deleteMany({ownerId: this._id});
-  await this.leaveGroups(this._id);
+  await GroupModel.deleteMany({ownerId: (await this)._id});
+  await (await this).leaveGroups((await this)._id);
 
   /// アバターの削除
-  if (this.avatarUrl) {
+  if ((await this).avatarUrl) {
     const awsClient = new AWSClient();
-    console.log('DELETE AVATAR RELATION', this._id);
-    await awsClient.deleteImage(this.avatarUrl);
+    console.log('DELETE AVATAR RELATION', (await this)._id);
+    await awsClient.deleteImage((await this).avatarUrl);
   }
 
   next();

@@ -1,11 +1,11 @@
 import {Request, Response} from 'express';
-import {UserModel} from '../../utils/database/models';
-import ResponseAPI from '../../utils/interface/response.api';
 import jwt from 'jsonwebtoken';
-import {usePagenation} from '../../utils/database/pagenation';
-import {checkMongoId} from '../../utils/database/database';
 import getUserIdFromRes from '../../middleware/get_userid_res';
 import AWSClient from '../../utils/aws/aws_client';
+import {checkMongoId} from '../../utils/database/database';
+import {UserModel} from '../../utils/database/models';
+import {usePagenation} from '../../utils/database/pagenation';
+import ResponseAPI from '../../utils/interface/response.api';
 
 async function signUp(req: Request, res: Response) {
   const {name, email, countryCode, mainLanguage, password} = req.body;

@@ -1,18 +1,18 @@
-import {prop, pre, Ref} from '@typegoose/typegoose';
+import {pre, prop, Ref} from '@typegoose/typegoose';
 import AWSClient from '../../utils/aws/aws_client';
 import {User} from '../users/user.model';
 
 @pre<Message>('remove', async function (next) {
   const awsClient = new AWSClient();
-  if (this.imageUrl) {
+  if ((await this).imageUrl) {
     console.log('=== Start DELETE');
-    console.log('DELETE IAMGE RELATION', this._id);
-    awsClient.deleteImage(this.imageUrl);
+    console.log('DELETE IAMGE RELATION', (await this)._id);
+    awsClient.deleteImage((await this).imageUrl);
   }
-  if (this.videoUrl) {
+  if ((await this).videoUrl) {
     console.log('=== Start DELETE');
-    console.log('DELETE VIDEO RELATION', this._id);
-    awsClient.deleteImage(this.videoUrl);
+    console.log('DELETE VIDEO RELATION', (await this)._id);
+    awsClient.deleteImage((await this).videoUrl);
   }
   next();
 })
