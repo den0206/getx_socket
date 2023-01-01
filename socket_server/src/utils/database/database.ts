@@ -6,6 +6,7 @@ export async function connectDB() {
 
   try {
     const options: ConnectOptions = {dbName: MONGO_PATH};
+    mongoose.set('strictQuery', true);
     await mongoose.connect(dbUrl, options);
     console.log('Success connect DB');
   } catch (e) {

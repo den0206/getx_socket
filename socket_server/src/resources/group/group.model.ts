@@ -1,6 +1,6 @@
-import {prop, pre, Ref} from '@typegoose/typegoose';
+import {pre, prop, Ref} from '@typegoose/typegoose';
+import {MessageModel, RecentModel} from '../../utils/database/models';
 import {User} from '../users/user.model';
-import {RecentModel, MessageModel} from '../../utils/database/models';
 
 // type MyRef<T> = Ref<
 //   T & {_id: Types.ObjectId},
@@ -9,10 +9,10 @@ import {RecentModel, MessageModel} from '../../utils/database/models';
 
 @pre<Group>('remove', async function (next) {
   console.log('=== Start DELETE');
-  console.log('DELETE RELATION', this._id);
+  console.log('DELETE RELATION', (await this)._id);
 
-  await RecentModel.deleteMany({chatRoomId: this._id});
-  await MessageModel.deleteMany({chatRoomId: this._id});
+  await RecentModel.deleteMany({chatRoomId: (await this)._id});
+  await MessageModel.deleteMany({chatRoomId: (await this)._id});
   next();
 })
 export class Group {
