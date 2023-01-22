@@ -277,7 +277,6 @@ class MessageScreen extends LoadingGetView<MessageController> {
               indicatorColor: Colors.blue,
               iconColor: Colors.grey,
               iconColorSelected: Colors.blue,
-              progressIndicatorColor: Colors.blue,
               backspaceColor: Colors.blue,
               showRecentsTab: true,
               recentsLimit: 28,
