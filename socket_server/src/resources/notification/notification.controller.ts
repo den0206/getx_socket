@@ -1,9 +1,9 @@
-import axios, {AxiosRequestConfig} from 'axios';
+import axios, {RawAxiosRequestConfig} from 'axios';
 import {Request, Response} from 'express';
-import ResponseAPI from '../../utils/interface/response.api';
+import mongoose from 'mongoose';
 import getUserIdFromRes from '../../middleware/get_userid_res';
 import {RecentModel} from '../../utils/database/models';
-import mongoose from 'mongoose';
+import ResponseAPI from '../../utils/interface/response.api';
 
 async function pushNotification(req: Request, res: Response) {
   const fcmURL = 'https://fcm.googleapis.com/fcm';
@@ -15,7 +15,7 @@ async function pushNotification(req: Request, res: Response) {
     Authorization: `key=${serverKey}`,
   };
 
-  const options: AxiosRequestConfig = {
+  const options: RawAxiosRequestConfig = {
     method: 'POST',
     headers,
   };
