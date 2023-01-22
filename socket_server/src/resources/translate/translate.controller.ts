@@ -1,4 +1,4 @@
-import axios, {AxiosRequestConfig} from 'axios';
+import axios, {RawAxiosRequestConfig} from 'axios';
 import {Request, Response} from 'express';
 import ResponseAPI from '../../utils/interface/response.api';
 
@@ -29,11 +29,12 @@ async function textTR(req: Request, res: Response) {
   params.append('target_lang', tar as string);
 
   try {
-    const options: AxiosRequestConfig = {
+    const options: RawAxiosRequestConfig = {
       method: 'GET',
       headers: {'accept-encoding': '*'},
       params: params,
     };
+
     const trs = await client.get('/translate', options);
 
     let data: {
