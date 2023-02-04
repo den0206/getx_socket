@@ -55,7 +55,7 @@ dependencies:
   flutter_cache_manager: ^3.3.0
   lottie: ^2.2.0
   visibility_detector: ^0.3.3
-  flutter_markdown: ^0.6.13
+  flutter_markdown: ^0.6.13+1
   gallery_saver: ^2.3.2
   flutter_lints: ^2.0.1
 
