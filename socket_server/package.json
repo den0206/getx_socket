@@ -13,7 +13,9 @@
     "start:dev": "ts-node-dev --respawn src/index.ts",
     "lc": "lt -s yuuki0206 --port 3000",
     "try:loca": "npm-run-all -p start:dev lc",
-    "copy:handlebars": "cpx \"./src/utils/email/template/**/*\" ./dist/utils/email/template --clean"
+    "copy:handlebars": "cpx \"./src/utils/email/template/**/*\" ./dist/utils/email/template --clean",
+    "lint": "eslint . --ext .ts",
+    "lint-and-fix": "eslint . --ext .ts --fix"
   },
   "keywords": [],
   "author": "",
@@ -54,6 +56,9 @@
     "@types/nodemailer": "^6.4.7",
     "@types/socket.io": "^3.0.2",
     "@types/typescript": "^2.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.52.0",
+    "@typescript-eslint/parser": "^5.52.0",
+    "eslint": "^8.34.0",
     "cpx": "^1.5.0",
     "npm-run-all": "^4.1.5",
     "rimraf": "^4.1.2",
