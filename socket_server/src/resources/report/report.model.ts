@@ -1,4 +1,4 @@
-import {prop, pre, Ref} from '@typegoose/typegoose';
+import {prop, Ref} from '@typegoose/typegoose';
 import {Message} from '../message/message.model';
 import {User} from '../users/user.model';
 

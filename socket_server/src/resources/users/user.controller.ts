@@ -31,7 +31,7 @@ async function signUp(req: Request, res: Response) {
       const awsClient = new AWSClient();
       const extention = file.originalname.split('.').pop();
       const fileName = `${user._id}/avatar/avatar.${extention}`;
-      let imagePath = await awsClient.uploadImagge(file, fileName);
+      const imagePath = await awsClient.uploadImagge(file, fileName);
       user.avatarUrl = imagePath;
     }
 
@@ -188,7 +188,7 @@ async function getById(req: Request, res: Response) {
   const searchId = req.query.id as string;
 
   try {
-    var findUser;
+    let findUser;
     if (checkMongoId(searchId)) {
       findUser = await UserModel.findById(searchId).select([
         '-password',

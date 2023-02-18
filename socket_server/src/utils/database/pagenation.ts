@@ -1,5 +1,4 @@
 import {HydratedDocument, Model, PopulateOptions} from 'mongoose';
-import mongoose from 'mongoose';
 
 export async function usePagenation<T>({
   model,
