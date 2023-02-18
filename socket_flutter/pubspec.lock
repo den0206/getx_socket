@@ -5,10 +5,10 @@ packages:
     dependency: transitive
     description:
       name: _flutterfire_internals
-      sha256: "6215ac7d00ed98300b72f45ed2b38c2ca841f9f4e6965fab33cbd591e45e4473"
+      sha256: "953f097772b5fd095e0ee6eeeab34e3a42de91d5f43fa86b5de8485a57494f96"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.13"
+    version: "1.0.15"
   archive:
     dependency: transitive
     description:
@@ -237,10 +237,10 @@ packages:
     dependency: "direct main"
     description:
       name: firebase_core
-      sha256: be13e431c0c950f0fc66bdb67b41b8059121d7e7d8bbbc21fb59164892d561f8
+      sha256: "46b80acfb472d8abc500c2cb6ce65c4b5237d825e4c23bfc3efc70df9eec1a6e"
       url: "https://pub.dev"
     source: hosted
-    version: "2.5.0"
+    version: "2.6.1"
   firebase_core_platform_interface:
     dependency: transitive
     description:
@@ -253,34 +253,34 @@ packages:
     dependency: transitive
     description:
       name: firebase_core_web
-      sha256: "4b3a41410f3313bb95fd560aa5eb761b6ad65c185de772c72231e8b4aeed6d18"
+      sha256: "291fbcace608aca6c860652e1358ef89752be8cc3ef227f8bbcd1e62775b833a"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.1"
+    version: "2.2.1"
   firebase_messaging:
     dependency: "direct main"
     description:
       name: firebase_messaging
-      sha256: dbccddc62fef6f3745ba83062bfd1fbf2eb6a931db4c73d03f85c5772dfdec7f
+      sha256: "0f540f162af6f92b1de00d9c05367afdbe974625d025d8c58a8458aec7fd1dcf"
       url: "https://pub.dev"
     source: hosted
-    version: "14.2.2"
+    version: "14.2.4"
   firebase_messaging_platform_interface:
     dependency: transitive
     description:
       name: firebase_messaging_platform_interface
-      sha256: "564a47ea76db9cd2d17e7d95790428ad3de9d0075795d14c4c901ba0bf518e1a"
+      sha256: ffcb3c0de14213d54453fc827972214eb8f25d887c88e19b513bdd6741378db0
       url: "https://pub.dev"
     source: hosted
-    version: "4.2.11"
+    version: "4.2.13"
   firebase_messaging_web:
     dependency: transitive
     description:
       name: firebase_messaging_web
-      sha256: "76291494583a003d4ce0d613c41cb87c58fab25773317daa66a245f537e1c3f7"
+      sha256: "79be85713f0e76557c91a96d470fd8dfa89cbbc427edb2299d7d7ff35113380b"
       url: "https://pub.dev"
     source: hosted
-    version: "3.2.12"
+    version: "3.2.14"
   flip_card:
     dependency: "direct main"
     description:
@@ -431,10 +431,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_markdown
-      sha256: "818cf6c28377ba2c91ed283c96fd712e9c175dd2d2488eb7fc93b6afb9ad2e08"
+      sha256: "7b25c10de1fea883f3c4f9b8389506b54053cd00807beab69fd65c8653a2711f"
       url: "https://pub.dev"
     source: hosted
-    version: "0.6.13+1"
+    version: "0.6.14"
   flutter_native_splash:
     dependency: "direct main"
     description:
@@ -545,10 +545,10 @@ packages:
     dependency: "direct main"
     description:
       name: image_picker
-      sha256: f98d76672d309c8b7030c323b3394669e122d52b307d2bbd8d06bd70f5b2aabe
+      sha256: d39cc12402dab8365fe5b5370e64694ae0223d675c36b15ff0490b7cc3d32551
       url: "https://pub.dev"
     source: hosted
-    version: "0.8.6+1"
+    version: "0.8.6+2"
   image_picker_android:
     dependency: transitive
     description:
@@ -633,10 +633,10 @@ packages:
     dependency: transitive
     description:
       name: markdown
-      sha256: c2b81e184067b41d0264d514f7cdaa2c02d38511e39d6521a1ccc238f6d7b3f2
+      sha256: b3c60dee8c2af50ad0e6e90cceba98e47718a6ee0a7a6772c77846a0cc21f78b
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.1"
+    version: "7.0.1"
   matcher:
     dependency: transitive
     description:
