@@ -1,10 +1,9 @@
 import {Request, Response} from 'express';
-import {usePagenation} from '../../utils/database/pagenation';
-import {MessageModel} from '../../utils/database/models';
-import ResponseAPI from '../../utils/interface/response.api';
-import getUserIdFromRes from '../../middleware/get_userid_res';
-import {checkMongoId} from '../../utils/database/database';
 import AWSClient from '../../utils/aws/aws_client';
+import {checkMongoId} from '../../utils/database/database';
+import {MessageModel} from '../../utils/database/models';
+import {usePagenation} from '../../utils/database/pagenation';
+import ResponseAPI from '../../utils/interface/response.api';
 
 async function loadMessage(req: Request, res: Response) {
   const chatRoomId = req.query.chatRoomId as string;
@@ -71,11 +70,11 @@ async function sendVideoMessage(req: Request, res: Response) {
     if (!files || !(files.length == 2))
       return new ResponseAPI(res, {message: 'Not find File OR 2'}).excute(400);
 
-    var fileUrls = [];
+    const fileUrls = [];
     const awsClient = new AWSClient();
     for (const file of files) {
       const extention = file.originalname.split('.').pop();
-      var fileName;
+      let fileName;
       if (imageMimes.includes(file.mimetype)) {
         fileName = `${message.userId}/messages/${message.id}/image.${extention}`;
       } else if (videoMimes.includes(file.mimetype)) {
@@ -105,6 +104,7 @@ async function updateReadStatus(req: Request, res: Response) {
 
   const value = {readBy};
   try {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const _ = await MessageModel.findByIdAndUpdate(messageId, value);
     new ResponseAPI(res, {data: true}).excute(200);
   } catch (e: any) {
@@ -118,6 +118,7 @@ async function deleteMessage(req: Request, res: Response) {
     return new ResponseAPI(res, {message: 'InvalidId'}).excute(400);
 
   try {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const message = await MessageModel.findByIdAndDelete(messageId);
     new ResponseAPI(res, {data: true}).excute(200);
   } catch (e: any) {

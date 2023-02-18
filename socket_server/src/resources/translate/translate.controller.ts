@@ -14,7 +14,7 @@ const client = axios.create({
 async function textTR(req: Request, res: Response) {
   const {texts, paragraphs, src, tar} = req.query;
 
-  var params = new URLSearchParams();
+  const params = new URLSearchParams();
   params.append('auth_key', DEEPKEY);
 
   if (texts instanceof Array) {
@@ -37,12 +37,12 @@ async function textTR(req: Request, res: Response) {
 
     const trs = await client.get('/translate', options);
 
-    let data: {
+    const data: {
       [key: string]: string;
     } = {};
 
     if (paragraphs instanceof Array) {
-      for (let [index, val] of trs.data.translations.entries()) {
+      for (const [index, val] of trs.data.translations.entries()) {
         const i = paragraphs[index];
         data[i as string] = val.text;
       }

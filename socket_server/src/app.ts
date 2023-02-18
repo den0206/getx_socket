@@ -1,19 +1,20 @@
 import cors from 'cors';
-import helmet from 'helmet';
 import express, {Application} from 'express';
+import helmet from 'helmet';
 import http from 'http';
-import usersRoute from './resources/users/user.route';
-import {connectDB} from './utils/database/database';
-import recentRoute from './resources/recent/recent.route';
+import nodeSchedule from 'node-schedule';
+import checkAPIKey from './middleware/check_api';
 import groupRoute from './resources/group/group.route';
 import messageRoute from './resources/message/message.route';
-import translateRoute from './resources/translate/translate.route';
-import tokenRoute from './resources/temp_token/temp_token.route';
 import notificationRoute from './resources/notification/notification.route';
-import {connectIO} from './utils/socket/socket';
-import checkAPIKey from './middleware/check_api';
-import nodeSchedule from 'node-schedule';
+import recentRoute from './resources/recent/recent.route';
 import reportRoute from './resources/report/report.route';
+import tokenRoute from './resources/temp_token/temp_token.route';
+import translateRoute from './resources/translate/translate.route';
+import usersRoute from './resources/users/user.route';
+import {connectDB} from './utils/database/database';
+import {connectIO} from './utils/socket/socket';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const get = require('simple-get');
 
 class App {
@@ -73,7 +74,7 @@ class App {
     if (url) {
       console.log('Set Schedule');
       nodeSchedule.scheduleJob('01,16,25,41,50 * * * *', function () {
-        get.concat(url, function (err: any, res: {statusCode: any}, data: any) {
+        get.concat(url, function (err: any, res: {statusCode: any}) {
           if (err) throw err;
           console.log(res.statusCode);
         });

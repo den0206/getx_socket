@@ -1,8 +1,8 @@
-import nodemailer, {SendMailOptions} from 'nodemailer';
 import handlebars from 'handlebars';
+import nodemailer, {SendMailOptions} from 'nodemailer';
 
-import path from 'path';
 import fs from 'fs';
+import path from 'path';
 
 export default async function sendEmail(
   email: string,
@@ -25,7 +25,7 @@ export default async function sendEmail(
   const from = process.env.TRAP_FROM;
 
   try {
-    var transport = nodemailer.createTransport({
+    const transport = nodemailer.createTransport({
       host,
       port,
       auth: {user, pass},

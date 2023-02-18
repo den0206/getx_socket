@@ -1,7 +1,7 @@
 import {Request, Response} from 'express';
-import ResponseAPI from '../../utils/interface/response.api';
-import {UserModel, TempTokenModel} from '../../utils/database/models';
+import {TempTokenModel, UserModel} from '../../utils/database/models';
 import sendEmail from '../../utils/email/send_email';
+import ResponseAPI from '../../utils/interface/response.api';
 import {hashdPassword} from '../users/user.model';
 
 // Email
@@ -119,16 +119,11 @@ async function generateNumberAndToken(tempId: string): Promise<number> {
 }
 
 async function checkValid(tempId: string, verify: string) {
-  try {
-    const currentToken = await TempTokenModel.findOne({tempId: tempId});
-    if (!currentToken)
-      throw new Error('Invalid or expired password reset token');
-    const isValid = await currentToken.compareToken(verify);
-    if (!isValid) throw new Error('Invalid or expired password reset token');
-    return currentToken;
-  } catch (e: any) {
-    throw e;
-  }
+  const currentToken = await TempTokenModel.findOne({tempId: tempId});
+  if (!currentToken) throw new Error('Invalid or expired password reset token');
+  const isValid = await currentToken.compareToken(verify);
+  if (!isValid) throw new Error('Invalid or expired password reset token');
+  return currentToken;
 }
 
 export default {

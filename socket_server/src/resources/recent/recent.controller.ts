@@ -1,10 +1,10 @@
 import {Request, Response} from 'express';
-import {RecentModel} from '../../utils/database/models';
-import ResponseAPI from '../../utils/interface/response.api';
-import getUserIdFromRes from '../../middleware/get_userid_res';
-import {usePagenation} from '../../utils/database/pagenation';
-import {checkMongoId} from '../../utils/database/database';
 import {PopulateOptions} from 'mongoose';
+import getUserIdFromRes from '../../middleware/get_userid_res';
+import {checkMongoId} from '../../utils/database/database';
+import {RecentModel} from '../../utils/database/models';
+import {usePagenation} from '../../utils/database/pagenation';
+import ResponseAPI from '../../utils/interface/response.api';
 
 const recentOpt: PopulateOptions[] = [
   {
@@ -82,7 +82,7 @@ async function findByRoomId(req: Request, res: Response) {
   const chatRoomId = req.query.chatRoomId as string;
   const useUserParam = req.query.userParams as string;
 
-  var recents;
+  let recents;
 
   /// 使う(private) 0
   /// 使わない 1
@@ -123,6 +123,7 @@ async function findOneByRoomAndUser(req: Request, res: Response) {
 }
 
 async function deleteRecent(req: Request, res: Response) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const userId = getUserIdFromRes(res);
   const recentId = req.params.id;
   try {
