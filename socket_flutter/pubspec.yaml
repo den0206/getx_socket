@@ -49,8 +49,8 @@ dependencies:
   webview_flutter: ^4.0.5
   package_info_plus: ^3.0.3
   permission_handler: ^10.2.0
-  flutter_launcher_icons: ^0.11.0
-  flutter_native_splash: ^2.2.3
+  flutter_launcher_icons: ^0.12.0
+  flutter_native_splash: ^2.2.18
   cached_network_image: ^3.2.3
   flutter_cache_manager: ^3.3.0
   lottie: ^2.2.0
