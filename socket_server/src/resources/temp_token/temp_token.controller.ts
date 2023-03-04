@@ -56,7 +56,7 @@ async function requestPassword(req: Request, res: Response) {
     if (!isFind)
       return new ResponseAPI(res, {message: 'Not find this Email'}).excute(400);
 
-    const genetateNumber = await generateNumberAndToken(isFind._id);
+    const genetateNumber = await generateNumberAndToken(isFind._id.toString());
     const payload = {name: isFind.name, number: genetateNumber};
 
     await sendEmail(
