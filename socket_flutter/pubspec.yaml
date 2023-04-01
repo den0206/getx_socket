@@ -23,7 +23,7 @@ dependencies:
   image_picker: ^0.8.7
   intl: ^0.17.0
   mime: ^1.0.4
-  shared_preferences: ^2.0.20
+  shared_preferences: ^2.1.0
   sizer: ^2.0.15
   socket_io_client: ^2.0.0-beta.3-nullsafety.0
   stream_transform: ^2.1.0
@@ -31,8 +31,8 @@ dependencies:
     git: https://github.com/jonataslaw/VideoCompress
   video_player: ^2.6.0
   device_info_plus: ^8.1.0
-  firebase_core: ^2.8.0
-  firebase_messaging: ^14.3.0
+  firebase_core: ^2.9.0
+  firebase_messaging: ^14.4.0
   flutter_local_notifications: ^13.0.0
   flutter_dotenv: ^5.0.2
   flutter_app_badger: ^1.5.0
@@ -53,7 +53,7 @@ dependencies:
   flutter_native_splash: ^2.2.19
   cached_network_image: ^3.2.3
   flutter_cache_manager: ^3.3.0
-  lottie: ^2.3.0
+  lottie: ^2.3.1
   visibility_detector: ^0.4.0+2
   flutter_markdown: ^0.6.14
   gallery_saver: ^2.3.2
