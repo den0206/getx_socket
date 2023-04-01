@@ -1,8 +1,8 @@
 import {Request, Response} from 'express';
-import ResponseAPI from '../../utils/interface/response.api';
-import {GroupModel} from '../../utils/database/models';
 import getUserIdFromRes from '../../middleware/get_userid_res';
 import {checkMongoId} from '../../utils/database/database';
+import {GroupModel} from '../../utils/database/models';
+import ResponseAPI from '../../utils/interface/response.api';
 
 async function createGroup(req: Request, res: Response) {
   const {ownerId, title, members} = req.body;
@@ -56,7 +56,7 @@ async function leaveTheGroup(req: Request, res: Response) {
 
     if (currentMembers.length <= 2) {
       // delete(人数が2を切った時)
-      await findGroup.delete();
+      await findGroup.deleteOne();
     } else {
       // update member
       const value = {members: currentMembers};
@@ -87,7 +87,7 @@ async function deleteGroup(req: Request, res: Response) {
   }
 
   try {
-    await findGroup.delete();
+    await findGroup.deleteOne();
     console.log('=== Complete DELETE');
     new ResponseAPI(res, {data: findGroup}).excute(200);
   } catch (e: any) {
