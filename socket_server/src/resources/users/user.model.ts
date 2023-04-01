@@ -74,7 +74,7 @@ export class User {
       currentMembers = currentMembers.filter((id) => String(id) !== _id);
       if (currentMembers.length <= 2) {
         // delete(人数が2を切った時)
-        await group.delete();
+        await group.deleteOne();
       } else {
         // update member
         const value = {members: currentMembers};
