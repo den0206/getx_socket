@@ -134,7 +134,7 @@ async function deleteUser(req: Request, res: Response) {
         message: 'Can not find Delete user',
       }).excute(400);
 
-    await isFind.delete();
+    await isFind.deleteOne();
     console.log('=== Complete DELETE');
 
     new ResponseAPI(res, {data: isFind}).excute(200);
