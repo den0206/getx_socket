@@ -93,10 +93,10 @@ packages:
     dependency: transitive
     description:
       name: cli_util
-      sha256: "66f86e916d285c1a93d3b79587d94bd71984a66aac4ff74e524cfa7877f1395c"
+      sha256: b8db3080e59b2503ca9e7922c3df2072cf13992354d5e944074ffa836fba43b7
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.5"
+    version: "0.4.0"
   clock:
     dependency: transitive
     description:
@@ -386,10 +386,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_launcher_icons
-      sha256: "02dcaf49d405f652b7160e882bacfc02cb497041bb2eab2a49b1c393cf9aac12"
+      sha256: "8546a9b9510e1a260b8d55fb2d07096e8a8552c6a2c2bf529100344894b2b41a"
       url: "https://pub.dev"
     source: hosted
-    version: "0.12.0"
+    version: "0.13.0"
   flutter_lints:
     dependency: "direct main"
     description:
@@ -545,10 +545,10 @@ packages:
     dependency: "direct main"
     description:
       name: image_picker
-      sha256: "64b21d9f0e065f9ab0e4dde458076226c97382cc0c6949144cb874c62bf8e9f8"
+      sha256: cb25f04595a88450970dbe727243ba8cd21b6f7e0d7d1fc5b789fc6f52e95494
       url: "https://pub.dev"
     source: hosted
-    version: "0.8.7"
+    version: "0.8.7+1"
   image_picker_android:
     dependency: transitive
     description:
@@ -625,10 +625,10 @@ packages:
     dependency: "direct main"
     description:
       name: lottie
-      sha256: "14b489bf93af84727a07c87c73580a9413f9cbffa4ea2342f3f71447a674a3fb"
+      sha256: "23522951540d20a57a60202ed7022e6376bed206a4eee1c347a91f58bd57eb9f"
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.1"
+    version: "2.3.2"
   markdown:
     dependency: transitive
     description:
@@ -1175,10 +1175,10 @@ packages:
     dependency: "direct main"
     description:
       name: video_player
-      sha256: "868a139229acb5018d22aded3eb9cb4767ff43a8216573c086b6c535a4957481"
+      sha256: de95f0e9405f29b5582573d4166132e71f83b3158aac14e8ee5767a54f4f1fbd
       url: "https://pub.dev"
     source: hosted
-    version: "2.6.0"
+    version: "2.6.1"
   video_player_android:
     dependency: transitive
     description:
@@ -1199,10 +1199,10 @@ packages:
     dependency: transitive
     description:
       name: video_player_platform_interface
-      sha256: "42bb75de5e9b79e1f20f1d95f688fac0f95beac4d89c6eb2cd421724d4432dae"
+      sha256: a8c4dcae2a7a6e7cc1d7f9808294d968eca1993af34a98e95b9bdfa959bec684
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.1"
+    version: "6.1.0"
   video_player_web:
     dependency: transitive
     description:
@@ -1324,5 +1324,5 @@ packages:
     source: hosted
     version: "3.1.1"
 sdks:
-  dart: ">=2.18.0 <3.0.0"
+  dart: ">=2.19.0 <3.0.0"
   flutter: ">=3.3.0"
