@@ -18,30 +18,34 @@ export async function hashdPassword(value: string): Promise<string> {
   }
   return next();
 })
-@pre<User>('remove', async function (next) {
-  console.log('=== Start USER DELETE');
-  console.log('DELETE RELATION', (await this)._id);
+@pre<User>(
+  'deleteOne',
+  async function (next) {
+    console.log('=== Start USER DELETE');
+    console.log('DELETE RELATION', (await this)._id);
 
-  // Messageの削除
-  await MessageModel.deleteMany({userId: (await this)._id});
+    // Messageの削除
+    await MessageModel.deleteMany({userId: (await this)._id});
 
-  // Recentの削除
-  await RecentModel.deleteMany({userId: (await this)._id});
-  await RecentModel.deleteMany({withUserId: (await this)._id});
+    // Recentの削除
+    await RecentModel.deleteMany({userId: (await this)._id});
+    await RecentModel.deleteMany({withUserId: (await this)._id});
 
-  // Groupの削除
-  await GroupModel.deleteMany({ownerId: (await this)._id});
-  await (await this).leaveGroups((await this)._id.toString());
+    // Groupの削除
+    await GroupModel.deleteMany({ownerId: (await this)._id});
+    await (await this).leaveGroups((await this)._id.toString());
 
-  /// アバターの削除
-  if ((await this).avatarUrl) {
-    const awsClient = new AWSClient();
-    console.log('DELETE AVATAR RELATION', (await this)._id);
-    await awsClient.deleteImage((await this).avatarUrl);
-  }
+    /// アバターの削除
+    if ((await this).avatarUrl) {
+      const awsClient = new AWSClient();
+      console.log('DELETE AVATAR RELATION', (await this)._id);
+      await awsClient.deleteImage((await this).avatarUrl);
+    }
 
-  next();
-})
+    next();
+  },
+  {document: true, query: true}
+)
 export class User {
   @prop({required: true, maxlength: 20})
   name: string;
