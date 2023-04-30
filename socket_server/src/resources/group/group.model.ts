@@ -7,14 +7,18 @@ import {User} from '../users/user.model';
 //   Types.ObjectId & {_id: Types.ObjectId}
 // >;
 
-@pre<Group>('remove', async function (next) {
-  console.log('=== Start DELETE');
-  console.log('DELETE RELATION', (await this)._id);
+@pre<Group>(
+  'deleteOne',
+  async function (next) {
+    console.log('=== Start DELETE');
+    console.log('DELETE RELATION', (await this)._id);
 
-  await RecentModel.deleteMany({chatRoomId: (await this)._id});
-  await MessageModel.deleteMany({chatRoomId: (await this)._id});
-  next();
-})
+    await RecentModel.deleteMany({chatRoomId: (await this)._id});
+    await MessageModel.deleteMany({chatRoomId: (await this)._id});
+    next();
+  },
+  {document: true, query: true}
+)
 export class Group {
   @prop({required: true})
   ownerId: string;

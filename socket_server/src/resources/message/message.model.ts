@@ -2,20 +2,24 @@ import {pre, prop, Ref} from '@typegoose/typegoose';
 import AWSClient from '../../utils/aws/aws_client';
 import {User} from '../users/user.model';
 
-@pre<Message>('remove', async function (next) {
-  const awsClient = new AWSClient();
-  if ((await this).imageUrl) {
-    console.log('=== Start DELETE');
-    console.log('DELETE IAMGE RELATION', (await this)._id);
-    awsClient.deleteImage((await this).imageUrl);
-  }
-  if ((await this).videoUrl) {
-    console.log('=== Start DELETE');
-    console.log('DELETE VIDEO RELATION', (await this)._id);
-    awsClient.deleteImage((await this).videoUrl);
-  }
-  next();
-})
+@pre<Message>(
+  'deleteOne',
+  async function (next) {
+    const awsClient = new AWSClient();
+    if ((await this).imageUrl) {
+      console.log('=== Start DELETE');
+      console.log('DELETE IAMGE RELATION', (await this)._id);
+      awsClient.deleteImage((await this).imageUrl);
+    }
+    if ((await this).videoUrl) {
+      console.log('=== Start DELETE');
+      console.log('DELETE VIDEO RELATION', (await this)._id);
+      awsClient.deleteImage((await this).videoUrl);
+    }
+    next();
+  },
+  {document: true, query: true}
+)
 export class Message {
   @prop({required: true})
   chatRoomId: string;
