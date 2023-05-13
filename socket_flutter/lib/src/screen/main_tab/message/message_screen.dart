@@ -404,7 +404,8 @@ class MessageCell extends GetView<MessageController> {
                           style: TextStyle(fontSize: 12.sp),
                         ),
                         onPressed: () async {
-                          final data = ClipboardData(text: message.translated);
+                          if (message.translated == null) return;
+                          final data = ClipboardData(text: message.translated!);
                           await Clipboard.setData(data);
                           Get.back();
                         },
