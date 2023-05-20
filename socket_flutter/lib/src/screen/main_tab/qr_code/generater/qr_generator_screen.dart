@@ -22,11 +22,12 @@ class QrGenerateScreen extends StatelessWidget {
               child: Neumorphic(
                 padding: const EdgeInsets.all(15),
                 style: commonNeumorphic(depth: 0.5),
-                child: QrImage(
+                child: QrImageView(
                   data: AuthService.to.currentUser.value!.searchId,
                   version: QrVersions.auto,
                   backgroundColor: Colors.green,
-                  foregroundColor: ConstsColor.mainBackgroundColor,
+                  eyeStyle:
+                      const QrEyeStyle(color: ConstsColor.mainBackgroundColor),
                   size: 200,
                   gapless: false,
                   errorStateBuilder: (cxt, err) {
