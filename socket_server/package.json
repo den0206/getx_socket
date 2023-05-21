@@ -22,7 +22,7 @@
   "license": "ISC",
   "dependencies": {
     "@aws-sdk/client-s3": "^3.335.0",
-    "@typegoose/typegoose": "^11.1.0",
+    "@typegoose/typegoose": "^11.2.0",
     "argon2": "^0.30.3",
     "axios": "^1.4.0",
     "cors": "^2.8.5",
@@ -31,7 +31,7 @@
     "handlebars": "^4.7.7",
     "helmet": "^7.0.0",
     "jsonwebtoken": "^9.0.0",
-    "mongoose": "^7.1.2",
+    "mongoose": "^7.2.0",
     "multer": "^1.4.5-lts.1",
     "node-schedule": "^2.1.1",
     "nodemailer": "^6.9.2",
