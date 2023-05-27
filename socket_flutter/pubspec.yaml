@@ -32,7 +32,7 @@ dependencies:
   device_info_plus: any
   firebase_core: ^2.13.0
   firebase_messaging: ^14.6.1
-  flutter_local_notifications: ^14.0.1
+  flutter_local_notifications: ^14.1.0
   flutter_dotenv: ^5.0.2
   flutter_app_badger: ^1.5.0
   flip_card: ^0.7.0
@@ -48,7 +48,7 @@ dependencies:
     git:
       url: https://github.com/den0206/Flutter-Neumorphic.git
       ref: feature/remoce_accentcolor
-  webview_flutter: ^4.2.0
+  webview_flutter: ^4.2.1
   package_info_plus: any
   permission_handler: ^10.2.0
   flutter_launcher_icons: ^0.13.1
