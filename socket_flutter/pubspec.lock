@@ -330,10 +330,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_dotenv
-      sha256: d9283d92059a22e9834bc0a31336658ffba77089fb6f3cc36751f1fc7c6661a3
+      sha256: "9357883bdd153ab78cbf9ffa07656e336b8bbb2b5a3ca596b0b27e119f7c7d77"
       url: "https://pub.dev"
     source: hosted
-    version: "5.0.2"
+    version: "5.1.0"
   flutter_keyboard_visibility:
     dependency: "direct main"
     description:
@@ -402,10 +402,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_local_notifications
-      sha256: "12f8abacca8bf29c042ec50c554f967da4c6f88ec99fc215e0325e5b43a25188"
+      sha256: "812791d43ccfc1b443a0d39fa02a206fc228c597e28ff9337e09e3ca8d370391"
       url: "https://pub.dev"
     source: hosted
-    version: "14.1.0"
+    version: "14.1.1"
   flutter_local_notifications_linux:
     dependency: transitive
     description:
@@ -626,10 +626,10 @@ packages:
     dependency: "direct main"
     description:
       name: lottie
-      sha256: "23522951540d20a57a60202ed7022e6376bed206a4eee1c347a91f58bd57eb9f"
+      sha256: f461105d3a35887b27089abf9c292334478dd292f7b47ecdccb6ae5c37a22c80
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.2"
+    version: "2.4.0"
   markdown:
     dependency: transitive
     description:
@@ -1325,4 +1325,4 @@ packages:
     version: "3.1.2"
 sdks:
   dart: ">=3.0.0 <4.0.0"
-  flutter: ">=3.7.0"
+  flutter: ">=3.10.0"
