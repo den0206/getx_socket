@@ -5,7 +5,6 @@ import 'package:sizer/sizer.dart';
 import 'package:socket_flutter/src/screen/main_tab/qr_code/generater/qr_generator_controller.dart';
 import 'package:socket_flutter/src/screen/widget/neumorphic/buttons.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
-import 'package:socket_flutter/src/utils/consts_color.dart';
 import 'package:socket_flutter/src/utils/neumorpic_style.dart';
 
 class QrGenerateScreen extends StatelessWidget {
@@ -25,9 +24,6 @@ class QrGenerateScreen extends StatelessWidget {
                 child: QrImageView(
                   data: AuthService.to.currentUser.value!.searchId,
                   version: QrVersions.auto,
-                  backgroundColor: Colors.green,
-                  eyeStyle:
-                      const QrEyeStyle(color: ConstsColor.mainBackgroundColor),
                   size: 200,
                   gapless: false,
                   errorStateBuilder: (cxt, err) {
