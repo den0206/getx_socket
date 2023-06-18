@@ -1,33 +1,24 @@
+import {getModelForClass} from '@typegoose/typegoose';
 import {IModelOptions} from '@typegoose/typegoose/lib/types';
-import {DocumentType, getModelForClass} from '@typegoose/typegoose';
 import {User} from '../../resources/users/user.model';
 
-import {Recent} from '../../resources/recent/recent.model';
 import {Group} from '../../resources/group/group.model';
 import {Message} from '../../resources/message/message.model';
-import {TempToken} from '../../resources/temp_token/temp_token.model';
+import {Recent} from '../../resources/recent/recent.model';
 import {Report} from '../../resources/report/report.model';
+import {TempToken} from '../../resources/temp_token/temp_token.model';
 
-export const UserModel = getModelForClass(User, commoneSchemaOption<User>({}));
+export const UserModel = getModelForClass(User, commoneSchemaOption({}));
 
-export const RecentModel = getModelForClass(
-  Recent,
-  commoneSchemaOption<Recent>({})
-);
+export const RecentModel = getModelForClass(Recent, commoneSchemaOption({}));
 
-export const GroupModel = getModelForClass(
-  Group,
-  commoneSchemaOption<Group>({})
-);
+export const GroupModel = getModelForClass(Group, commoneSchemaOption({}));
 
-export const MessageModel = getModelForClass(
-  Message,
-  commoneSchemaOption<Message>({})
-);
+export const MessageModel = getModelForClass(Message, commoneSchemaOption({}));
 
 export const TempTokenModel = getModelForClass(
   TempToken,
-  commoneSchemaOption<TempToken>({})
+  commoneSchemaOption({})
 );
 
 export const ReportModel = getModelForClass(
@@ -36,7 +27,7 @@ export const ReportModel = getModelForClass(
 );
 
 // utils
-function commoneSchemaOption<T>({
+function commoneSchemaOption({
   useTimestamp = false,
 }: {
   useTimestamp?: boolean;
@@ -44,12 +35,18 @@ function commoneSchemaOption<T>({
   return {
     schemaOptions: {
       toJSON: {
-        transform: (doc: DocumentType<T>, ret) => {
-          delete ret.__v;
+        transform: function (_, ret) {
+          // replace _id to id
           ret.id = ret._id;
+
+          // remove _id & __v
           delete ret._id;
+          delete ret.__v;
         },
+        versionKey: false,
       },
+      // _vをつけない様にする
+      versionKey: false,
       timestamps: useTimestamp || false,
     },
   };
