@@ -20,7 +20,9 @@ class VideoBubbleController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    videoPlayerController = VideoPlayerController.network(videoUrl);
+    videoPlayerController = VideoPlayerController.networkUrl(
+      Uri.parse(videoUrl),
+    );
 
     await videoPlayerController.initialize();
 
