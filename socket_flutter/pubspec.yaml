@@ -9,7 +9,7 @@ environment:
   sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
-  chewie: ^1.5.0
+  chewie: ^1.7.0
   country_list_pick: ^1.0.1+6
   cupertino_icons: ^1.0.5
 
@@ -29,10 +29,10 @@ dependencies:
   stream_transform: ^2.1.0
   video_compress: ^3.1.2
   video_player: ^2.7.0
-  device_info_plus: any
+  device_info_plus: ^9.0.2
   firebase_core: ^2.14.0
   firebase_messaging: ^14.6.4
-  flutter_local_notifications: ^14.1.1
+  flutter_local_notifications: ^15.1.0+1
   flutter_dotenv: ^5.1.0
   flutter_app_badger: ^1.5.0
   flip_card: ^0.7.0
@@ -48,22 +48,15 @@ dependencies:
     git:
       url: https://github.com/den0206/Flutter-Neumorphic.git
       ref: feature/remoce_accentcolor
-  # http v1 対策
-  cached_network_image: 
-   git: 
-    url: https://github.com/lucasmiranda5/flutter_cached_network_image.git 
-    ref: dart3 
-    path: cached_network_image
-  
+  cached_network_image: ^3.2.3
   webview_flutter: ^4.2.2
-  package_info_plus: any
-  permission_handler: ^10.4.1
+  package_info_plus: ^4.0.2
+  permission_handler: ^10.4.2
   flutter_launcher_icons: ^0.13.1
   flutter_native_splash: ^2.3.1
-  
   lottie: ^2.4.0
   visibility_detector: ^0.4.0+2
-  flutter_markdown: ^0.6.15+1
+  flutter_markdown: ^0.6.17
   gallery_saver: ^2.3.2
   flutter_lints: ^2.0.2
 
