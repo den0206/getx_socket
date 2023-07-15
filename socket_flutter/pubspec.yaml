@@ -20,7 +20,7 @@ dependencies:
   flutter_spinkit: ^5.2.0
   get: ^4.6.5
   http: ^1.1.0
-  image_picker: ^1.0.0
+  image_picker: ^1.0.1
   intl: any
   mime: ^1.0.4
   shared_preferences: ^2.2.0
@@ -30,14 +30,14 @@ dependencies:
   video_compress: ^3.1.2
   video_player: ^2.7.0
   device_info_plus: ^9.0.2
-  firebase_core: ^2.14.0
-  firebase_messaging: ^14.6.4
+  firebase_core: ^2.15.0
+  firebase_messaging: ^14.6.5
   flutter_local_notifications: ^15.1.0+1
   flutter_dotenv: ^5.1.0
   flutter_app_badger: ^1.5.0
   flip_card: ^0.7.0
   device_preview: ^1.1.0
-  url_launcher: ^6.1.11
+  url_launcher: ^6.1.12
   qr_flutter: ^4.1.0
   flutter_barcode_scanner: ^2.0.0
   uuid: ^3.0.7
@@ -51,7 +51,7 @@ dependencies:
   cached_network_image: ^3.2.3
   webview_flutter: ^4.2.2
   package_info_plus: ^4.0.2
-  permission_handler: ^10.4.2
+  permission_handler: ^10.4.3
   flutter_launcher_icons: ^0.13.1
   flutter_native_splash: ^2.3.1
   lottie: ^2.4.0
