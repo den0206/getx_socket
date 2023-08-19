@@ -158,7 +158,7 @@ class MessageScreen extends LoadingGetView<MessageController> {
                   margin: const EdgeInsets.only(
                       left: 8, right: 8, top: 2, bottom: 4),
                   style: commonNeumorphic(
-                    depth: -10,
+                    depth: 3,
                     boxShape: const NeumorphicBoxShape.stadium(),
                   ),
                   padding: const EdgeInsets.symmetric(horizontal: 18),

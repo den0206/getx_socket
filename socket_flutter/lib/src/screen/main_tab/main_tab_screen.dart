@@ -52,6 +52,9 @@ class MainTabScreen extends StatelessWidget {
               case AppLifecycleState.detached:
                 print('破棄されたときの処理');
                 break;
+              case AppLifecycleState.hidden:
+                print('hideされたときの処理');
+                break;
             }
           },
           child: Scaffold(
