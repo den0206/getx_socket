@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:skeleton_text/skeleton_text.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class CustomButton extends StatelessWidget {
   const CustomButton({
@@ -129,10 +129,8 @@ class CircleImageButton extends StatelessWidget {
             height: size,
             loadingBuilder: (context, child, event) {
               if (event != null) {
-                return SkeletonAnimation(
-                  shimmerColor: Colors.white,
-                  borderRadius: BorderRadius.circular(20),
-                  shimmerDuration: 1000,
+                return Skeleton.leaf(
+                  enabled: true,
                   child: child,
                 );
               }
