@@ -41,10 +41,7 @@ dependencies:
   qr_flutter: ^4.1.0
   flutter_barcode_scanner: ^2.0.0
   uuid: ^3.0.7
-  skeleton_text:
-    git:
-      url: https://github.com/reynirf/Skeleton-Text.git
-      ref: master
+  skeletonizer: ^0.7.0
   pin_code_fields: ^8.0.1
   emoji_picker_flutter: ^1.6.1
   flutter_neumorphic: 
