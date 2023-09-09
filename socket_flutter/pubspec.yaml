@@ -9,7 +9,7 @@ environment:
   sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
-  chewie: ^1.7.0
+  chewie: ^1.7.1
   country_list_pick: ^1.0.1+6
   cupertino_icons: ^1.0.6
 
@@ -18,7 +18,7 @@ dependencies:
   flutter_keyboard_visibility: ^5.4.1
   flutter_slidable: ^3.0.0
   flutter_spinkit: ^5.2.0
-  get: ^4.6.5
+  get: ^4.6.6
   http: ^1.1.0
   image_picker: ^1.0.4
   intl: any
@@ -51,7 +51,7 @@ dependencies:
   cached_network_image: ^3.2.3
   webview_flutter: ^4.2.4
   package_info_plus: ^4.1.0
-  permission_handler: ^10.4.3
+  permission_handler: ^10.4.5
   flutter_launcher_icons: ^0.13.1
   flutter_native_splash: ^2.3.2
   lottie: ^2.6.0
