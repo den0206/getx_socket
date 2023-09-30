@@ -32,8 +32,13 @@ class AuthService extends GetxService {
   }
 
   Future<void> updateUser(User newUser) async {
-    newUser.sessionToken = currentUser.value!.sessionToken;
+    newUser.sessionToken ??= currentUser.value!.sessionToken;
+
+    // set home
     await StorageKey.user.saveString(newUser.toMap());
+    // set login email(String)
+    await StorageKey.loginEmail.saveString(newUser.email);
+
     currentUser.call(newUser);
   }
 

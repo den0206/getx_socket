@@ -33,6 +33,7 @@ class LoginController extends LoadingGetController {
     if (temp != null) currentLang = getLocale(temp);
 
     acceptTerms = await StorageKey.checkTerms.loadBool() ?? false;
+    emailController.text = await StorageKey.loginEmail.loadString() ?? "";
   }
 
   void updateTerms(LocaleLangs lang) {
@@ -73,11 +74,11 @@ class LoginController extends LoadingGetController {
 
       final user = User.fromMap(userData);
       user.sessionToken = token;
-
-      await StorageKey.user.saveString(user.toMap());
+      await Future.delayed(const Duration(seconds: 1));
 
       await Get.delete<LoginController>();
-      AuthService.to.currentUser.call(user);
+
+      await AuthService.to.updateUser(user);
     } catch (e) {
       showError(e.toString());
     } finally {
