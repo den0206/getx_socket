@@ -7,32 +7,18 @@ enum StorageKey {
   realtime,
   fcmToken,
   checkTerms,
-  locale;
-
-  String get keyString {
-    switch (this) {
-      case StorageKey.user:
-        return "user";
-      case StorageKey.realtime:
-        return "realtime";
-      case StorageKey.fcmToken:
-        return "fcmToken";
-      case StorageKey.checkTerms:
-        return "checkTerms";
-      case StorageKey.locale:
-        return "locale";
-    }
-  }
+  locale,
+  loginEmail;
 
   Future<bool> saveString(dynamic value) async {
     final pref = await SharedPreferences.getInstance();
     final encoded = json.encode(value);
-    return await pref.setString(keyString, encoded);
+    return await pref.setString(name, encoded);
   }
 
   Future<dynamic> loadString() async {
     final pref = await SharedPreferences.getInstance();
-    final value = pref.getString(keyString);
+    final value = pref.getString(name);
     if (value == null) {
       print("No Local Storage");
       return null;
@@ -43,17 +29,17 @@ enum StorageKey {
 
   Future<bool> saveBool(bool value) async {
     final pref = await SharedPreferences.getInstance();
-    return await pref.setBool(keyString, value);
+    return await pref.setBool(name, value);
   }
 
   Future<bool?> loadBool() async {
     final pref = await SharedPreferences.getInstance();
-    final value = pref.getBool(keyString);
+    final value = pref.getBool(name);
     return value;
   }
 
   Future<bool> deleteLocal() async {
     final pref = await SharedPreferences.getInstance();
-    return await pref.remove(keyString);
+    return await pref.remove(name);
   }
 }
