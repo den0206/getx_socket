@@ -106,10 +106,10 @@ class LoginScreen extends LoadingGetView<LoginController> {
                         return NeumorphicCustomButtton(
                           title: "Login".tr,
                           background: Colors.green,
-                          onPressed: () {
+                          onPressed: () async {
                             dismisskeyBord(context);
                             if (_formKey.currentState?.validate() ?? false) {
-                              controller.login();
+                              await controller.login();
                             }
                           },
                         );
