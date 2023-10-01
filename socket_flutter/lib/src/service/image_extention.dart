@@ -1,6 +1,7 @@
 import 'dart:io';
 
-import 'package:gallery_saver/gallery_saver.dart';
+import 'package:flutter/material.dart';
+import 'package:gal/gal.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:video_compress/video_compress.dart';
 
@@ -45,8 +46,15 @@ class ImageExtention {
   }
 
   Future<bool> downloadImage(String imageUrl) async {
-    final result = await GallerySaver.saveImage(imageUrl);
+    try {
+      // TODO ---- downlod from internet
 
-    return result ?? false;
+      // put Image Gallary
+      await Gal.putImage(imageUrl);
+      return true;
+    } catch (e) {
+      debugPrint("Fail Download Image: ${e.toString()}");
+      return false;
+    }
   }
 }
