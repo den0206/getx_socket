@@ -190,7 +190,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   device_info_plus: 7545d84d8d1b896cb16a4ff98c19f07ec4b298ea
-  emoji_picker_flutter: df19dac03a2b39ac667dc8d1da939ef3a9e21347
+  emoji_picker_flutter: fe2e6151c5b548e975d546e6eeb567daf0962a58
   Firebase: 66043bd4579e5b73811f96829c694c7af8d67435
   firebase_core: 28e84c2a4fcf6a50ef83f47b145ded8c1fa331e4
   firebase_messaging: 91ec967913a5d144f951b3c3ac17a57796d38735
