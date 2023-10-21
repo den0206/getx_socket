@@ -42,7 +42,7 @@ abstract class LoadingGetView<T extends LoadingGetController>
 }
 
 class PlainLoadingWidget extends StatelessWidget {
-  const PlainLoadingWidget({Key? key}) : super(key: key);
+  const PlainLoadingWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -72,8 +72,8 @@ class PlainLoadingWidget extends StatelessWidget {
 
 class LoadingCellWidget extends StatelessWidget {
   const LoadingCellWidget({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

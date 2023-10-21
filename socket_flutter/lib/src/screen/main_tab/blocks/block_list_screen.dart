@@ -5,7 +5,7 @@ import 'package:socket_flutter/src/screen/main_tab/blocks/block_list_controller.
 import 'package:socket_flutter/src/screen/main_tab/users/users_screen.dart';
 
 class BlockListScreen extends StatelessWidget {
-  const BlockListScreen({Key? key}) : super(key: key);
+  const BlockListScreen({super.key});
 
   static const routeName = '/BlockList';
 

@@ -7,7 +7,7 @@ import 'package:socket_flutter/src/service/image_extention.dart';
 import 'package:socket_flutter/src/utils/global_functions.dart';
 
 class ImageBubble extends StatelessWidget {
-  const ImageBubble({Key? key, required this.message}) : super(key: key);
+  const ImageBubble({super.key, required this.message});
   final Message message;
 
   @override
@@ -63,7 +63,7 @@ class ImageBubble extends StatelessWidget {
 }
 
 class ImageDetailScreen extends StatelessWidget {
-  const ImageDetailScreen({Key? key, required this.imageUrl}) : super(key: key);
+  const ImageDetailScreen({super.key, required this.imageUrl});
   final String imageUrl;
   @override
   Widget build(BuildContext context) {

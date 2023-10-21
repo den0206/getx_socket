@@ -7,7 +7,7 @@ import 'package:socket_flutter/src/screen/widget/common_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TextBubble extends StatelessWidget {
-  const TextBubble({Key? key, required this.message}) : super(key: key);
+  const TextBubble({super.key, required this.message});
 
   final Message message;
 
@@ -60,13 +60,13 @@ class TextBubble extends StatelessWidget {
 
 class BubbleSelf extends StatelessWidget {
   const BubbleSelf({
-    Key? key,
+    super.key,
     required this.text,
     required this.bubbleColor,
     required this.textColor,
     required this.bottomLeft,
     required this.bottomRight,
-  }) : super(key: key);
+  });
 
   final String text;
   final Color bubbleColor;

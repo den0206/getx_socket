@@ -14,7 +14,7 @@ import '../../../../utils/consts_color.dart';
 import '../../report/report_controller.dart';
 
 class UserDetailScreen extends StatelessWidget {
-  const UserDetailScreen(this.user, {Key? key}) : super(key: key);
+  const UserDetailScreen(this.user, {super.key});
 
   static const routeName = '/UserDetail';
   final User user;
@@ -160,9 +160,9 @@ class UserDetailScreen extends StatelessWidget {
 
 class ProfileButtonsArea extends StatelessWidget {
   const ProfileButtonsArea({
-    Key? key,
+    super.key,
     required this.buttons,
-  }) : super(key: key);
+  });
   final List<CustomCircleButton> buttons;
 
   @override

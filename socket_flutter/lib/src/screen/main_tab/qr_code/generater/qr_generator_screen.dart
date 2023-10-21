@@ -8,7 +8,7 @@ import 'package:socket_flutter/src/service/auth_service.dart';
 import 'package:socket_flutter/src/utils/neumorpic_style.dart';
 
 class QrGenerateScreen extends StatelessWidget {
-  const QrGenerateScreen({Key? key}) : super(key: key);
+  const QrGenerateScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

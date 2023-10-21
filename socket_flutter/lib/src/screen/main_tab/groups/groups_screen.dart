@@ -11,7 +11,7 @@ import 'package:socket_flutter/src/screen/widget/overlap_avatars.dart';
 import '../../../utils/neumorpic_style.dart';
 
 class GroupsScreen extends StatelessWidget {
-  const GroupsScreen({Key? key}) : super(key: key);
+  const GroupsScreen({super.key});
   static const routeName = '/GroupScreen';
 
   @override
@@ -52,9 +52,9 @@ class GroupsScreen extends StatelessWidget {
 
 class GroupCell extends GetView<GroupsController> {
   const GroupCell({
-    Key? key,
+    super.key,
     required this.group,
-  }) : super(key: key);
+  });
 
   final Group group;
 

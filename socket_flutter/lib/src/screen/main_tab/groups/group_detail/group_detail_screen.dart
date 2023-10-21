@@ -8,7 +8,7 @@ import 'package:socket_flutter/src/screen/widget/overlap_avatars.dart';
 import '../../../widget/neumorphic/buttons.dart';
 
 class GroupDetailScreen extends GetView<GroupDetailController> {
-  const GroupDetailScreen({Key? key}) : super(key: key);
+  const GroupDetailScreen({super.key});
 
   static const routeName = '/GroupDetail';
 

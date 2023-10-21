@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class DetectLifeCycleWidget extends StatefulWidget {
   const DetectLifeCycleWidget({
-    Key? key,
+    super.key,
     required this.child,
     required this.onChangeState,
-  }) : super(key: key);
+  });
 
   final Widget child;
   final Function(AppLifecycleState state) onChangeState;

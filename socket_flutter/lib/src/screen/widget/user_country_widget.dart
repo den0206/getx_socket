@@ -6,12 +6,12 @@ import 'package:socket_flutter/src/screen/widget/neumorphic/buttons.dart';
 
 class UserCountryWidget extends StatelessWidget {
   const UserCountryWidget({
-    Key? key,
+    super.key,
     required this.user,
     required this.size,
     this.useNeumorphic = false,
     this.onTap,
-  }) : super(key: key);
+  });
 
   final User user;
   final double size;
@@ -45,10 +45,10 @@ class UserCountryWidget extends StatelessWidget {
 
 class CountryFlagWidget extends StatelessWidget {
   const CountryFlagWidget({
-    Key? key,
+    super.key,
     required this.country,
     this.size = 30,
-  }) : super(key: key);
+  });
 
   final CountryCode country;
   final double size;

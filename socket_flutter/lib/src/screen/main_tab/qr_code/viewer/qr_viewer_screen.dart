@@ -7,7 +7,7 @@ import 'package:socket_flutter/src/screen/widget/user_country_widget.dart';
 import 'package:socket_flutter/src/utils/neumorpic_style.dart';
 
 class QrViewerScreen extends StatelessWidget {
-  const QrViewerScreen({Key? key}) : super(key: key);
+  const QrViewerScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

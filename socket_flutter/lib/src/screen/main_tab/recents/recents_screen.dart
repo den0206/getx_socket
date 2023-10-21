@@ -18,7 +18,7 @@ import 'package:socket_flutter/src/utils/date_format.dart';
 import '../../../utils/neumorpic_style.dart';
 
 class RecentsScreen extends StatelessWidget {
-  const RecentsScreen({Key? key}) : super(key: key);
+  const RecentsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -110,8 +110,7 @@ class RecentsScreen extends StatelessWidget {
 }
 
 class NeumorphicRecentCell extends GetView<RecentsController> {
-  const NeumorphicRecentCell({Key? key, required this.recent})
-      : super(key: key);
+  const NeumorphicRecentCell({super.key, required this.recent});
 
   final Recent recent;
   @override
@@ -226,7 +225,7 @@ class NeumorphicRecentCell extends GetView<RecentsController> {
 }
 
 class RecentCell extends GetView<RecentsController> {
-  const RecentCell({Key? key, required this.recent}) : super(key: key);
+  const RecentCell({super.key, required this.recent});
 
   final Recent recent;
 

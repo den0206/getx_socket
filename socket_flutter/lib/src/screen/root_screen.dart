@@ -5,7 +5,7 @@ import 'package:socket_flutter/src/screen/main_tab/main_tab_screen.dart';
 import 'package:socket_flutter/src/service/auth_service.dart';
 
 class RootScreen extends StatelessWidget {
-  const RootScreen({Key? key}) : super(key: key);
+  const RootScreen({super.key});
   static const routeName = '/Root';
 
   @override

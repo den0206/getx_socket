@@ -10,7 +10,7 @@ import 'package:socket_flutter/src/screen/main_tab/users/user_detail/user_detail
 import 'package:socket_flutter/src/service/storage_service.dart';
 
 class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({Key? key}) : super(key: key);
+  const SettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -6,8 +6,7 @@ import 'package:socket_flutter/src/model/language.dart';
 
 class SelectlanguageArea extends StatelessWidget {
   const SelectlanguageArea(
-      {Key? key, required this.currentlang, this.onSelectedLang})
-      : super(key: key);
+      {super.key, required this.currentlang, this.onSelectedLang});
 
   final Rxn<Language> currentlang;
   final Function(Language selectLang)? onSelectedLang;
@@ -52,10 +51,10 @@ class SelectlanguageArea extends StatelessWidget {
 
 class SelectLanguagePicker extends StatelessWidget {
   const SelectLanguagePicker({
-    Key? key,
+    super.key,
     this.title = "Choose Your Languag",
     this.onSelectedLang,
-  }) : super(key: key);
+  });
 
   final String title;
   final Function(Language selectLang)? onSelectedLang;
