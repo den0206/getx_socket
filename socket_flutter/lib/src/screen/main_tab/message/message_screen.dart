@@ -351,7 +351,7 @@ class MessageScreen extends LoadingGetView<MessageController> {
 }
 
 class WaveLoading extends StatelessWidget {
-  const WaveLoading({Key? key}) : super(key: key);
+  const WaveLoading({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -363,7 +363,7 @@ class WaveLoading extends StatelessWidget {
 }
 
 class MessageCell extends GetView<MessageController> {
-  const MessageCell({Key? key, required this.message}) : super(key: key);
+  const MessageCell({super.key, required this.message});
 
   final Message message;
 

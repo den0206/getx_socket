@@ -13,7 +13,7 @@ import 'package:socket_flutter/src/utils/consts_color.dart';
 import 'package:socket_flutter/src/utils/neumorpic_style.dart';
 
 class MainTabScreen extends StatelessWidget {
-  const MainTabScreen({Key? key}) : super(key: key);
+  const MainTabScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

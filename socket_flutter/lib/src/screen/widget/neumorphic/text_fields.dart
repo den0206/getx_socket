@@ -3,7 +3,7 @@ import 'package:socket_flutter/src/utils/neumorpic_style.dart';
 
 class NeumorphicCustomTextField extends StatelessWidget {
   const NeumorphicCustomTextField({
-    Key? key,
+    super.key,
     required this.controller,
     required this.labelText,
     this.inputType,
@@ -13,7 +13,7 @@ class NeumorphicCustomTextField extends StatelessWidget {
     this.padding,
     this.icon,
     this.onChange,
-  }) : super(key: key);
+  });
 
   final TextEditingController controller;
   final String labelText;

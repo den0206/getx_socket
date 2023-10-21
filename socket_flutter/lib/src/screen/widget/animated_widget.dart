@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 class FadeinWidget extends StatefulWidget {
-  const FadeinWidget({Key? key, required this.child, this.duration})
-      : super(key: key);
+  const FadeinWidget({super.key, required this.child, this.duration});
 
   final Widget child;
   final Duration? duration;
@@ -53,10 +52,10 @@ class _FadeinWidgetState extends State<FadeinWidget>
 
 class EmptyScreen extends StatelessWidget {
   const EmptyScreen({
-    Key? key,
+    super.key,
     required this.title,
     required this.path,
-  }) : super(key: key);
+  });
 
   final String title;
   final String path;

@@ -7,14 +7,14 @@ import '../custom_button.dart';
 
 class NeumorphicCustomButtton extends StatelessWidget {
   const NeumorphicCustomButtton({
-    Key? key,
+    super.key,
     required this.title,
     this.titleColor = Colors.white,
     this.width = 250,
     this.height = 60,
     this.background,
     this.onPressed,
-  }) : super(key: key);
+  });
 
   final String title;
   final Color titleColor;
@@ -53,13 +53,13 @@ class NeumorphicCustomButtton extends StatelessWidget {
 
 class NeumorphicIconButton extends StatelessWidget {
   const NeumorphicIconButton({
-    Key? key,
+    super.key,
     required this.icon,
     this.color,
     this.depth,
     this.onPressed,
     this.boxShape,
-  }) : super(key: key);
+  });
 
   final Widget icon;
 
@@ -87,11 +87,11 @@ class NeumorphicIconButton extends StatelessWidget {
 
 class NeumorphicAvatarButton extends StatelessWidget {
   const NeumorphicAvatarButton({
-    Key? key,
+    super.key,
     required this.imageProvider,
     this.size = 120,
     this.onTap,
-  }) : super(key: key);
+  });
 
   final ImageProvider<Object> imageProvider;
   final double size;
@@ -118,11 +118,11 @@ class NeumorphicAvatarButton extends StatelessWidget {
 
 class NeumorphicTextButton extends StatelessWidget {
   const NeumorphicTextButton({
-    Key? key,
+    super.key,
     required this.title,
     this.titleColor = Colors.green,
     this.onPressed,
-  }) : super(key: key);
+  });
 
   final String title;
   final Color titleColor;

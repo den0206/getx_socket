@@ -8,7 +8,7 @@ import 'package:socket_flutter/src/screen/widget/user_country_widget.dart';
 import '../../../utils/neumorpic_style.dart';
 
 class UsersScreen extends StatelessWidget {
-  const UsersScreen({Key? key}) : super(key: key);
+  const UsersScreen({super.key});
 
   static const routeName = '/UsersScreen';
 
@@ -69,11 +69,11 @@ class UsersScreen extends StatelessWidget {
 
 class UserCell extends StatelessWidget {
   const UserCell({
-    Key? key,
+    super.key,
     required this.user,
     this.selected = false,
     this.onTap,
-  }) : super(key: key);
+  });
 
   final User user;
   final bool selected;

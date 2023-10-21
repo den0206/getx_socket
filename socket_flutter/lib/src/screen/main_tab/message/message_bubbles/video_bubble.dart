@@ -79,7 +79,7 @@ class VideoBubbleController extends GetxController {
 }
 
 class VideoBubble extends StatelessWidget {
-  const VideoBubble({Key? key, required this.message}) : super(key: key);
+  const VideoBubble({super.key, required this.message});
 
   final Message message;
 
@@ -134,7 +134,7 @@ class VideoBubble extends StatelessWidget {
 }
 
 class ErrorImageWidget extends StatelessWidget {
-  const ErrorImageWidget({Key? key}) : super(key: key);
+  const ErrorImageWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

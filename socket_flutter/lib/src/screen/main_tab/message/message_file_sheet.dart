@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class MessageFileSheet extends StatelessWidget {
-  const MessageFileSheet({Key? key, required this.actions}) : super(key: key);
+  const MessageFileSheet({super.key, required this.actions});
   final List<MessageFileButton> actions;
 
   @override
@@ -31,10 +31,10 @@ class MessageFileSheet extends StatelessWidget {
 
 class MessageFileButton extends StatelessWidget {
   const MessageFileButton({
-    Key? key,
+    super.key,
     required this.icon,
     required this.onPress,
-  }) : super(key: key);
+  });
 
   final IconData icon;
   final VoidCallback onPress;

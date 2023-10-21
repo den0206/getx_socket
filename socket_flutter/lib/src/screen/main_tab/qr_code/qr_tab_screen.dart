@@ -4,7 +4,7 @@ import 'package:socket_flutter/src/screen/main_tab/qr_code/generater/qr_generato
 import 'package:socket_flutter/src/screen/main_tab/qr_code/viewer/qr_viewer_screen.dart';
 
 class QrTabScreen extends StatelessWidget {
-  const QrTabScreen({Key? key}) : super(key: key);
+  const QrTabScreen({super.key});
 
   static const routeName = '/QrTabScreen';
 

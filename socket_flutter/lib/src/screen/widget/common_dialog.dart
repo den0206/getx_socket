@@ -7,13 +7,13 @@ import 'package:get/utils.dart';
 
 class CustomDialog extends StatelessWidget {
   const CustomDialog({
-    Key? key,
+    super.key,
     required this.title,
     required this.descripon,
     required this.onPress,
     required this.icon,
     required this.mainColor,
-  }) : super(key: key);
+  });
 
   final String title;
   final String descripon;

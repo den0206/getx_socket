@@ -34,8 +34,7 @@ class MessageExtention {
     required this.withUsers,
   });
 
-  List<String> get userIds =>
-      [currentUser.id, ...withUsers.map((u) => u.id).toList()];
+  List<String> get userIds => [currentUser.id, ...withUsers.map((u) => u.id)];
 
   bool get isSameLanguage {
     return currentUser.mainLanguage == targetLanguage.value;

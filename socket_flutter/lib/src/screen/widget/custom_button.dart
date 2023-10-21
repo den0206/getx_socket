@@ -3,7 +3,7 @@ import 'package:skeletonizer/skeletonizer.dart';
 
 class CustomButton extends StatelessWidget {
   const CustomButton({
-    Key? key,
+    super.key,
     required this.title,
     this.titleColor = Colors.white,
     this.width = 250,
@@ -11,7 +11,7 @@ class CustomButton extends StatelessWidget {
     this.isLoading = false,
     this.background = Colors.blue,
     this.onPressed,
-  }) : super(key: key);
+  });
 
   final String title;
   final Color titleColor;
@@ -45,7 +45,7 @@ class CustomButton extends StatelessWidget {
 
 class CustomCircleButton extends StatelessWidget {
   const CustomCircleButton({
-    Key? key,
+    super.key,
     required this.title,
     required this.icon,
     this.size,
@@ -53,7 +53,7 @@ class CustomCircleButton extends StatelessWidget {
     required this.backColor,
     required this.onPress,
     this.mainColor = Colors.white,
-  }) : super(key: key);
+  });
 
   final String title;
   final IconData icon;
@@ -96,12 +96,12 @@ class CustomCircleButton extends StatelessWidget {
 
 class CircleImageButton extends StatelessWidget {
   const CircleImageButton({
-    Key? key,
+    super.key,
     required this.imageProvider,
     required this.size,
     this.fit = BoxFit.cover,
     this.onTap,
-  }) : super(key: key);
+  });
 
   final ImageProvider imageProvider;
   final double size;
