@@ -8,10 +8,10 @@ PODS:
   - Firebase/Messaging (10.16.0):
     - Firebase/CoreOnly
     - FirebaseMessaging (~> 10.16.0)
-  - firebase_core (2.20.0):
+  - firebase_core (2.21.0):
     - Firebase/CoreOnly (= 10.16.0)
     - Flutter
-  - firebase_messaging (14.7.2):
+  - firebase_messaging (14.7.3):
     - Firebase/Messaging (= 10.16.0)
     - firebase_core
     - Flutter
@@ -100,6 +100,7 @@ PODS:
     - Flutter
   - video_player_avfoundation (0.0.1):
     - Flutter
+    - FlutterMacOS
   - wakelock_plus (0.0.1):
     - Flutter
   - webview_flutter_wkwebview (0.0.1):
@@ -125,7 +126,7 @@ DEPENDENCIES:
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - video_compress (from `.symlinks/plugins/video_compress/ios`)
-  - video_player_avfoundation (from `.symlinks/plugins/video_player_avfoundation/ios`)
+  - video_player_avfoundation (from `.symlinks/plugins/video_player_avfoundation/darwin`)
   - wakelock_plus (from `.symlinks/plugins/wakelock_plus/ios`)
   - webview_flutter_wkwebview (from `.symlinks/plugins/webview_flutter_wkwebview/ios`)
 
@@ -182,7 +183,7 @@ EXTERNAL SOURCES:
   video_compress:
     :path: ".symlinks/plugins/video_compress/ios"
   video_player_avfoundation:
-    :path: ".symlinks/plugins/video_player_avfoundation/ios"
+    :path: ".symlinks/plugins/video_player_avfoundation/darwin"
   wakelock_plus:
     :path: ".symlinks/plugins/wakelock_plus/ios"
   webview_flutter_wkwebview:
@@ -192,8 +193,8 @@ SPEC CHECKSUMS:
   device_info_plus: c6fb39579d0f423935b0c9ce7ee2f44b71b9fce6
   emoji_picker_flutter: fe2e6151c5b548e975d546e6eeb567daf0962a58
   Firebase: 25899099b77d255a636e3579c3d9dce10ec150d5
-  firebase_core: 2e0e89436a00b664a23bebb08859e5fede7215e9
-  firebase_messaging: 2b2ed8f43ca8289caebfa324ada472e527bebcdf
+  firebase_core: 68027ba03585e3efe1608e35d3ab2777a64eabe9
+  firebase_messaging: e11ea61b449e6e39741b8a309ddab803ef1eb5cd
   FirebaseCore: 65a801af84cca84361ef9eac3fd868656968a53b
   FirebaseCoreInternal: 26233f705cc4531236818a07ac84d20c333e505a
   FirebaseInstallations: b822f91a61f7d1ba763e5ccc9d4f2e6f2ed3b3ee
@@ -218,7 +219,7 @@ SPEC CHECKSUMS:
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
   url_launcher_ios: 68d46cc9766d0c41dbdc884310529557e3cd7a86
   video_compress: fce97e4fb1dfd88175aa07d2ffc8a2f297f87fbe
-  video_player_avfoundation: 81e49bb3d9fb63dccf9fa0f6d877dc3ddbeac126
+  video_player_avfoundation: 8563f13d8fc8b2c29dc2d09e60b660e4e8128837
   wakelock_plus: 8b09852c8876491e4b6d179e17dfe2a0b5f60d47
   webview_flutter_wkwebview: 2e2d318f21a5e036e2c3f26171342e95908bd60a
 
