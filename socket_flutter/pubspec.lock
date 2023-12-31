@@ -434,10 +434,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_local_notifications
-      sha256: bb5cd63ff7c91d6efe452e41d0d0ae6348925c82eafd10ce170ef585ea04776e
+      sha256: "892ada16046d641263f30c72e7432397088810a84f34479f6677494802a2b535"
       url: "https://pub.dev"
     source: hosted
-    version: "16.2.0"
+    version: "16.3.0"
   flutter_local_notifications_linux:
     dependency: transitive
     description:
@@ -1010,10 +1010,10 @@ packages:
     dependency: "direct main"
     description:
       name: skeletonizer
-      sha256: ff4c36e826efd5288d7a84e7619a6e9be8185d3064cecf101a9133762f3b401b
+      sha256: f7ae1d2263933abc8db5833e7e697f99de0f22882b836bc7bd42aef2e3a3e896
       url: "https://pub.dev"
     source: hosted
-    version: "0.8.0"
+    version: "0.9.0"
   sky_engine:
     dependency: transitive
     description: flutter
