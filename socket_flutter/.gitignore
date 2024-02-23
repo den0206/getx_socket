@@ -45,11 +45,12 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-
 /build
 
 /test
 .env*
 
-.fvm/flutter_sdk
 test_user.txt
+
+# FVM Version Cache
+.fvm/
