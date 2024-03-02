@@ -52,5 +52,7 @@ app.*.map.json
 
 test_user.txt
 
+.vscode/settings.json
+
 # FVM Version Cache
 .fvm/
