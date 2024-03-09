@@ -28,11 +28,11 @@ dependencies:
   socket_io_client: ^2.0.3+1
   stream_transform: ^2.1.0
   video_compress: ^3.1.2
-  video_player: ^2.8.2
+  video_player: ^2.8.3
   device_info_plus: ^9.1.2
-  firebase_core: ^2.25.5
-  firebase_messaging: ^14.7.17
-  flutter_local_notifications: ^16.3.2
+  firebase_core: ^2.27.0
+  firebase_messaging: ^14.7.19
+  flutter_local_notifications: ^16.3.3
   flutter_dotenv: ^5.1.0
   flutter_app_badger: ^1.5.0
   flip_card: ^0.7.0
@@ -56,7 +56,7 @@ dependencies:
   flutter_native_splash: ^2.3.10
   lottie: ^3.1.0
   visibility_detector: ^0.4.0+2
-  flutter_markdown: ^0.6.20+1
+  flutter_markdown: ^0.6.21
   gal: ^2.3.0
   flutter_lints: ^3.0.1
 
