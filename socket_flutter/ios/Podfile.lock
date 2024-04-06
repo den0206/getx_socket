@@ -8,10 +8,10 @@ PODS:
   - Firebase/Messaging (10.22.0):
     - Firebase/CoreOnly
     - FirebaseMessaging (~> 10.22.0)
-  - firebase_core (2.27.2):
+  - firebase_core (2.28.0):
     - Firebase/CoreOnly (= 10.22.0)
     - Flutter
-  - firebase_messaging (14.7.21):
+  - firebase_messaging (14.8.0):
     - Firebase/Messaging (= 10.22.0)
     - firebase_core
     - Flutter
@@ -201,8 +201,8 @@ SPEC CHECKSUMS:
   device_info_plus: 97af1d7e84681a90d0693e63169a5d50e0839a0d
   emoji_picker_flutter: fe2e6151c5b548e975d546e6eeb567daf0962a58
   Firebase: 797fd7297b7e1be954432743a0b3f90038e45a71
-  firebase_core: cc49b6648d6dd7570d9273a616cb1205260db91e
-  firebase_messaging: bca531e02d5b4d3ed940f234d4e1b6f970e8278a
+  firebase_core: d955499180c3c8ef355adf46b8752c4c01d09e0a
+  firebase_messaging: 23c8eaa885a11552e45c98b7a08ba81860092883
   FirebaseCore: 0326ec9b05fbed8f8716cddbf0e36894a13837f7
   FirebaseCoreInternal: bca337352024b18424a61e478460547d46c4c753
   FirebaseInstallations: 763814908793c0da14c18b3dcffdec71e29ed55e
@@ -219,7 +219,7 @@ SPEC CHECKSUMS:
   GoogleUtilities: d053d902a8edaa9904e1bd00c37535385b8ed152
   image_picker_ios: 4a8aadfbb6dc30ad5141a2ce3832af9214a705b5
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
-  package_info_plus: 115f4ad11e0698c8c1c5d8a689390df880f47e85
+  package_info_plus: 58f0028419748fad15bf008b270aaa8e54380b1c
   path_provider_foundation: eaf5b3e458fc0e5fbb9940fb09980e853fe058b8
   permission_handler_apple: 9878588469a2b0d0fc1e048d9f43605f92e6cec2
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
@@ -228,7 +228,7 @@ SPEC CHECKSUMS:
   url_launcher_ios: 68d46cc9766d0c41dbdc884310529557e3cd7a86
   video_compress: fce97e4fb1dfd88175aa07d2ffc8a2f297f87fbe
   video_player_avfoundation: 8563f13d8fc8b2c29dc2d09e60b660e4e8128837
-  wakelock_plus: 8b09852c8876491e4b6d179e17dfe2a0b5f60d47
+  wakelock_plus: 78ec7c5b202cab7761af8e2b2b3d0671be6c4ae1
   webview_flutter_wkwebview: be0f0d33777f1bfd0c9fdcb594786704dbf65f36
 
 PODFILE CHECKSUM: 082e50b992a2f985f8f0bdeb0fd8951b36918653
