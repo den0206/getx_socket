@@ -32,7 +32,7 @@ export async function hashdPassword(value: string): Promise<string> {
     await RecentModel.deleteMany({withUserId: (await this)._id});
 
     // Groupの削除
-    await GroupModel.deleteMany({ownerId: (await this)._id});
+    await GroupModel.deleteMany({ownerId: (await this)._id.toString()});
     await (await this).leaveGroups((await this)._id.toString());
 
     /// アバターの削除
