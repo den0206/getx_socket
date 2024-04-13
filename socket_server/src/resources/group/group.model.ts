@@ -13,8 +13,10 @@ import {User} from '../users/user.model';
     console.log('=== Start DELETE');
     console.log('DELETE RELATION', (await this)._id);
 
-    await RecentModel.deleteMany({chatRoomId: (await this)._id});
-    await MessageModel.deleteMany({chatRoomId: (await this)._id});
+    const id: string = this._id.toString();
+
+    await RecentModel.deleteMany({chatRoomId: id});
+    await MessageModel.deleteMany({chatRoomId: id});
     next();
   },
   {document: true, query: true}
