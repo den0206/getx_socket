@@ -8,10 +8,10 @@ PODS:
   - Firebase/Messaging (11.0.0):
     - Firebase/CoreOnly
     - FirebaseMessaging (~> 11.0.0)
-  - firebase_core (3.4.0):
+  - firebase_core (3.5.0):
     - Firebase/CoreOnly (= 11.0.0)
     - Flutter
-  - firebase_messaging (15.1.0):
+  - firebase_messaging (15.1.2):
     - Firebase/Messaging (= 11.0.0)
     - firebase_core
     - Flutter
@@ -196,8 +196,8 @@ SPEC CHECKSUMS:
   device_info_plus: 97af1d7e84681a90d0693e63169a5d50e0839a0d
   emoji_picker_flutter: fe2e6151c5b548e975d546e6eeb567daf0962a58
   Firebase: 9f574c08c2396885b5e7e100ed4293d956218af9
-  firebase_core: ceec591a66629daaee82d3321551692c4a871493
-  firebase_messaging: 15d8b557010f3bb7b98d0302e1c7c8fbcd244425
+  firebase_core: 2ec6b789859c7c24766344ec71fdf78639402d56
+  firebase_messaging: a18e1e02b2e8e69097c8173e0c851be223b21c50
   FirebaseCore: 3cf438f431f18c12cdf2aaf64434648b63f7e383
   FirebaseCoreInternal: adefedc9a88dbe393c4884640a73ec9e8e790f8c
   FirebaseInstallations: d0a8fea5a6fa91abc661591cf57c0f0d70863e57
