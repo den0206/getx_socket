@@ -40,7 +40,7 @@ async function getBadgeCount(req: Request, res: Response) {
     if (count.length < 1) return new ResponseAPI(res, {data: 0}).excute(200);
     const total = count[0].counter as number;
 
-    return res.status(200).json({status: true, data: total});
+    return new ResponseAPI(res, {data: total}).excute(200);
   } catch (e: any) {
     new ResponseAPI(res, {message: e.message}).excute(500);
   }
