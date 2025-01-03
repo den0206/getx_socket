@@ -23,8 +23,8 @@ dependencies:
   image_picker: ^1.1.2
   intl: any
   mime: ^2.0.0
-  emoji_picker_flutter: ^3.1.0
-  shared_preferences: ^2.3.4
+  emoji_picker_flutter: ^4.2.0
+  shared_preferences: ^2.3.5
   sizer: ^2.0.15
   socket_io_client: ^3.0.2
   stream_transform: ^2.1.1
