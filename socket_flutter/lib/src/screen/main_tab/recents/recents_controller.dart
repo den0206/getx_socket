@@ -26,12 +26,14 @@ class RecentsController extends GetxController {
     return recents.isEmpty && !isLoading;
   }
 
-  final sc = ScrollController();
+  ScrollController? sc;
   final RecentIO recentIO = RecentIO();
 
   @override
   void onInit() async {
     super.onInit();
+
+    sc ??= ScrollController();
 
     await loadRecents();
     addSCListner();
@@ -44,8 +46,9 @@ class RecentsController extends GetxController {
   void onClose() {
     super.onClose();
 
-    sc.removeListener(() {});
-    sc.dispose();
+    sc?.removeListener(() {});
+    sc?.dispose();
+    sc = null;
 
     print("Destroy RECENT");
     recentIO.destroySocket();
@@ -63,8 +66,9 @@ class RecentsController extends GetxController {
   }
 
   void addSCListner() {
-    sc.addListener(() {
-      if (sc.position.pixels >= sc.position.maxScrollExtent * 0.95) {
+    if (sc == null) return;
+    sc!.addListener(() {
+      if (sc!.position.pixels >= sc!.position.maxScrollExtent * 0.95) {
         loadRecents();
       }
     });
