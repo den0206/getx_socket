@@ -9,7 +9,7 @@ environment:
   sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
-  chewie: ^1.10.0
+  chewie: ^1.11.0
   country_list_pick: ^1.0.1+1
   cupertino_icons: ^1.0.8
 
