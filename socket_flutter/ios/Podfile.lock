@@ -206,7 +206,7 @@ SPEC CHECKSUMS:
   flutter_app_badger: 16b371e989d04cd265df85be2c3851b49cb68d18
   flutter_barcode_scanner: c5aa9f51c150a6242fa392386bd52b64bb27fcb5
   flutter_keyboard_visibility: 4625131e43015dbbe759d9b20daaf77e0e3f6619
-  flutter_local_notifications: 395056b3175ba4f08480a7c5de30cd36d69827e4
+  flutter_local_notifications: a5a732f069baa862e728d839dd2ebb904737effb
   flutter_native_splash: c32d145d68aeda5502d5f543ee38c192065986cf
   gal: baecd024ebfd13c441269ca7404792a7152fde89
   GoogleDataTransport: aae35b7ea0c09004c3797d53c8c41f66f219d6a7
