@@ -1,21 +1,21 @@
 import {prop, Ref} from '@typegoose/typegoose';
-import {User} from '../users/user.model';
 import {Group} from '../group/group.model';
+import {User} from '../users/user.model';
 
 export class Recent {
   @prop({required: true, ref: () => User})
   userId: Ref<User>;
-  @prop({required: true})
+  @prop({type: () => String, required: true})
   chatRoomId: string;
   @prop({ref: () => User})
   withUserId: Ref<User>;
-  @prop({default: ''})
+  @prop({type: () => String, default: ''})
   lastMessage: string;
-  @prop({default: 0})
-  counter: Number;
+  @prop({type: () => Number, default: 0})
+  counter: number;
   @prop({ref: () => Group})
   group: Ref<Group>;
-  @prop({default: Date.now})
+  @prop({type: () => Date, default: Date.now})
   date: Date;
 }
 

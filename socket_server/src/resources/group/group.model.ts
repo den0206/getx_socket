@@ -22,9 +22,9 @@ import {User} from '../users/user.model';
   {document: true, query: true}
 )
 export class Group {
-  @prop({required: true})
+  @prop({type: () => String, required: true})
   ownerId: string;
-  @prop({})
+  @prop({type: () => String})
   title: string;
   @prop({required: true, ref: () => User})
   members: Ref<User>[];
