@@ -47,23 +47,23 @@ export async function hashdPassword(value: string): Promise<string> {
   {document: true, query: true}
 )
 export class User {
-  @prop({required: true, maxlength: 20})
+  @prop({type: () => String, required: true, maxlength: 20})
   name: string;
-  @prop({required: true, unique: true})
+  @prop({type: () => String, required: true, unique: true})
   email: string;
-  @prop({required: true})
+  @prop({type: () => String, required: true})
   password: string;
-  @prop({})
+  @prop({type: () => String})
   avatarUrl: string;
-  @prop({})
+  @prop({type: () => String})
   fcmToken: string;
-  @prop({required: true})
+  @prop({type: () => String, required: true})
   countryCode: string;
-  @prop({required: true})
+  @prop({type: () => String, required: true})
   mainLanguage: string;
   @prop({default: [], ref: () => User})
   blocked: Ref<User>[];
-  @prop({unique: true})
+  @prop({type: () => String, unique: true})
   searchId: string;
 
   async comparePasswrd(password: string): Promise<boolean> {

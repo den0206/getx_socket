@@ -9,6 +9,6 @@ export class Report {
   reported: Ref<User>;
   @prop({ref: () => Message})
   message: Ref<Message>;
-  @prop({required: true})
+  @prop({type: () => String, required: true})
   reportedContent: string;
 }

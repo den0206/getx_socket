@@ -21,20 +21,20 @@ import {User} from '../users/user.model';
   {document: true, query: true}
 )
 export class Message {
-  @prop({required: true})
+  @prop({type: () => String, required: true})
   chatRoomId: string;
-  @prop({required: true})
+  @prop({type: () => String, required: true})
   text: string;
   @prop({required: true, ref: () => User})
   userId: Ref<User>;
   @prop({default: [], ref: () => User})
   readBy: Ref<User>[];
-  @prop({})
+  @prop({type: () => String})
   translated: string;
-  @prop({})
+  @prop({type: () => String})
   imageUrl: string;
-  @prop({})
+  @prop({type: () => String})
   videoUrl: string;
-  @prop({default: Date.now})
+  @prop({type: () => Date, default: Date.now})
   date: Date;
 }

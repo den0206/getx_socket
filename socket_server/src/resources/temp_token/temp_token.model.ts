@@ -1,4 +1,4 @@
-import {prop, pre} from '@typegoose/typegoose';
+import {pre, prop} from '@typegoose/typegoose';
 import argon2 from 'argon2';
 
 @pre<TempToken>('save', async function (next) {
@@ -9,11 +9,11 @@ import argon2 from 'argon2';
   return next();
 })
 export class TempToken {
-  @prop({unique: true, required: true})
+  @prop({type: () => String, unique: true, required: true})
   tempId: string;
-  @prop({required: true})
+  @prop({type: () => String, required: true})
   token: string;
-  @prop({default: Date.now, expires: 3600})
+  @prop({type: () => Date, default: Date.now, expires: 3600})
   createdAt: Date;
 
   async compareToken(token: string): Promise<boolean> {
