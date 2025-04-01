@@ -46,7 +46,7 @@ class App {
     });
 
     const apiVer = '/api/v1';
-    this.app.all(`${apiVer}/*`, checkAPIKey);
+    this.app.all(`${apiVer}/*all`, checkAPIKey);
     this.app.use(`${apiVer}/users`, usersRoute);
     this.app.use(`${apiVer}/recents`, recentRoute);
     this.app.use(`${apiVer}/messages`, messageRoute);
