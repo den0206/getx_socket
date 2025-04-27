@@ -1,0 +1,8 @@
+[tools]
+flutter = "3.29.3"
+
+# mise run check
+
+[tasks.check]
+description = "Flutter のバージョン更新"
+run = "mise ls-remote flutter"
