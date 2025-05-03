@@ -6,3 +6,7 @@ flutter = "3.29.3"
 [tasks.check]
 description = "Flutter のバージョン更新"
 run = "mise ls-remote flutter"
+
+[tasks.mise-update]
+description = "mise自体 の更新"
+run = "brew upgrade mise"
