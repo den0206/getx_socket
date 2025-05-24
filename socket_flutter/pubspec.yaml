@@ -31,9 +31,9 @@ dependencies:
   video_compress: ^3.1.4
   video_player: ^2.9.5
   device_info_plus: ^11.4.0
-  firebase_core: ^3.13.0
-  firebase_messaging: ^15.2.5
-  flutter_local_notifications: ^19.1.0
+  firebase_core: ^3.13.1
+  firebase_messaging: ^15.2.6
+  flutter_local_notifications: ^19.2.1
   flutter_dotenv: ^5.2.1
   flutter_app_badger: ^1.5.0
   flip_card: ^0.7.0
@@ -42,7 +42,7 @@ dependencies:
   qr_flutter: ^4.1.0
   flutter_barcode_scanner: ^2.0.0
   uuid: ^4.5.1
-  skeletonizer: ^1.4.3
+  skeletonizer: ^2.0.1
   pin_code_fields: ^8.0.1
 
   flutter_neumorphic:
@@ -50,7 +50,7 @@ dependencies:
       url: https://github.com/den0206/Flutter-Neumorphic.git
       ref: feature/remoce_accentcolor
   cached_network_image: ^3.4.1
-  webview_flutter: ^4.11.0
+  webview_flutter: ^4.13.0
   permission_handler: ^12.0.0
   flutter_launcher_icons: ^0.14.3
   flutter_native_splash: ^2.4.6
