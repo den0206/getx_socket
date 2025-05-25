@@ -15,21 +15,18 @@ class Pages<T> {
 }
 
 class PageInfo {
-  PageInfo({
-    required this.nextPageCursor,
-    required this.hasNextPage,
-  });
+  PageInfo({required this.nextPageCursor, required this.hasNextPage});
 
   final String? nextPageCursor;
   final bool hasNextPage;
 
   factory PageInfo.fromMap(Map<String, dynamic> json) => PageInfo(
-        nextPageCursor: json["nextPageCursor"],
-        hasNextPage: json["hasNextPage"],
-      );
+    nextPageCursor: json["nextPageCursor"],
+    hasNextPage: json["hasNextPage"],
+  );
 
   Map<String, dynamic> toMap() => {
-        "nextPageCursor": nextPageCursor,
-        "hasNextPage": hasNextPage,
-      };
+    "nextPageCursor": nextPageCursor,
+    "hasNextPage": hasNextPage,
+  };
 }

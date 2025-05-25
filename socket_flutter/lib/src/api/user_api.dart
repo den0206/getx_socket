@@ -7,8 +7,10 @@ import 'package:socket_flutter/src/service/auth_service.dart';
 class UserAPI extends APIBase {
   UserAPI() : super(EndPoint.user);
 
-  Future<ResponseAPI> signUp(
-      {required Map<String, dynamic> userData, File? avatarFile}) async {
+  Future<ResponseAPI> signUp({
+    required Map<String, dynamic> userData,
+    File? avatarFile,
+  }) async {
     try {
       final Uri uri = setUri("/signup");
 
@@ -52,8 +54,10 @@ class UserAPI extends APIBase {
     }
   }
 
-  Future<ResponseAPI> editUser(
-      {required Map<String, dynamic> userData, File? avatarFile}) async {
+  Future<ResponseAPI> editUser({
+    required Map<String, dynamic> userData,
+    File? avatarFile,
+  }) async {
     try {
       final Uri uri = setUri("/edit");
 
@@ -61,11 +65,12 @@ class UserAPI extends APIBase {
         return await putRequest(uri: uri, body: userData, useToken: true);
       } else {
         return await updateSingleFile(
-            uri: uri,
-            body: userData,
-            file: avatarFile,
-            type: "PUT",
-            useToken: true);
+          uri: uri,
+          body: userData,
+          file: avatarFile,
+          type: "PUT",
+          useToken: true,
+        );
       }
     } catch (e) {
       rethrow;

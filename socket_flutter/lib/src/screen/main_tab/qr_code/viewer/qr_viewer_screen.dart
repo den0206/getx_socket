@@ -32,31 +32,28 @@ class QrViewerScreen extends StatelessWidget {
                         controller.selectFindUser();
                       },
                     ),
-                    SizedBox(
-                      height: 5.h,
-                    ),
+                    SizedBox(height: 5.h),
                     Text(
                       controller.findUser!.name,
                       style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 40.0,
-                          color: Colors.black),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 40.0,
+                        color: Colors.black,
+                      ),
                     ),
                   ],
                 ),
               ),
               Positioned(
-                  top: 5.h,
-                  right: 20,
-                  child: NeumorphicIconButton(
-                    icon: const Icon(
-                      Icons.close,
-                      size: 40,
-                    ),
-                    onPressed: () {
-                      controller.resetFindUser();
-                    },
-                  ))
+                top: 5.h,
+                right: 20,
+                child: NeumorphicIconButton(
+                  icon: const Icon(Icons.close, size: 40),
+                  onPressed: () {
+                    controller.resetFindUser();
+                  },
+                ),
+              ),
             ] else ...[
               Center(
                 child: NeumorphicButton(
@@ -68,23 +65,20 @@ class QrViewerScreen extends StatelessWidget {
                       Text(
                         "Scan QR".tr,
                         style: TextStyle(
-                            color: mainColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15.sp),
+                          color: mainColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15.sp,
+                        ),
                       ),
-                      Icon(
-                        Icons.qr_code_2,
-                        size: 23.h,
-                        color: mainColor,
-                      ),
+                      Icon(Icons.qr_code_2, size: 23.h, color: mainColor),
                     ],
                   ),
                   onPressed: () {
                     controller.startQrcodeScan();
                   },
                 ),
-              )
-            ]
+              ),
+            ],
           ],
         );
       },

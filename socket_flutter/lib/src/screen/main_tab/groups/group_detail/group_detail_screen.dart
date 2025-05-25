@@ -15,45 +15,39 @@ class GroupDetailScreen extends GetView<GroupDetailController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: controller.group.title != null
-              ? Text(controller.group.title!)
-              : null,
-        ),
-        body: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              OverlapAvatars(
-                users: controller.group.members,
-                size: 100,
-              ),
-              SizedBox(
-                height: 20.h,
-              ),
-              if (controller.group.isOwner) ...[
-                NeumorphicCustomButtton(
-                  title: "Delete Group".tr,
-                  background: Colors.red,
-                  titleColor: Colors.white,
-                  onPressed: () {
-                    controller.tryDeleteGroup(context);
-                  },
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-              ],
+      appBar: AppBar(
+        title: controller.group.title != null
+            ? Text(controller.group.title!)
+            : null,
+      ),
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            OverlapAvatars(users: controller.group.members, size: 100),
+            SizedBox(height: 20.h),
+            if (controller.group.isOwner) ...[
               NeumorphicCustomButtton(
-                title: "Message".tr,
-                background: Colors.green,
+                title: "Delete Group".tr,
+                background: Colors.red,
                 titleColor: Colors.white,
                 onPressed: () {
-                  controller.pushMessagePage();
+                  controller.tryDeleteGroup(context);
                 },
               ),
+              const SizedBox(height: 20),
             ],
-          ),
-        ));
+            NeumorphicCustomButtton(
+              title: "Message".tr,
+              background: Colors.green,
+              titleColor: Colors.white,
+              onPressed: () {
+                controller.pushMessagePage();
+              },
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

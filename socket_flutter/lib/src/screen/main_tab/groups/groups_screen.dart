@@ -28,20 +28,20 @@ class GroupsScreen extends StatelessWidget {
                 onPressed: () {
                   Get.toNamed(UsersScreen.routeName, arguments: false);
                 },
-              )
+              ),
             ],
           ),
           body: controller.isCompEmpty
               ? const EmptyScreen(
-                  title: "No Group", path: "assets/lotties/no_group.json")
+                  title: "No Group",
+                  path: "assets/lotties/no_group.json",
+                )
               : ListView.separated(
                   separatorBuilder: (context, index) => const Divider(),
                   itemCount: controller.groups.length,
                   itemBuilder: (context, index) {
                     final group = controller.groups[index];
-                    return GroupCell(
-                      group: group,
-                    );
+                    return GroupCell(group: group);
                   },
                 ),
         );
@@ -51,10 +51,7 @@ class GroupsScreen extends StatelessWidget {
 }
 
 class GroupCell extends GetView<GroupsController> {
-  const GroupCell({
-    super.key,
-    required this.group,
-  });
+  const GroupCell({super.key, required this.group});
 
   final Group group;
 
@@ -71,9 +68,7 @@ class GroupCell extends GetView<GroupsController> {
         child: Row(
           children: [
             OverlapAvatars(users: group.members),
-            const SizedBox(
-              width: 20,
-            ),
+            const SizedBox(width: 20),
             Text(group.title != null ? group.title! : "Anonymous".tr),
           ],
         ),

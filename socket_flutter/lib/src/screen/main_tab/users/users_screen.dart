@@ -90,10 +90,8 @@ class UserCell extends StatelessWidget {
         child: Row(
           children: [
             UserCountryWidget(user: user, size: 35),
-            const SizedBox(
-              width: 20,
-            ),
-            Text(user.name)
+            const SizedBox(width: 20),
+            Text(user.name),
           ],
         ),
       ),

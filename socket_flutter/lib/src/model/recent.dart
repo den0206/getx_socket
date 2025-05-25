@@ -51,8 +51,9 @@ class Recent {
       id: map['id'] ?? '',
       chatRoomId: map['chatRoomId'] ?? '',
       user: User.fromMap(map['userId']),
-      withUser:
-          map['withUserId'] != null ? User.fromMap(map['withUserId']) : null,
+      withUser: map['withUserId'] != null
+          ? User.fromMap(map['withUserId'])
+          : null,
       group: map["group"] != null ? Group.fromMap(map["group"]) : null,
       lastMessage: map['lastMessage'] ?? '',
       counter: map['counter']?.toInt() ?? 0,

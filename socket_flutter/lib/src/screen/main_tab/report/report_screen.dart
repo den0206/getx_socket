@@ -22,9 +22,7 @@ class ReportScreen extends LoadingGetView<ReportController> {
       appBar: AppBar(
         title: Text(
           '${"Report".tr} ${user.name}',
-          style: const TextStyle(
-            color: Colors.red,
-          ),
+          style: const TextStyle(color: Colors.red),
         ),
       ),
       body: SizedBox(
@@ -48,7 +46,8 @@ class ReportScreen extends LoadingGetView<ReportController> {
                     fillColor: Colors.white,
                     filled: true,
                     border: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black)),
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
                     focusedBorder: const OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.black),
                     ),
@@ -57,17 +56,19 @@ class ReportScreen extends LoadingGetView<ReportController> {
                   // onChanged: controller.streamText,
                 ),
               ),
-              Builder(builder: (context) {
-                return NeumorphicCustomButtton(
-                  title: "Send".tr,
-                  background: Colors.green,
-                  onPressed: !controller.enableReport.value
-                      ? null
-                      : () {
-                          controller.sendReport(context);
-                        },
-                );
-              })
+              Builder(
+                builder: (context) {
+                  return NeumorphicCustomButtton(
+                    title: "Send".tr,
+                    background: Colors.green,
+                    onPressed: !controller.enableReport.value
+                        ? null
+                        : () {
+                            controller.sendReport(context);
+                          },
+                  );
+                },
+              ),
             ],
           ),
         ),

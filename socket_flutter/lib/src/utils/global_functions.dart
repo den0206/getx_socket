@@ -17,12 +17,14 @@ List<CountryCode> getAllCountry() {
   List<Map> jsonList = countriesEnglish;
 
   final countries = jsonList
-      .map((json) => CountryCode(
-            name: json["name"],
-            code: json["code"],
-            dialCode: json["dial_code"],
-            flagUri: 'flags/${json['code'].toLowerCase()}.png',
-          ))
+      .map(
+        (json) => CountryCode(
+          name: json["name"],
+          code: json["code"],
+          dialCode: json["dial_code"],
+          flagUri: 'flags/${json['code'].toLowerCase()}.png',
+        ),
+      )
       .toList();
 
   return countries;
@@ -44,8 +46,9 @@ CountryCode getCountryFromCode(String code) {
 }
 
 Language getLanguage(String lang) {
-  final language =
-      Language.values.firstWhere((element) => element.name == lang);
+  final language = Language.values.firstWhere(
+    (element) => element.name == lang,
+  );
   return language;
 }
 

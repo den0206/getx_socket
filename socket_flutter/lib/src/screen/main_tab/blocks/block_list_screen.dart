@@ -15,9 +15,7 @@ class BlockListScreen extends StatelessWidget {
       init: BlockListController(),
       builder: (controller) {
         return Scaffold(
-          appBar: AppBar(
-            title: Text('Block List'.tr),
-          ),
+          appBar: AppBar(title: Text('Block List'.tr)),
           body: ListView.separated(
             separatorBuilder: (context, index) => const Divider(),
             itemCount: controller.blocks.length,
@@ -36,7 +34,7 @@ class BlockListScreen extends StatelessWidget {
                       onPressed: (context) {
                         controller.blockUser(user);
                       },
-                    )
+                    ),
                   ],
                 ),
                 child: UserCell(

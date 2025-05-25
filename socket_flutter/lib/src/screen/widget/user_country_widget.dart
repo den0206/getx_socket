@@ -34,21 +34,14 @@ class UserCountryWidget extends StatelessWidget {
             size: size,
             onTap: onTap,
           ),
-        CountryFlagWidget(
-          country: user.country,
-          size: size / 2.5,
-        )
+        CountryFlagWidget(country: user.country, size: size / 2.5),
       ],
     );
   }
 }
 
 class CountryFlagWidget extends StatelessWidget {
-  const CountryFlagWidget({
-    super.key,
-    required this.country,
-    this.size = 30,
-  });
+  const CountryFlagWidget({super.key, required this.country, this.size = 30});
 
   final CountryCode country;
   final double size;

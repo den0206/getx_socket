@@ -54,8 +54,10 @@ class GroupDetailController extends GetxController {
   Future<void> pushMessagePage() async {
     Get.until((route) => route.isFirst);
 
-    final MessageExtention extention =
-        MessageExtention(chatRoomId: group.id, withUsers: group.members);
+    final MessageExtention extention = MessageExtention(
+      chatRoomId: group.id,
+      withUsers: group.members,
+    );
     Get.toNamed(MessageScreen.routeName, arguments: extention);
   }
 }

@@ -32,8 +32,9 @@ class GroupsController extends GetxController {
       if (!res.status) return;
 
       final items = res.data.cast<Map<String, dynamic>>();
-      final List<Group> temp =
-          List<Group>.from(items.map((m) => Group.fromMap(m)));
+      final List<Group> temp = List<Group>.from(
+        items.map((m) => Group.fromMap(m)),
+      );
 
       groups.addAll(temp);
 

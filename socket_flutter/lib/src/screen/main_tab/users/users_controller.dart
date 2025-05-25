@@ -54,9 +54,7 @@ class UsersController extends GetxController {
 
   void onTap(User user) {
     if (isPrivate) {
-      Get.to(
-        () => UserDetailScreen(user),
-      );
+      Get.to(() => UserDetailScreen(user));
     } else {
       if (!checkSelected(user)) {
         selectedUsers.add(user);

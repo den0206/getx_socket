@@ -42,56 +42,41 @@ class CustomDialog extends StatelessWidget {
                     fontSize: 20,
                   ),
                 ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Text(
-                  descripon,
-                  style: const TextStyle(
-                    fontSize: 20,
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 5),
+                Text(descripon, style: const TextStyle(fontSize: 20)),
+                const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.grey,
-                          textStyle: const TextStyle(
-                            color: Colors.white,
-                          )),
+                        backgroundColor: Colors.grey,
+                        textStyle: const TextStyle(color: Colors.white),
+                      ),
                       onPressed: () {
                         Navigator.pop(context);
                       },
                       child: Text(
                         "Cancel".tr,
-                        style: const TextStyle(
-                          color: Colors.white,
-                        ),
+                        style: const TextStyle(color: Colors.white),
                       ),
                     ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: mainColor,
-                          textStyle: const TextStyle(
-                            color: Colors.white,
-                          )),
+                        backgroundColor: mainColor,
+                        textStyle: const TextStyle(color: Colors.white),
+                      ),
                       onPressed: () {
                         Navigator.pop(context);
                         onPress();
                       },
                       child: Text(
                         "OK".tr,
-                        style: const TextStyle(
-                          color: Colors.white,
-                        ),
+                        style: const TextStyle(color: Colors.white),
                       ),
                     ),
                   ],
-                )
+                ),
               ],
             ),
           ),
@@ -100,11 +85,7 @@ class CustomDialog extends StatelessWidget {
             child: CircleAvatar(
               backgroundColor: mainColor,
               radius: 60,
-              child: Icon(
-                icon,
-                color: Colors.white,
-                size: 50,
-              ),
+              child: Icon(icon, color: Colors.white, size: 50),
             ),
           ),
         ],
@@ -147,8 +128,9 @@ void showCommonDialog({
       builder: (BuildContext ctx) {
         return CupertinoAlertDialog(
           title: title != null ? Text(title) : null,
-          content:
-              content != null ? Text(content, textAlign: contentAlign) : null,
+          content: content != null
+              ? Text(content, textAlign: contentAlign)
+              : null,
           actions: [
             CupertinoDialogAction(
               onPressed: () {
@@ -170,7 +152,7 @@ void showCommonDialog({
                 isDefaultAction: true,
                 isDestructiveAction: true,
                 child: Text('OK'.tr),
-              )
+              ),
           ],
         );
       },
@@ -183,10 +165,7 @@ void showCommonDialog({
         return AlertDialog(
           title: title != null ? Center(child: Text(title)) : null,
           content: content != null
-              ? Text(
-                  content,
-                  textAlign: contentAlign,
-                )
+              ? Text(content, textAlign: contentAlign)
               : null,
           actions: [
             TextButton(

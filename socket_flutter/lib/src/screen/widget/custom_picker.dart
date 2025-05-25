@@ -5,8 +5,11 @@ import 'package:sizer/sizer.dart';
 import 'package:socket_flutter/src/model/language.dart';
 
 class SelectlanguageArea extends StatelessWidget {
-  const SelectlanguageArea(
-      {super.key, required this.currentlang, this.onSelectedLang});
+  const SelectlanguageArea({
+    super.key,
+    required this.currentlang,
+    this.onSelectedLang,
+  });
 
   final Rxn<Language> currentlang;
   final Function(Language selectLang)? onSelectedLang;
@@ -34,14 +37,16 @@ class SelectlanguageArea extends StatelessWidget {
           height: 8.h,
           child: Container(
             alignment: Alignment.centerLeft,
-            child: Obx(() => Row(
-                  children: [
-                    const Icon(Icons.arrow_drop_down),
-                    currentlang.value != null
-                        ? Text(currentlang.value!.name.toUpperCase())
-                        : Text("Language".tr)
-                  ],
-                )),
+            child: Obx(
+              () => Row(
+                children: [
+                  const Icon(Icons.arrow_drop_down),
+                  currentlang.value != null
+                      ? Text(currentlang.value!.name.toUpperCase())
+                      : Text("Language".tr),
+                ],
+              ),
+            ),
           ),
         ),
       ),
@@ -69,9 +74,7 @@ class SelectLanguagePicker extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 15),
           child: Text(
             title,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
         SizedBox(

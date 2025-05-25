@@ -52,8 +52,9 @@ class UserEditController extends LoadingGetController {
   }
 
   Future<void> selectImage() async {
-    final imageFile =
-        await imageExt.selectImage(imageSource: ImageSource.gallery);
+    final imageFile = await imageExt.selectImage(
+      imageSource: ImageSource.gallery,
+    );
 
     userImage.call(imageFile);
   }
@@ -65,7 +66,9 @@ class UserEditController extends LoadingGetController {
 
     try {
       final res = await _userAPI.editUser(
-          userData: editUser.toMap(), avatarFile: userImage.value);
+        userData: editUser.toMap(),
+        avatarFile: userImage.value,
+      );
 
       if (!res.status) return;
 

@@ -11,11 +11,7 @@ class MessageFileSheet extends StatelessWidget {
       decoration: const BoxDecoration(
         color: Colors.white,
         boxShadow: [
-          BoxShadow(
-            offset: Offset(0, 5),
-            blurRadius: 15.0,
-            color: Colors.grey,
-          ),
+          BoxShadow(offset: Offset(0, 5), blurRadius: 15.0, color: Colors.grey),
         ],
       ),
       child: GridView.count(
@@ -48,10 +44,7 @@ class MessageFileButton extends StatelessWidget {
         border: Border.all(color: Colors.green, width: 2),
       ),
       child: IconButton(
-        icon: Icon(
-          icon,
-          color: Colors.green,
-        ),
+        icon: Icon(icon, color: Colors.green),
         onPressed: onPress,
       ),
     );

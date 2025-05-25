@@ -19,9 +19,7 @@ class ImageBubble extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(
-            (Radius.circular(8)),
-          ),
+          borderRadius: const BorderRadius.all((Radius.circular(8))),
           border: Border.all(color: Colors.grey, width: 2),
         ),
         child: Image.network(
@@ -35,19 +33,18 @@ class ImageBubble extends StatelessWidget {
               margin: const EdgeInsets.only(bottom: 10, right: 10.0),
               decoration: const BoxDecoration(
                 color: Colors.grey,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(8.0),
-                ),
+                borderRadius: BorderRadius.all(Radius.circular(8.0)),
               ),
               width: 50.w,
               height: 50.w,
               child: Center(
                 child: CircularProgressIndicator(
                   color: Colors.black,
-                  value: loadingProgress.expectedTotalBytes != null &&
+                  value:
+                      loadingProgress.expectedTotalBytes != null &&
                           loadingProgress.expectedTotalBytes != null
                       ? loadingProgress.cumulativeBytesLoaded /
-                          loadingProgress.expectedTotalBytes!
+                            loadingProgress.expectedTotalBytes!
                       : null,
                 ),
               ),
@@ -79,29 +76,28 @@ class ImageDetailScreen extends StatelessWidget {
           elevation: 0,
           actions: [
             IconButton(
-              icon: const Icon(
-                Icons.download,
-                color: Colors.white,
-              ),
+              icon: const Icon(Icons.download, color: Colors.white),
               onPressed: () {
                 showCommonDialog(
-                    context: context,
-                    title: "Image",
-                    content: "Donwload Image??",
-                    okAction: () async {
-                      final result =
-                          await ImageExtention().downloadImage(imageUrl);
+                  context: context,
+                  title: "Image",
+                  content: "Donwload Image??",
+                  okAction: () async {
+                    final result = await ImageExtention().downloadImage(
+                      imageUrl,
+                    );
 
-                      if (result) {
-                        showSnackBar(
-                          title: "Success",
-                          message: "Dowmload Image",
-                          position: SnackPosition.TOP,
-                        );
-                      }
-                    });
+                    if (result) {
+                      showSnackBar(
+                        title: "Success",
+                        message: "Dowmload Image",
+                        position: SnackPosition.TOP,
+                      );
+                    }
+                  },
+                );
               },
-            )
+            ),
           ],
         ),
         body: Center(

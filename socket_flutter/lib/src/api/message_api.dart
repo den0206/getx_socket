@@ -7,8 +7,9 @@ import 'api_base.dart';
 class MessageAPI extends APIBase {
   MessageAPI() : super(EndPoint.message);
 
-  Future<ResponseAPI> sendMessage(
-      {required Map<String, dynamic> message}) async {
+  Future<ResponseAPI> sendMessage({
+    required Map<String, dynamic> message,
+  }) async {
     try {
       final Uri uri = setUri("/");
 
@@ -18,30 +19,45 @@ class MessageAPI extends APIBase {
     }
   }
 
-  Future<ResponseAPI> sendImageMessage(
-      {required Map<String, dynamic> message, required File file}) async {
+  Future<ResponseAPI> sendImageMessage({
+    required Map<String, dynamic> message,
+    required File file,
+  }) async {
     try {
       final Uri uri = setUri("/image");
       return await updateSingleFile(
-          uri: uri, body: message, file: file, useToken: true);
+        uri: uri,
+        body: message,
+        file: file,
+        useToken: true,
+      );
     } catch (e) {
       rethrow;
     }
   }
 
-  Future<ResponseAPI> sendVideoMessage(
-      {required Map<String, dynamic> message, required File videoFile}) async {
+  Future<ResponseAPI> sendVideoMessage({
+    required Map<String, dynamic> message,
+    required File videoFile,
+  }) async {
     try {
       final Uri uri = setUri("/video");
       return await updateSingleFile(
-          uri: uri, body: message, file: videoFile, useToken: true);
+        uri: uri,
+        body: message,
+        file: videoFile,
+        useToken: true,
+      );
     } catch (e) {
       rethrow;
     }
   }
 
-  Future<ResponseAPI> loadMessage(
-      {required String chatRoomId, int? limit, String? nextCursor}) async {
+  Future<ResponseAPI> loadMessage({
+    required String chatRoomId,
+    int? limit,
+    String? nextCursor,
+  }) async {
     final Map<String, dynamic> query = {
       "chatRoomId": chatRoomId,
       "limit": limit.toString(),

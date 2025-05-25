@@ -36,41 +36,44 @@ class MessageScreen extends LoadingGetView<MessageController> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             if (controller.isPrivate) ...[
-              Builder(builder: (context) {
-                return GestureDetector(
-                  onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      builder: (context) {
-                        return SelectLanguagePicker(
-                          title:
-                              "Please select the language of your translation"
-                                  .tr,
-                          onSelectedLang: (selectLang) {
-                            controller.extention.targetLanguage
-                                .call(selectLang);
-                          },
-                        );
-                      },
-                    );
-                  },
-                  child: Column(
-                    children: [
-                      CountryFlagWidget(
-                        country: controller.extention.withUsers[0].country,
-                      ),
-                      Obx(
-                        () => Text(
-                          "(${controller.extention.targetLanguage.value.source_lang})",
-                          style: TextStyle(fontSize: 8.sp),
-                          softWrap: true,
-                          overflow: TextOverflow.ellipsis,
+              Builder(
+                builder: (context) {
+                  return GestureDetector(
+                    onTap: () {
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return SelectLanguagePicker(
+                            title:
+                                "Please select the language of your translation"
+                                    .tr,
+                            onSelectedLang: (selectLang) {
+                              controller.extention.targetLanguage.call(
+                                selectLang,
+                              );
+                            },
+                          );
+                        },
+                      );
+                    },
+                    child: Column(
+                      children: [
+                        CountryFlagWidget(
+                          country: controller.extention.withUsers[0].country,
                         ),
-                      ),
-                    ],
-                  ),
-                );
-              }),
+                        Obx(
+                          () => Text(
+                            "(${controller.extention.targetLanguage.value.source_lang})",
+                            style: TextStyle(fontSize: 8.sp),
+                            softWrap: true,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
               const Icon(Icons.loop),
               Column(
                 children: [
@@ -82,7 +85,7 @@ class MessageScreen extends LoadingGetView<MessageController> {
                     style: TextStyle(fontSize: 8.sp),
                   ),
                 ],
-              )
+              ),
             ],
           ],
         ),
@@ -104,7 +107,7 @@ class MessageScreen extends LoadingGetView<MessageController> {
                 ),
               ],
             ),
-          )
+          ),
         ],
       ),
       body: Column(
@@ -133,118 +136,116 @@ class MessageScreen extends LoadingGetView<MessageController> {
                       },
                     ),
                   ),
-                  _keybordBackround()
+                  _keybordBackround(),
                 ],
               ),
             ),
           ),
           _messageInput(),
-          _emojiSpace()
+          _emojiSpace(),
         ],
       ),
     );
   }
 
   Widget _messageInput() {
-    return Builder(builder: (context) {
-      return Container(
-        padding: const EdgeInsets.symmetric(vertical: 20),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Row(
-            children: [
-              Expanded(
-                child: Neumorphic(
-                  margin: const EdgeInsets.only(
-                      left: 8, right: 8, top: 2, bottom: 4),
-                  style: commonNeumorphic(
-                    depth: 3,
-                    boxShape: const NeumorphicBoxShape.stadium(),
-                  ),
-                  padding: const EdgeInsets.symmetric(horizontal: 18),
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(
-                      maxHeight: 300.0,
+    return Builder(
+      builder: (context) {
+        return Container(
+          padding: const EdgeInsets.symmetric(vertical: 20),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Neumorphic(
+                    margin: const EdgeInsets.only(
+                      left: 8,
+                      right: 8,
+                      top: 2,
+                      bottom: 4,
                     ),
-                    child: Row(
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.emoji_emotions_outlined),
-                          color: Colors.grey[500],
-                          onPressed: () async {
-                            dismisskeyBord(context);
-                            await Future.delayed(
-                                const Duration(milliseconds: 300));
-                            controller.showEmoji.toggle();
-                          },
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                          child: TextField(
-                            controller: controller.tx,
-                            focusNode: controller.focusNode,
-                            maxLength: 70,
-                            keyboardType: TextInputType.multiline,
-                            textInputAction: TextInputAction.newline,
-                            minLines: 1,
-                            maxLines: 5,
-                            decoration: const InputDecoration(
-                              hintText: "Message...",
-                              hintStyle: TextStyle(
-                                height: 1.8,
-                              ),
-                              border: InputBorder.none,
-                              counterText: '',
-                            ),
-                            onChanged: (value) {
-                              controller.streamController.add(value);
-                            },
-                            onSubmitted: (value) {
-                              print("BREAK");
+                    style: commonNeumorphic(
+                      depth: 3,
+                      boxShape: const NeumorphicBoxShape.stadium(),
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 18),
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxHeight: 300.0),
+                      child: Row(
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.emoji_emotions_outlined),
+                            color: Colors.grey[500],
+                            onPressed: () async {
+                              dismisskeyBord(context);
+                              await Future.delayed(
+                                const Duration(milliseconds: 300),
+                              );
+                              controller.showEmoji.toggle();
                             },
                           ),
-                        ),
-                        IconButton(
-                          onPressed: () {
-                            controller.showBottomSheet();
-                          },
-                          icon:
-                              Icon(Icons.attach_file, color: Colors.grey[500]),
-                        )
-                      ],
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: TextField(
+                              controller: controller.tx,
+                              focusNode: controller.focusNode,
+                              maxLength: 70,
+                              keyboardType: TextInputType.multiline,
+                              textInputAction: TextInputAction.newline,
+                              minLines: 1,
+                              maxLines: 5,
+                              decoration: const InputDecoration(
+                                hintText: "Message...",
+                                hintStyle: TextStyle(height: 1.8),
+                                border: InputBorder.none,
+                                counterText: '',
+                              ),
+                              onChanged: (value) {
+                                controller.streamController.add(value);
+                              },
+                              onSubmitted: (value) {
+                                print("BREAK");
+                              },
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              controller.showBottomSheet();
+                            },
+                            icon: Icon(
+                              Icons.attach_file,
+                              color: Colors.grey[500],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                width: 16,
-              ),
-              NeumorphicIconButton(
-                icon: const Icon(
-                  Icons.send,
-                  size: 18,
-                ),
-                onPressed: () async {
-                  if (controller.tx.text.isEmpty) {
-                    return;
-                  } else {
-                    await controller.sendMessage(
-                      type: MessageType.text,
-                      text: controller.tx.text,
-                      translated: controller.after.value,
-                    );
+                const SizedBox(width: 16),
+                NeumorphicIconButton(
+                  icon: const Icon(Icons.send, size: 18),
+                  onPressed: () async {
+                    if (controller.tx.text.isEmpty) {
+                      return;
+                    } else {
+                      await controller.sendMessage(
+                        type: MessageType.text,
+                        text: controller.tx.text,
+                        translated: controller.after.value,
+                      );
 
-                    FocusScope.of(context).unfocus();
-                  }
-                },
-              ),
-            ],
+                      FocusScope.of(context).unfocus();
+                    }
+                  },
+                ),
+              ],
+            ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 
   Widget _emojiSpace() {
@@ -258,7 +259,8 @@ class MessageScreen extends LoadingGetView<MessageController> {
               controller.tx
                 ..text += emoji.emoji
                 ..selection = TextSelection.fromPosition(
-                    TextPosition(offset: controller.tx.text.length));
+                  TextPosition(offset: controller.tx.text.length),
+                );
             },
             onBackspacePressed: () {
               controller.tx
@@ -268,23 +270,24 @@ class MessageScreen extends LoadingGetView<MessageController> {
                 );
             },
             config: const Config(
-                emojiViewConfig: EmojiViewConfig(
-                  columns: 7,
-                  emojiSizeMax: 32.0,
-                  verticalSpacing: 0,
-                  horizontalSpacing: 0,
-                  recentsLimit: 28,
-                  buttonMode: ButtonMode.MATERIAL,
-                ),
-                categoryViewConfig: CategoryViewConfig(
-                  initCategory: Category.RECENT,
-                  backgroundColor: Color(0xFFF2F2F2),
-                  indicatorColor: Colors.blue,
-                  iconColor: Colors.grey,
-                  iconColorSelected: Colors.blue,
-                  backspaceColor: Colors.blue,
-                  categoryIcons: CategoryIcons(),
-                )),
+              emojiViewConfig: EmojiViewConfig(
+                columns: 7,
+                emojiSizeMax: 32.0,
+                verticalSpacing: 0,
+                horizontalSpacing: 0,
+                recentsLimit: 28,
+                buttonMode: ButtonMode.MATERIAL,
+              ),
+              categoryViewConfig: CategoryViewConfig(
+                initCategory: Category.RECENT,
+                backgroundColor: Color(0xFFF2F2F2),
+                indicatorColor: Colors.blue,
+                iconColor: Colors.grey,
+                iconColorSelected: Colors.blue,
+                backspaceColor: Colors.blue,
+                categoryIcons: CategoryIcons(),
+              ),
+            ),
           ),
         ),
       ),
@@ -303,9 +306,7 @@ class MessageScreen extends LoadingGetView<MessageController> {
                       children: [
                         Container(
                           decoration: BoxDecoration(
-                            color: Colors.black.withValues(
-                              alpha: 0.4,
-                            ),
+                            color: Colors.black.withValues(alpha: 0.4),
                           ),
                         ),
                         Center(
@@ -321,7 +322,7 @@ class MessageScreen extends LoadingGetView<MessageController> {
                                   textColor: Colors.white,
                                   bottomLeft: 12,
                                   bottomRight: 0,
-                                )
+                                ),
                             ],
                           ),
                         ),
@@ -342,7 +343,7 @@ class MessageScreen extends LoadingGetView<MessageController> {
                                 ),
                               ),
                             ),
-                          )
+                          ),
                       ],
                     ),
                   );
@@ -359,10 +360,7 @@ class WaveLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SpinKitWave(
-      color: Color(0xffffffff),
-      size: 30,
-    );
+    return const SpinKitWave(color: Color(0xffffffff), size: 30);
   }
 }
 
@@ -375,9 +373,10 @@ class MessageCell extends GetView<MessageController> {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(
-          top: 10,
-          left: message.isCurrent ? 0 : 10,
-          right: message.isCurrent ? 10 : 0),
+        top: 10,
+        left: message.isCurrent ? 0 : 10,
+        right: message.isCurrent ? 10 : 0,
+      ),
       child: Column(
         children: [
           Row(
@@ -389,90 +388,87 @@ class MessageCell extends GetView<MessageController> {
               if (!message.isCurrent)
                 Center(child: UserCountryWidget(user: message.user, size: 30)),
               CupertinoContextMenu(
-                  actions: [
-                    if (message.type == MessageType.text)
-                      CupertinoContextMenuAction(
-                        isDefaultAction: true,
-                        child: Text("Copy".tr),
-                        onPressed: () async {
-                          final data = ClipboardData(text: message.text);
-                          await Clipboard.setData(data);
-                          Get.back();
-                        },
+                actions: [
+                  if (message.type == MessageType.text)
+                    CupertinoContextMenuAction(
+                      isDefaultAction: true,
+                      child: Text("Copy".tr),
+                      onPressed: () async {
+                        final data = ClipboardData(text: message.text);
+                        await Clipboard.setData(data);
+                        Get.back();
+                      },
+                    ),
+                  if (message.isTranslated)
+                    CupertinoContextMenuAction(
+                      child: Text(
+                        "Copy(Translated)".tr,
+                        style: TextStyle(fontSize: 12.sp),
                       ),
-                    if (message.isTranslated)
-                      CupertinoContextMenuAction(
-                        child: Text(
-                          "Copy(Translated)".tr,
-                          style: TextStyle(fontSize: 12.sp),
-                        ),
-                        onPressed: () async {
-                          if (message.translated == null) return;
-                          final data = ClipboardData(text: message.translated!);
-                          await Clipboard.setData(data);
-                          Get.back();
-                        },
+                      onPressed: () async {
+                        if (message.translated == null) return;
+                        final data = ClipboardData(text: message.translated!);
+                        await Clipboard.setData(data);
+                        Get.back();
+                      },
+                    ),
+                  if (message.isCurrent)
+                    CupertinoContextMenuAction(
+                      isDefaultAction: true,
+                      child: Text(
+                        'Delete'.tr,
+                        style: const TextStyle(color: Colors.red),
                       ),
-                    if (message.isCurrent)
-                      CupertinoContextMenuAction(
-                        isDefaultAction: true,
-                        child: Text(
-                          'Delete'.tr,
-                          style: const TextStyle(
-                            color: Colors.red,
-                          ),
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          controller.deleteMessage(message);
-                        },
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        controller.deleteMessage(message);
+                      },
+                    ),
+                  if (!message.isCurrent)
+                    CupertinoContextMenuAction(
+                      isDefaultAction: true,
+                      child: Text(
+                        'Report'.tr,
+                        style: const TextStyle(color: Colors.red),
                       ),
-                    if (!message.isCurrent)
-                      CupertinoContextMenuAction(
-                        isDefaultAction: true,
-                        child: Text(
-                          'Report'.tr,
-                          style: const TextStyle(
-                            color: Colors.red,
-                          ),
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).pop();
+                      onPressed: () {
+                        Navigator.of(context).pop();
 
-                          Navigator.of(context)
-                              .push(MaterialPageRoute(
-                            builder: (context) {
-                              return ReportScreen(message.user, message);
-                            },
-                            fullscreenDialog: true,
-                            maintainState: false,
-                          ))
-                              .then(
-                            (value) async {
+                        Navigator.of(context)
+                            .push(
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return ReportScreen(message.user, message);
+                                },
+                                fullscreenDialog: true,
+                                maintainState: false,
+                              ),
+                            )
+                            .then((value) async {
                               if (Get.isRegistered<ReportController>()) {
                                 await Get.delete<ReportController>();
                               }
-                            },
-                          );
-                        },
-                      ),
-                    CupertinoContextMenuAction(
-                      child: Text('Cancel'.tr),
-                      onPressed: () {
-                        Navigator.pop(context);
+                            });
                       },
                     ),
+                  CupertinoContextMenuAction(
+                    child: Text('Cancel'.tr),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+                child: Stack(
+                  children: [
+                    if (message.type == MessageType.text)
+                      TextBubble(message: message),
+                    if (message.type == MessageType.image)
+                      ImageBubble(message: message),
+                    if (message.type == MessageType.video)
+                      VideoBubble(message: message),
                   ],
-                  child: Stack(
-                    children: [
-                      if (message.type == MessageType.text)
-                        TextBubble(message: message),
-                      if (message.type == MessageType.image)
-                        ImageBubble(message: message),
-                      if (message.type == MessageType.video)
-                        VideoBubble(message: message)
-                    ],
-                  )),
+                ),
+              ),
             ],
           ),
           Padding(
@@ -492,11 +488,7 @@ class MessageCell extends GetView<MessageController> {
                     ),
                   ),
                 if (message.isTranslated && message.isCurrent)
-                  Icon(
-                    Icons.g_translate,
-                    color: Colors.grey,
-                    size: 12.sp,
-                  ),
+                  Icon(Icons.g_translate, color: Colors.grey, size: 12.sp),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: Text(
@@ -510,14 +502,10 @@ class MessageCell extends GetView<MessageController> {
                   ),
                 ),
                 if (message.isTranslated && !message.isCurrent)
-                  Icon(
-                    Icons.g_translate,
-                    color: Colors.grey,
-                    size: 12.sp,
-                  ),
+                  Icon(Icons.g_translate, color: Colors.grey, size: 12.sp),
               ],
             ),
-          )
+          ),
         ],
       ),
     );

@@ -31,8 +31,9 @@ class NeumorphicCustomButtton extends StatelessWidget {
       child: NeumorphicButton(
         onPressed: onPressed,
         style: commonNeumorphic(
-          color:
-              onPressed != null ? background : ConstsColor.mainBackgroundColor,
+          color: onPressed != null
+              ? background
+              : ConstsColor.mainBackgroundColor,
           // lightSource: LightSource.bottomRight,
           depth: 1.2,
         ),

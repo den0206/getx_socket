@@ -40,33 +40,28 @@ class SignUpScreen extends LoadingGetView<SignUpController> {
                       if (controller.state == VerifyState.checkEmail) ...[
                         CircleImageButton(
                           imageProvider: controller.userImage == null
-                              ? Image.asset("assets/images/default_user.png")
-                                  .image
+                              ? Image.asset(
+                                  "assets/images/default_user.png",
+                                ).image
                               : FileImage(controller.userImage!),
                           size: 15.h,
                           onTap: () {
                             controller.selectImage();
                           },
                         ),
-                        const SizedBox(
-                          height: 20,
-                        ),
+                        const SizedBox(height: 20),
                         CustomTextField(
                           controller: controller.nameController,
                           labelText: "Name".tr,
                           validator: valideName,
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        const SizedBox(height: 10),
                         CustomTextField(
                           controller: controller.emaiController,
                           labelText: "Email".tr,
                           validator: validateEmail,
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        const SizedBox(height: 10),
                         SizedBox(
                           width: double.infinity,
                           child: Column(
@@ -96,17 +91,13 @@ class SignUpScreen extends LoadingGetView<SignUpController> {
                                 // useUiOverlay: true,
                                 useSafeArea: false,
                               ),
-                              const SizedBox(
-                                height: 10,
-                              ),
+                              const SizedBox(height: 10),
                               SelectlanguageArea(
                                 currentlang: controller.currentLanguage,
                                 onSelectedLang: (selectLang) =>
                                     controller.currentLanguage.call(selectLang),
                               ),
-                              const SizedBox(
-                                height: 10,
-                              ),
+                              const SizedBox(height: 10),
                             ],
                           ),
                         ),
@@ -116,9 +107,7 @@ class SignUpScreen extends LoadingGetView<SignUpController> {
                           validator: validPassword,
                           isSecure: true,
                         ),
-                        SizedBox(
-                          height: 2.h,
-                        ),
+                        SizedBox(height: 2.h),
                         Row(
                           children: [
                             Checkbox(
@@ -130,41 +119,43 @@ class SignUpScreen extends LoadingGetView<SignUpController> {
                                 controller.update();
                               },
                             ),
-                            Builder(builder: (context) {
-                              return RichText(
-                                text: TextSpan(
-                                  style: const TextStyle(
-                                      fontSize: 12, color: Colors.black),
-                                  children: [
-                                    TextSpan(text: "I agree".tr),
-                                    TextSpan(
-                                      text: "the Terms of Use".tr,
-                                      style: const TextStyle(
-                                        color: Colors.blue,
-                                        decoration: TextDecoration.underline,
-                                      ),
-                                      recognizer: TapGestureRecognizer()
-                                        ..onTap = () async {
-                                          await showTermsDialog(context);
-                                        },
+                            Builder(
+                              builder: (context) {
+                                return RichText(
+                                  text: TextSpan(
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.black,
                                     ),
-                                  ],
-                                ),
-                              );
-                            }),
+                                    children: [
+                                      TextSpan(text: "I agree".tr),
+                                      TextSpan(
+                                        text: "the Terms of Use".tr,
+                                        style: const TextStyle(
+                                          color: Colors.blue,
+                                          decoration: TextDecoration.underline,
+                                        ),
+                                        recognizer: TapGestureRecognizer()
+                                          ..onTap = () async {
+                                            await showTermsDialog(context);
+                                          },
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
                           ],
-                        )
+                        ),
                       ],
                       if (controller.state == VerifyState.verify) ...[
                         CustomPinCodeField(
                           controller: controller.pinCodeController,
                           inputType: controller.state.inputType,
                           isSecure: true,
-                        )
+                        ),
                       ],
-                      SizedBox(
-                        height: 10.h,
-                      ),
+                      SizedBox(height: 10.h),
                       NeumorphicCustomButtton(
                         title: controller.buttonTitle,
                         background: Colors.green,
@@ -184,7 +175,7 @@ class SignUpScreen extends LoadingGetView<SignUpController> {
                             Get.back();
                           },
                         ),
-                      ]
+                      ],
                     ],
                   ),
                 ),

@@ -116,17 +116,22 @@ class MessageController extends LoadingGetController {
     }
   }
 
-  Future<void> sendMessage(
-      {required MessageType type,
-      required String text,
-      String? translated,
-      File? file}) async {
+  Future<void> sendMessage({
+    required MessageType type,
+    required String text,
+    String? translated,
+    File? file,
+  }) async {
     isOverlay.call(true);
     try {
       if (isBlocked) throw Exception("Can't send This Message");
 
       final newMessage = await extention.sendMessage(
-          type: type, text: text, translated: translated, file: file);
+        type: type,
+        text: text,
+        translated: translated,
+        file: file,
+      );
 
       _messageIO.sendNewMessage(newMessage);
       await extention.updateLastRecent(newMessage);
@@ -193,12 +198,16 @@ class MessageController extends LoadingGetController {
       MessageFileButton(
         icon: Icons.camera,
         onPress: () async {
-          final takedPicture =
-              await imageExtention.selectImage(imageSource: ImageSource.camera);
+          final takedPicture = await imageExtention.selectImage(
+            imageSource: ImageSource.camera,
+          );
 
           if (takedPicture != null) {
             await sendMessage(
-                type: MessageType.image, text: "image", file: takedPicture);
+              type: MessageType.image,
+              text: "image",
+              file: takedPicture,
+            );
             Get.back();
           }
         },
@@ -207,11 +216,15 @@ class MessageController extends LoadingGetController {
         icon: Icons.image,
         onPress: () async {
           final selectedImage = await imageExtention.selectImage(
-              imageSource: ImageSource.gallery);
+            imageSource: ImageSource.gallery,
+          );
 
           if (selectedImage != null) {
             sendMessage(
-                type: MessageType.image, text: "image", file: selectedImage);
+              type: MessageType.image,
+              text: "image",
+              file: selectedImage,
+            );
             Get.back();
           }
         },
@@ -222,7 +235,10 @@ class MessageController extends LoadingGetController {
           final selectedVideo = await imageExtention.selectVideo();
           if (selectedVideo != null) {
             sendMessage(
-                type: MessageType.video, text: "video", file: selectedVideo);
+              type: MessageType.video,
+              text: "video",
+              file: selectedVideo,
+            );
             Get.back();
           }
         },
@@ -254,13 +270,11 @@ class MessageController extends LoadingGetController {
 
   void listnFocus() {
     if (focusNode == null) return;
-    focusNode!.addListener(
-      () {
-        if (focusNode!.hasFocus) {
-          showEmoji.call(false);
-        }
-      },
-    );
+    focusNode!.addListener(() {
+      if (focusNode!.hasFocus) {
+        showEmoji.call(false);
+      }
+    });
   }
 
   Future<void> toggleReal() async {
@@ -328,18 +342,15 @@ class MessageController extends LoadingGetController {
   }
 }
 
+// if (!isTranslationg.value) isTranslationg.call(true);
+// try {
+//   final trs = await extention.translateText(
+//     text: tc.text,
+//     src: extention.currentUser.mainLanguage,
+//     tar: extention.targetLanguage,
+//   );
 
-
-    // if (!isTranslationg.value) isTranslationg.call(true);
-    // try {
-    //   final trs = await extention.translateText(
-    //     text: tc.text,
-    //     src: extention.currentUser.mainLanguage,
-    //     tar: extention.targetLanguage,
-    //   );
-
-  
-    // } catch (e) {
-    // } finally {
-    //   isTranslationg.call(false);
-    // }
+// } catch (e) {
+// } finally {
+//   isTranslationg.call(false);
+// }

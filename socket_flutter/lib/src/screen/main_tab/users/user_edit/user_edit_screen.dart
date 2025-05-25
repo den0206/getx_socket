@@ -40,9 +40,7 @@ class UserEditScreen extends LoadingGetView<UserEditController> {
           constraints: BoxConstraints(maxHeight: 100.h),
           child: Column(
             children: [
-              const SizedBox(
-                height: 40,
-              ),
+              const SizedBox(height: 40),
               Obx(
                 () => NeumorphicAvatarButton(
                   imageProvider: controller.userImage.value == null
@@ -54,9 +52,7 @@ class UserEditScreen extends LoadingGetView<UserEditController> {
                   },
                 ),
               ),
-              const SizedBox(
-                height: 40,
-              ),
+              const SizedBox(height: 40),
               Form(
                 key: _formKey,
                 child: Column(
@@ -67,18 +63,13 @@ class UserEditScreen extends LoadingGetView<UserEditController> {
                         controller: controller.nameController,
                         labelText: "Name".tr,
                         validator: valideName,
-                        icon: const Icon(
-                          Icons.person,
-                          color: Colors.black,
-                        ),
+                        icon: const Icon(Icons.person, color: Colors.black),
                         onChange: (text) {
                           controller.editUser.name = text;
                         },
                       ),
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
+                    const SizedBox(height: 20),
                     SelectlanguageArea(
                       currentlang: controller.selectLanguage,
                       onSelectedLang: (selectLang) {
@@ -109,19 +100,19 @@ class UserEditScreen extends LoadingGetView<UserEditController> {
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 40,
+              const SizedBox(height: 40),
+              Builder(
+                builder: (context) {
+                  return NeumorphicCustomButtton(
+                    title: "Delete".tr,
+                    width: 70.w,
+                    background: Colors.red,
+                    onPressed: () {
+                      controller.deleteAlert(context);
+                    },
+                  );
+                },
               ),
-              Builder(builder: (context) {
-                return NeumorphicCustomButtton(
-                  title: "Delete".tr,
-                  width: 70.w,
-                  background: Colors.red,
-                  onPressed: () {
-                    controller.deleteAlert(context);
-                  },
-                );
-              }),
             ],
           ),
         ),

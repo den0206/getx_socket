@@ -18,9 +18,7 @@ class EditEmailScreen extends LoadingGetView<EditEmailController> {
     return GetBuilder<EditEmailController>(
       builder: (controller) {
         return Scaffold(
-          appBar: AppBar(
-            title: Text('Change Email'.tr),
-          ),
+          appBar: AppBar(title: Text('Change Email'.tr)),
           body: controller.currentTX != null
               ? Form(
                   key: _formKey,

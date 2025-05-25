@@ -111,7 +111,7 @@ class BubbleSelf extends StatelessWidget {
             blurRadius: 20.0,
             offset: Offset(10, 10),
             color: Colors.black54,
-          )
+          ),
         ],
         borderRadius: BorderRadius.only(
           topLeft: const Radius.circular(16),
@@ -128,19 +128,20 @@ class BubbleSelf extends StatelessWidget {
               }
             : null,
         child: FittedBox(
-            fit: BoxFit.fitWidth,
-            child: RichText(
-              text: TextSpan(
-                text: text,
-                style: TextStyle(
-                  fontSize: 13.sp,
-                  letterSpacing: 1.5,
-                  fontWeight: FontWeight.w600,
-                  color: _isLink(text) ? Colors.blueAccent : textColor,
-                  decoration: _isLink(text) ? TextDecoration.underline : null,
-                ),
+          fit: BoxFit.fitWidth,
+          child: RichText(
+            text: TextSpan(
+              text: text,
+              style: TextStyle(
+                fontSize: 13.sp,
+                letterSpacing: 1.5,
+                fontWeight: FontWeight.w600,
+                color: _isLink(text) ? Colors.blueAccent : textColor,
+                decoration: _isLink(text) ? TextDecoration.underline : null,
               ),
-            )),
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -148,6 +149,7 @@ class BubbleSelf extends StatelessWidget {
 
 bool _isLink(String input) {
   final matcher = RegExp(
-      r"(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)");
+    r"(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)",
+  );
   return matcher.hasMatch(input);
 }

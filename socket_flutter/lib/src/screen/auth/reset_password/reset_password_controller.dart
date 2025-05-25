@@ -48,8 +48,9 @@ class ResetPasswordController extends LoadingGetController {
         case VerifyState.sendPassword:
 
           /// validate Password
-          final res =
-              await _resetPasswordAPI.requestPassword(emailTextField.text);
+          final res = await _resetPasswordAPI.requestPassword(
+            emailTextField.text,
+          );
 
           if (res.message != null &&
               res.message!.contains("Not find this Email")) {
@@ -65,7 +66,7 @@ class ResetPasswordController extends LoadingGetController {
           final data = {
             "userId": userId,
             "password": passwordTextField.text,
-            "verify": verifyTextField.text
+            "verify": verifyTextField.text,
           };
 
           final res = await _resetPasswordAPI.verifyPassword(data);

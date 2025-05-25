@@ -25,42 +25,36 @@ class CustomTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     RxBool visiblity = isSecure.obs;
 
-    return Obx(
-      () {
-        return TextFormField(
-          controller: controller,
-          decoration: InputDecoration(
-            prefixIcon: icon,
-            suffixIcon: isSecure
-                ? IconButton(
-                    icon: Icon(
-                      visiblity.value ? Icons.visibility : Icons.visibility_off,
-                      color: Colors.grey,
-                    ),
-                    onPressed: () {
-                      visiblity.toggle();
-                    },
-                  )
-                : null,
-            hintText: labelText,
-            focusedBorder: const UnderlineInputBorder(
-              borderSide: BorderSide(
-                color: Colors.black,
-              ),
-            ),
-            enabledBorder: const UnderlineInputBorder(
-              borderSide: BorderSide(
-                color: Colors.black,
-              ),
-            ),
+    return Obx(() {
+      return TextFormField(
+        controller: controller,
+        decoration: InputDecoration(
+          prefixIcon: icon,
+          suffixIcon: isSecure
+              ? IconButton(
+                  icon: Icon(
+                    visiblity.value ? Icons.visibility : Icons.visibility_off,
+                    color: Colors.grey,
+                  ),
+                  onPressed: () {
+                    visiblity.toggle();
+                  },
+                )
+              : null,
+          hintText: labelText,
+          focusedBorder: const UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.black),
           ),
-          cursorColor: Colors.black,
-          keyboardType: inputType,
-          validator: validator,
-          obscureText: visiblity.value,
-          onChanged: onChange,
-        );
-      },
-    );
+          enabledBorder: const UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.black),
+          ),
+        ),
+        cursorColor: Colors.black,
+        keyboardType: inputType,
+        validator: validator,
+        obscureText: visiblity.value,
+        onChanged: onChange,
+      );
+    });
   }
 }

@@ -48,8 +48,9 @@ class SignUpController extends LoadingGetController {
 
   Future<void> selectImage() async {
     final imageExt = ImageExtention();
-    final imageFile =
-        await imageExt.selectImage(imageSource: ImageSource.gallery);
+    final imageFile = await imageExt.selectImage(
+      imageSource: ImageSource.gallery,
+    );
 
     userImage = imageFile;
 

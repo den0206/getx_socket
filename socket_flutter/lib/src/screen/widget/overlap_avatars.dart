@@ -3,11 +3,7 @@ import 'package:socket_flutter/src/model/user.dart';
 import 'package:socket_flutter/src/screen/widget/custom_button.dart';
 
 class OverlapAvatars extends StatelessWidget {
-  const OverlapAvatars({
-    super.key,
-    required this.users,
-    this.size = 40,
-  });
+  const OverlapAvatars({super.key, required this.users, this.size = 40});
 
   final List<User> users;
   final double size;

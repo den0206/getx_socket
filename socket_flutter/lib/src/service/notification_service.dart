@@ -54,15 +54,16 @@ class NotificationService extends GetxService {
 
     await flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
+          AndroidFlutterLocalNotificationsPlugin
+        >()
         ?.createNotificationChannel(channel);
 
     await FirebaseMessaging.instance
         .setForegroundNotificationPresentationOptions(
-      alert: true,
-      badge: true,
-      sound: true,
-    );
+          alert: true,
+          badge: true,
+          sound: true,
+        );
   }
 
   Future<String?> getFCMToken() async {
@@ -70,12 +71,10 @@ class NotificationService extends GetxService {
   }
 
   void listenForeground() {
-    FirebaseMessaging.onMessage.listen(
-      (RemoteMessage message) {
-        print("FOREGROUND Notifications");
-        showNotification(message);
-      },
-    );
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print("FOREGROUND Notifications");
+      showNotification(message);
+    });
   }
 
   void showNotification(RemoteMessage message) {
@@ -97,8 +96,8 @@ class NotificationService extends GetxService {
             priority: Priority.high,
           ),
           iOS: const DarwinNotificationDetails(
-              // badgeNumber: 10,
-              ),
+            // badgeNumber: 10,
+          ),
         ),
       );
     }
@@ -127,7 +126,7 @@ class NotificationService extends GetxService {
         "sound": "app_sound.wav",
         "content_available": true,
         "bodyText": lastMessage,
-      }
+      },
     };
 
     _notificationApi.messageNotification(data);

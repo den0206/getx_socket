@@ -18,10 +18,7 @@ class ReportController extends LoadingGetController {
     return (reportField.text.isNotEmpty && !user.isCurrent).obs;
   }
 
-  ReportController({
-    required this.user,
-    this.message,
-  });
+  ReportController({required this.user, this.message});
 
   @override
   void onClose() async {
@@ -38,16 +35,17 @@ class ReportController extends LoadingGetController {
       final reportData = {
         "reported": user.id,
         "reportedContent": reportField.text,
-        "message": message?.id
+        "message": message?.id,
       };
       await _reportAPI.sendReport(reportData: reportData);
 
       reportField.clear();
       Navigator.of(context).pop();
       showSnackBar(
-          title: "Thank you Report!",
-          message: "We will check soon!",
-          background: Colors.red);
+        title: "Thank you Report!",
+        message: "We will check soon!",
+        background: Colors.red,
+      );
     } catch (e) {
       isOverlay.call(false);
       showError(e.toString());

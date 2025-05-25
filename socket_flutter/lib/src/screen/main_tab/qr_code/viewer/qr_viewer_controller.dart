@@ -15,7 +15,11 @@ class QrViewerController extends GetxController {
   Future<void> startQrcodeScan() async {
     try {
       final result = await FlutterBarcodeScanner.scanBarcode(
-          '#ff6666', "Cancel", true, ScanMode.QR);
+        '#ff6666',
+        "Cancel",
+        true,
+        ScanMode.QR,
+      );
 
       if (result == "-1") return;
 
@@ -36,9 +40,7 @@ class QrViewerController extends GetxController {
 
   void selectFindUser() {
     if (findUser == null) return;
-    Get.to(
-      () => UserDetailScreen(findUser!),
-    );
+    Get.to(() => UserDetailScreen(findUser!));
   }
 
   void resetFindUser() {

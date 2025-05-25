@@ -43,19 +43,12 @@ class _FadeinWidgetState extends State<FadeinWidget>
 
   @override
   Widget build(BuildContext context) {
-    return FadeTransition(
-      opacity: animation,
-      child: widget.child,
-    );
+    return FadeTransition(opacity: animation, child: widget.child);
   }
 }
 
 class EmptyScreen extends StatelessWidget {
-  const EmptyScreen({
-    super.key,
-    required this.title,
-    required this.path,
-  });
+  const EmptyScreen({super.key, required this.title, required this.path});
 
   final String title;
   final String path;
@@ -75,14 +68,8 @@ class EmptyScreen extends StatelessWidget {
               title,
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            LottieBuilder.asset(
-              path,
-              width: 300,
-              height: 300,
-            ),
+            const SizedBox(height: 20),
+            LottieBuilder.asset(path, width: 300, height: 300),
           ],
         ),
       ),

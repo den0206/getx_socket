@@ -47,8 +47,11 @@ class UserDetailController extends LoadingGetController {
 
       final cr = RecentExtention();
 
-      final chatRoomId = await cr
-          .createPrivateChatRoom(currentUser.id, user.id, [currentUser, user]);
+      final chatRoomId = await cr.createPrivateChatRoom(
+        currentUser.id,
+        user.id,
+        [currentUser, user],
+      );
 
       if (chatRoomId == null) {
         print("Not Generate ChatID");
@@ -57,8 +60,10 @@ class UserDetailController extends LoadingGetController {
 
       Get.until((route) => route.isFirst);
 
-      final MessageExtention extention =
-          MessageExtention(chatRoomId: chatRoomId, withUsers: [user]);
+      final MessageExtention extention = MessageExtention(
+        chatRoomId: chatRoomId,
+        withUsers: [user],
+      );
 
       Get.toNamed(MessageScreen.routeName, arguments: extention);
     } catch (e) {
@@ -114,7 +119,7 @@ class UserDetailController extends LoadingGetController {
     }
 
     final Map<String, dynamic> data = {
-      "blocked": currentUser.blockedUsers.toSet().toList()
+      "blocked": currentUser.blockedUsers.toSet().toList(),
     };
 
     final res = await _userAPI.updateBlock(userData: data);
