@@ -79,8 +79,10 @@ class RecentsController extends GetxController {
     isLoading = true;
 
     try {
-      final res =
-          await _recentApi.getRecents(limit: limit, nextCursor: nextCursor);
+      final res = await _recentApi.getRecents(
+        limit: limit,
+        nextCursor: nextCursor,
+      );
 
       if (!res.status) return;
 

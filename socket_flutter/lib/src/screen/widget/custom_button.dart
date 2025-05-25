@@ -34,10 +34,7 @@ class CustomButton extends StatelessWidget {
           ),
         ),
         onPressed: onPressed,
-        child: Text(
-          title,
-          style: TextStyle(color: titleColor),
-        ),
+        child: Text(title, style: TextStyle(color: titleColor)),
       ),
     );
   }
@@ -78,15 +75,8 @@ class CustomCircleButton extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              icon,
-              size: size != null ? size! / 2 : null,
-              color: mainColor,
-            ),
-            Text(
-              title,
-              style: TextStyle(color: mainColor),
-            )
+            Icon(icon, size: size != null ? size! / 2 : null, color: mainColor),
+            Text(title, style: TextStyle(color: mainColor)),
           ],
         ),
       ),
@@ -116,10 +106,7 @@ class CircleImageButton extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          border: Border.all(
-            color: Colors.green,
-            width: 2,
-          ),
+          border: Border.all(color: Colors.green, width: 2),
         ),
         child: ClipOval(
           child: Image(
@@ -129,10 +116,7 @@ class CircleImageButton extends StatelessWidget {
             height: size,
             loadingBuilder: (context, child, event) {
               if (event != null) {
-                return Skeleton.leaf(
-                  enabled: true,
-                  child: child,
-                );
+                return Skeleton.leaf(enabled: true, child: child);
               }
               return child;
             },

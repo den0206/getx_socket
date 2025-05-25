@@ -13,10 +13,7 @@ class DateFormatter {
       return "Just Now";
     }
 
-    String roughTimeString = DateFormat(
-      'jm',
-      locale,
-    ).format(dateTime);
+    String roughTimeString = DateFormat('jm', locale).format(dateTime);
     if (localDateTime.day == now.day &&
         localDateTime.month == now.month &&
         localDateTime.year == now.year) {

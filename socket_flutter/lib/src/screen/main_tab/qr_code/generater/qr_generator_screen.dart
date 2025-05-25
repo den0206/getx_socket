@@ -46,10 +46,7 @@ class QrGenerateScreen extends StatelessWidget {
               right: 20,
               child: !controller.isLoading
                   ? NeumorphicIconButton(
-                      icon: const Icon(
-                        Icons.refresh,
-                        size: 40,
-                      ),
+                      icon: const Icon(Icons.refresh, size: 40),
                       onPressed: () {
                         controller.updateSearchId();
                       },
@@ -57,7 +54,7 @@ class QrGenerateScreen extends StatelessWidget {
                   : const CircularProgressIndicator(
                       valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
                     ),
-            )
+            ),
           ],
         );
       },

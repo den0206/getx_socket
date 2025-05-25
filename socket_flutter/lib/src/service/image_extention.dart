@@ -21,8 +21,9 @@ class ImageExtention {
   }
 
   Future<File?> selectVideo() async {
-    final XFile? _video =
-        await _imagePicker.pickVideo(source: ImageSource.gallery);
+    final XFile? _video = await _imagePicker.pickVideo(
+      source: ImageSource.gallery,
+    );
     if (_video == null) return null;
     final compressVideo = await VideoCompress.compressVideo(
       _video.path,

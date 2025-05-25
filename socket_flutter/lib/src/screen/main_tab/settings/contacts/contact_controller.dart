@@ -23,22 +23,24 @@ class ContactController extends LoadingGetController {
     webViewController = WebViewController();
     await webViewController.setJavaScriptMode(JavaScriptMode.unrestricted);
 
-    await webViewController.setNavigationDelegate(NavigationDelegate(
-      onProgress: (int progress) {
-        print(progress);
-      },
-      onPageStarted: (String url) {},
-      onPageFinished: (String url) {},
-      onWebResourceError: (WebResourceError error) {
-        showError("No Internet");
-      },
-      onNavigationRequest: (NavigationRequest request) {
-        // if (request.url.startsWith('https://www.youtube.com/')) {
-        //   return NavigationDecision.prevent;
-        // }
-        return NavigationDecision.navigate;
-      },
-    ));
+    await webViewController.setNavigationDelegate(
+      NavigationDelegate(
+        onProgress: (int progress) {
+          print(progress);
+        },
+        onPageStarted: (String url) {},
+        onPageFinished: (String url) {},
+        onWebResourceError: (WebResourceError error) {
+          showError("No Internet");
+        },
+        onNavigationRequest: (NavigationRequest request) {
+          // if (request.url.startsWith('https://www.youtube.com/')) {
+          //   return NavigationDecision.prevent;
+          // }
+          return NavigationDecision.navigate;
+        },
+      ),
+    );
 
     await webViewController.loadRequest(Uri.parse(contactURL!));
   }

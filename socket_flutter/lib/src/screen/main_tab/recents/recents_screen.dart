@@ -138,20 +138,15 @@ class NeumorphicRecentCell extends GetView<RecentsController> {
                   onPressed: (context) {
                     controller.deleteRecent(recent);
                   },
-                )
+                ),
               ],
             ),
             child: Row(
               children: [
                 recent.type == RecentType.private
-                    ? UserCountryWidget(
-                        user: recent.withUser!,
-                        size: 35,
-                      )
+                    ? UserCountryWidget(user: recent.withUser!, size: 35)
                     : OverlapAvatars(users: recent.group!.members),
-                const SizedBox(
-                  width: 20,
-                ),
+                const SizedBox(width: 20),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -168,12 +163,12 @@ class NeumorphicRecentCell extends GetView<RecentsController> {
                         letterSpacing: 1.5,
                       ),
                     ),
-                    const SizedBox(
-                      height: 5,
-                    ),
+                    const SizedBox(height: 5),
                     Container(
-                      constraints:
-                          const BoxConstraints(minWidth: 100, maxWidth: 200),
+                      constraints: const BoxConstraints(
+                        minWidth: 100,
+                        maxWidth: 200,
+                      ),
                       child: Text(
                         recent.lastMessage,
                         maxLines: 2,
@@ -184,7 +179,7 @@ class NeumorphicRecentCell extends GetView<RecentsController> {
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
                 const Spacer(),
@@ -204,15 +199,14 @@ class NeumorphicRecentCell extends GetView<RecentsController> {
                             color: Colors.green,
                           ),
                           child: Center(
-                              child: Text(
-                            "${recent.counter}",
-                            style: const TextStyle(
-                              color: Colors.white,
+                            child: Text(
+                              "${recent.counter}",
+                              style: const TextStyle(color: Colors.white),
                             ),
-                          )),
+                          ),
                         ),
-                      )
-                    ]
+                      ),
+                    ],
                   ],
                 ),
               ],
@@ -238,9 +232,9 @@ class RecentCell extends GetView<RecentsController> {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
         decoration: const BoxDecoration(
-            color: ConstsColor.mainBackgroundColor,
-            border:
-                Border(bottom: BorderSide(color: Colors.black, width: 0.5))),
+          color: ConstsColor.mainBackgroundColor,
+          border: Border(bottom: BorderSide(color: Colors.black, width: 0.5)),
+        ),
         child: Slidable(
           key: Key(recent.id),
           endActionPane: ActionPane(
@@ -254,20 +248,15 @@ class RecentCell extends GetView<RecentsController> {
                 onPressed: (context) {
                   controller.deleteRecent(recent);
                 },
-              )
+              ),
             ],
           ),
           child: Row(
             children: [
               recent.type == RecentType.private
-                  ? UserCountryWidget(
-                      user: recent.withUser!,
-                      size: 35,
-                    )
+                  ? UserCountryWidget(user: recent.withUser!, size: 35)
                   : OverlapAvatars(users: recent.group!.members),
-              const SizedBox(
-                width: 20,
-              ),
+              const SizedBox(width: 20),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -284,12 +273,12 @@ class RecentCell extends GetView<RecentsController> {
                       letterSpacing: 1.5,
                     ),
                   ),
-                  const SizedBox(
-                    height: 5,
-                  ),
+                  const SizedBox(height: 5),
                   Container(
-                    constraints:
-                        const BoxConstraints(minWidth: 100, maxWidth: 200),
+                    constraints: const BoxConstraints(
+                      minWidth: 100,
+                      maxWidth: 200,
+                    ),
                     child: Text(
                       recent.lastMessage,
                       maxLines: 2,
@@ -300,7 +289,7 @@ class RecentCell extends GetView<RecentsController> {
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
               if (recent.counter != 0) ...[
@@ -314,14 +303,13 @@ class RecentCell extends GetView<RecentsController> {
                     color: Colors.green,
                   ),
                   child: Center(
-                      child: Text(
-                    "${recent.counter}",
-                    style: const TextStyle(
-                      color: Colors.white,
+                    child: Text(
+                      "${recent.counter}",
+                      style: const TextStyle(color: Colors.white),
                     ),
-                  )),
-                )
-              ]
+                  ),
+                ),
+              ],
             ],
           ),
         ),
@@ -345,7 +333,8 @@ Widget buildAndroidRefreshIndicator(
       child: refreshState == RefreshIndicatorMode.drag
           ? Opacity(
               opacity: opacityCurve.transform(
-                  min(pulledExtent / refreshTriggerPullDistance, 1.0)),
+                min(pulledExtent / refreshTriggerPullDistance, 1.0),
+              ),
               child: const Icon(
                 Icons.arrow_downward,
                 color: CupertinoColors.inactiveGray,
@@ -353,8 +342,9 @@ Widget buildAndroidRefreshIndicator(
               ),
             )
           : Opacity(
-              opacity: opacityCurve
-                  .transform(min(pulledExtent / refreshIndicatorExtent, 1.0)),
+              opacity: opacityCurve.transform(
+                min(pulledExtent / refreshIndicatorExtent, 1.0),
+              ),
               child: const CircularProgressIndicator(strokeWidth: 2.0),
             ),
     ),

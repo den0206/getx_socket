@@ -42,7 +42,9 @@ class Group {
 
   /// MARK 初期化(with members)
   factory Group.fromMapWithMembers(
-      Map<String, dynamic> map, List<User> members) {
+    Map<String, dynamic> map,
+    List<User> members,
+  ) {
     return Group(
       id: map['id'] ?? '',
       ownerId: map['ownerId'] ?? '',

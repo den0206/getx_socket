@@ -13,9 +13,7 @@ class VideoBubbleController extends GetxController {
   final String videoUrl;
   final RxBool isPlayng = false.obs;
 
-  VideoBubbleController(
-    this.videoUrl,
-  );
+  VideoBubbleController(this.videoUrl);
 
   @override
   void onInit() async {
@@ -30,15 +28,13 @@ class VideoBubbleController extends GetxController {
     await videoPlayerController.setLooping(false);
     await videoPlayerController.pause();
 
-    videoPlayerController.addListener(
-      () {
-        if (videoPlayerController.value.position ==
-            videoPlayerController.value.duration) {
-          if (!chewieController.isFullScreen) isPlayng.value = false;
-          update();
-        }
-      },
-    );
+    videoPlayerController.addListener(() {
+      if (videoPlayerController.value.position ==
+          videoPlayerController.value.duration) {
+        if (!chewieController.isFullScreen) isPlayng.value = false;
+        update();
+      }
+    });
 
     chewieController = ChewieController(
       videoPlayerController: videoPlayerController,
@@ -46,18 +42,15 @@ class VideoBubbleController extends GetxController {
       autoInitialize: true,
       aspectRatio: videoPlayerController.value.size.aspectRatio,
       fullScreenByDefault: false,
-      deviceOrientationsAfterFullScreen: [
-        DeviceOrientation.portraitUp,
-      ],
-      deviceOrientationsOnEnterFullScreen: [
-        DeviceOrientation.landscapeLeft,
-      ],
+      deviceOrientationsAfterFullScreen: [DeviceOrientation.portraitUp],
+      deviceOrientationsOnEnterFullScreen: [DeviceOrientation.landscapeLeft],
       placeholder: Container(
         color: Colors.black87,
         child: const Center(
-            child: CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-        )),
+          child: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+          ),
+        ),
       ),
     );
   }
@@ -90,10 +83,7 @@ class VideoBubble extends StatelessWidget {
       builder: (controller) {
         return Container(
           margin: const EdgeInsets.only(bottom: 10, right: 10.0),
-          constraints: const BoxConstraints(
-            maxHeight: 250,
-            maxWidth: 300,
-          ),
+          constraints: const BoxConstraints(maxHeight: 250, maxWidth: 300),
           decoration: BoxDecoration(
             border: Border.all(color: Colors.grey),
             borderRadius: BorderRadius.circular(8),
@@ -120,13 +110,11 @@ class VideoBubble extends StatelessWidget {
                         Icons.play_circle_fill,
                         color: Colors.black,
                         size: 80,
-                      )
+                      ),
                     ],
                   ),
                 )
-              : Chewie(
-                  controller: controller.chewieController,
-                ),
+              : Chewie(controller: controller.chewieController),
         );
       },
     );
@@ -139,9 +127,7 @@ class ErrorImageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      borderRadius: const BorderRadius.all(
-        Radius.circular(8.0),
-      ),
+      borderRadius: const BorderRadius.all(Radius.circular(8.0)),
       clipBehavior: Clip.hardEdge,
       child: Image.asset(
         'assets/images/logo.png',

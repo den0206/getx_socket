@@ -84,9 +84,7 @@ class PinCodeArea extends StatelessWidget {
           if (currentState == VerifyState.verify)
             Text(
               "Please Check Your Email".tr,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           Padding(
             padding: const EdgeInsets.all(20.0),
@@ -95,10 +93,7 @@ class PinCodeArea extends StatelessWidget {
                 if (currentState != VerifyState.verify)
                   CustomTextField(
                     controller: currentTX,
-                    icon: const Icon(
-                      Icons.email,
-                      color: Colors.grey,
-                    ),
+                    icon: const Icon(Icons.email, color: Colors.grey),
                     labelText: currentState.title,
                     inputType: currentState.inputType,
                     isSecure: currentState.isSecure,
@@ -115,14 +110,16 @@ class PinCodeArea extends StatelessWidget {
               ],
             ),
           ),
-          Builder(builder: (context) {
-            return NeumorphicCustomButtton(
-              title: currentState.title,
-              background: Colors.green,
-              titleColor: Colors.white,
-              onPressed: onPressed,
-            );
-          }),
+          Builder(
+            builder: (context) {
+              return NeumorphicCustomButtton(
+                title: currentState.title,
+                background: Colors.green,
+                titleColor: Colors.white,
+                onPressed: onPressed,
+              );
+            },
+          ),
         ],
       ),
     );

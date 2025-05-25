@@ -17,24 +17,15 @@ import 'package:socket_flutter/src/screen/main_tab/users/users_screen.dart';
 import 'package:socket_flutter/src/screen/root_screen.dart';
 
 class AppRoot {
-  static List<GetPage> pages = [
-    ..._authPages,
-    ..._mainPages,
-    ..._settingPages,
-  ];
+  static List<GetPage> pages = [..._authPages, ..._mainPages, ..._settingPages];
 }
 
 final List<GetPage> _authPages = [
-  GetPage(
-    name: RootScreen.routeName,
-    page: () => const RootScreen(),
-  ),
+  GetPage(name: RootScreen.routeName, page: () => const RootScreen()),
   GetPage(
     name: LoginScreen.routeName,
     page: () => LoginScreen(),
-    binding: BindingsBuilder(
-      () => Get.lazyPut(() => LoginController()),
-    ),
+    binding: BindingsBuilder(() => Get.lazyPut(() => LoginController())),
   ),
   GetPage(
     name: SignUpScreen.routeName,
@@ -46,22 +37,15 @@ final List<GetPage> _authPages = [
   GetPage(
     name: ResetPasswordScreen.routeName,
     page: () => ResetPasswordScreen(),
-  )
+  ),
 ];
 
 final List<GetPage> _mainPages = [
-  GetPage(
-    name: UsersScreen.routeName,
-    page: () => const UsersScreen(),
-  ),
+  GetPage(name: UsersScreen.routeName, page: () => const UsersScreen()),
   GetPage(
     name: UserEditScreen.routeName,
     page: () => UserEditScreen(),
-    binding: BindingsBuilder(
-      () => Get.lazyPut(
-        () => UserEditController(),
-      ),
-    ),
+    binding: BindingsBuilder(() => Get.lazyPut(() => UserEditController())),
   ),
   GetPage(
     name: BlockListScreen.routeName,
@@ -71,9 +55,7 @@ final List<GetPage> _mainPages = [
   GetPage(
     name: MessageScreen.routeName,
     page: () => MessageScreen(),
-    binding: BindingsBuilder(
-      () => Get.lazyPut(() => MessageController()),
-    ),
+    binding: BindingsBuilder(() => Get.lazyPut(() => MessageController())),
   ),
   GetPage(
     name: GroupsScreen.routeName,
@@ -89,9 +71,9 @@ final List<GetPage> _mainPages = [
     name: EditEmailScreen.routeName,
     page: () => EditEmailScreen(),
     fullscreenDialog: true,
-  )
+  ),
 ];
 
 final List<GetPage> _settingPages = [
-  GetPage(name: ContactScreen.routeName, page: () => ContactScreen())
+  GetPage(name: ContactScreen.routeName, page: () => ContactScreen()),
 ];

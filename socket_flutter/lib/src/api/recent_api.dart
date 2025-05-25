@@ -15,7 +15,9 @@ class RecentAPI extends APIBase {
   }
 
   Future<ResponseAPI> updateRecent(
-      Recent recent, Map<String, dynamic> value) async {
+    Recent recent,
+    Map<String, dynamic> value,
+  ) async {
     final Map<String, dynamic> q = {"id": recent.id};
     try {
       final Uri uri = setUri("/update", q);
@@ -35,13 +37,15 @@ class RecentAPI extends APIBase {
     }
   }
 
-  Future<ResponseAPI> getByRoomID(String chatRoomId,
-      {bool includeUserParams = true}) async {
+  Future<ResponseAPI> getByRoomID(
+    String chatRoomId, {
+    bool includeUserParams = true,
+  }) async {
     /// 使う 0 (規定値)
     /// 使わない 1
     final Map<String, dynamic> query = {
       "userParams": includeUserParams ? "0" : "1",
-      "chatRoomId": chatRoomId
+      "chatRoomId": chatRoomId,
     };
     try {
       final Uri uri = setUri("/roomid", query);

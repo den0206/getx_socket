@@ -16,7 +16,10 @@ class RecentExtention {
 
   // MARK Private
   Future<String?> createPrivateChatRoom(
-      String currentUID, String withUserID, List<User> users) async {
+    String currentUID,
+    String withUserID,
+    List<User> users,
+  ) async {
     var chatRoomId;
 
     final value = currentUID.compareTo(withUserID);
@@ -60,8 +63,10 @@ class RecentExtention {
 
   void _useSingleSocket({required String userId, required String chatRoomId}) {
     /// MARK Recentソケット
-    RecentsController.to.recentIO
-        .sendUpdateRecent(userIds: userId, chatRoomId: chatRoomId);
+    RecentsController.to.recentIO.sendUpdateRecent(
+      userIds: userId,
+      chatRoomId: chatRoomId,
+    );
   }
 
   /// MARK Group
@@ -76,7 +81,7 @@ class RecentExtention {
 
     final Map<String, dynamic> body = {
       "ownerId": owner.id,
-      "members": memberIds
+      "members": memberIds,
     };
 
     final res = await _groupAPI.createGroup(body);
@@ -102,15 +107,15 @@ class RecentExtention {
   }
 
   Future<void> createRecentAPI(
-      String id, String currentUID, List<User> users, String chatRoomId) async {
+    String id,
+    String currentUID,
+    List<User> users,
+    String chatRoomId,
+  ) async {
     Map<String, dynamic> recent;
 
     if (users.length > 2) {
-      recent = {
-        "userId": id,
-        "chatRoomId": chatRoomId,
-        "group": chatRoomId,
-      };
+      recent = {"userId": id, "chatRoomId": chatRoomId, "group": chatRoomId};
     } else {
       /// private
       final withUser = id == currentUID ? users.last : users.first;
@@ -135,7 +140,10 @@ class RecentExtention {
   }
 
   Future<void> updateRecentItem(
-      Recent recent, String lastMessage, bool isDelete) async {
+    Recent recent,
+    String lastMessage,
+    bool isDelete,
+  ) async {
     final uid = recent.user.id;
     var counter = recent.counter;
 
@@ -150,16 +158,15 @@ class RecentExtention {
       }
     }
 
-    final value = {
-      "lastMessage": lastMessage,
-      "counter": counter,
-    };
+    final value = {"lastMessage": lastMessage, "counter": counter};
 
     await _recentAPI.updateRecent(recent, value);
   }
 
-  Future<List<Recent>> updateRecentWithLastMessage(
-      {required String chatRoomId, String? lastMessage}) async {
+  Future<List<Recent>> updateRecentWithLastMessage({
+    required String chatRoomId,
+    String? lastMessage,
+  }) async {
     final recents = await findByChatRoomId(chatRoomId);
 
     String last;
@@ -178,10 +185,14 @@ class RecentExtention {
     return recents;
   }
 
-  void updateRecentSocket(
-      {required String userId, required String chatRoomId}) {
+  void updateRecentSocket({
+    required String userId,
+    required String chatRoomId,
+  }) {
     if (!Get.isRegistered<RecentsController>()) return;
-    RecentsController.to.recentIO
-        .sendUpdateRecent(userIds: userId, chatRoomId: chatRoomId);
+    RecentsController.to.recentIO.sendUpdateRecent(
+      userIds: userId,
+      chatRoomId: chatRoomId,
+    );
   }
 }

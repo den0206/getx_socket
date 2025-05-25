@@ -33,7 +33,7 @@ abstract class LoadingGetView<T extends LoadingGetController>
                   color: Color.fromRGBO(0, 0, 0, 0.6),
                 ),
                 child: const PlainLoadingWidget(),
-              )
+              ),
           ],
         ),
       ),
@@ -53,9 +53,7 @@ class PlainLoadingWidget extends StatelessWidget {
           const CircularProgressIndicator(
             valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
           ),
-          const SizedBox(
-            height: 24,
-          ),
+          const SizedBox(height: 24),
           Text(
             "Loading...".tr,
             style: const TextStyle(
@@ -63,7 +61,7 @@ class PlainLoadingWidget extends StatelessWidget {
               fontSize: 24,
               decoration: TextDecoration.none,
             ),
-          )
+          ),
         ],
       ),
     );
@@ -71,18 +69,13 @@ class PlainLoadingWidget extends StatelessWidget {
 }
 
 class LoadingCellWidget extends StatelessWidget {
-  const LoadingCellWidget({
-    super.key,
-  });
+  const LoadingCellWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const Padding(
       padding: EdgeInsets.symmetric(vertical: 10),
-      child: Center(
-          child: CupertinoActivityIndicator(
-        radius: 12.0,
-      )),
+      child: Center(child: CupertinoActivityIndicator(radius: 12.0)),
     );
   }
 }

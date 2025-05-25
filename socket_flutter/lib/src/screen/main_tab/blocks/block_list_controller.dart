@@ -57,7 +57,7 @@ class BlockListController extends GetxController {
         currentUser.blockedUsers.add(user.id);
       }
       final Map<String, dynamic> data = {
-        "blocked": currentUser.blockedUsers.toSet().toList()
+        "blocked": currentUser.blockedUsers.toSet().toList(),
       };
 
       final res = await _userAPI.updateBlock(userData: data);

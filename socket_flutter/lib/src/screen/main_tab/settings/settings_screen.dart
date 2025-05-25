@@ -24,7 +24,7 @@ class SettingsScreen extends StatelessWidget {
               Navigator.of(context).pop();
             },
             icon: const Icon(Icons.close),
-          )
+          ),
         ],
       ),
       body: GetBuilder<UserDetailController>(
@@ -91,8 +91,10 @@ class SettingsScreen extends StatelessWidget {
   }
 }
 
-Future<dynamic> showLocaleLangs(BuildContext context,
-    [Function(LocaleLangs current)? onPressed]) {
+Future<dynamic> showLocaleLangs(
+  BuildContext context, [
+  Function(LocaleLangs current)? onPressed,
+]) {
   return showDialog(
     context: context,
     builder: (builder) {
@@ -103,15 +105,12 @@ Future<dynamic> showLocaleLangs(BuildContext context,
           child: ListView.separated(
             shrinkWrap: true,
             itemCount: LocaleLangs.values.length,
-            separatorBuilder: (context, index) => const Divider(
-              color: Colors.black,
-            ),
+            separatorBuilder: (context, index) =>
+                const Divider(color: Colors.black),
             itemBuilder: (context, index) {
               final current = LocaleLangs.values[index];
               return ListTile(
-                title: Text(
-                  current.title,
-                ),
+                title: Text(current.title),
                 onTap: () async {
                   Get.back();
                   await Get.updateLocale(current.locale);
@@ -128,10 +127,8 @@ Future<dynamic> showLocaleLangs(BuildContext context,
   );
 }
 
-
-
- // ListTile(
-  //   title: Text("レビュー"),
-  //   trailing: Icon(Icons.arrow_forward_ios),
-  //   onTap: () {},
-  // ),
+// ListTile(
+//   title: Text("レビュー"),
+//   trailing: Icon(Icons.arrow_forward_ios),
+//   onTap: () {},
+// ),

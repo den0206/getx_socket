@@ -19,8 +19,10 @@ class RecentIO extends SocketBase {
 
   /// MARK  送信
 
-  void sendUpdateRecent(
-      {required dynamic userIds, required String chatRoomId}) {
+  void sendUpdateRecent({
+    required dynamic userIds,
+    required String chatRoomId,
+  }) {
     if (Get.isRegistered<RecentsController>()) {
       final Map<String, dynamic> data = {
         "userIds": userIds,

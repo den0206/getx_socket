@@ -49,7 +49,7 @@ class EditEmailController extends LoadingGetController {
         case VerifyState.verify:
           final Map<String, dynamic> data = {
             "email": emaiController.text,
-            "verify": pinController.text
+            "verify": pinController.text,
           };
           final checkRes = await _tempTokenAPI.verifyEmail(data);
           if (!checkRes.status) break;

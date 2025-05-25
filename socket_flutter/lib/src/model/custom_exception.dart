@@ -42,7 +42,7 @@ class QuotaExceedException extends CustomException {
 
 class ResourceUnavailableException extends CustomException {
   ResourceUnavailableException(message)
-      : super(message, "The Resource Unavailable: ");
+    : super(message, "The Resource Unavailable: ");
 }
 
 class BadRequestException extends CustomException {

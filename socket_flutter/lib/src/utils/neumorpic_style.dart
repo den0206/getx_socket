@@ -1,12 +1,13 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:socket_flutter/src/utils/consts_color.dart';
 
-NeumorphicStyle commonNeumorphic(
-    {NeumorphicBoxShape? boxShape,
-    double? depth,
-    Color? color,
-    Color? shadowColor,
-    LightSource? lightSource}) {
+NeumorphicStyle commonNeumorphic({
+  NeumorphicBoxShape? boxShape,
+  double? depth,
+  Color? color,
+  Color? shadowColor,
+  LightSource? lightSource,
+}) {
   return NeumorphicStyle(
     shape: NeumorphicShape.concave,
     boxShape:

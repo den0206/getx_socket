@@ -19,7 +19,7 @@ abstract class APIBase {
   final JsonCodec json = const JsonCodec();
   final Map<String, String> headers = {
     "Content-type": "application/json",
-    "x-api-key": dotenv.env["API_KEY"] ?? "No API Key"
+    "x-api-key": dotenv.env["API_KEY"] ?? "No API Key",
   };
 
   final EndPoint endPoint;
@@ -116,10 +116,11 @@ extension APIBaseExtention on APIBase {
   }
 
   // POST
-  Future<ResponseAPI> postRequest(
-      {required Uri uri,
-      required Map<String, dynamic> body,
-      useToken = false}) async {
+  Future<ResponseAPI> postRequest({
+    required Uri uri,
+    required Map<String, dynamic> body,
+    useToken = false,
+  }) async {
     try {
       _setToken(useToken);
 
@@ -135,10 +136,11 @@ extension APIBaseExtention on APIBase {
   }
 
   // PUT
-  Future<ResponseAPI> putRequest(
-      {required Uri uri,
-      required Map<String, dynamic> body,
-      useToken = false}) async {
+  Future<ResponseAPI> putRequest({
+    required Uri uri,
+    required Map<String, dynamic> body,
+    useToken = false,
+  }) async {
     try {
       _setToken(useToken);
 
@@ -154,8 +156,10 @@ extension APIBaseExtention on APIBase {
   }
 
   // DELETE
-  Future<ResponseAPI> deleteRequest(
-      {required Uri uri, useToken = false}) async {
+  Future<ResponseAPI> deleteRequest({
+    required Uri uri,
+    useToken = false,
+  }) async {
     try {
       _setToken(useToken);
 
@@ -199,23 +203,21 @@ extension APIBaseExtention on APIBase {
       }
       final List<http.MultipartFile> multipartFiles = [];
 
-      await Future.forEach(
-        inputs,
-        (File temp) async {
-          final tempContent = lookupMimeType(temp.path);
-          if (tempContent == null) throw Exception("NO Temp Content Type");
-          final multipart = await http.MultipartFile.fromPath(
-            fileType[0],
-            temp.path,
-            contentType: MediaType.parse(tempContent),
-          );
-          multipartFiles.add(multipart);
-        },
-      );
+      await Future.forEach(inputs, (File temp) async {
+        final tempContent = lookupMimeType(temp.path);
+        if (tempContent == null) throw Exception("NO Temp Content Type");
+        final multipart = await http.MultipartFile.fromPath(
+          fileType[0],
+          temp.path,
+          contentType: MediaType.parse(tempContent),
+        );
+        multipartFiles.add(multipart);
+      });
 
       // Map<String,dynamic> to <Str,Str>
-      final Map<String, String> stringParameters =
-          body.map((key, value) => MapEntry(key, value.toString()));
+      final Map<String, String> stringParameters = body.map(
+        (key, value) => MapEntry(key, value.toString()),
+      );
 
       final request = http.MultipartRequest(type, uri);
       request.headers.addAll(headers);

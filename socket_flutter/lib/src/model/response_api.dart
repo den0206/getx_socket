@@ -3,11 +3,7 @@ class ResponseAPI {
   String? message;
   dynamic data;
 
-  ResponseAPI({
-    required this.status,
-    required this.data,
-    this.message,
-  });
+  ResponseAPI({required this.status, required this.data, this.message});
 
   factory ResponseAPI.fromMap(Map<String, dynamic> map) {
     return ResponseAPI(

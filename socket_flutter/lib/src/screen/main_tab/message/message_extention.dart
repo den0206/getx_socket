@@ -29,10 +29,7 @@ class MessageExtention {
   bool reachLast = false;
   String? nextCursor;
 
-  MessageExtention({
-    required this.chatRoomId,
-    required this.withUsers,
-  });
+  MessageExtention({required this.chatRoomId, required this.withUsers});
 
   List<String> get userIds => [currentUser.id, ...withUsers.map((u) => u.id)];
 
@@ -42,7 +39,10 @@ class MessageExtention {
 
   Future<List<Message>> loadMessage() async {
     final res = await _messageAPI.loadMessage(
-        chatRoomId: chatRoomId, limit: limit, nextCursor: nextCursor);
+      chatRoomId: chatRoomId,
+      limit: limit,
+      nextCursor: nextCursor,
+    );
 
     if (!res.status) throw Exception("Cant load messages");
     final Pages<Message> pages = Pages.fromMap(res.data, Message.fromJsonModel);
@@ -102,7 +102,9 @@ class MessageExtention {
 
   Future<void> updateLastRecent(Message newMessage) async {
     final existUsers = await updateRecent(
-        chatRoomId: chatRoomId, lastMessage: newMessage.text);
+      chatRoomId: chatRoomId,
+      lastMessage: newMessage.text,
+    );
 
     /// Recent が消されているユーザーを求める
     final deleteUsers = userIds.toSet().difference(existUsers.toSet()).toList();
@@ -119,14 +121,17 @@ class MessageExtention {
 
   Future<void> sendNotification({required Message newMessage}) async {
     final tokens = withUsers.map((u) => u.fcmToken).toList();
-    await NotificationService.to
-        .pushNotification(tokens: tokens, lastMessage: newMessage.text);
+    await NotificationService.to.pushNotification(
+      tokens: tokens,
+      lastMessage: newMessage.text,
+    );
   }
 
   /// MARK Delete Message
   Future<void> updateDeleteRecent() async {
-    final remainRecents =
-        await re.updateRecentWithLastMessage(chatRoomId: chatRoomId);
+    final remainRecents = await re.updateRecentWithLastMessage(
+      chatRoomId: chatRoomId,
+    );
 
     if (remainRecents.isNotEmpty) {
       for (var recent in remainRecents) {
@@ -148,10 +153,14 @@ class MessageExtention {
 
   /// MARK Recent Status
 
-  Future<List<String>> updateRecent(
-      {required String chatRoomId, required String lastMessage}) async {
+  Future<List<String>> updateRecent({
+    required String chatRoomId,
+    required String lastMessage,
+  }) async {
     final updated = await re.updateRecentWithLastMessage(
-        chatRoomId: chatRoomId, lastMessage: lastMessage);
+      chatRoomId: chatRoomId,
+      lastMessage: lastMessage,
+    );
 
     return updated.map((r) => r.user.id).toList();
   }
@@ -171,13 +180,12 @@ class MessageExtention {
     return unreads.map((u) => u.id).toList();
   }
 
-  Future<void> updateRead(
-      {required Message message, bool useSocket = false}) async {
+  Future<void> updateRead({
+    required Message message,
+    bool useSocket = false,
+  }) async {
     final uniqueRead = [currentUser.id, ...message.readBy].toSet().toList();
-    final body = {
-      "messageId": message.id,
-      "readBy": uniqueRead,
-    };
+    final body = {"messageId": message.id, "readBy": uniqueRead};
 
     final res = await _messageAPI.updateMessage(body);
 
@@ -187,13 +195,17 @@ class MessageExtention {
 
 // translate
 extension MessageExtTranslation on MessageExtention {
-  Future<String?> translateText(
-      {required Map<int, String> text,
-      required String currentTrs,
-      required Language src,
-      required Language tar}) async {
-    final res =
-        await _translateAPI.getTranslate(text: text, src: src, tar: tar);
+  Future<String?> translateText({
+    required Map<int, String> text,
+    required String currentTrs,
+    required Language src,
+    required Language tar,
+  }) async {
+    final res = await _translateAPI.getTranslate(
+      text: text,
+      src: src,
+      tar: tar,
+    );
 
     if (!res.status) return null;
 

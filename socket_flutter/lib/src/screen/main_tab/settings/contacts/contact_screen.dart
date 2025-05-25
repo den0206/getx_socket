@@ -17,16 +17,12 @@ class ContactScreen extends LoadingGetView<ContactController> {
   @override
   Widget get child {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Contact'.tr),
-      ),
+      appBar: AppBar(title: Text('Contact'.tr)),
       body: GetBuilder<ContactController>(
         builder: (controller) {
           return controller.connectionStatus
               ? WebViewWidget(controller: controller.webViewController)
-              : Center(
-                  child: Text("No Internet connection".tr),
-                );
+              : Center(child: Text("No Internet connection".tr));
         },
       ),
     );

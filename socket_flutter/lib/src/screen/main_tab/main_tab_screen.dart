@@ -21,7 +21,7 @@ class MainTabScreen extends StatelessWidget {
       Icons.message,
       Icons.group,
       Icons.qr_code,
-      Icons.person
+      Icons.person,
     ];
 
     final List<Widget> pages = [
@@ -62,30 +62,29 @@ class MainTabScreen extends StatelessWidget {
             bottomNavigationBar: Container(
               margin: const EdgeInsets.only(bottom: 20),
               height: kBottomNavigationBarHeight,
-              decoration:
-                  const BoxDecoration(color: ConstsColor.mainBackgroundColor),
+              decoration: const BoxDecoration(
+                color: ConstsColor.mainBackgroundColor,
+              ),
               child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: bottomIcons
-                      .asMap()
-                      .entries
-                      .map(
-                        (entry) => NeumorphicRadio(
-                          style: commonRatioStyle(),
-                          padding: const EdgeInsets.all(10),
-                          value: entry.key,
-                          groupValue: controller.currentIndex,
-                          onChanged: (int? index) {
-                            if (index == null) return;
-                            controller.setIndex(index);
-                          },
-                          child: Icon(
-                            entry.value,
-                            size: 30.sp,
-                          ),
-                        ),
-                      )
-                      .toList()),
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: bottomIcons
+                    .asMap()
+                    .entries
+                    .map(
+                      (entry) => NeumorphicRadio(
+                        style: commonRatioStyle(),
+                        padding: const EdgeInsets.all(10),
+                        value: entry.key,
+                        groupValue: controller.currentIndex,
+                        onChanged: (int? index) {
+                          if (index == null) return;
+                          controller.setIndex(index);
+                        },
+                        child: Icon(entry.value, size: 30.sp),
+                      ),
+                    )
+                    .toList(),
+              ),
             ),
           ),
         );
@@ -94,12 +93,12 @@ class MainTabScreen extends StatelessWidget {
   }
 }
 
-       //  BottomNavigationBar(
-            //   backgroundColor: Colors.grey,
-            //   selectedItemColor: Colors.black,
-            //   elevation: 0,
-            //   onTap: controller.setIndex,
-            //   type: BottomNavigationBarType.fixed,
-            //   currentIndex: controller.currentIndex,
-            //   items: bottomItems,
-            // ),
+//  BottomNavigationBar(
+//   backgroundColor: Colors.grey,
+//   selectedItemColor: Colors.black,
+//   elevation: 0,
+//   onTap: controller.setIndex,
+//   type: BottomNavigationBarType.fixed,
+//   currentIndex: controller.currentIndex,
+//   items: bottomItems,
+// ),

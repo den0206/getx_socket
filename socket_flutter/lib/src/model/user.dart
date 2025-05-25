@@ -39,7 +39,7 @@ class User {
     // flatmap
     return [
       blockedUsers,
-      [id]
+      [id],
     ].expand((element) => element).toList();
   }
 
@@ -131,8 +131,5 @@ ImageProvider getUserImage(User user) {
 }
 
 ImageProvider getCountryFlag(CountryCode country) {
-  return Image.asset(
-    country.flagUri!,
-    package: 'country_list_pick',
-  ).image;
+  return Image.asset(country.flagUri!, package: 'country_list_pick').image;
 }

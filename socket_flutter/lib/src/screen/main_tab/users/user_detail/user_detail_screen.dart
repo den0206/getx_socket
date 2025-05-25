@@ -29,33 +29,35 @@ class UserDetailScreen extends StatelessWidget {
             title: Text(controller.user.name),
             actions: !user.isCurrent
                 ? [
-                    Builder(builder: (context) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: NeumorphicIconButton(
-                          icon: Icon(
-                            Icons.emergency_share,
-                            color: Colors.red[400],
+                    Builder(
+                      builder: (context) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: NeumorphicIconButton(
+                            icon: Icon(
+                              Icons.emergency_share,
+                              color: Colors.red[400],
+                            ),
+                            onPressed: () {
+                              Navigator.of(context)
+                                  .push(
+                                    MaterialPageRoute(
+                                      builder: (context) {
+                                        return ReportScreen(user, null);
+                                      },
+                                      fullscreenDialog: true,
+                                    ),
+                                  )
+                                  .then((value) async {
+                                    if (Get.isRegistered<ReportController>()) {
+                                      await Get.delete<ReportController>();
+                                    }
+                                  });
+                            },
                           ),
-                          onPressed: () {
-                            Navigator.of(context)
-                                .push(MaterialPageRoute(
-                              builder: (context) {
-                                return ReportScreen(user, null);
-                              },
-                              fullscreenDialog: true,
-                            ))
-                                .then(
-                              (value) async {
-                                if (Get.isRegistered<ReportController>()) {
-                                  await Get.delete<ReportController>();
-                                }
-                              },
-                            );
-                          },
-                        ),
-                      );
-                    }),
+                        );
+                      },
+                    ),
                   ]
                 : null,
           ),
@@ -63,55 +65,37 @@ class UserDetailScreen extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                UserCountryWidget(
-                  user: user,
-                  size: 40.w,
-                  useNeumorphic: true,
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
+                UserCountryWidget(user: user, size: 40.w, useNeumorphic: true),
+                const SizedBox(height: 20),
                 if (user.isCurrent) ...[Text(user.email)],
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 Text(
                   controller.user.name,
                   style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 40.0,
-                      color: Colors.black),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 40.0,
+                    color: Colors.black,
+                  ),
                 ),
-                const SizedBox(
-                  height: 40,
-                ),
+                const SizedBox(height: 40),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: controller.user.isCurrent
                       ? [
                           NeumorphicIconButton(
-                            icon: Icon(
-                              Icons.group,
-                              size: 35.sp,
-                            ),
+                            icon: Icon(Icons.group, size: 35.sp),
                             onPressed: () {
                               controller.openGroups();
                             },
                           ),
                           NeumorphicIconButton(
-                            icon: Icon(
-                              Icons.edit,
-                              size: 35.sp,
-                            ),
+                            icon: Icon(Icons.edit, size: 35.sp),
                             onPressed: () {
                               controller.showEdit();
                             },
                           ),
                           NeumorphicIconButton(
-                            icon: Icon(
-                              Icons.settings,
-                              size: 35.sp,
-                            ),
+                            icon: Icon(Icons.settings, size: 35.sp),
                             onPressed: () {
                               showModalBottomSheet(
                                 context: context,
@@ -126,10 +110,7 @@ class UserDetailScreen extends StatelessWidget {
                         ]
                       : [
                           NeumorphicIconButton(
-                            icon: Icon(
-                              Icons.message,
-                              size: 40.sp,
-                            ),
+                            icon: Icon(Icons.message, size: 40.sp),
                             onPressed: () {
                               controller.startPrivateChat();
                             },
@@ -159,10 +140,7 @@ class UserDetailScreen extends StatelessWidget {
 }
 
 class ProfileButtonsArea extends StatelessWidget {
-  const ProfileButtonsArea({
-    super.key,
-    required this.buttons,
-  });
+  const ProfileButtonsArea({super.key, required this.buttons});
   final List<CustomCircleButton> buttons;
 
   @override
