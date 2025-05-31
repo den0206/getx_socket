@@ -1,13 +1,13 @@
 class CustomException implements Exception {
-  final _message;
-  final _prefix;
+  final String? _message;
+  final String _prefix;
 
   CustomException(this._message, this._prefix);
 
   @override
   String toString() {
     // return "$_prefix$_message";
-    var str = "$_prefix";
+    var str = _prefix;
     if (_message != null) {
       str += _message;
     }
@@ -17,38 +17,40 @@ class CustomException implements Exception {
 }
 
 class FetchDataException extends CustomException {
-  FetchDataException(message) : super(message, "Error During Communication: ");
+  FetchDataException(String? message)
+    : super(message, "Error During Communication: ");
 }
 
 class NotFoundException extends CustomException {
-  NotFoundException(message) : super(message, "Not Found: ");
+  NotFoundException(String? message) : super(message, "Not Found: ");
 }
 
 class ExceedLimitException extends CustomException {
-  ExceedLimitException(message) : super(message, "ExceedLimit: ");
+  ExceedLimitException(String? message) : super(message, "ExceedLimit: ");
 }
 
 class URLTooLongException extends CustomException {
-  URLTooLongException(message) : super(message, "Url is Too Long: ");
+  URLTooLongException(String? message) : super(message, "Url is Too Long: ");
 }
 
 class TooManyRequestException extends CustomException {
-  TooManyRequestException(message) : super(message, "Too Many Request: ");
+  TooManyRequestException(String? message)
+    : super(message, "Too Many Request: ");
 }
 
 class QuotaExceedException extends CustomException {
-  QuotaExceedException(message) : super(message, "QuotaExceed: ");
+  QuotaExceedException(String? message) : super(message, "QuotaExceed: ");
 }
 
 class ResourceUnavailableException extends CustomException {
-  ResourceUnavailableException(message)
+  ResourceUnavailableException(String? message)
     : super(message, "The Resource Unavailable: ");
 }
 
 class BadRequestException extends CustomException {
-  BadRequestException(message) : super(message, "Invalid Request: ");
+  BadRequestException(String? message) : super(message, "Invalid Request: ");
 }
 
 class UnauthorisedException extends CustomException {
-  UnauthorisedException(message) : super(message, "Unauthorised: ");
+  UnauthorisedException(String? message) : super(message, "Unauthorised: ");
 }
