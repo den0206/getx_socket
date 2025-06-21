@@ -30,7 +30,7 @@ dependencies:
   stream_transform: ^2.1.1
   video_compress: ^3.1.4
   video_player: ^2.10.0
-  device_info_plus: ^11.4.0
+  device_info_plus: ^11.5.0
   firebase_core: ^3.14.0
   firebase_messaging: ^15.2.7
   flutter_local_notifications: ^19.2.1
