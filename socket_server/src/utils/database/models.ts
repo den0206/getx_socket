@@ -35,7 +35,7 @@ function commoneSchemaOption({
   return {
     schemaOptions: {
       toJSON: {
-        transform: function (_, ret) {
+        transform: function (_, ret: any) {
           // replace _id to id
           ret.id = ret._id;
 
