@@ -202,7 +202,7 @@ SPEC CHECKSUMS:
   FirebaseCoreInternal: dedc28e569a4be85f38f3d6af1070a2e12018d55
   FirebaseInstallations: d4c7c958f99c8860d7fcece786314ae790e2f988
   FirebaseMessaging: af49f8d7c0a3d2a017d9302c80946f45a7777dde
-  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
   flutter_app_badger: 16b371e989d04cd265df85be2c3851b49cb68d18
   flutter_barcode_scanner: c5aa9f51c150a6242fa392386bd52b64bb27fcb5
   flutter_keyboard_visibility: 4625131e43015dbbe759d9b20daaf77e0e3f6619
