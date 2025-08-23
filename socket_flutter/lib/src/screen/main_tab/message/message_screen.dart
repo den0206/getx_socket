@@ -99,7 +99,7 @@ class MessageScreen extends LoadingGetView<MessageController> {
                 ),
                 Switch(
                   value: controller.useRealtime.value,
-                  activeColor: Colors.orange,
+                  activeThumbColor: Colors.orange,
                   inactiveTrackColor: Colors.white,
                   onChanged: (value) {
                     controller.toggleReal();
