@@ -9,7 +9,7 @@ environment:
   sdk: '>=3.8.0 <4.0.0'
 
 dependencies:
-  chewie: ^1.12.1
+  chewie: ^1.13.0
   country_list_pick: ^1.0.1+1
   cupertino_icons: ^1.0.8
 
@@ -30,9 +30,9 @@ dependencies:
   stream_transform: ^2.1.1
   video_compress: ^3.1.4
   video_player: ^2.10.0
-  device_info_plus: ^11.5.0
+  device_info_plus: ^12.1.0
   firebase_core: ^4.1.0
-  firebase_messaging: ^16.0.0
+  firebase_messaging: ^16.0.1
   flutter_local_notifications: ^19.4.1
   flutter_dotenv: ^6.0.0
   flutter_app_badger: ^1.5.0
@@ -54,7 +54,7 @@ dependencies:
   permission_handler: ^12.0.1
   flutter_launcher_icons: ^0.14.4
   flutter_native_splash: ^2.4.6
-  lottie: ^3.3.1
+  lottie: ^3.3.2
   visibility_detector: ^0.4.0+2
   flutter_markdown: ^0.7.7
   gal: ^2.3.2
