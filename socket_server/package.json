@@ -21,12 +21,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.896.0",
+    "@aws-sdk/client-s3": "^3.901.0",
     "@typegoose/typegoose": "^12.19.0",
     "argon2": "^0.44.0",
     "axios": "^1.12.2",
     "cors": "^2.8.5",
-    "dotenv": "^17.2.2",
+    "dotenv": "^17.2.3",
     "express": "5.1.0",
     "handlebars": "^4.7.8",
     "helmet": "^8.1.0",
@@ -50,16 +50,16 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@types/mongoose": "^5.11.97",
     "@types/multer": "^2.0.0",
-    "@types/node": "^24.5.2",
+    "@types/node": "^24.6.2",
     "@types/node-schedule": "^2.1.8",
-    "@types/nodemailer": "^7.0.1",
+    "@types/nodemailer": "^7.0.2",
     "@types/socket.io": "^3.0.2",
     "@types/typescript": "^2.0.0",
-    "@typescript-eslint/eslint-plugin": "^8.44.1",
-    "@typescript-eslint/parser": "^8.44.1",
+    "@typescript-eslint/eslint-plugin": "^8.45.0",
+    "@typescript-eslint/parser": "^8.45.0",
     "cpx2": "^8.0.0",
     "npm-run-all": "^4.1.5",
     "rimraf": "^6.0.1",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.3"
   }
 }
