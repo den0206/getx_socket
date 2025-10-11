@@ -67,7 +67,7 @@ class NotificationService extends GetxService {
   }
 
   Future<String?> getFCMToken() async {
-    return await _firebaseMessaging.getToken();
+    return "";
   }
 
   void listenForeground() {
