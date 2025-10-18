@@ -31,9 +31,9 @@ dependencies:
   video_compress: ^3.1.4
   video_player: ^2.10.0
   device_info_plus: ^12.1.0
-  firebase_core: ^4.1.1
-  firebase_messaging: ^16.0.2
-  flutter_local_notifications: ^19.4.2
+  firebase_core: ^4.2.0
+  firebase_messaging: ^16.0.3
+  flutter_local_notifications: ^19.5.0
   flutter_dotenv: ^6.0.0
   flutter_app_badger: ^1.5.0
   flip_card: ^0.7.0
@@ -53,7 +53,7 @@ dependencies:
   webview_flutter: ^4.13.0
   permission_handler: ^12.0.1
   flutter_launcher_icons: ^0.14.4
-  flutter_native_splash: ^2.4.6
+  flutter_native_splash: ^2.4.7
   lottie: ^3.3.2
   visibility_detector: ^0.4.0+2
   flutter_markdown: ^0.7.7
