@@ -1,5 +1,5 @@
+import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/route_manager.dart';
 import 'package:socket_flutter/src/api/user_api.dart';
@@ -14,16 +14,24 @@ class QrViewerController extends GetxController {
 
   Future<void> startQrcodeScan() async {
     try {
-      final result = await FlutterBarcodeScanner.scanBarcode(
-        '#ff6666',
-        "Cancel",
-        true,
-        ScanMode.QR,
+      final result = await BarcodeScanner.scan(
+        options: ScanOptions(
+          restrictFormat: [BarcodeFormat.qr],
+          strings: {
+            'cancel': 'Cancel',
+            'flash_on': 'Flash On',
+            'flash_off': 'Flash Off',
+          },
+        ),
       );
 
-      if (result == "-1") return;
+      // キャンセルまたは失敗の場合は終了
+      if (result.type == ResultType.Cancelled ||
+          result.type == ResultType.Error) {
+        return;
+      }
 
-      String searchId = result;
+      String searchId = result.rawContent;
 
       final res = await _userAPI.getById(id: searchId);
       if (!res.status) return;
