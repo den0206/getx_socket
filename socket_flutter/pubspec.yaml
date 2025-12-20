@@ -31,8 +31,8 @@ dependencies:
   video_compress: ^3.1.4
   video_player: ^2.10.1
   device_info_plus: ^12.3.0
-  firebase_core: ^4.2.1
-  firebase_messaging: ^16.0.4
+  firebase_core: ^4.3.0
+  firebase_messaging: ^16.1.0
   flutter_local_notifications: ^19.5.0
   flutter_dotenv: ^6.0.0
   flutter_app_badger: ^1.5.0
@@ -40,9 +40,9 @@ dependencies:
   # device_preview: ^1.1.0
   url_launcher: ^6.3.2
   qr_flutter: ^4.1.0
-  barcode_scan2: ^4.5.2
+  barcode_scan2: ^4.5.3
   uuid: ^4.5.2
-  skeletonizer: ^2.1.1
+  skeletonizer: ^2.1.2
   pin_code_fields: ^8.0.1
 
   flutter_neumorphic:
