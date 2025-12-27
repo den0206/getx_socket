@@ -2,7 +2,7 @@ PODS:
   - barcode_scan2 (0.0.1):
     - Flutter
     - MTBBarcodeScanner
-    - SwiftProtobuf
+    - SwiftProtobuf (~> 1.33)
   - device_info_plus (0.0.1):
     - Flutter
   - emoji_picker_flutter (0.0.1):
@@ -199,7 +199,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/webview_flutter_wkwebview/darwin"
 
 SPEC CHECKSUMS:
-  barcode_scan2: f80517f040989095c9b5067be77649bf6114442c
+  barcode_scan2: eb52194dc350f19c155585d47a6da04e71c540bb
   device_info_plus: 21fcca2080fbcd348be798aa36c3e5ed849eefbe
   emoji_picker_flutter: ece213fc274bdddefb77d502d33080dc54e616cc
   Firebase: a451a7b61536298fd5cbfe3a746fd40443a50679
