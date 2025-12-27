@@ -9,7 +9,7 @@ import {User} from '../users/user.model';
 
 @pre<Group>(
   'deleteOne',
-  async function (next) {
+  async function () {
     console.log('=== Start DELETE');
     console.log('DELETE RELATION', (await this)._id);
 
@@ -17,7 +17,6 @@ import {User} from '../users/user.model';
 
     await RecentModel.deleteMany({chatRoomId: id});
     await MessageModel.deleteMany({chatRoomId: id});
-    next();
   },
   {document: true, query: true}
 )
