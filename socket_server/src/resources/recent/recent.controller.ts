@@ -110,7 +110,7 @@ async function findOneByRoomAndUser(req: Request, res: Response) {
   const chatRoomId = req.query.chatRoomId as string;
 
   try {
-    const findRecent = await RecentModel.findOne({userId, chatRoomId}).populate(
+    const findRecent = await RecentModel.findOne({userId: userId as any, chatRoomId}).populate(
       recentOpt
     );
     if (!findRecent)

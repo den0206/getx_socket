@@ -4,7 +4,7 @@ import {User} from '../users/user.model';
 
 @pre<Message>(
   'deleteOne',
-  async function (next) {
+  async function () {
     const awsClient = new AWSClient();
     if ((await this).imageUrl) {
       console.log('=== Start DELETE');
@@ -16,7 +16,6 @@ import {User} from '../users/user.model';
       console.log('DELETE VIDEO RELATION', (await this)._id);
       awsClient.deleteImage((await this).videoUrl);
     }
-    next();
   },
   {document: true, query: true}
 )

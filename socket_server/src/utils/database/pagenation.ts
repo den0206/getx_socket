@@ -70,7 +70,7 @@ export async function usePagenation<T>({
   const hasNextPage = array.length > limit;
   array = hasNextPage ? array.slice(0, -1) : array;
   const nextPageCursor = hasNextPage
-    ? Base64.encodeBase64(array[array.length - 1].id)
+    ? Base64.encodeBase64(array[array.length - 1]._id)
     : null;
 
   const data = {
