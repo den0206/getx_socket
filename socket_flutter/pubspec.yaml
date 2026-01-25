@@ -1,12 +1,12 @@
 name: socket_flutter
 description: A new Flutter project.
 
-publish_to: "none"
+publish_to: 'none'
 
 version: 1.0.0+1
 
 environment:
-  sdk: ">=3.8.0 <4.0.0"
+  sdk: '>=3.8.0 <4.0.0'
 
 dependencies:
   chewie: ^1.13.0
@@ -31,8 +31,8 @@ dependencies:
   video_compress: ^3.1.4
   video_player: ^2.10.1
   device_info_plus: ^12.3.0
-  firebase_core: ^4.3.0
-  firebase_messaging: ^16.1.0
+  firebase_core: ^4.4.0
+  firebase_messaging: ^16.1.1
   flutter_local_notifications: ^19.5.0
   flutter_dotenv: ^6.0.0
   flutter_app_badger: ^1.5.0
@@ -75,17 +75,17 @@ flutter:
     - .env
 
 flutter_icons:
-  image_path: "assets/icon/icon-ios.png"
-  image_path_ios: "assets/icon/icon-ios.png"
+  image_path: 'assets/icon/icon-ios.png'
+  image_path_ios: 'assets/icon/icon-ios.png'
   android: true
   ios: true
-  adaptive_icon_foreground: "assets/icon/icon-android.png"
-  adaptive_icon_background: "#DCE6E7"
+  adaptive_icon_foreground: 'assets/icon/icon-android.png'
+  adaptive_icon_background: '#DCE6E7'
 
 flutter_native_splash:
-  image: "assets/icon/splash-icon.png"
-  color: "#DCE6E7"
+  image: 'assets/icon/splash-icon.png'
+  color: '#DCE6E7'
   fullscreen: true
   android_12:
-    icon_background_color: "#DCE6E7"
-    image: "assets/icon/splash-icon.png"
+    icon_background_color: '#DCE6E7'
+    image: 'assets/icon/splash-icon.png'
