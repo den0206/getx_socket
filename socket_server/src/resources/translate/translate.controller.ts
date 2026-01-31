@@ -1,4 +1,4 @@
-import axios, {RawAxiosRequestConfig} from 'axios';
+import axios from 'axios';
 import {Request, Response} from 'express';
 import ResponseAPI from '../../utils/interface/response.api';
 
@@ -9,33 +9,26 @@ const client = axios.create({
   baseURL: baseURL,
   proxy: false,
   responseType: 'json',
+  headers: {
+    'Authorization': `DeepL-Auth-Key ${DEEPKEY}`,
+    'Content-Type': 'application/json',
+  },
 });
 
 async function textTR(req: Request, res: Response) {
   const {texts, paragraphs, src, tar} = req.query;
 
-  const params = new URLSearchParams();
-  params.append('auth_key', DEEPKEY);
-
-  if (texts instanceof Array) {
-    (texts as string[]).forEach((text) => {
-      params.append('text', text);
-    });
-  } else {
-    params.append('text', texts as string);
-  }
-
-  params.append('source_lang', src as string);
-  params.append('target_lang', tar as string);
+  // テキストを配列として準備
+  const textArray = Array.isArray(texts) ? texts : [texts as string];
 
   try {
-    const options: RawAxiosRequestConfig = {
-      method: 'GET',
-      headers: {'accept-encoding': '*'},
-      params: params,
+    const requestBody = {
+      text: textArray,
+      source_lang: src as string,
+      target_lang: tar as string,
     };
 
-    const trs = await client.get('/translate', options);
+    const trs = await client.post('/translate', requestBody);
 
     const data: {
       [key: string]: string;
