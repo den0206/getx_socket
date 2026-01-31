@@ -83,22 +83,22 @@ class NotificationService extends GetxService {
 
     if (notification != null) {
       flutterLocalNotificationsPlugin.show(
-        notification.hashCode,
-        notification.title,
-        notification.body,
-        NotificationDetails(
-          android: AndroidNotificationDetails(
-            channel.id,
-            channel.name,
-            channelDescription: channel.description,
-            icon: 'launch_background',
-            importance: Importance.high,
-            priority: Priority.high,
-          ),
-          iOS: const DarwinNotificationDetails(
-            // badgeNumber: 10,
-          ),
-        ),
+        id: notification.hashCode,
+        title: notification.title,
+        body: notification.body,
+        // NotificationDetails(
+        //   android: AndroidNotificationDetails(
+        //     channel.id,
+        //     channel.name,
+        //     channelDescription: channel.description,
+        //     icon: 'launch_background',
+        //     importance: Importance.high,
+        //     priority: Priority.high,
+        //   ),
+        //   iOS: const DarwinNotificationDetails(
+        //     // badgeNumber: 10,
+        //   ),
+        // ),
       );
     }
   }
