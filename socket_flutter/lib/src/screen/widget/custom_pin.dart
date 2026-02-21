@@ -126,7 +126,7 @@ class PinCodeArea extends StatelessWidget {
   }
 }
 
-class CustomPinCodeField extends StatelessWidget {
+class CustomPinCodeField extends StatefulWidget {
   const CustomPinCodeField({
     super.key,
     required this.controller,
@@ -141,45 +141,48 @@ class CustomPinCodeField extends StatelessWidget {
   final Function(String text)? onChange;
 
   @override
+  State<CustomPinCodeField> createState() => _CustomPinCodeFieldState();
+}
+
+class _CustomPinCodeFieldState extends State<CustomPinCodeField> {
+  late final PinInputController _pinController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pinController = PinInputController();
+  }
+
+  @override
+  void dispose() {
+    _pinController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return PinCodeTextField(
-      appContext: context,
-      controller: controller,
+    return MaterialPinField(
       length: 6,
       autoFocus: true,
-      obscureText: false,
-      autoDisposeControllers: true,
-      blinkWhenObscuring: true,
-      animationType: AnimationType.fade,
-      validator: (v) {
-        if (v!.length < 6) {
-          return "";
-        } else {
-          return null;
-        }
+      obscureText: widget.isSecure,
+      pinController: _pinController,
+      keyboardType: widget.inputType,
+      onChanged: (value) {
+        widget.controller.text = value;
+        widget.onChange?.call(value);
       },
-      pinTheme: PinTheme(
-        shape: PinCodeFieldShape.box,
-        borderRadius: BorderRadius.circular(5),
-        fieldHeight: 50,
-        fieldWidth: 40,
-        activeColor: Colors.grey,
-        inactiveColor: Colors.grey,
-        selectedColor: Colors.grey,
-        activeFillColor: Colors.white,
-        inactiveFillColor: Colors.white,
-        selectedFillColor: Colors.white,
+      theme: const MaterialPinTheme(
+        shape: MaterialPinShape.outlined,
+        cellSize: Size(40, 50),
+        borderRadius: BorderRadius.all(Radius.circular(5)),
+        borderColor: Colors.grey,
+        focusedBorderColor: Colors.grey,
+        filledBorderColor: Colors.grey,
+        showCursor: true,
+        cursorColor: Colors.black,
+        animationDuration: Duration(milliseconds: 300),
+        entryAnimation: MaterialPinAnimation.fade,
       ),
-      cursorColor: Colors.black,
-      animationDuration: const Duration(milliseconds: 300),
-      enableActiveFill: false,
-      keyboardType: inputType,
-      onChanged: onChange ?? (value) {},
-      beforeTextPaste: (text) {
-        print("Allowing to paste $text");
-
-        return true;
-      },
     );
   }
 }
