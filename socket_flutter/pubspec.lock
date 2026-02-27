@@ -869,10 +869,10 @@ packages:
     dependency: "direct main"
     description:
       name: pin_code_fields
-      sha256: "585e831c767bce361fdbae7c2976ef41bd2a4ff5dde8e33799d60590c93404ba"
+      sha256: b9c33ef91da2a959dde3eaa0ec90dfca6a90d5b734cb594bb533a01f7f9732fa
       url: "https://pub.dev"
     source: hosted
-    version: "9.0.0"
+    version: "9.1.0"
   platform:
     dependency: transitive
     description:
@@ -1202,10 +1202,10 @@ packages:
     dependency: "direct main"
     description:
       name: uuid
-      sha256: a11b666489b1954e01d992f3d601b1804a33937b5a8fe677bd26b8a9f96f96e8
+      sha256: "1fef9e8e11e2991bb773070d4656b7bd5d850967a2456cfc83cf47925ba79489"
       url: "https://pub.dev"
     source: hosted
-    version: "4.5.2"
+    version: "4.5.3"
   vector_math:
     dependency: transitive
     description:
