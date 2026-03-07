@@ -31,9 +31,9 @@ dependencies:
   video_compress: ^3.1.4
   video_player: ^2.11.0
   device_info_plus: ^12.3.0
-  firebase_core: ^4.4.0
-  firebase_messaging: ^16.1.1
-  flutter_local_notifications: ^20.1.0
+  firebase_core: ^4.5.0
+  firebase_messaging: ^16.1.2
+  flutter_local_notifications: ^21.0.0
   flutter_dotenv: ^6.0.0
   flutter_app_badger: ^1.5.0
   flip_card: ^0.7.0
