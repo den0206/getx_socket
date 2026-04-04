@@ -181,10 +181,10 @@ packages:
     dependency: "direct main"
     description:
       name: device_info_plus
-      sha256: "4df8babf73058181227e18b08e6ea3520cf5fc5d796888d33b7cb0f33f984b7c"
+      sha256: b4fed1b2835da9d670d7bed7db79ae2a94b0f5ad6312268158a9b5479abbacdd
       url: "https://pub.dev"
     source: hosted
-    version: "12.3.0"
+    version: "12.4.0"
   device_info_plus_platform_interface:
     dependency: transitive
     description:
@@ -869,10 +869,10 @@ packages:
     dependency: "direct main"
     description:
       name: pin_code_fields
-      sha256: b9c33ef91da2a959dde3eaa0ec90dfca6a90d5b734cb594bb533a01f7f9732fa
+      sha256: "8e919c5093b326d1a2d39d62d88572aa4a79b3567b1ed11ada74ee4872444f23"
       url: "https://pub.dev"
     source: hosted
-    version: "9.1.0"
+    version: "9.3.0"
   platform:
     dependency: transitive
     description:
