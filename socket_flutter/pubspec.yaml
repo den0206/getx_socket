@@ -20,7 +20,7 @@ dependencies:
   flutter_spinkit: ^5.2.2
   get: ^4.7.3
   http: ^1.6.0
-  image_picker: ^1.2.1
+  image_picker: ^1.2.2
   intl: any
   mime: ^2.0.0
   emoji_picker_flutter: ^4.4.0
