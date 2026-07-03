@@ -45,10 +45,10 @@ packages:
     dependency: "direct main"
     description:
       name: barcode_scan2
-      sha256: "9b539b0ce419005c451de66374c79f39801986f1fd7a213e63d948f21487cd69"
+      sha256: e48fbbe8d98a55b0ed6b502031371e1eca33dd6ff3964272c8bc8687fa226ceb
       url: "https://pub.dev"
     source: hosted
-    version: "4.7.2"
+    version: "4.8.0"
   boolean_selector:
     dependency: transitive
     description:
@@ -597,10 +597,10 @@ packages:
     dependency: "direct main"
     description:
       name: image_picker
-      sha256: "91c025426c2881c551100bce834e201c835a170151545f58d17da5180ca7d9ac"
+      sha256: d8402284df184bc05f4a2210c6c23983b0720f4cd87cbd05c5390a78af602667
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.2"
+    version: "1.2.3"
   image_picker_android:
     dependency: transitive
     description:
