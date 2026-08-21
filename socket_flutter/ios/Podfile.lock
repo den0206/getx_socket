@@ -30,7 +30,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/video_compress/ios"
 
 SPEC CHECKSUMS:
-  Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
+  Flutter: 71a624a5bc0c04062bf19101d501e466baf2fb47
   flutter_app_badger: 16b371e989d04cd265df85be2c3851b49cb68d18
   flutter_keyboard_visibility: 4625131e43015dbbe759d9b20daaf77e0e3f6619
   sqflite: c35dad70033b8862124f8337cc994a809fcd9fa3
