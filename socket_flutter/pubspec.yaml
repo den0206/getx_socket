@@ -9,7 +9,7 @@ environment:
   sdk: '>=3.8.0 <4.0.0'
 
 dependencies:
-  chewie: ^1.15.0
+  chewie: ^1.16.2
   country_list_pick: ^1.0.1+1
   cupertino_icons: ^1.0.9
 
@@ -23,7 +23,7 @@ dependencies:
   image_picker: ^1.2.3
   intl: any
   mime: ^2.1.0
-  emoji_picker_flutter: ^4.5.3
+  emoji_picker_flutter: ^4.5.4
   shared_preferences: ^2.5.5
   sizer: ^2.0.15
   socket_io_client: ^3.1.6
@@ -51,7 +51,7 @@ dependencies:
       ref: feature/remoce_accentcolor
   cached_network_image: ^4.0.0
   webview_flutter: ^4.14.1
-  permission_handler: ^13.0.1
+  permission_handler: ^13.0.2
   flutter_launcher_icons: ^0.14.4
   flutter_native_splash: ^2.4.8
   lottie: ^3.5.1
