@@ -43,13 +43,13 @@ dependencies:
   barcode_scan2: ^4.8.2
   uuid: ^4.6.0
   skeletonizer: ^3.0.0
-  pin_code_fields: ^10.0.0
+  pin_code_fields: ^10.1.0
 
   flutter_neumorphic:
     git:
       url: https://github.com/den0206/Flutter-Neumorphic.git
       ref: feature/remoce_accentcolor
-  cached_network_image: ^4.0.0
+  cached_network_image: ^4.0.2
   webview_flutter: ^4.14.1
   permission_handler: ^13.0.2
   flutter_launcher_icons: ^0.14.4
